@@ -29,7 +29,7 @@ class TabelleTest {
 	}
 
 	@Value
-	@Builder
+	@Builder(toBuilder = true)
 	private static class Paarung {
 		String team1, team2;
 		boolean wayPlayed;
@@ -42,7 +42,7 @@ class TabelleTest {
 		}
 		
 		private Paarung reverse() {
-			return Paarung.builder().team1(team2).team2(team1).tore(gegentore).gegentore(tore).build();
+			return builder().team1(team2).team2(team1).tore(gegentore).gegentore(tore).build();
 		}
 
 		private static class PaarungBuilder {
