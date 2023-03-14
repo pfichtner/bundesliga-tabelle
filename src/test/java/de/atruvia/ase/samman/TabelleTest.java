@@ -46,8 +46,8 @@ class TabelleTest {
 
 	private void wennDieTabelleBerechnetWird() {
 		tabelle = new TabellenPlatz[] { //
-				tabellenplatz().platz(1).team("Team 1").build(), //
-				tabellenplatz().platz(2).team("Team 2").build() //
+				tabellenplatz().platz(1).team(teams[0]).build(), //
+				tabellenplatz().platz(2).team(teams[1]).build() //
 		};
 	}
 
