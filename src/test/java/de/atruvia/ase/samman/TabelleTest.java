@@ -126,7 +126,8 @@ class TabelleTest {
 		}
 
 		private void addInternal(Paarung paarung) {
-			eintraege.merge(paarung.getTeam1(), new Eintrag(paarung.punkte(), paarung.tore, paarung.gegentore),
+			Eintrag value = new Eintrag(paarung.punkte(), paarung.tore, paarung.gegentore);
+			eintraege.merge(paarung.getTeam1(), value,
 					Eintrag::merge);
 		}
 
