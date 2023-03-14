@@ -145,11 +145,11 @@ class TabelleTest {
 
 	private void wennDieTabelleBerechnetWird() {
 		Arrays.stream(this.paarungen).forEach(tabelle::add);
-		this.tabelle_ = tabelle.getEntries().toArray(TabellenPlatz[]::new);
 	}
 
 	private void dannIstDieTabelle(String expected) {
-		assertThat(toString(tabelle_)).isEqualTo(expected);
+		TabellenPlatz[] tabellenPlaetze = tabelle.getEntries().toArray(TabellenPlatz[]::new);
+		assertThat(toString(tabellenPlaetze)).isEqualTo(expected);
 	}
 
 	private String toString(TabellenPlatz[] t) {
