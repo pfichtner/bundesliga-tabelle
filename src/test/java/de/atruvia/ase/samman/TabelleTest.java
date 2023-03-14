@@ -21,7 +21,7 @@ class TabelleTest {
 	@Value
 	@Builder
 	private static class TabellenPlatz {
-		
+
 		static TabellenPlatz NULL = new TabellenPlatz(0, "", 0, 0, 0, 0, 0, 0, 0);
 
 		int platz;
