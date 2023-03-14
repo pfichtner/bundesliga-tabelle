@@ -78,36 +78,36 @@ class TabelleTest {
 		this.paarungen = Arrays.stream(paarungen).map(Paarung.PaarungBuilder::build).toArray(Paarung[]::new);
 	}
 
-	private void wennDieTabelleBerechnetWird() {
-		class T {
-
-			class Entry {
-
-				private int points;
-				private int goalScored;
-				private int goalsGet;
-
-				public void add(int points, int goalScored, int goalsGet) {
-					this.points += points;
-					this.goalScored += goalScored;
-					this.goalsGet += goalsGet;
-				}
-
+	private static class T {
+		
+		class Entry {
+			
+			private int points;
+			private int goalScored;
+			private int goalsGet;
+			
+			public void add(int points, int goalScored, int goalsGet) {
+				this.points += points;
+				this.goalScored += goalScored;
+				this.goalsGet += goalsGet;
 			}
-
-			private final Map<String, Entry> entries = new HashMap<>();
-
-			void add(Paarung p) {
-				Entry entry1 = entries.computeIfAbsent(p.getTeam1(), k -> new Entry());
-				entry1.add(p.points1(), p.score1, p.score2);
-				entries.put(p.getTeam1(), entry1);
-
-				Entry entry2 = entries.computeIfAbsent(p.getTeam2(), k -> new Entry());
-				entry2.add(p.points1(), p.score2, p.score1);
-				entries.put(p.getTeam2(), entry2);
-			}
-
+			
 		}
+		
+		private final Map<String, Entry> entries = new HashMap<>();
+		
+		void add(Paarung p) {
+			Entry entry1 = entries.computeIfAbsent(p.getTeam1(), k -> new Entry());
+			entry1.add(p.points1(), p.score1, p.score2);
+			entries.put(p.getTeam1(), entry1);
+			
+			Entry entry2 = entries.computeIfAbsent(p.getTeam2(), k -> new Entry());
+			entry2.add(p.points1(), p.score2, p.score1);
+			entries.put(p.getTeam2(), entry2);
+		}
+		
+	}
+	private void wennDieTabelleBerechnetWird() {
 		T t = new T();
 		Arrays.stream(this.paarungen).forEach(t::add);
 
