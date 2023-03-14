@@ -8,14 +8,14 @@ import lombok.Builder;
 import lombok.Value;
 
 public class LombokBuilderIssueTest {
-	
+
 	@Value
 	@Builder(toBuilder = true)
 	static class MyPojo {
 		int intValue;
 		String stringValue;
 		boolean booleanValue;
-		
+
 		static class MyPojoBuilder {
 			MyPojoBuilder activate() {
 				booleanValue = true;
@@ -23,7 +23,7 @@ public class LombokBuilderIssueTest {
 			}
 		}
 	}
-	
+
 	@Test
 	void testName() {
 		MyPojo myPojo1 = MyPojo.builder().stringValue("string").intValue(42).booleanValue(true).build();
