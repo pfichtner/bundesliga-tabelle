@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class TabelleTest {
 
 	@Test
-	void test() {
+	void zweiMannschaftenKeinSpiel() {
 		fail("Not yet implemented");
 	}
 
