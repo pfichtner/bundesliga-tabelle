@@ -76,10 +76,9 @@ class TabelleTest {
 	void zweiMannschaftenEinSpielKeineTore() {
 		gegenSeienDiePaarungen(paarung(TEAM_1, TEAM_2).score(0, 0), paarung(TEAM_2, TEAM_1));
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle( //
-				tabellenplatz().platz(1).team(TEAM_1).punkte(1), //
-				tabellenplatz().platz(1).team(TEAM_2).punkte(1) //
-		);
+		dannIstDieTabelle("""
+				1|Team 1|1
+				1|Team 2|1""");
 	}
 
 	@Test
@@ -90,6 +89,9 @@ class TabelleTest {
 				tabellenplatz().platz(1).team(TEAM_1).punkte(3).tore(1).gegentore(1), //
 				tabellenplatz().platz(1).team(TEAM_2).punkte(3).tore(1).gegentore(1) //
 		);
+		dannIstDieTabelle("""
+				1|Team 1|3|1|1
+				1|Team 2|3|1|1""");
 	}
 
 	private Paarung.PaarungBuilder paarung(String team1, String team2) {
