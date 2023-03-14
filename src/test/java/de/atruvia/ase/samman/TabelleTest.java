@@ -47,10 +47,10 @@ class TabelleTest {
 
 		private static class PaarungBuilder {
 
-			public PaarungBuilder score(int score1, int score2) {
+			public PaarungBuilder score(int tore, int gegentore) {
 				this.wayPlayed = true;
-				this.tore = score1;
-				this.gegentore = score2;
+				this.tore = tore;
+				this.gegentore = gegentore;
 				return this;
 			}
 
