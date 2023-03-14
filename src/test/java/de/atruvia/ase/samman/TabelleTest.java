@@ -102,7 +102,7 @@ class TabelleTest {
 
 		@Value
 		@Builder
-		class Entry {
+		static class Entry {
 			int punkte;
 			int tore;
 			int gegentore;
