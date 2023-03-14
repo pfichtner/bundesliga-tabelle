@@ -85,7 +85,7 @@ class TabelleTest {
 			
 		}
 		T t = new T();
-		Arrays.stream(this.paarungen).forEach(T:add);
+		Arrays.stream(this.paarungen).forEach(t::add);
 
 
 		tabelle = new TabellenPlatz[] { //
