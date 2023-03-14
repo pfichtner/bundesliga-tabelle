@@ -31,8 +31,8 @@ class TabelleTest {
 	}
 
 	private void dannSindDiePlatzierungen(String team1, String team2) {
-		assertThat(platz1).isEqualTo(team1);
-		assertThat(platz2).isEqualTo(team2);
+		assertThat(platz1).isEqualTo(teams[0]);
+		assertThat(platz2).isEqualTo(teams[1]);
 	}
 
 	private void gegenSeienErgebisse() {
