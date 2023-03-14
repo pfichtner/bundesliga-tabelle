@@ -60,6 +60,7 @@ class TabelleTest {
 
 	private Paarung[] paarungen;
 	private Tabelle tabelle = new Tabelle();
+
 	@Test
 	void zweiMannschaftenKeinSpiel() {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
