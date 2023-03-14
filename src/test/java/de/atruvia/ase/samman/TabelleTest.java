@@ -113,8 +113,12 @@ class TabelleTest {
 
 		tabelle = new TabellenPlatz[] { //
 				a(), //
-				tabellenplatz().platz(2).team(this.paarungen[0].team2).build() //
+				b() //
 		};
+	}
+
+	private TabellenPlatz b() {
+		return tabellenplatz().platz(2).team(this.paarungen[0].team2).build();
 	}
 
 	private TabellenPlatz a() {
