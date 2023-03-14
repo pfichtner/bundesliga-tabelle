@@ -36,7 +36,7 @@ class TabelleTest {
 		int tore, gegentore;
 
 		int punkte() {
-			return tore > gegentore ? 3 : tore == gegentore ? 1 : 0;
+			return tore == gegentore ? 1 : tore > gegentore ? 3 : 0;
 		}
 
 		private Paarung swap() {
