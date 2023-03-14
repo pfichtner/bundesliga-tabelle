@@ -146,11 +146,7 @@ class TabelleTest {
 	}
 
 	private void dannIstDieTabelle(String expected) {
-		assertThat(toString(tabellenPlaetze())).isEqualTo(expected);
-	}
-
-	private List<TabellenPlatz> tabellenPlaetze() {
-		return sut.getEntries();
+		assertThat(toString(sut.getEntries())).isEqualTo(expected);
 	}
 
 	private String toString(List<TabellenPlatz> tabellenPlaetze) {
