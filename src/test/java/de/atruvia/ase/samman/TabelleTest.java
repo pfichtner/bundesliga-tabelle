@@ -59,7 +59,8 @@ class TabelleTest {
 	}
 
 	private Paarung[] paarungen;
-	Tabelle tabelle = new Tabelle();
+	private Tabelle tabelle = new Tabelle();
+	@Deprecated
 	private TabellenPlatz[] tabelle_;
 
 	@Test
