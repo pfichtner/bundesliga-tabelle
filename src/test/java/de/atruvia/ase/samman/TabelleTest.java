@@ -136,11 +136,11 @@ class TabelleTest {
 			return entries.entrySet().stream().map(e -> tabellenPlatz(e)).collect(toList());
 		}
 
-		private TabellenPlatz tabellenPlatz(java.util.Map.Entry<String, Entry> e) {
-			return TabellenPlatz.builder().platz(1).team(e.getKey()) //
-					.punkte(e.getValue().punkte) //
-					.tore(e.getValue().tore) //
-					.gegentore(e.getValue().gegentore) //
+		private TabellenPlatz tabellenPlatz(java.util.Map.Entry<String, Entry> entry) {
+			return TabellenPlatz.builder().platz(1).team(entry.getKey()) //
+					.punkte(entry.getValue().punkte) //
+					.tore(entry.getValue().tore) //
+					.gegentore(entry.getValue().gegentore) //
 					.build();
 		}
 
