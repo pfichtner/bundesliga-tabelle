@@ -126,7 +126,6 @@ class TabelleTest {
 		void add(Paarung p) {
 			entries.merge(p.getTeam1(), new Entry(p.points1(), p.score1, p.score2),
 					(e1, e2) -> e1.add(e2.punkte, e2.tore, e2.gegentore));
-
 			entries.merge(p.getTeam2(), new Entry(p.points2(), p.score2, p.score1),
 					(e1, e2) -> e1.add(e2.punkte, e2.tore, e2.gegentore));
 		}
