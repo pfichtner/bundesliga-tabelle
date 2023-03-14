@@ -33,22 +33,30 @@ class TabelleTest {
 	private static class Paarung {
 		String team1, team2;
 		boolean wayPlayed;
-		int score1, score2;
+		int tore, gegentore;
 
+		int punkte() {
+			if (!wayPlayed)
+				return 0;
+			return tore > gegentore ? 3 : tore < gegentore ? 0 : 1;
+		}
+		
+		@Deprecated
 		int points1() {
 			if (!wayPlayed)
 				return 0;
-			return score1 > score2 ? 3 : score1 < score2 ? 0 : 1;
+			return tore > gegentore ? 3 : tore < gegentore ? 0 : 1;
 		}
 
+		@Deprecated
 		int points2() {
 			if (!wayPlayed)
 				return 0;
-			return score2 > score1 ? 3 : score2 < score1 ? 0 : 1;
+			return gegentore > tore ? 3 : gegentore < tore ? 0 : 1;
 		}
 		
 		private Paarung reverse() {
-			return Paarung.builder().team1(team2).team2(team1).score1(score2).score2(score1).build();
+			return Paarung.builder().team1(team2).team2(team1).tore(gegentore).gegentore(tore).build();
 		}
 
 		private static class PaarungBuilder {
