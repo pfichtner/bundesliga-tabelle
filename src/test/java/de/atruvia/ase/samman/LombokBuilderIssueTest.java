@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import de.atruvia.ase.samman.LombokBuilderIssueTest.MyPojo.MyPojoBuilder;
 import lombok.Builder;
 
 public class LombokBuilderIssueTest {
@@ -17,7 +18,7 @@ public class LombokBuilderIssueTest {
 	
 	@Test
 	void testName() {
-		
+		MyPojo myPojo1 = MyPojo.builder().stringValue("string").intValue(42).booleanValue(true).build();
 	}
 
 }
