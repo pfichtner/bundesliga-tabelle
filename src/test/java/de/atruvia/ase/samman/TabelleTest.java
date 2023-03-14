@@ -126,8 +126,7 @@ class TabelleTest {
 		}
 
 		private void addInternal(Paarung paarung) {
-			Eintrag value = new Eintrag(paarung.punkte(), paarung.tore, paarung.gegentore);
-			eintraege.merge(paarung.getTeam1(), paarung.isGespielt() ? value : Eintrag.NULL, Eintrag::merge);
+			eintraege.merge(paarung.getTeam1(), paarung.isGespielt() ? new Eintrag(paarung.punkte(), paarung.tore, paarung.gegentore) : Eintrag.NULL, Eintrag::merge);
 		}
 
 		public List<TabellenPlatz> getEntries() {
