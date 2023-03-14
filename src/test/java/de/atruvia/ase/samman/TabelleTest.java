@@ -3,6 +3,8 @@ package de.atruvia.ase.samman;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
@@ -78,6 +80,8 @@ class TabelleTest {
 
 	private void wennDieTabelleBerechnetWird() {
 		class T {
+			
+			Map<String> entries = new HashMap<>();
 
 			void add(Paarung p) {
 
