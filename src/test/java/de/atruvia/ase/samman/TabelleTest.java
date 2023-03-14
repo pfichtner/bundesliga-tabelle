@@ -107,7 +107,7 @@ class TabelleTest {
 			entries.put(p.getTeam2(), entry2);
 		}
 
-		public List<Entry> getEntries() {
+		public List<TabellenPlatz> getEntries() {
 			// TODO Auto-generated method stub
 			return entries.;
 		}
