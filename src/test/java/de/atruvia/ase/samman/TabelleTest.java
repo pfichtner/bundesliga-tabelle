@@ -26,7 +26,6 @@ class TabelleTest {
 		gegebenSeien("Team1", "Team2");
 		gegenSeienErgebisse();
 		wennDieTabelleBerechnetWird();
-		String[] expected = { "Team1", "Team2" };
 		dannIstDieTabelle(TabellenPlatz.builder().platz(1).team("Team 1").build(),
 				TabellenPlatz.builder().platz(2).team("Team 2").build());
 	}
