@@ -20,6 +20,8 @@ class TabelleTest {
 	private static final String TEAM_2 = "Team 2";
 
 	
+	@Value
+	@Builder
 	private static class TabellenPlatz {
 		int platz;
 		String team;
