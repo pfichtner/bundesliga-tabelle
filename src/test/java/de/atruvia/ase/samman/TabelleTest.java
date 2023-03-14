@@ -98,8 +98,7 @@ class TabelleTest {
 			private final Map<String, Entry> entries = new HashMap<>();
 
 			void add(Paarung p) {
-				Entry entry = entries.computeIfAbsent(p.getTeam1(), k -> new Entry());
-				entry.add(p.points1(), p.score1, p.score2);
+				entries.computeIfAbsent(p.getTeam1(), k -> new Entry()).add(p.points1(), p.score1, p.score2);
 
 			}
 
