@@ -25,7 +25,7 @@ class TabelleTest {
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {
-		gegebenSeien("Team1", "Team2");
+		gegebenSeien("Team 1", "Team 2");
 		gegenSeienErgebisse();
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(tabellenplatz().platz(1).team("Team 1"),
