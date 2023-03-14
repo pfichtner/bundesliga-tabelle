@@ -15,6 +15,7 @@ class TabelleTest {
 		gegenSeienErgebisse();
 		wennDieTabelleBerechnetWird();
 		dannSindDiePlatzierungen("Team1", "Team2");
+//		dannIstDieTabelle("Team1", "Team2");
 	}
 
 	private void gegebenSeien(String... teams) {
