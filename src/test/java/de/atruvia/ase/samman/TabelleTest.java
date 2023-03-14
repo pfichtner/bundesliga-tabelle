@@ -16,8 +16,8 @@ import lombok.Value;
 
 class TabelleTest {
 
-	private static final String TEAM_2 = "Team 2";
 	private static final String TEAM_1 = "Team 1";
+	private static final String TEAM_2 = "Team 2";
 
 	@Value
 	@Builder
