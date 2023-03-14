@@ -122,7 +122,6 @@ class TabelleTest {
 		void add(Paarung paarung) {
 			add_(paarung);
 			add_(paarung.reverse());
-
 		}
 
 		private void add_(Paarung paarung) {
