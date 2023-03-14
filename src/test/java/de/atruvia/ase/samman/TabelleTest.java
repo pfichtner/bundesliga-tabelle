@@ -4,10 +4,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
+import lombok.Builder;
+import lombok.Value;
+
 class TabelleTest {
 
+	@Value
+	@Builder
 	private static class TabellenPlatz {
-
+		int platz;
+		String team;
+		int punkte;
+		int tore;
 	}
 
 	private String[] teams;
