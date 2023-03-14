@@ -23,6 +23,7 @@ class TabelleTest {
 		String team;
 		int punkte;
 		int tore;
+		int gegentore;
 	}
 
 	@Value
