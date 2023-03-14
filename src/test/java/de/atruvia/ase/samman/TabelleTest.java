@@ -34,8 +34,7 @@ class TabelleTest {
 		gegebenSeien("Team 1", "Team 2");
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2"));
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle(tabellenplatz().platz(1).team("Team 1"),
-				tabellenplatz().platz(2).team("Team 2"));
+		dannIstDieTabelle(tabellenplatz().platz(1).team("Team 1"), tabellenplatz().platz(2).team("Team 2"));
 	}
 
 	private de.atruvia.ase.samman.TabelleTest.Paarung.PaarungBuilder paarung(String team1, String team2) {
@@ -50,7 +49,7 @@ class TabelleTest {
 		this.teams = teams;
 	}
 
-	private void gegenSeienDiePaarungen(de.atruvia.ase.samman.TabelleTest.Paarung.PaarungBuilder paarungBuilder) {
+	private void gegenSeienDiePaarungen(de.atruvia.ase.samman.TabelleTest.Paarung.PaarungBuilder... paarungeb) {
 		// TODO Auto-generated method stub
 	}
 
@@ -62,7 +61,7 @@ class TabelleTest {
 	}
 
 	private void dannIstDieTabelle(TabellenPlatz.TabellenPlatzBuilder... expected) {
-		assertThat(tabelle).isEqualTo(Arrays.stream(expected).map(t->t.build()).toArray(TabellenPlatz[]::new));
+		assertThat(tabelle).isEqualTo(Arrays.stream(expected).map(TabellenPlatz.TabellenPlatzBuilder::build).toArray(TabellenPlatz[]::new));
 	}
 
 }
