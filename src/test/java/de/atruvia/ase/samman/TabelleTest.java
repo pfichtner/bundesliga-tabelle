@@ -122,6 +122,13 @@ class TabelleTest {
 			Entry entry1 = entries.computeIfAbsent(p.getTeam1(), k -> new Entry());
 			entry1.add(p.points1(), p.score1, p.score2);
 			entries.put(p.getTeam1(), entry1);
+			
+			entries.merge(p.getTeam1(), new Entry(), (e1,e2)-> {
+				e1.add(p.points1(), p.score1, p.score2);
+				return e1;
+			});
+			
+			
 
 			Entry entry2 = entries.computeIfAbsent(p.getTeam2(), k -> new Entry());
 			entry2.add(p.points2(), p.score2, p.score1);
