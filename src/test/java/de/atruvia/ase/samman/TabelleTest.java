@@ -14,9 +14,15 @@ class TabelleTest {
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {
+		gegebenSeien("Team1", "Team2");
 
 		assertThat(platz1).isEqualTo("Team1");
 		assertThat(platz2).isEqualTo("Team2");
+	}
+
+	private void gegebenSeien(String team1, String team2) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
