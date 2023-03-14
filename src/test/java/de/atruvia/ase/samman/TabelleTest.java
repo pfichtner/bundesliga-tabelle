@@ -128,10 +128,12 @@ class TabelleTest {
 		}
 
 		public List<TabellenPlatz> getEntries() {
+			// TODO sort
 			return eintraege.entrySet().stream().map(this::tabellenPlatz).collect(toList());
 		}
 
 		private TabellenPlatz tabellenPlatz(Entry<String, Eintrag> entry) {
+			// TODO platz enumerating
 			return TabellenPlatz.builder().platz(1).team(entry.getKey()) //
 					.punkte(entry.getValue().punkte) //
 					.tore(entry.getValue().tore) //
