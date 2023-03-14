@@ -155,8 +155,8 @@ class TabelleTest {
 		assertThat(toString(sut.getEntries())).isEqualTo(expected);
 	}
 
-	private String toString(List<TabellenPlatz> tabellenPlaetze) {
-		return tabellenPlaetze.stream().map(this::toString).collect(joining("\n"));
+	private String toString(List<TabellenPlatz> plaetze) {
+		return plaetze.stream().map(this::toString).collect(joining("\n"));
 	}
 
 	private String toString(TabellenPlatz platz) {
