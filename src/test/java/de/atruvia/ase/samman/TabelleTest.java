@@ -112,16 +112,16 @@ class TabelleTest {
 		Arrays.stream(this.paarungen).forEach(t::add);
 
 		tabelle = new TabellenPlatz[] { //
-				a(), //
-				b() //
+				a(t), //
+				b(t) //
 		};
 	}
 
-	private TabellenPlatz b() {
+	private TabellenPlatz b(T t) {
 		return tabellenplatz().platz(2).team(this.paarungen[0].team2).build();
 	}
 
-	private TabellenPlatz a() {
+	private TabellenPlatz a(T t) {
 		return tabellenplatz().platz(1).team(this.paarungen[0].team1).build();
 	}
 
