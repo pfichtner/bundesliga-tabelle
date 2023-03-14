@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -108,7 +109,8 @@ class TabelleTest {
 		}
 
 		public List<TabellenPlatz> getEntries() {
-			return entries.entrySet().stream().map(e->TabellenPlatz.builder().team(e.getKey()).build());
+			return entries.entrySet().stream().map(e -> TabellenPlatz.builder().team(e.getKey()).build())
+					.collect(Collectors.toList());
 		}
 
 	}
