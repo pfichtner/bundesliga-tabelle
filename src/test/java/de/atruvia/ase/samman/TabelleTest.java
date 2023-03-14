@@ -66,7 +66,7 @@ class TabelleTest {
 	void zweiMannschaftenKeinSpiel() {
 		gegenSeienDiePaarungen(paarung(TEAM_1, TEAM_2), paarung(TEAM_2, TEAM_1));
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle(tabellenplatz().platz(1).team(TEAM_1), tabellenplatz().platz(2).team(TEAM_2));
+		dannIstDieTabelle(tabellenplatz().platz(1).team(TEAM_1), tabellenplatz().platz(1).team(TEAM_2));
 	}
 
 	@Test
