@@ -95,7 +95,7 @@ class TabelleTest {
 		this.paarungen = Arrays.stream(paarungen).map(Paarung.PaarungBuilder::build).toArray(Paarung[]::new);
 	}
 
-	private static class T {
+	private static class Tabelle {
 
 		@Value
 		@Builder
@@ -141,7 +141,7 @@ class TabelleTest {
 	}
 
 	private void wennDieTabelleBerechnetWird() {
-		T t = new T();
+		Tabelle t = new Tabelle();
 		Arrays.stream(this.paarungen).forEach(t::add);
 		tabelle = t.getEntries().toArray(TabellenPlatz[]::new);
 	}
