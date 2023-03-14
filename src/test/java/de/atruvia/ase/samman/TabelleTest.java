@@ -150,8 +150,7 @@ class TabelleTest {
 	}
 
 	private TabellenPlatz[] tabellenPlaetze() {
-		TabellenPlatz[] tabellenPlaetze = sut.getEntries().toArray(TabellenPlatz[]::new);
-		return tabellenPlaetze;
+		return sut.getEntries().toArray(TabellenPlatz[]::new);
 	}
 
 	private String toString(TabellenPlatz[] t) {
