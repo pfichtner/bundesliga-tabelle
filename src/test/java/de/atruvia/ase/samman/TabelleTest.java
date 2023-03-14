@@ -112,9 +112,13 @@ class TabelleTest {
 		Arrays.stream(this.paarungen).forEach(t::add);
 
 		tabelle = new TabellenPlatz[] { //
-				tabellenplatz().platz(1).team(this.paarungen[0].team1).build(), //
+				a(), //
 				tabellenplatz().platz(2).team(this.paarungen[0].team2).build() //
 		};
+	}
+
+	private TabellenPlatz a() {
+		return tabellenplatz().platz(1).team(this.paarungen[0].team1).build();
 	}
 
 	private void dannIstDieTabelle(TabellenPlatz.TabellenPlatzBuilder... expected) {
