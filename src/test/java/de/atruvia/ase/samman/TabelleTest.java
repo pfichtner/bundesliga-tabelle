@@ -129,6 +129,8 @@ class TabelleTest {
 			return entries.entrySet().stream()
 					.map(e -> TabellenPlatz.builder().platz(platz.incrementAndGet()).team(e.getKey()) //
 							.punkte(e.getValue().punkte) //
+							.tore(e.getValue().tore) //
+							.gegentore(e.getValue().gegentore) //
 							.build())
 					.collect(toList());
 		}
