@@ -26,6 +26,10 @@ class TabelleTest {
 		int punkte;
 		int tore;
 		int gegentore;
+
+		public int getTorDifferenz() {
+			return 0;
+		}
 	}
 
 	@Value
@@ -161,7 +165,7 @@ class TabelleTest {
 
 	private String toString(TabellenPlatz platz) {
 		return Arrays
-				.asList(platz.getPlatz(), platz.getTeam(), platz.getPunkte(), platz.getTore(), platz.getGegentore())
+				.asList(platz.getPlatz(), platz.getTeam(), platz.getPunkte(), platz.getTore(), platz.getGegentore(),platz.getTorDifferenz())
 				.stream().map(Objects::toString).collect(joining("|"));
 	}
 
