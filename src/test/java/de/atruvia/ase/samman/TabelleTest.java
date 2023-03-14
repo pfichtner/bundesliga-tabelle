@@ -112,10 +112,11 @@ class TabelleTest {
 			private int tore;
 			private int gegentore;
 
-			public void add(int punkte, int tore, int gegentore) {
+			public Entry add(int punkte, int tore, int gegentore) {
 				this.punkte += punkte;
 				this.tore += tore;
 				this.gegentore += gegentore;
+				return this;
 			}
 
 		}
