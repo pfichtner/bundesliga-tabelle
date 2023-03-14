@@ -102,8 +102,6 @@ class TabelleTest {
 
 	private static class T {
 
-		@NoArgsConstructor
-		@AllArgsConstructor
 		class Entry {
 
 			private int punkte;
