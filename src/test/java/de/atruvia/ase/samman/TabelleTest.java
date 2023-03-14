@@ -108,7 +108,7 @@ class TabelleTest {
 		}
 
 		public List<TabellenPlatz> getEntries() {
-			return entries.entrySet().stream().map(TabellenPlatz.builder().team(e->e.getKey()).build());
+			return entries.entrySet().stream().map(TabellenPlatz.builder().team(e -> e.getKey()).build());
 		}
 
 	}
@@ -116,8 +116,8 @@ class TabelleTest {
 	private void wennDieTabelleBerechnetWird() {
 		T t = new T();
 		Arrays.stream(this.paarungen).forEach(t::add);
-		
-		List<de.atruvia.ase.samman.TabelleTest.T.Entry> es = t.getEntries(); 
+
+		List<de.atruvia.ase.samman.TabelleTest.T.Entry> es = t.getEntries();
 
 		tabelle = new TabellenPlatz[] { //
 				a(t), //
