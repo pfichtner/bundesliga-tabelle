@@ -110,11 +110,11 @@ class TabelleTest {
 			int tore;
 			int gegentore;
 
-			public Entry merge(Entry e) {
+			public Entry merge(Entry other) {
 				return Entry.builder() //
-						.punkte(this.punkte + e.punkte) //
-						.tore(this.tore + e.tore) //
-						.gegentore(this.gegentore + e.gegentore) //
+						.punkte(this.punkte + other.punkte) //
+						.tore(this.tore + other.tore) //
+						.gegentore(this.gegentore + other.gegentore) //
 						.build();
 			}
 
