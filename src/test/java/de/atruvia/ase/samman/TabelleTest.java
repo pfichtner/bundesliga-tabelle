@@ -85,7 +85,7 @@ class TabelleTest {
 				
 			}
 			
-			Map<String, Entry> entries = new HashMap<>();
+			private final Map<String, Entry> entries = new HashMap<>();
 
 			void add(Paarung p) {
 
