@@ -81,7 +81,11 @@ class TabelleTest {
 	private void wennDieTabelleBerechnetWird() {
 		class T {
 			
-			Map<String> entries = new HashMap<>();
+			class Entry {
+				
+			}
+			
+			Map<String, Entry> entries = new HashMap<>();
 
 			void add(Paarung p) {
 
