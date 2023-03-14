@@ -10,7 +10,9 @@ public class LombokBuilderIssueTest {
 	
 	@Builder(toBuilder = true)
 	static class MyPojo {
-		
+		int intValue;
+		String stringValue;
+		boolean booleanValue; 
 	}
 	
 	@Test
