@@ -133,11 +133,15 @@ class TabelleTest {
 		}
 
 		public List<TabellenPlatz> getEntries() {
-			return entries.entrySet().stream().map(e -> TabellenPlatz.builder().platz(1).team(e.getKey()) //
+			return entries.entrySet().stream().map(e -> extracted(e)).collect(toList());
+		}
+
+		private TabellenPlatz extracted(java.util.Map.Entry<String, Entry> e) {
+			return TabellenPlatz.builder().platz(1).team(e.getKey()) //
 					.punkte(e.getValue().punkte) //
 					.tore(e.getValue().tore) //
 					.gegentore(e.getValue().gegentore) //
-					.build()).collect(toList());
+					.build();
 		}
 
 	}
