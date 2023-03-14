@@ -149,12 +149,12 @@ class TabelleTest {
 		assertThat(toString(tabellenPlaetze())).isEqualTo(expected);
 	}
 
-	private TabellenPlatz[] tabellenPlaetze() {
-		return sut.getEntries().toArray(TabellenPlatz[]::new);
+	private List<TabellenPlatz> tabellenPlaetze() {
+		return sut.getEntries();
 	}
 
-	private String toString(TabellenPlatz[] t) {
-		return Arrays.stream(t).map(this::toString).collect(joining("\n"));
+	private String toString(List<TabellenPlatz> tabellenPlaetze) {
+		return tabellenPlaetze.stream().map(this::toString).collect(joining("\n"));
 	}
 
 	private String toString(TabellenPlatz platz) {
