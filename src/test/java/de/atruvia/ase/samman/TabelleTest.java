@@ -32,7 +32,6 @@ class TabelleTest {
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {
-		gegebenSeien("Team 1", "Team 2");
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(tabellenplatz().platz(1).team("Team 1"), tabellenplatz().platz(2).team("Team 2"));
@@ -44,10 +43,6 @@ class TabelleTest {
 
 	private de.atruvia.ase.samman.TabelleTest.TabellenPlatz.TabellenPlatzBuilder tabellenplatz() {
 		return TabellenPlatz.builder();
-	}
-
-	private void gegebenSeien(String... teams) {
-		this.teams = teams;
 	}
 
 	private void gegenSeienDiePaarungen(Paarung.PaarungBuilder... paarungen) {
