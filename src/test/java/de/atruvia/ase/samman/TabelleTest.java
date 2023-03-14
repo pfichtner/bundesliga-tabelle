@@ -107,6 +107,11 @@ class TabelleTest {
 			entries.put(p.getTeam2(), entry2);
 		}
 
+		public List<Entry> getEntries() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	}
 
 	private void wennDieTabelleBerechnetWird() {
