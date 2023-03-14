@@ -77,8 +77,16 @@ class TabelleTest {
 	}
 
 	private void wennDieTabelleBerechnetWird() {
+		class T {
+			
+			void add(Paarung p) {
+				
+			}
+			
+		}
+		T t = new T();
+		Arrays.stream(this.paarungen).forEach(T:add);
 
-//		Arrays.stream(this.paarungen).map
 
 		tabelle = new TabellenPlatz[] { //
 				tabellenplatz().platz(1).team(this.paarungen[0].team1).build(), //
