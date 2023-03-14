@@ -14,7 +14,14 @@ public class LombokBuilderIssueTest {
 	static class MyPojo {
 		int intValue;
 		String stringValue;
-		boolean booleanValue; 
+		boolean booleanValue;
+		
+		static class MyPojoBuilder {
+			MyPojoBuilder activate() {
+				booleanValue = true;
+				return this;
+			}
+		}
 	}
 	
 	@Test
