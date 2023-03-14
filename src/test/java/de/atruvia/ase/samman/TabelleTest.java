@@ -40,9 +40,9 @@ class TabelleTest {
 				return 0;
 			return tore == gegentore ? 1 : tore > gegentore ? 3 : 0;
 		}
-		
+
 		private Paarung reverse() {
-			return builder().team1(team2).team2(team1).tore(gegentore).gegentore(tore).build();
+			return Paarung.builder().team1(team2).team2(team1).score(gegentore, tore).build();
 		}
 
 		private static class PaarungBuilder {
@@ -127,7 +127,7 @@ class TabelleTest {
 			paarung = paarung.reverse();
 			entries.merge(paarung.getTeam1(), new Entry(paarung.punkte(), paarung.tore, paarung.gegentore),
 					(e1, e2) -> e1.add(e2.punkte, e2.tore, e2.gegentore));
-			
+
 		}
 
 		public List<TabellenPlatz> getEntries() {
