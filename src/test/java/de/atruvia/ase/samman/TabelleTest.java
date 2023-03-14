@@ -138,8 +138,11 @@ class TabelleTest {
 		void add(Paarung paarung) {
 			entries.merge(paarung.getTeam1(), new Entry(paarung.points1(), paarung.tore, paarung.gegentore),
 					(e1, e2) -> e1.add(e2.punkte, e2.tore, e2.gegentore));
-			entries.merge(paarung.getTeam2(), new Entry(paarung.points2(), paarung.gegentore, paarung.tore),
+			
+			paarung = paarung.reverse();
+			entries.merge(paarung.getTeam1(), new Entry(paarung.points1(), paarung.tore, paarung.gegentore),
 					(e1, e2) -> e1.add(e2.punkte, e2.tore, e2.gegentore));
+			
 		}
 
 		public List<TabellenPlatz> getEntries() {
