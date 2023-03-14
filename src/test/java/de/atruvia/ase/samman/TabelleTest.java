@@ -99,13 +99,13 @@ class TabelleTest {
 
 		@Value
 		@Builder
-		static class Entry {
+		static class Eintrag {
 			int punkte;
 			int tore;
 			int gegentore;
 
-			public Entry merge(Entry other) {
-				return Entry.builder() //
+			public Eintrag merge(Eintrag other) {
+				return Eintrag.builder() //
 						.punkte(this.punkte + other.punkte) //
 						.tore(this.tore + other.tore) //
 						.gegentore(this.gegentore + other.gegentore) //
@@ -114,7 +114,7 @@ class TabelleTest {
 
 		}
 
-		private final Map<String, Entry> entries = new HashMap<>();
+		private final Map<String, Eintrag> entries = new HashMap<>();
 
 		void add(Paarung paarung) {
 			addInternal(paarung);
@@ -122,15 +122,15 @@ class TabelleTest {
 		}
 
 		private void addInternal(Paarung paarung) {
-			entries.merge(paarung.getTeam1(), new Entry(paarung.punkte(), paarung.tore, paarung.gegentore),
-					Entry::merge);
+			entries.merge(paarung.getTeam1(), new Eintrag(paarung.punkte(), paarung.tore, paarung.gegentore),
+					Eintrag::merge);
 		}
 
 		public List<TabellenPlatz> getEntries() {
 			return entries.entrySet().stream().map(this::tabellenPlatz).collect(toList());
 		}
 
-		private TabellenPlatz tabellenPlatz(java.util.Map.Entry<String, Entry> entry) {
+		private TabellenPlatz tabellenPlatz(java.util.Map.Entry<String, Eintrag> entry) {
 			return TabellenPlatz.builder().platz(1).team(entry.getKey()) //
 					.punkte(entry.getValue().punkte) //
 					.tore(entry.getValue().tore) //
