@@ -26,9 +26,8 @@ class TabelleTest {
 		String team1, team2;
 
 		private static class PaarungBuilder {
-			public PaarungBuilder score(int i, int j) {
-				// TODO Auto-generated method stub
-				return null;
+			public PaarungBuilder score(int score1, int score2) {
+				return this;
 			}
 
 		}
