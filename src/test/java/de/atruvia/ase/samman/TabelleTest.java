@@ -1,5 +1,7 @@
 package de.atruvia.ase.samman;
 
+import static de.atruvia.ase.samman.TabelleTest.Ergebnis.SIEG;
+import static de.atruvia.ase.samman.TabelleTest.Ergebnis.UNENTSCHIEDEN;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -63,11 +65,16 @@ class TabelleTest {
 
 		int punkte() {
 			Ergebnis ergebnis = ergebnis();
-			return ergebnis == Ergebnis.UNENTSCHIEDEN ? 1 : ergebnis == Ergebnis.SIEG ? 3 : 0;
+			if (ergebnis == UNENTSCHIEDEN)
+				return 1;
+			else if (ergebnis == SIEG)
+				return 3;
+			else
+				return 0;
 		}
 
 		public Ergebnis ergebnis() {
-			return tore == gegentore ? Ergebnis.UNENTSCHIEDEN : tore > gegentore ? Ergebnis.SIEG : Ergebnis.NIEDERLAGE;
+			return tore == gegentore ? UNENTSCHIEDEN : tore > gegentore ? Ergebnis.SIEG : Ergebnis.NIEDERLAGE;
 		}
 
 		private Paarung swap() {
