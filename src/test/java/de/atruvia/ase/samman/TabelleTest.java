@@ -25,7 +25,7 @@ class TabelleTest {
 	private static class Paarung {
 		String team1, team2;
 		int score1, score2;
-		
+
 		int points1() {
 			return score1 > score2 ? 3 : score1 < score2 ? 0 : 1;
 		}
@@ -77,10 +77,9 @@ class TabelleTest {
 	}
 
 	private void wennDieTabelleBerechnetWird() {
-		
+
 //		Arrays.stream(this.paarungen).map
-		
-		
+
 		tabelle = new TabellenPlatz[] { //
 				tabellenplatz().platz(1).team(this.paarungen[0].team1).build(), //
 				tabellenplatz().platz(2).team(this.paarungen[0].team2).build() //
