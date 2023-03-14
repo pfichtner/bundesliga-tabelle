@@ -114,7 +114,7 @@ class TabelleTest {
 
 		}
 
-		private final Map<String, Eintrag> entries = new HashMap<>();
+		private final Map<String, Eintrag> eintraege = new HashMap<>();
 
 		void add(Paarung paarung) {
 			addInternal(paarung);
@@ -122,12 +122,12 @@ class TabelleTest {
 		}
 
 		private void addInternal(Paarung paarung) {
-			entries.merge(paarung.getTeam1(), new Eintrag(paarung.punkte(), paarung.tore, paarung.gegentore),
+			eintraege.merge(paarung.getTeam1(), new Eintrag(paarung.punkte(), paarung.tore, paarung.gegentore),
 					Eintrag::merge);
 		}
 
 		public List<TabellenPlatz> getEntries() {
-			return entries.entrySet().stream().map(this::tabellenPlatz).collect(toList());
+			return eintraege.entrySet().stream().map(this::tabellenPlatz).collect(toList());
 		}
 
 		private TabellenPlatz tabellenPlatz(java.util.Map.Entry<String, Eintrag> entry) {
