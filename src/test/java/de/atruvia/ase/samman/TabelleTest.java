@@ -33,10 +33,14 @@ class TabelleTest {
 		int score1, score2;
 
 		int points1() {
+			if (!wayPlayed)
+				return 0;
 			return score1 > score2 ? 3 : score1 < score2 ? 0 : 1;
 		}
 
 		int points2() {
+			if (!wayPlayed)
+				return 0;
 			return score2 > score1 ? 3 : score2 < score1 ? 0 : 1;
 		}
 
