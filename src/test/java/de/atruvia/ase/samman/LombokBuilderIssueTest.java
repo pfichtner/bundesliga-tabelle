@@ -5,9 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 
 import lombok.Builder;
+import lombok.Value;
 
 public class LombokBuilderIssueTest {
 	
+	@Value
 	@Builder(toBuilder = true)
 	static class MyPojo {
 		int intValue;
