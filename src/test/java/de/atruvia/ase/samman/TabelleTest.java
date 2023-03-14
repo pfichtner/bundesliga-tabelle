@@ -11,7 +11,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
 class TabelleTest {
@@ -102,6 +104,8 @@ class TabelleTest {
 
 	private static class T {
 
+		@NoArgsConstructor
+		@AllArgsConstructor
 		class Entry {
 
 			private int punkte;
@@ -123,7 +127,7 @@ class TabelleTest {
 			entry1.add(p.points1(), p.score1, p.score2);
 			entries.put(p.getTeam1(), entry1);
 			
-			entries.merge(p.getTeam1(), new Entry(), (e1,e2)-> {
+			entries.merge(p.getTeam1(), new Entry(p.points1(), p.score1, p.score2), (e1,e2)-> {
 				e1.add(p.points1(), p.score1, p.score2);
 				return e1;
 			});
