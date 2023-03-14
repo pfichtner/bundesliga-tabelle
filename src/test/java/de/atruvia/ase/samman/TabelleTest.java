@@ -26,8 +26,12 @@ class TabelleTest {
 		gegebenSeien("Team1", "Team2");
 		gegenSeienErgebisse();
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle(TabellenPlatz.builder().platz(1).team("Team 1").build(),
-				TabellenPlatz.builder().platz(2).team("Team 2").build());
+		dannIstDieTabelle(tabellenplatz().platz(1).team("Team 1").build(),
+				tabellenplatz().platz(2).team("Team 2").build());
+	}
+
+	private de.atruvia.ase.samman.TabelleTest.TabellenPlatz.TabellenPlatzBuilder tabellenplatz() {
+		return TabellenPlatz.builder();
 	}
 
 	private void gegebenSeien(String... teams) {
@@ -40,8 +44,8 @@ class TabelleTest {
 
 	private void wennDieTabelleBerechnetWird() {
 		tabelle = new TabellenPlatz[] { //
-				TabellenPlatz.builder().platz(1).team("Team 1").build(), //
-				TabellenPlatz.builder().platz(2).team("Team 2").build() //
+				tabellenplatz().platz(1).team("Team 1").build(), //
+				tabellenplatz().platz(2).team("Team 2").build() //
 		};
 	}
 
