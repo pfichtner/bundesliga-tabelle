@@ -136,11 +136,11 @@ class TabelleTest {
 		private final Map<String, Entry> entries = new HashMap<>();
 
 		void add(Paarung paarung) {
-			entries.merge(paarung.getTeam1(), new Entry(paarung.points1(), paarung.tore, paarung.gegentore),
+			entries.merge(paarung.getTeam1(), new Entry(paarung.punkte(), paarung.tore, paarung.gegentore),
 					(e1, e2) -> e1.add(e2.punkte, e2.tore, e2.gegentore));
 			
 			paarung = paarung.reverse();
-			entries.merge(paarung.getTeam1(), new Entry(paarung.points1(), paarung.tore, paarung.gegentore),
+			entries.merge(paarung.getTeam1(), new Entry(paarung.punkte(), paarung.tore, paarung.gegentore),
 					(e1, e2) -> e1.add(e2.punkte, e2.tore, e2.gegentore));
 			
 		}
