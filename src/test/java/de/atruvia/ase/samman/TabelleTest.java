@@ -127,9 +127,8 @@ class TabelleTest {
 			entries.merge(p.getTeam1(), new Entry(p.points1(), p.score1, p.score2),
 					(e1, e2) -> e1.add(e2.punkte, e2.tore, e2.gegentore));
 
-			Entry entry2 = entries.computeIfAbsent(p.getTeam2(), k -> new Entry());
-			entry2.add(p.points2(), p.score2, p.score1);
-			entries.put(p.getTeam2(), entry2);
+			entries.merge(p.getTeam2(), new Entry(p.points2(), p.score2, p.score1),
+					(e1, e2) -> e1.add(e2.punkte, e2.tore, e2.gegentore));
 		}
 
 		public List<TabellenPlatz> getEntries() {
