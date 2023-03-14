@@ -144,9 +144,8 @@ class TabelleTest {
 		}
 
 		private TabellenPlatz newEintrag(Paarung paarung) {
-			Ergebnis erg = paarung.ergebnis();
 			return paarung.isGespielt()
-					? TabellenPlatz.builder().punkte(paarung.punkte()).tore(paarung.tore).gegentore(paarung.gegentore)
+					? TabellenPlatz.builder().ergebnis(paarung.ergebnis()). punkte(paarung.punkte()).tore(paarung.tore).gegentore(paarung.gegentore)
 							.build()
 					: TabellenPlatz.NULL;
 		}
