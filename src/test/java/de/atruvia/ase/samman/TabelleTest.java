@@ -38,7 +38,7 @@ class TabelleTest {
 		int punkte() {
 			if (!wayPlayed)
 				return 0;
-			return tore > gegentore ? 3 : tore < gegentore ? 0 : 1;
+			return tore == gegentore ? 1 : tore > gegentore ? 3 : 0;
 		}
 		
 		private Paarung reverse() {
