@@ -80,7 +80,7 @@ class TabelleTest {
 
 	@Test
 	void zweiMannschaftenZweiSpieleMitToren() {
-		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").score(1, 0), paarung("Team 2", "Team 1").score(0, 1));
+		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").score(1, 0), paarung("Team 2", "Team 1").score(1, 0));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
 				tabellenplatz().platz(1).team("Team 1").punkte(3).tore(1).gegentore(1), //
