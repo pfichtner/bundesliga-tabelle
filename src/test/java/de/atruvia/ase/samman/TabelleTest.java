@@ -135,7 +135,9 @@ class TabelleTest {
 		}
 
 		private Eintrag newEintrag(Paarung paarung) {
-			return paarung.isGespielt() ? new Eintrag(paarung.punkte(), paarung.tore, paarung.gegentore) : Eintrag.NULL;
+			return paarung.isGespielt()
+					? Eintrag.builder().punkte(paarung.punkte()).tore(paarung.tore).gegentore(paarung.gegentore).build()
+					: Eintrag.NULL;
 		}
 
 		public List<TabellenPlatz> getEntries() {
