@@ -39,6 +39,9 @@ class TabelleTest {
 		}
 
 		int points2() {
+			if (score1 == null && score2 == null) {
+				return 0;
+			}
 			return score2 > score1 ? 3 : score2 < score1 ? 0 : 1;
 		}
 
