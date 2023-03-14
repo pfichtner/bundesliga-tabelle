@@ -27,7 +27,8 @@ class TabelleTest {
 		gegenSeienErgebisse();
 		wennDieTabelleBerechnetWird();
 		dannSindDiePlatzierungen("Team1", "Team2");
-		dannIstDieTabelle(TabellenPlatz.builder().platz(1).team("Team 1").build(), TabellenPlatz.builder().platz(2).team("Team 2").build());
+		dannIstDieTabelle(TabellenPlatz.builder().platz(1).team("Team 1").build(),
+				TabellenPlatz.builder().platz(2).team("Team 2").build());
 	}
 
 	private void gegebenSeien(String... teams) {
@@ -46,9 +47,8 @@ class TabelleTest {
 		assertThat(plaetze).isEqualTo(expected);
 	}
 
-	private void dannIstDieTabelle(TabellenPlatz tabellenPlatz, TabellenPlatz tabellenPlatz2) {
-		// TODO Auto-generated method stub
-
+	private void dannIstDieTabelle(TabellenPlatz... expected) {
+		assertThat(tabelle).isEqualTo(expected);
 	}
 
 }
