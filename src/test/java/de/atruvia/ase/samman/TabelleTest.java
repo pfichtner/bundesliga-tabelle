@@ -46,6 +46,10 @@ class TabelleTest {
 				return 0;
 			return score2 > score1 ? 3 : score2 < score1 ? 0 : 1;
 		}
+		
+		private Paarung reverse() {
+			return Paarung.builder().team1(team2).team2(team1).score1(score2).score2(score1).build();
+		}
 
 		private static class PaarungBuilder {
 
