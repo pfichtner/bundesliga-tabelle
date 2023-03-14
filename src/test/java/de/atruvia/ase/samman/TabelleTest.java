@@ -43,6 +43,10 @@ class TabelleTest {
 
 	private void wennDieTabelleBerechnetWird() {
 		plaetze = teams;
+		tabelle = new TabellenPlatz[] {
+				TabellenPlatz.builder().platz(1).team("Team 1").build(), //
+				TabellenPlatz.builder().platz(2).team("Team 2").build()
+		};
 	}
 
 	private void dannSindDiePlatzierungen(String... expected) {
