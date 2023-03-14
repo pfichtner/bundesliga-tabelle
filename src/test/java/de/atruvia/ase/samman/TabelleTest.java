@@ -21,7 +21,10 @@ class TabelleTest {
 	}
 
 	@Value
-	@Builder
+	@Builderpublic PaarungBuilder score(int i, int j) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	private static class Paarung {
 		String team1, team2;
 	}
@@ -32,6 +35,13 @@ class TabelleTest {
 	@Test
 	void zweiMannschaftenKeinSpiel() {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
+		wennDieTabelleBerechnetWird();
+		dannIstDieTabelle(tabellenplatz().platz(1).team("Team 1"), tabellenplatz().platz(2).team("Team 2"));
+	}
+
+	@Test
+	void zweiMannschaftenEinSpiel() {
+		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").score(0, 0), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(tabellenplatz().platz(1).team("Team 1"), tabellenplatz().platz(2).team("Team 2"));
 	}
