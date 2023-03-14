@@ -29,9 +29,13 @@ class TabelleTest {
 	@Builder
 	private static class Paarung {
 		String team1, team2;
-		int score1, score2;
+		Integer score1, score2;
 
 		int points1() {
+			if (score1==null&&score2==null) {
+				return 0;
+			}
+			
 			return score1 > score2 ? 3 : score1 < score2 ? 0 : 1;
 		}
 
