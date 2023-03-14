@@ -13,10 +13,15 @@ import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
+import de.atruvia.ase.samman.TabelleTest.Ergebnis;
 import lombok.Builder;
 import lombok.Value;
 
 class TabelleTest {
+
+	public enum Ergebnis {
+		SIEG,UNENTSCHIEDEN,NIEDERLAGE;
+	}
 
 	@Value
 	@Builder
@@ -60,6 +65,9 @@ class TabelleTest {
 			return tore == gegentore ? 1 : tore > gegentore ? 3 : 0;
 		}
 
+		public Ergebnis ergebnis() {
+			return tore == gegentore ? Ergebnis.U : tore > gegentore ? Ergebnis.S : Ergebnis.N;
+		}
 		private Paarung swap() {
 			return toBuilder().team1(team2).team2(team1).tore(gegentore).gegentore(tore).build();
 		}
@@ -74,6 +82,7 @@ class TabelleTest {
 			}
 
 		}
+
 
 	}
 
@@ -129,6 +138,7 @@ class TabelleTest {
 		}
 
 		private TabellenPlatz newEintrag(Paarung paarung) {
+			Ergebnis erg = paarung.ergebnis();
 			return paarung.isGespielt()
 					? TabellenPlatz.builder().punkte(paarung.punkte()).tore(paarung.tore).gegentore(paarung.gegentore)
 							.build()
