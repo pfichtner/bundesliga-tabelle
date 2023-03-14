@@ -155,8 +155,9 @@ class TabelleTest {
 	}
 
 	private String toString(TabellenPlatz platz) {
-		return Arrays.asList(platz.getPlatz(), platz.getTeam(), platz.getPunkte(), platz.getTore(), platz.getGegentore()).stream()
-				.map(Objects::toString).collect(joining("|"));
+		return Arrays
+				.asList(platz.getPlatz(), platz.getTeam(), platz.getPunkte(), platz.getTore(), platz.getGegentore())
+				.stream().map(Objects::toString).collect(joining("|"));
 	}
 
 }
