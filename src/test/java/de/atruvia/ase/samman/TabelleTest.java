@@ -127,7 +127,6 @@ class TabelleTest {
 	}
 
 	private TabellenPlatz b(T t) {
-		t.get(0);
 		return tabellenplatz().platz(2).team(this.paarungen[0].team2).build();
 	}
 
