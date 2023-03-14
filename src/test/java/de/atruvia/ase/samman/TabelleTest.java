@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman;
 
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,9 +8,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.IntPredicate;
 import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -168,7 +169,8 @@ class TabelleTest {
 	}
 
 	private String toString(TabellenPlatz[] t) {
-		return Arrays.stream(t).map(e->"").collect(Collectors.joining("\n"));
+		return Arrays.stream(t).map(e -> Arrays.asList(e.getPlatz(), e.getTeam(), e.getPunkte()).stream()
+				.map(Objects::toString).collect(joining("|"))).collect(joining("\n"));
 	}
 
 }
