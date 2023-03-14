@@ -68,8 +68,8 @@ class TabelleTest {
 		gegenSeienDiePaarungen(paarung(TEAM_1, TEAM_2), paarung(TEAM_2, TEAM_1));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
-				1|Team 1|0
-				1|Team 2|0""");
+				1|Team 1|0|0|0
+				1|Team 2|0|0|0""");
 	}
 
 	@Test
@@ -77,8 +77,8 @@ class TabelleTest {
 		gegenSeienDiePaarungen(paarung(TEAM_1, TEAM_2).score(0, 0), paarung(TEAM_2, TEAM_1));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
-				1|Team 1|1
-				1|Team 2|1""");
+				1|Team 1|1|0|0
+				1|Team 2|1|0|0""");
 	}
 
 	@Test
