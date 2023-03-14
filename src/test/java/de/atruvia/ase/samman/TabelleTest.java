@@ -39,7 +39,7 @@ class TabelleTest {
 			return tore > gegentore ? 3 : tore == gegentore ? 1 : 0;
 		}
 
-		private Paarung reverse() {
+		private Paarung swap() {
 			return toBuilder().team1(team2).team2(team1).tore(gegentore).gegentore(tore).build();
 		}
 
@@ -120,7 +120,7 @@ class TabelleTest {
 
 		private void add(Paarung paarung) {
 			addInternal(paarung);
-			addInternal(paarung.reverse());
+			addInternal(paarung.swap());
 		}
 
 		private void addInternal(Paarung paarung) {
