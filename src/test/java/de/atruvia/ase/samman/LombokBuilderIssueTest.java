@@ -24,7 +24,7 @@ public class LombokBuilderIssueTest {
 		}
 
 		private MyPojo copy() {
-			return toBuilder().build();
+			return toBuilder().intValue(intValue + 1).build();
 		}
 	}
 
