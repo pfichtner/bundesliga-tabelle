@@ -29,25 +29,21 @@ class TabelleTest {
 	@Builder
 	private static class Paarung {
 		String team1, team2;
-		Integer score1, score2;
+		boolean wayPlayed;
+		int score1, score2;
 
 		int points1() {
-			if (score1 == null && score2 == null) {
-				return 0;
-			}
 			return score1 > score2 ? 3 : score1 < score2 ? 0 : 1;
 		}
 
 		int points2() {
-			if (score1 == null && score2 == null) {
-				return 0;
-			}
 			return score2 > score1 ? 3 : score2 < score1 ? 0 : 1;
 		}
 
 		private static class PaarungBuilder {
 
 			public PaarungBuilder score(int score1, int score2) {
+				this.wayPlayed = true;
 				this.score1 = score1;
 				this.score2 = score2;
 				return this;
