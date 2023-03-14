@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 class TabelleTest {
 
 	private String[] teams;
-	private String platz1;
-	private String platz2;
 	private String[] plaetze;
 
 	@Test
@@ -31,7 +29,7 @@ class TabelleTest {
 	}
 
 	private void dannSindDiePlatzierungen(String... expected) {
-		assertThat(teams).isEqualTo(expected);
+		assertThat(plaetze).isEqualTo(expected);
 	}
 
 	private void gegenSeienErgebisse() {
