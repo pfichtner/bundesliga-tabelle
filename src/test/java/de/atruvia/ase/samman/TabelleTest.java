@@ -146,8 +146,13 @@ class TabelleTest {
 	}
 
 	private void dannIstDieTabelle(String expected) {
-		TabellenPlatz[] tabellenPlaetze = sut.getEntries().toArray(TabellenPlatz[]::new);
+		TabellenPlatz[] tabellenPlaetze = tabellenPlaetze();
 		assertThat(toString(tabellenPlaetze)).isEqualTo(expected);
+	}
+
+	private TabellenPlatz[] tabellenPlaetze() {
+		TabellenPlatz[] tabellenPlaetze = sut.getEntries().toArray(TabellenPlatz[]::new);
+		return tabellenPlaetze;
 	}
 
 	private String toString(TabellenPlatz[] t) {
