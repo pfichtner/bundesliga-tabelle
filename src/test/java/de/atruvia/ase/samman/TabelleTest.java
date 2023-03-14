@@ -46,7 +46,7 @@ class TabelleTest {
 		this.teams = teams;
 	}
 
-	private void gegenSeienErgebisse() {
+	private void gegenSeienDiePaarungen() {
 		// TODO Auto-generated method stub
 	}
 
