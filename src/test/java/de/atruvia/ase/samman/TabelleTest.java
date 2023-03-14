@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.IntPredicate;
-import java.util.stream.Collector;
 
 import org.junit.jupiter.api.Test;
 
@@ -69,11 +67,9 @@ class TabelleTest {
 	void zweiMannschaftenKeinSpiel() {
 		gegenSeienDiePaarungen(paarung(TEAM_1, TEAM_2), paarung(TEAM_2, TEAM_1));
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle(tabellenplatz().platz(1).team(TEAM_1), tabellenplatz().platz(1).team(TEAM_2));
 		dannIstDieTabelle("""
 				1|Team 1|0
-				1|Team 2|0
-				""");
+				1|Team 2|0""");
 	}
 
 	@Test
@@ -170,7 +166,7 @@ class TabelleTest {
 
 	private String toString(TabellenPlatz[] t) {
 		return Arrays.stream(t).map(e -> Arrays.asList(e.getPlatz(), e.getTeam(), e.getPunkte()).stream()
-				.map(Objects::toString).collect(joining("|"))).collect(joining("\n")) + "\n";
+				.map(Objects::toString).collect(joining("|"))).collect(joining("\n"));
 	}
 
 }
