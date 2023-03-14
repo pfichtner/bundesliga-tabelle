@@ -26,11 +26,11 @@ class TabelleTest {
 		String team1, team2;
 		int score1, score2;
 		
-		private int points1() {
+		int points1() {
 			return score1 > score2 ? 3 : score1 < score2 ? 0 : 1;
 		}
 
-		private int points2() {
+		int points2() {
 			return score2 > score1 ? 3 : score2 < score1 ? 0 : 1;
 		}
 
