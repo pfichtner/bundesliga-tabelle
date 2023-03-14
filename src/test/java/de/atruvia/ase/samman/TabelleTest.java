@@ -28,6 +28,10 @@ class TabelleTest {
 	@Value
 	@Builder
 	private static class TabellenPlatz {
+		
+		private static class TabellenPlatzBuilder {
+			
+		}
 
 		static TabellenPlatz NULL = new TabellenPlatz(0, "", 0, 0, 0, 0, 0, 0, 0);
 
@@ -53,6 +57,8 @@ class TabelleTest {
 					.gegentore(this.gegentore + other.gegentore) //
 					.build();
 		}
+		
+		
 
 	}
 
