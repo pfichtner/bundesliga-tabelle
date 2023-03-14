@@ -35,7 +35,6 @@ class TabelleTest {
 			if (score1==null&&score2==null) {
 				return 0;
 			}
-			
 			return score1 > score2 ? 3 : score1 < score2 ? 0 : 1;
 		}
 
