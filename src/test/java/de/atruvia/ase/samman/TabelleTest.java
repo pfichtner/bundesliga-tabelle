@@ -91,10 +91,6 @@ class TabelleTest {
 		return Paarung.builder().team1(team1).team2(team2);
 	}
 
-	private TabellenPlatz.TabellenPlatzBuilder tabellenplatz() {
-		return TabellenPlatz.builder();
-	}
-
 	private void gegenSeienDiePaarungen(Paarung.PaarungBuilder... paarungen) {
 		this.paarungen = Arrays.stream(paarungen).map(Paarung.PaarungBuilder::build).toArray(Paarung[]::new);
 	}
@@ -148,11 +144,6 @@ class TabelleTest {
 		T t = new T();
 		Arrays.stream(this.paarungen).forEach(t::add);
 		tabelle = t.getEntries().toArray(TabellenPlatz[]::new);
-	}
-
-	private void dannIstDieTabelle(TabellenPlatz.TabellenPlatzBuilder... expected) {
-		assertThat(tabelle).isEqualTo(
-				Arrays.stream(expected).map(TabellenPlatz.TabellenPlatzBuilder::build).toArray(TabellenPlatz[]::new));
 	}
 
 	private void dannIstDieTabelle(String expected) {
