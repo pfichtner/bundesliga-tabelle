@@ -11,9 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
 import lombok.Value;
 
 class TabelleTest {
@@ -102,11 +100,12 @@ class TabelleTest {
 
 	private static class T {
 
+		@Value
+		@Builder
 		class Entry {
-
-			private int punkte;
-			private int tore;
-			private int gegentore;
+			int punkte;
+			int tore;
+			int gegentore;
 
 			public Entry merge(Entry e) {
 				this.punkte += e.punkte;
