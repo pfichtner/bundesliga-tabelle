@@ -66,7 +66,12 @@ class TabelleTest {
 		gegenSeienDiePaarungen(paarung(TEAM_1, TEAM_2), paarung(TEAM_2, TEAM_1));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(tabellenplatz().platz(1).team(TEAM_1), tabellenplatz().platz(1).team(TEAM_2));
+		dannIstDieTabelle("""
+                1|Team 1|0
+                1|Team 2|0
+                """);
 	}
+
 
 	@Test
 	void zweiMannschaftenEinSpielKeineTore() {
@@ -154,6 +159,11 @@ class TabelleTest {
 	private void dannIstDieTabelle(TabellenPlatz.TabellenPlatzBuilder... expected) {
 		assertThat(tabelle).isEqualTo(
 				Arrays.stream(expected).map(TabellenPlatz.TabellenPlatzBuilder::build).toArray(TabellenPlatz[]::new));
+	}
+
+	private void dannIstDieTabelle(String string) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
