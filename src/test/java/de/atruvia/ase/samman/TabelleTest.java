@@ -17,14 +17,17 @@ class TabelleTest {
 		gegebenSeien("Team1", "Team2");
 		gegenSeienErgebisse();
 		wennDieTabelleBerechnetWird();
+		dannSindDiePlatzierungen("Team1", "Team2");
+	}
 
-		assertThat(platz1).isEqualTo("Team1");
-		assertThat(platz2).isEqualTo("Team2");
+	private void dannSindDiePlatzierungen(String team1, String team2) {
+		assertThat(platz1).isEqualTo(team1);
+		assertThat(platz2).isEqualTo(team2);
 	}
 
 	private void wennDieTabelleBerechnetWird() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void gegebenSeien(String team1, String team2) {
