@@ -31,8 +31,8 @@ class TabelleTest {
 	@Value
 	@Builder(toBuilder = true)
 	private static class Paarung {
-		String team1, team2;
 		boolean wayPlayed;
+		String team1, team2;
 		int tore, gegentore;
 
 		int punkte() {
