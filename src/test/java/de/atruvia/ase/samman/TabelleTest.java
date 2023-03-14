@@ -59,6 +59,7 @@ class TabelleTest {
 	}
 
 	private Paarung[] paarungen;
+	Tabelle tabelle = new Tabelle();
 	private TabellenPlatz[] tabelle_;
 
 	@Test
@@ -142,7 +143,6 @@ class TabelleTest {
 	}
 
 	private void wennDieTabelleBerechnetWird() {
-		Tabelle tabelle = new Tabelle();
 		Arrays.stream(this.paarungen).forEach(tabelle::add);
 		this.tabelle_ = tabelle.getEntries().toArray(TabellenPlatz[]::new);
 	}
