@@ -19,7 +19,9 @@ class TabelleTest {
 	}
 
 	private String[] teams;
+	@Deprecated
 	private String[] plaetze;
+	private TabellenPlatz[] tabelle;
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {
