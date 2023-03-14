@@ -27,8 +27,8 @@ class TabelleTest {
 	}
 
 	private String[] teams;
-	private TabellenPlatz[] tabelle;
 	private Paarung[] paarungen;
+	private TabellenPlatz[] tabelle;
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {
