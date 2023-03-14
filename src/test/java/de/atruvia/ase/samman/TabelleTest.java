@@ -161,7 +161,7 @@ class TabelleTest {
 				Arrays.stream(expected).map(TabellenPlatz.TabellenPlatzBuilder::build).toArray(TabellenPlatz[]::new));
 	}
 
-	private void dannIstDieTabelle(String string) {
+	private void dannIstDieTabelle(String expected) {
 		// TODO Auto-generated method stub
 		
 	}
