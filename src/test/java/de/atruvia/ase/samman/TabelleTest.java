@@ -65,14 +65,11 @@ class TabelleTest {
 
 		int punkte() {
 			Ergebnis ergebnis = ergebnis();
-			switch (ergebnis) {
-			case SIEG:
-				return 3;
-			case UNENTSCHIEDEN:
-				return 1;
-			case NIEDERLAGE:
-				return 0;
-			}
+			return switch (ergebnis) {
+			case SIEG -> 3;
+			case UNENTSCHIEDEN -> 1;
+			case NIEDERLAGE -> 0;
+			};
 		}
 
 		public Ergebnis ergebnis() {
