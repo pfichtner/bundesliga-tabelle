@@ -28,7 +28,7 @@ class TabelleTest {
 		int gegentore;
 
 		public int getTorDifferenz() {
-			return 0;
+			return tore - gegentore;
 		}
 
 	}
