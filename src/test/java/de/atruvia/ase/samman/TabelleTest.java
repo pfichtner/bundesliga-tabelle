@@ -170,7 +170,7 @@ class TabelleTest {
 
 	private String toString(TabellenPlatz[] t) {
 		return Arrays.stream(t).map(e -> Arrays.asList(e.getPlatz(), e.getTeam(), e.getPunkte()).stream()
-				.map(Objects::toString).collect(joining("|"))).collect(joining("\n"));
+				.map(Objects::toString).collect(joining("|"))).collect(joining("\n")) + "\n";
 	}
 
 }
