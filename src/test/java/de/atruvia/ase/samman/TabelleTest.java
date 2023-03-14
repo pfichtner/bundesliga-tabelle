@@ -73,7 +73,7 @@ class TabelleTest {
 
 	private void wennDieTabelleBerechnetWird() {
 		
-		Arrays.stream(this.paarungen).map
+//		Arrays.stream(this.paarungen).map
 		
 		
 		tabelle = new TabellenPlatz[] { //
