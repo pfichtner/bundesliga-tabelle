@@ -23,6 +23,7 @@ class TabelleTest {
 	private static class TabellenPlatz {
 		int platz;
 		String team;
+		int spiele;
 		int punkte;
 		int tore;
 		int gegentore;
@@ -148,10 +149,12 @@ class TabelleTest {
 
 		private TabellenPlatz tabellenPlatz(Entry<String, Eintrag> entry) {
 			// TODO platz enumerating
+			Eintrag eintrag = entry.getValue();
 			return TabellenPlatz.builder().platz(1).team(entry.getKey()) //
-					.punkte(entry.getValue().punkte) //
-					.tore(entry.getValue().tore) //
-					.gegentore(entry.getValue().gegentore) //
+					.spiele(eintrag.spiele) //
+					.punkte(eintrag.punkte) //
+					.tore(eintrag.tore) //
+					.gegentore(eintrag.gegentore) //
 					.build();
 		}
 
@@ -170,7 +173,7 @@ class TabelleTest {
 	}
 
 	private String toString(TabellenPlatz platz) {
-		return Arrays.asList(platz.getPlatz(), platz.getTeam(), platz.getPunkte(), platz.getTore(),
+		return Arrays.asList(platz.getPlatz(), platz.getTeam(), platz.getSpiele(), platz.getPunkte(), platz.getTore(),
 				platz.getGegentore(), platz.getTorDifferenz()).stream().map(Objects::toString).collect(joining("|"));
 	}
 
