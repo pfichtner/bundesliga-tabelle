@@ -116,7 +116,7 @@ class TabelleTest {
 
 		private final Map<String, Eintrag> eintraege = new HashMap<>();
 
-		void add(Paarung paarung) {
+		private void add(Paarung paarung) {
 			addInternal(paarung);
 			addInternal(paarung.reverse());
 		}
