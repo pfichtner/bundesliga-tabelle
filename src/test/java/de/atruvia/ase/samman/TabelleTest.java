@@ -30,6 +30,7 @@ class TabelleTest {
 	private static class TabellenPlatz {
 
 		private static class TabellenPlatzBuilder {
+
 			public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
 				// TODO Auto-generated method stub
 				return null;
