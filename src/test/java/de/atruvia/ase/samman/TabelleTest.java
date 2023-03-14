@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Test;
 
 class TabelleTest {
 
+	private static class TabellenPlatz {
+
+	}
+
 	private String[] teams;
 	private String[] plaetze;
 
@@ -15,11 +19,15 @@ class TabelleTest {
 		gegenSeienErgebisse();
 		wennDieTabelleBerechnetWird();
 		dannSindDiePlatzierungen("Team1", "Team2");
-//		dannIstDieTabelle("Team1", "Team2");
+		dannIstDieTabelle(new TabellenPlatz(), new TabellenPlatz());
 	}
 
 	private void gegebenSeien(String... teams) {
 		this.teams = teams;
+	}
+
+	private void gegenSeienErgebisse() {
+		// TODO Auto-generated method stub
 	}
 
 	private void wennDieTabelleBerechnetWird() {
@@ -30,8 +38,9 @@ class TabelleTest {
 		assertThat(plaetze).isEqualTo(expected);
 	}
 
-	private void gegenSeienErgebisse() {
+	private void dannIstDieTabelle(TabellenPlatz tabellenPlatz, TabellenPlatz tabellenPlatz2) {
 		// TODO Auto-generated method stub
+
 	}
 
 }
