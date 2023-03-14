@@ -100,7 +100,7 @@ class TabelleTest {
 		@Builder
 		static class Eintrag {
 
-			static Eintrag NULL = Eintrag.builder().build();
+			static Eintrag NULL = new Eintrag(0, 0, 0);
 
 			int punkte;
 			int tore;
