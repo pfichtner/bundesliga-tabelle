@@ -20,6 +20,12 @@ class TabelleTest {
 		int tore;
 	}
 
+	@Value
+	@Builder
+	private static class SpielPaarung {
+		String team1, team2;
+	}
+
 	private String[] teams;
 	private TabellenPlatz[] tabelle;
 
