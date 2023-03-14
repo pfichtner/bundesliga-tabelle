@@ -24,6 +24,7 @@ class TabelleTest {
 		int platz;
 		String team;
 		int spiele;
+		int gewonnen, unentschieden, verloren;
 		int punkte;
 		int tore;
 		int gegentore;
@@ -173,8 +174,11 @@ class TabelleTest {
 	}
 
 	private String toString(TabellenPlatz platz) {
-		return Arrays.asList(platz.getPlatz(), platz.getTeam(), platz.getSpiele(), platz.getPunkte(), platz.getTore(),
-				platz.getGegentore(), platz.getTorDifferenz()).stream().map(Objects::toString).collect(joining("|"));
+		return Arrays
+				.asList(platz.getPlatz(), platz.getTeam(), platz.getSpiele(), platz.getGewonnen(),
+						platz.getUnentschieden(), platz.getVerloren(), platz.getPunkte(), platz.getTore(),
+						platz.getGegentore(), platz.getTorDifferenz())
+				.stream().map(Objects::toString).collect(joining("|"));
 	}
 
 }
