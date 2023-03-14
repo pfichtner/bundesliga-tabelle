@@ -123,8 +123,10 @@ class TabelleTest {
 		}
 
 		private void addInternal(Paarung paarung) {
-			eintraege.merge(paarung.getTeam1(), new Eintrag(paarung.punkte(), paarung.tore, paarung.gegentore),
-					Eintrag::merge);
+			if (paarung.gespielt) {
+				eintraege.merge(paarung.getTeam1(), new Eintrag(paarung.punkte(), paarung.tore, paarung.gegentore),
+						Eintrag::merge);
+			}
 		}
 
 		public List<TabellenPlatz> getEntries() {
