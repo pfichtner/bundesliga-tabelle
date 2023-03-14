@@ -82,10 +82,6 @@ class TabelleTest {
 	void zweiMannschaftenZweiSpieleMitToren() {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 0), paarung("Team 2", "Team 1").ergebnis(1, 0));
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle( //
-				tabellenplatz().platz(1).team("Team 1").punkte(3).tore(1).gegentore(1), //
-				tabellenplatz().platz(1).team("Team 2").punkte(3).tore(1).gegentore(1) //
-		);
 		dannIstDieTabelle("""
 				1|Team 1|3|1|1
 				1|Team 2|3|1|1""");
