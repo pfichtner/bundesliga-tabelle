@@ -142,9 +142,9 @@ class TabelleTest {
 	}
 
 	private void wennDieTabelleBerechnetWird() {
-		Tabelle t = new Tabelle();
-		Arrays.stream(this.paarungen).forEach(t::add);
-		tabelle = t.getEntries().toArray(TabellenPlatz[]::new);
+		Tabelle tabelle = new Tabelle();
+		Arrays.stream(this.paarungen).forEach(tabelle::add);
+		tabelle = tabelle.getEntries().toArray(TabellenPlatz[]::new);
 	}
 
 	private void dannIstDieTabelle(String expected) {
