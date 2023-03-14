@@ -101,6 +101,9 @@ class TabelleTest {
 		@Value
 		@Builder
 		static class Eintrag {
+			
+			Eintrag NULL = Eintrag.builder().build();
+			
 			int punkte;
 			int tore;
 			int gegentore;
@@ -123,10 +126,8 @@ class TabelleTest {
 		}
 
 		private void addInternal(Paarung paarung) {
-			if (paarung.gespielt) {
-				eintraege.merge(paarung.getTeam1(), new Eintrag(paarung.punkte(), paarung.tore, paarung.gegentore),
-						Eintrag::merge);
-			}
+			eintraege.merge(paarung.getTeam1(), new Eintrag(paarung.punkte(), paarung.tore, paarung.gegentore),
+					Eintrag::merge);
 		}
 
 		public List<TabellenPlatz> getEntries() {
