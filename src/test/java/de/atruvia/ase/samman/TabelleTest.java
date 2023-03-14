@@ -63,8 +63,8 @@ class TabelleTest {
 
 			public PaarungBuilder score(int score1, int score2) {
 				this.wayPlayed = true;
-				this.score1 = score1;
-				this.score2 = score2;
+				this.tore = score1;
+				this.gegentore = score2;
 				return this;
 			}
 
@@ -136,9 +136,9 @@ class TabelleTest {
 		private final Map<String, Entry> entries = new HashMap<>();
 
 		void add(Paarung p) {
-			entries.merge(p.getTeam1(), new Entry(p.points1(), p.score1, p.score2),
+			entries.merge(p.getTeam1(), new Entry(p.points1(), p.tore, p.gegentore),
 					(e1, e2) -> e1.add(e2.punkte, e2.tore, e2.gegentore));
-			entries.merge(p.getTeam2(), new Entry(p.points2(), p.score2, p.score1),
+			entries.merge(p.getTeam2(), new Entry(p.points2(), p.gegentore, p.tore),
 					(e1, e2) -> e1.add(e2.punkte, e2.tore, e2.gegentore));
 		}
 
