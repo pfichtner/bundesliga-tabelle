@@ -2,6 +2,8 @@ package de.atruvia.ase.samman;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 
 import lombok.Builder;
@@ -50,7 +52,7 @@ class TabelleTest {
 	}
 
 	private void dannIstDieTabelle(TabellenPlatz.TabellenPlatzBuilder... expected) {
-		assertThat(tabelle).isEqualTo(expected);
+		assertThat(tabelle).isEqualTo(Arrays.stream(expected).map(t->t.build()).toArray(TabellenPlatz[]::new));
 	}
 
 }
