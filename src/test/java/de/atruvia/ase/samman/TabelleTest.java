@@ -146,8 +146,7 @@ class TabelleTest {
 	}
 
 	private void dannIstDieTabelle(String expected) {
-		TabellenPlatz[] tabellenPlaetze = tabellenPlaetze();
-		assertThat(toString(tabellenPlaetze)).isEqualTo(expected);
+		assertThat(toString(tabellenPlaetze())).isEqualTo(expected);
 	}
 
 	private TabellenPlatz[] tabellenPlaetze() {
