@@ -105,14 +105,16 @@ class TabelleTest {
 		@Builder
 		static class Eintrag {
 
-			static Eintrag NULL = new Eintrag(0, 0, 0);
+			static Eintrag NULL = new Eintrag(0, 0, 0, 0);
 
+			int spiele;
 			int punkte;
 			int tore;
 			int gegentore;
 
 			public Eintrag merge(Eintrag other) {
 				return Eintrag.builder() //
+						.spiele(this.spiele + other.spiele) //
 						.punkte(this.punkte + other.punkte) //
 						.tore(this.tore + other.tore) //
 						.gegentore(this.gegentore + other.gegentore) //
