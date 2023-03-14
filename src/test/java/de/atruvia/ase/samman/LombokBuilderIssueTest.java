@@ -22,6 +22,10 @@ public class LombokBuilderIssueTest {
 				return this;
 			}
 		}
+		
+		private MyPojo copy() {
+			return toBuilder().build();
+		}
 	}
 
 	@Test
