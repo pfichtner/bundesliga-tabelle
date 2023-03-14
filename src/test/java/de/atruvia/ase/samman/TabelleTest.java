@@ -109,7 +109,7 @@ class TabelleTest {
 
 		public List<Entry> getEntries() {
 			// TODO Auto-generated method stub
-			return null;
+			return entries.;
 		}
 
 	}
