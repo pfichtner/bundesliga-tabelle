@@ -105,9 +105,9 @@ class TabelleTest {
 
 		@Value
 		@Builder
-		static class Eintrag {
+		static class TabellenPlatz {
 
-			static Eintrag NULL = new Eintrag(0, 0, 0, 0);
+			static TabellenPlatz NULL = new TabellenPlatz(0, 0, 0, 0);
 
 			@Builder.Default
 			int spiele = 1;
@@ -115,8 +115,8 @@ class TabelleTest {
 			int tore;
 			int gegentore;
 
-			public Eintrag merge(Eintrag other) {
-				return Eintrag.builder() //
+			public TabellenPlatz merge(TabellenPlatz other) {
+				return TabellenPlatz.builder() //
 						.spiele(this.spiele + other.spiele) //
 						.punkte(this.punkte + other.punkte) //
 						.tore(this.tore + other.tore) //
@@ -126,7 +126,7 @@ class TabelleTest {
 
 		}
 
-		private final Map<String, Eintrag> eintraege = new HashMap<>();
+		private final Map<String, TabellenPlatz> eintraege = new HashMap<>();
 
 		private void add(Paarung paarung) {
 			addInternal(paarung);
@@ -134,13 +134,13 @@ class TabelleTest {
 		}
 
 		private void addInternal(Paarung paarung) {
-			eintraege.merge(paarung.getTeam1(), newEintrag(paarung), Eintrag::merge);
+			eintraege.merge(paarung.getTeam1(), newEintrag(paarung), TabellenPlatz::merge);
 		}
 
-		private Eintrag newEintrag(Paarung paarung) {
+		private TabellenPlatz newEintrag(Paarung paarung) {
 			return paarung.isGespielt()
-					? Eintrag.builder().punkte(paarung.punkte()).tore(paarung.tore).gegentore(paarung.gegentore).build()
-					: Eintrag.NULL;
+					? TabellenPlatz.builder().punkte(paarung.punkte()).tore(paarung.tore).gegentore(paarung.gegentore).build()
+					: TabellenPlatz.NULL;
 		}
 
 		public List<TabellenPlatz> getEntries() {
@@ -148,9 +148,9 @@ class TabelleTest {
 			return eintraege.entrySet().stream().map(this::tabellenPlatz).collect(toList());
 		}
 
-		private TabellenPlatz tabellenPlatz(Entry<String, Eintrag> entry) {
+		private TabellenPlatz tabellenPlatz(Entry<String, TabellenPlatz> entry) {
 			// TODO platz enumerating
-			Eintrag eintrag = entry.getValue();
+			TabellenPlatz eintrag = entry.getValue();
 			return TabellenPlatz.builder().platz(1).team(entry.getKey()) //
 					.spiele(eintrag.getSpiele()) //
 					.punkte(eintrag.getPunkte()) //
