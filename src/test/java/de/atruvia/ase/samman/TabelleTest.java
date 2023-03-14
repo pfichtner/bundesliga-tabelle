@@ -46,6 +46,7 @@ class TabelleTest {
 			Paarung copied = builder().team1(team2).team2(team1)
 					.gespielt(gespielt)
 					.tore(gegentore).gegentore(tore).build();
+			System.out.println(copied);
 			return copied;
 		}
 
