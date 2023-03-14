@@ -111,10 +111,11 @@ class TabelleTest {
 
 		public List<TabellenPlatz> getEntries() {
 			AtomicInteger platz = new AtomicInteger();
-			return entries.entrySet().stream().map(e -> TabellenPlatz.builder().platz(platz.incrementAndGet())
-					.team(e.getKey()) //
-					.punkte(e.getValue().punkte) //
-					.build()).collect(toList());
+			return entries.entrySet().stream()
+					.map(e -> TabellenPlatz.builder().platz(platz.incrementAndGet()).team(e.getKey()) //
+							.punkte(e.getValue().punkte) //
+							.build())
+					.collect(toList());
 		}
 
 	}
@@ -122,13 +123,7 @@ class TabelleTest {
 	private void wennDieTabelleBerechnetWird() {
 		T t = new T();
 		Arrays.stream(this.paarungen).forEach(t::add);
-
-		List<de.atruvia.ase.samman.TabelleTest.T.Entry> es = t.getEntries();
-
-		tabelle = new TabellenPlatz[] { //
-				a(t), //
-				b(t) //
-		};
+		tabelle = t.getEntries().toArray(TabellenPlatz[]::new);
 	}
 
 	private TabellenPlatz b(T t) {
