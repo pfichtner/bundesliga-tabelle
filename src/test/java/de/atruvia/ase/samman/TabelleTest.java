@@ -24,11 +24,15 @@ class TabelleTest {
 	@Builder
 	private static class Paarung {
 		String team1, team2;
-		
+
 		private static class PaarungBuilder {
-			
+			public PaarungBuilder score(int i, int j) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
 		}
-		
+
 	}
 
 	private Paarung[] paarungen;
