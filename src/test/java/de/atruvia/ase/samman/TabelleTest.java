@@ -20,9 +20,9 @@ class TabelleTest {
 		dannSindDiePlatzierungen("Team1", "Team2");
 	}
 
-	private void dannSindDiePlatzierungen(String team1, String team2) {
-		assertThat(platz1).isEqualTo(team1);
-		assertThat(platz2).isEqualTo(team2);
+	private void gegebenSeien(String team1, String team2) {
+		platz1 = team1;
+		platz2 = team2;
 	}
 
 	private void wennDieTabelleBerechnetWird() {
@@ -30,9 +30,9 @@ class TabelleTest {
 
 	}
 
-	private void gegebenSeien(String team1, String team2) {
-		platz1 = team1;
-		platz2 = team2;
+	private void dannSindDiePlatzierungen(String team1, String team2) {
+		assertThat(platz1).isEqualTo(team1);
+		assertThat(platz2).isEqualTo(team2);
 	}
 
 	private void gegenSeienErgebisse() {
