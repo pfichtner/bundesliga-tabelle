@@ -111,9 +111,8 @@ class TabelleTest {
 
 		public List<TabellenPlatz> getEntries() {
 			AtomicInteger platz = new AtomicInteger();
-			return entries.entrySet().stream()
-					.map(e -> TabellenPlatz.builder().platz(platz.incrementAndGet()).team(e.getKey()).punkte().build())
-					.collect(toList());
+			return entries.entrySet().stream().map(e -> TabellenPlatz.builder().platz(platz.incrementAndGet())
+					.team(e.getKey()).punkte(e.getValue().points).build()).collect(toList());
 		}
 
 	}
