@@ -105,7 +105,7 @@ class TabelleTest {
 			entries.put(p.getTeam1(), entry1);
 
 			Entry entry2 = entries.computeIfAbsent(p.getTeam2(), k -> new Entry());
-			entry2.add(p.points1(), p.score2, p.score1);
+			entry2.add(p.points2(), p.score2, p.score1);
 			entries.put(p.getTeam2(), entry2);
 		}
 
