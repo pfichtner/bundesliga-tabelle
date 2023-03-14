@@ -133,7 +133,7 @@ class TabelleTest {
 		}
 
 		public List<TabellenPlatz> getEntries() {
-			return entries.entrySet().stream().map(e -> tabellenPlatz(e)).collect(toList());
+			return entries.entrySet().stream().map(this::tabellenPlatz).collect(toList());
 		}
 
 		private TabellenPlatz tabellenPlatz(java.util.Map.Entry<String, Entry> entry) {
