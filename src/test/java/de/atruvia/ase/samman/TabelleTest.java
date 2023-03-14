@@ -22,7 +22,7 @@ class TabelleTest {
 
 	@Value
 	@Builder
-	private static class SpielPaarung {
+	private static class Paarung {
 		String team1, team2;
 	}
 
