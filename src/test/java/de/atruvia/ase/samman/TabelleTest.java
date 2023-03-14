@@ -19,8 +19,6 @@ class TabelleTest {
 	}
 
 	private String[] teams;
-	@Deprecated
-	private String[] plaetze;
 	private TabellenPlatz[] tabelle;
 
 	@Test
@@ -28,7 +26,7 @@ class TabelleTest {
 		gegebenSeien("Team1", "Team2");
 		gegenSeienErgebisse();
 		wennDieTabelleBerechnetWird();
-		dannSindDiePlatzierungen("Team1", "Team2");
+		String[] expected = { "Team1", "Team2" };
 		dannIstDieTabelle(TabellenPlatz.builder().platz(1).team("Team 1").build(),
 				TabellenPlatz.builder().platz(2).team("Team 2").build());
 	}
@@ -47,10 +45,6 @@ class TabelleTest {
 				TabellenPlatz.builder().platz(1).team("Team 1").build(), //
 				TabellenPlatz.builder().platz(2).team("Team 2").build() //
 		};
-	}
-
-	private void dannSindDiePlatzierungen(String... expected) {
-		assertThat(plaetze).isEqualTo(expected);
 	}
 
 	private void dannIstDieTabelle(TabellenPlatz... expected) {
