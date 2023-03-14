@@ -120,11 +120,11 @@ class TabelleTest {
 		private final Map<String, Entry> entries = new HashMap<>();
 
 		void add(Paarung paarung) {
-			add_(paarung);
-			add_(paarung.reverse());
+			addInternal(paarung);
+			addInternal(paarung.reverse());
 		}
 
-		private void add_(Paarung paarung) {
+		private void addInternal(Paarung paarung) {
 			entries.merge(paarung.getTeam1(), new Entry(paarung.punkte(), paarung.tore, paarung.gegentore),
 					Entry::merge);
 		}
