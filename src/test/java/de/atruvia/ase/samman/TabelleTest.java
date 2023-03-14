@@ -25,15 +25,20 @@ class TabelleTest {
 	private static class Paarung {
 		String team1, team2;
 		int score1, score2;
-		int points1,points2;
+		
+		private int points1() {
+			return score1 > score2 ? 3 : score1 < score2 ? 0 : 1;
+		}
+
+		private int points2() {
+			return score2 > score1 ? 3 : score2 < score1 ? 0 : 1;
+		}
 
 		private static class PaarungBuilder {
 
 			public PaarungBuilder score(int score1, int score2) {
 				this.score1 = score1;
 				this.score2 = score2;
-				this.points1 = score1 > score2 ? 3 : score1 < score2 ? 0 : 1; 
-				this.points2 = score2 > score1 ? 3 : score2 < score1 ? 0 : 1; 
 				return this;
 			}
 
