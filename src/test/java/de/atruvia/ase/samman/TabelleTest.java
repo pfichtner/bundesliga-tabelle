@@ -110,10 +110,10 @@ class TabelleTest {
 			private int tore;
 			private int gegentore;
 
-			public Entry add(int punkte, int tore, int gegentore) {
-				this.punkte += punkte;
-				this.tore += tore;
-				this.gegentore += gegentore;
+			public Entry merge(Entry e) {
+				this.punkte += e.punkte;
+				this.tore += e.tore;
+				this.gegentore += e.gegentore;
 				return this;
 			}
 
@@ -123,10 +123,10 @@ class TabelleTest {
 
 		void add(Paarung paarung) {
 			entries.merge(paarung.getTeam1(), new Entry(paarung.punkte(), paarung.tore, paarung.gegentore),
-					(e1, e2) -> e1.add(e2.punkte, e2.tore, e2.gegentore));
+					(e1, e2) -> e1.merge(e2));
 			paarung = paarung.reverse();
 			entries.merge(paarung.getTeam1(), new Entry(paarung.punkte(), paarung.tore, paarung.gegentore),
-					(e1, e2) -> e1.add(e2.punkte, e2.tore, e2.gegentore));
+					(e1, e2) -> e1.merge(e2));
 			
 		}
 
