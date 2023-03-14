@@ -59,7 +59,7 @@ class TabelleTest {
 	}
 
 	private Paarung[] paarungen;
-	private Tabelle tabelle = new Tabelle();
+	private Tabelle sut = new Tabelle();
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {
@@ -142,11 +142,11 @@ class TabelleTest {
 	}
 
 	private void wennDieTabelleBerechnetWird() {
-		Arrays.stream(this.paarungen).forEach(tabelle::add);
+		Arrays.stream(this.paarungen).forEach(sut::add);
 	}
 
 	private void dannIstDieTabelle(String expected) {
-		TabellenPlatz[] tabellenPlaetze = tabelle.getEntries().toArray(TabellenPlatz[]::new);
+		TabellenPlatz[] tabellenPlaetze = sut.getEntries().toArray(TabellenPlatz[]::new);
 		assertThat(toString(tabellenPlaetze)).isEqualTo(expected);
 	}
 
