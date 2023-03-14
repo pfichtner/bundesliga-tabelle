@@ -151,10 +151,10 @@ class TabelleTest {
 			// TODO platz enumerating
 			Eintrag eintrag = entry.getValue();
 			return TabellenPlatz.builder().platz(1).team(entry.getKey()) //
-					.spiele(eintrag.spiele) //
-					.punkte(eintrag.punkte) //
-					.tore(eintrag.tore) //
-					.gegentore(eintrag.gegentore) //
+					.spiele(eintrag.getSpiele()) //
+					.punkte(eintrag.getPunkte()) //
+					.tore(eintrag.getTore()) //
+					.gegentore(eintrag.getGegentore()) //
 					.build();
 		}
 
