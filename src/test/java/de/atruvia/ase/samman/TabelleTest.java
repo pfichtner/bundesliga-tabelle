@@ -26,7 +26,6 @@ class TabelleTest {
 		String team1, team2;
 	}
 
-	private String[] teams;
 	private Paarung[] paarungen;
 	private TabellenPlatz[] tabelle;
 
@@ -51,8 +50,8 @@ class TabelleTest {
 
 	private void wennDieTabelleBerechnetWird() {
 		tabelle = new TabellenPlatz[] { //
-				tabellenplatz().platz(1).team(teams[0]).build(), //
-				tabellenplatz().platz(2).team(teams[1]).build() //
+				tabellenplatz().platz(1).team(this.paarungen[0].team1).build(), //
+				tabellenplatz().platz(2).team(this.paarungen[0].team2).build() //
 		};
 	}
 
