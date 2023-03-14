@@ -62,7 +62,8 @@ class TabelleTest {
 		int tore, gegentore;
 
 		int punkte() {
-			return tore == gegentore ? 1 : tore > gegentore ? 3 : 0;
+			Ergebnis ergebnis = ergebnis();
+			return ergebnis == Ergebnis.UNENTSCHIEDEN ? 1 : ergebnis == Ergebnis.SIEG ? 3 : 0;
 		}
 
 		public Ergebnis ergebnis() {
