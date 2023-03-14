@@ -50,7 +50,7 @@ class TabelleTest {
 		this.teams = teams;
 	}
 
-	private void gegenSeienDiePaarungen() {
+	private void gegenSeienDiePaarungen(de.atruvia.ase.samman.TabelleTest.Paarung.PaarungBuilder paarungBuilder) {
 		// TODO Auto-generated method stub
 	}
 
