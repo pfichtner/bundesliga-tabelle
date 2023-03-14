@@ -43,9 +43,10 @@ class TabelleTest {
 		}
 
 		private Paarung reverse() {
-			return builder().team1(team2).team2(team1)
+			Paarung copied = builder().team1(team2).team2(team1)
 					.gespielt(gespielt)
 					.tore(gegentore).gegentore(tore).build();
+			return copied;
 		}
 
 		private static class PaarungBuilder {
