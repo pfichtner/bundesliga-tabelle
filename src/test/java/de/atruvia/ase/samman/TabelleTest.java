@@ -28,6 +28,7 @@ class TabelleTest {
 
 	private String[] teams;
 	private TabellenPlatz[] tabelle;
+	private Paarung[] paarungen;
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {
@@ -49,9 +50,8 @@ class TabelleTest {
 		this.teams = teams;
 	}
 
-	private void gegenSeienDiePaarungen(TabelleTest.Paarung.PaarungBuilder... paarungen) {
-		Arrays.stream(paarungen).map(TabellenPlatz.TabellenPlatzBuilder::build).toArray(TabellenPlatz[]::new)
-		// TODO Auto-generated method stub
+	private void gegenSeienDiePaarungen(Paarung.PaarungBuilder... paarungen) {
+		this.paarungen = Arrays.stream(paarungen).map(Paarung.PaarungBuilder::build).toArray(Paarung[]::new);
 	}
 
 	private void wennDieTabelleBerechnetWird() {
