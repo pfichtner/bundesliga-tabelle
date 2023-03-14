@@ -121,10 +121,10 @@ class TabelleTest {
 
 		void add(Paarung paarung) {
 			entries.merge(paarung.getTeam1(), new Entry(paarung.punkte(), paarung.tore, paarung.gegentore),
-					(e1, e2) -> e1.merge(e2));
+					Entry::merge);
 			paarung = paarung.reverse();
 			entries.merge(paarung.getTeam1(), new Entry(paarung.punkte(), paarung.tore, paarung.gegentore),
-					(e1, e2) -> e1.merge(e2));
+					Entry::merge);
 
 		}
 
