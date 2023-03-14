@@ -126,14 +126,6 @@ class TabelleTest {
 		tabelle = t.getEntries().toArray(TabellenPlatz[]::new);
 	}
 
-	private TabellenPlatz b(T t) {
-		return tabellenplatz().platz(2).team(this.paarungen[0].team2).build();
-	}
-
-	private TabellenPlatz a(T t) {
-		return tabellenplatz().platz(1).team(this.paarungen[0].team1).build();
-	}
-
 	private void dannIstDieTabelle(TabellenPlatz.TabellenPlatzBuilder... expected) {
 		assertThat(tabelle).isEqualTo(
 				Arrays.stream(expected).map(TabellenPlatz.TabellenPlatzBuilder::build).toArray(TabellenPlatz[]::new));
