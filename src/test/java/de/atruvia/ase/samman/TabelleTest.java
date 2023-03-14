@@ -21,8 +21,8 @@ class TabelleTest {
 	}
 
 	private void gegebenSeien(String team1, String team2) {
-		// TODO Auto-generated method stub
-		
+		platz1 = team1;
+		platz2 = team2;
 	}
 
 }
