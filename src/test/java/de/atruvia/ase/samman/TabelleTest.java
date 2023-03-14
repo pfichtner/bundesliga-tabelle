@@ -21,9 +21,13 @@ class TabelleTest {
 	@Value
 	@Builder
 	private static class TabellenPlatz {
+		static TabellenPlatz NULL = new TabellenPlatz(0, "", 0, 0, 0, 0, 0, 0, 0);
+
 		int platz;
 		String team;
-		int spiele;
+
+		@Builder.Default
+		int spiele = 1;
 		int gewonnen, unentschieden, verloren;
 		int punkte;
 		int tore;
@@ -31,6 +35,15 @@ class TabelleTest {
 
 		public int getTorDifferenz() {
 			return tore - gegentore;
+		}
+
+		public TabellenPlatz merge(TabellenPlatz other) {
+			return TabellenPlatz.builder() //
+					.spiele(this.spiele + other.spiele) //
+					.punkte(this.punkte + other.punkte) //
+					.tore(this.tore + other.tore) //
+					.gegentore(this.gegentore + other.gegentore) //
+					.build();
 		}
 
 	}
@@ -103,29 +116,6 @@ class TabelleTest {
 
 	private static class Tabelle {
 
-		@Value
-		@Builder
-		static class TabellenPlatz {
-
-			static TabellenPlatz NULL = new TabellenPlatz(0, 0, 0, 0);
-
-			@Builder.Default
-			int spiele = 1;
-			int punkte;
-			int tore;
-			int gegentore;
-
-			public TabellenPlatz merge(TabellenPlatz other) {
-				return TabellenPlatz.builder() //
-						.spiele(this.spiele + other.spiele) //
-						.punkte(this.punkte + other.punkte) //
-						.tore(this.tore + other.tore) //
-						.gegentore(this.gegentore + other.gegentore) //
-						.build();
-			}
-
-		}
-
 		private final Map<String, TabellenPlatz> eintraege = new HashMap<>();
 
 		private void add(Paarung paarung) {
@@ -139,7 +129,8 @@ class TabelleTest {
 
 		private TabellenPlatz newEintrag(Paarung paarung) {
 			return paarung.isGespielt()
-					? TabellenPlatz.builder().punkte(paarung.punkte()).tore(paarung.tore).gegentore(paarung.gegentore).build()
+					? TabellenPlatz.builder().punkte(paarung.punkte()).tore(paarung.tore).gegentore(paarung.gegentore)
+							.build()
 					: TabellenPlatz.NULL;
 		}
 
