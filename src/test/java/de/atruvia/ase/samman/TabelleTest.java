@@ -101,13 +101,13 @@ class TabelleTest {
 		class Entry {
 
 			private int punkte;
-			private int goalScored;
-			private int goalsGet;
+			private int tore;
+			private int gegentore;
 
-			public void add(int points, int goalScored, int goalsGet) {
-				this.punkte += points;
-				this.goalScored += goalScored;
-				this.goalsGet += goalsGet;
+			public void add(int punkte, int tore, int gegentore) {
+				this.punkte += punkte;
+				this.tore += tore;
+				this.gegentore += gegentore;
 			}
 
 		}
