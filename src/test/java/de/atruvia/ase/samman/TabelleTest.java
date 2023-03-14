@@ -85,7 +85,7 @@ class TabelleTest {
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
 				tabellenplatz().platz(1).team(TEAM_1).punkte(3).tore(1).gegentore(1), //
-				tabellenplatz().platz(2).team(TEAM_2).punkte(3).tore(1).gegentore(1) //
+				tabellenplatz().platz(1).team(TEAM_2).punkte(3).tore(1).gegentore(1) //
 		);
 	}
 
