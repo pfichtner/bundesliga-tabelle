@@ -33,18 +33,18 @@ class TabelleTest {
 	@Value
 	@Builder(toBuilder = true)
 	private static class Paarung {
-		boolean wayPlayed;
+		boolean gespielt;
 		String team1, team2;
 		int tore, gegentore;
 
 		int punkte() {
-			if (!wayPlayed)
+			if (!gespielt)
 				return 0;
 			return tore > gegentore ? 3 : tore == gegentore ? 1 : 0;
 		}
 
 		private Paarung reverse() {
-			return builder().team1(team2).team2(team1).wayPlayed(wayPlayed).tore(gegentore).gegentore(tore).build();
+			return builder().team1(team2).team2(team1).wayPlayed(gespielt).tore(gegentore).gegentore(tore).build();
 		}
 
 		private static class PaarungBuilder {
