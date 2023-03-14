@@ -36,8 +36,6 @@ class TabelleTest {
 		int tore, gegentore;
 
 		int punkte() {
-			if (!gespielt)
-				return 0;
 			return tore > gegentore ? 3 : tore == gegentore ? 1 : 0;
 		}
 
