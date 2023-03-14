@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
@@ -130,7 +131,7 @@ class TabelleTest {
 			return eintraege.entrySet().stream().map(this::tabellenPlatz).collect(toList());
 		}
 
-		private TabellenPlatz tabellenPlatz(java.util.Map.Entry<String, Eintrag> entry) {
+		private TabellenPlatz tabellenPlatz(Entry<String, Eintrag> entry) {
 			return TabellenPlatz.builder().platz(1).team(entry.getKey()) //
 					.punkte(entry.getValue().punkte) //
 					.tore(entry.getValue().tore) //
