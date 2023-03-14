@@ -61,7 +61,8 @@ class TabelleTest {
 	}
 
 	private void dannIstDieTabelle(TabellenPlatz.TabellenPlatzBuilder... expected) {
-		assertThat(tabelle).isEqualTo(Arrays.stream(expected).map(TabellenPlatz.TabellenPlatzBuilder::build).toArray(TabellenPlatz[]::new));
+		assertThat(tabelle).isEqualTo(
+				Arrays.stream(expected).map(TabellenPlatz.TabellenPlatzBuilder::build).toArray(TabellenPlatz[]::new));
 	}
 
 }
