@@ -16,7 +16,8 @@ import lombok.Value;
 
 class TabelleTest {
 
-	private static final String TEAM_1 = "Team 1";
+	private static final String team1 = "Team 1";
+	private static final String team2 = "Team 2";
 
 	@Value
 	@Builder
@@ -63,28 +64,28 @@ class TabelleTest {
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {
-		gegenSeienDiePaarungen(paarung(TEAM_1, "Team 2"), paarung("Team 2", TEAM_1));
+		gegenSeienDiePaarungen(paarung(team1, team2), paarung(team2, team1));
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle(tabellenplatz().platz(1).team(TEAM_1), tabellenplatz().platz(2).team("Team 2"));
+		dannIstDieTabelle(tabellenplatz().platz(1).team(team1), tabellenplatz().platz(2).team(team2));
 	}
 
 	@Test
 	void zweiMannschaftenEinSpielKeineTore() {
-		gegenSeienDiePaarungen(paarung(TEAM_1, "Team 2").score(0, 0), paarung("Team 2", TEAM_1));
+		gegenSeienDiePaarungen(paarung(team1, team2).score(0, 0), paarung(team2, team1));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
-				tabellenplatz().platz(1).team(TEAM_1).punkte(1), //
-				tabellenplatz().platz(2).team("Team 2").punkte(1) //
+				tabellenplatz().platz(1).team(team1).punkte(1), //
+				tabellenplatz().platz(2).team(team2).punkte(1) //
 		);
 	}
 
 	@Test
 	void zweiMannschaftenZweiSpieleMitToren() {
-		gegenSeienDiePaarungen(paarung(TEAM_1, "Team 2").score(1, 0), paarung("Team 2", TEAM_1).score(1, 0));
+		gegenSeienDiePaarungen(paarung(team1, team2).score(1, 0), paarung(team2, team1).score(1, 0));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
-				tabellenplatz().platz(1).team(TEAM_1).punkte(3).tore(1).gegentore(1), //
-				tabellenplatz().platz(2).team("Team 2").punkte(3).tore(1).gegentore(1) //
+				tabellenplatz().platz(1).team(team1).punkte(3).tore(1).gegentore(1), //
+				tabellenplatz().platz(2).team(team2).punkte(3).tore(1).gegentore(1) //
 		);
 	}
 
