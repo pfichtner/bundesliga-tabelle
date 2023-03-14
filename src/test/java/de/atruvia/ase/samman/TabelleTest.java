@@ -85,12 +85,12 @@ class TabelleTest {
 
 		class Entry {
 
-			private int points;
+			private int punkte;
 			private int goalScored;
 			private int goalsGet;
 
 			public void add(int points, int goalScored, int goalsGet) {
-				this.points += points;
+				this.punkte += points;
 				this.goalScored += goalScored;
 				this.goalsGet += goalsGet;
 			}
@@ -113,9 +113,7 @@ class TabelleTest {
 			AtomicInteger platz = new AtomicInteger();
 			return entries.entrySet().stream().map(e -> TabellenPlatz.builder().platz(platz.incrementAndGet())
 					.team(e.getKey()) //
-					.punkte(e.getValue().points) //
-					
-					
+					.punkte(e.getValue().punkte) //
 					.build()).collect(toList());
 		}
 
