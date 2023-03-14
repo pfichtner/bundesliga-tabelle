@@ -154,8 +154,8 @@ class TabelleTest {
 		return Arrays.stream(t).map(this::toString).collect(joining("\n"));
 	}
 
-	private String toString(TabellenPlatz e) {
-		return Arrays.asList(e.getPlatz(), e.getTeam(), e.getPunkte(), e.getTore(), e.getGegentore()).stream()
+	private String toString(TabellenPlatz platz) {
+		return Arrays.asList(platz.getPlatz(), platz.getTeam(), platz.getPunkte(), platz.getTore(), platz.getGegentore()).stream()
 				.map(Objects::toString).collect(joining("|"));
 	}
 
