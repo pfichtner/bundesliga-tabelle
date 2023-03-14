@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman;
 
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
@@ -7,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -113,7 +113,7 @@ class TabelleTest {
 			AtomicInteger platz = new AtomicInteger();
 			return entries.entrySet().stream()
 					.map(e -> TabellenPlatz.builder().platz(platz.incrementAndGet()).team(e.getKey()).build())
-					.collect(Collectors.toList());
+					.collect(toList());
 		}
 
 	}
