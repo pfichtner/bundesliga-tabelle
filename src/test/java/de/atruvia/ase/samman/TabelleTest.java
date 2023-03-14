@@ -108,7 +108,7 @@ class TabelleTest {
 		}
 
 		public List<TabellenPlatz> getEntries() {
-			return entries.entrySet().stream().map(TabellenPlatz.builder().team(e->e.getKey()));
+			return entries.entrySet().stream().map(TabellenPlatz.builder().team(e->e.getKey()).build());
 		}
 
 	}
