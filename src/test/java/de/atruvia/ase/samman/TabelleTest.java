@@ -40,7 +40,7 @@ class TabelleTest {
 				return 0;
 			return tore == gegentore ? 1 : tore > gegentore ? 3 : 0;
 		}
-		
+
 		private Paarung reverse() {
 			return builder().team1(team2).team2(team1).tore(gegentore).gegentore(tore).build();
 		}
@@ -127,7 +127,7 @@ class TabelleTest {
 			paarung = paarung.reverse();
 			entries.merge(paarung.getTeam1(), new Entry(paarung.punkte(), paarung.tore, paarung.gegentore),
 					(e1, e2) -> e1.merge(e2));
-			
+
 		}
 
 		public List<TabellenPlatz> getEntries() {
