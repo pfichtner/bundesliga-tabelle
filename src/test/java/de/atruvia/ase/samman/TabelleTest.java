@@ -26,8 +26,8 @@ class TabelleTest {
 		gegebenSeien("Team1", "Team2");
 		gegenSeienErgebisse();
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle(tabellenplatz().platz(1).team("Team 1").build(),
-				tabellenplatz().platz(2).team("Team 2").build());
+		dannIstDieTabelle(tabellenplatz().platz(1).team("Team 1"),
+				tabellenplatz().platz(2).team("Team 2"));
 	}
 
 	private de.atruvia.ase.samman.TabelleTest.TabellenPlatz.TabellenPlatzBuilder tabellenplatz() {
@@ -49,7 +49,7 @@ class TabelleTest {
 		};
 	}
 
-	private void dannIstDieTabelle(TabellenPlatz... expected) {
+	private void dannIstDieTabelle(TabellenPlatz.TabellenPlatzBuilder... expected) {
 		assertThat(tabelle).isEqualTo(expected);
 	}
 
