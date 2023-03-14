@@ -30,7 +30,7 @@ class TabelleTest {
 	}
 
 	@Value
-	@Builder(toBuilder = true)
+	gespielt(toBuilder = true)
 	private static class Paarung {
 		boolean wayPlayed;
 		String team1, team2;
@@ -49,7 +49,7 @@ class TabelleTest {
 		private static class PaarungBuilder {
 
 			public PaarungBuilder score(int tore, int gegentore) {
-				this.wayPlayed = true;
+				this.gespielt = true;
 				this.tore = tore;
 				this.gegentore = gegentore;
 				return this;
