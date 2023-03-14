@@ -28,7 +28,6 @@ class TabelleTest {
 
 	private void gegenSeienErgebisse() {
 		// TODO Auto-generated method stub
-d
 	}
 
 }
