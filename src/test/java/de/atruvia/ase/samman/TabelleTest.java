@@ -80,14 +80,26 @@ class TabelleTest {
 
 	private void wennDieTabelleBerechnetWird() {
 		class T {
-			
+
 			class Entry {
-				
+
+				private int points;
+				private int goalScored;
+				private int goalsGet;
+
+				public void add(int points, int goalScored, int goalsGet) {
+					this.points += points;
+					this.goalScored += goalScored;
+					this.goalsGet += goalsGet;
+				}
+
 			}
-			
+
 			private final Map<String, Entry> entries = new HashMap<>();
 
 			void add(Paarung p) {
+				Entry entry = entries.computeIfAbsent(p.getTeam1(), k -> new Entry());
+				entry.add(p.points1(), p.score1, p.score2);
 
 			}
 
