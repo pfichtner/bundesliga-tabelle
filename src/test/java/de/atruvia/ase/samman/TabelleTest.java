@@ -100,6 +100,7 @@ class TabelleTest {
 			void add(Paarung p) {
 				Entry entry = entries.computeIfAbsent(p.getTeam1(), k -> new Entry());
 				entry.add(p.points1(), p.score1, p.score2);
+				entries.put(p.getTeam1(), entry);
 
 			}
 
