@@ -107,7 +107,8 @@ class TabelleTest {
 
 			static Eintrag NULL = new Eintrag(0, 0, 0, 0);
 
-			int spiele;
+			@Builder.Default
+			int spiele = 1;
 			int punkte;
 			int tore;
 			int gegentore;
