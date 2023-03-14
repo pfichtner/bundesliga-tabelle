@@ -112,9 +112,9 @@ class TabelleTest {
 
 			public Entry merge(Entry e) {
 				return Entry.builder() //
-						.punkte(punkte + e.punkte) //
-						.tore(tore + e.tore) //
-						.gegentore(gegentore + e.gegentore) //
+						.punkte(this.punkte + e.punkte) //
+						.tore(this.tore + e.tore) //
+						.gegentore(this.gegentore + e.gegentore) //
 						.build();
 			}
 
