@@ -28,9 +28,13 @@ class TabelleTest {
 	@Value
 	@Builder
 	private static class TabellenPlatz {
-		
+
 		private static class TabellenPlatzBuilder {
-			
+			public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
 		}
 
 		static TabellenPlatz NULL = new TabellenPlatz(0, "", 0, 0, 0, 0, 0, 0, 0);
@@ -57,8 +61,6 @@ class TabelleTest {
 					.gegentore(this.gegentore + other.gegentore) //
 					.build();
 		}
-		
-		
 
 	}
 
@@ -151,8 +153,8 @@ class TabelleTest {
 
 		private TabellenPlatz newEintrag(Paarung paarung) {
 			return paarung.isGespielt()
-					? TabellenPlatz.builder().ergebnis(paarung.ergebnis()). punkte(paarung.punkte()).tore(paarung.tore).gegentore(paarung.gegentore)
-							.build()
+					? TabellenPlatz.builder().ergebnis(paarung.ergebnis()).punkte(paarung.punkte()).tore(paarung.tore)
+							.gegentore(paarung.gegentore).build()
 					: TabellenPlatz.NULL;
 		}
 
