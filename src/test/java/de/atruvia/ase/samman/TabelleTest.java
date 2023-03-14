@@ -25,7 +25,7 @@ class TabelleTest {
 	private static class Paarung {
 		String team1, team2;
 		int score1, score2;
-		int points1;
+		int points1,points2;
 
 		private static class PaarungBuilder {
 
@@ -33,6 +33,7 @@ class TabelleTest {
 				this.score1 = score1;
 				this.score2 = score2;
 				this.points1 = score1 > score2 ? 3 : score1 < score2 ? 0 : 1; 
+				this.points2 = score2 > score1 ? 3 : score2 < score1 ? 0 : 1; 
 				return this;
 			}
 
