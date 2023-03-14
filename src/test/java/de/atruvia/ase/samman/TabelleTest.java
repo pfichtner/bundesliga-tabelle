@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.IntPredicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -67,11 +70,10 @@ class TabelleTest {
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(tabellenplatz().platz(1).team(TEAM_1), tabellenplatz().platz(1).team(TEAM_2));
 		dannIstDieTabelle("""
-                1|Team 1|0
-                1|Team 2|0
-                """);
+				1|Team 1|0
+				1|Team 2|0
+				""");
 	}
-
 
 	@Test
 	void zweiMannschaftenEinSpielKeineTore() {
@@ -162,8 +164,11 @@ class TabelleTest {
 	}
 
 	private void dannIstDieTabelle(String expected) {
-		// TODO Auto-generated method stub
-		
+		assertThat(toString(tabelle)).isEqualTo(expected);
+	}
+
+	private String toString(TabellenPlatz[] t) {
+		return Arrays.stream(t).map(e->"").collect(Collectors.joining("\n"));
 	}
 
 }
