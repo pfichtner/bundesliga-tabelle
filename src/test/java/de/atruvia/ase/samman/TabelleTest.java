@@ -89,11 +89,11 @@ class TabelleTest {
 		);
 	}
 
-	private de.atruvia.ase.samman.TabelleTest.Paarung.PaarungBuilder paarung(String team1, String team2) {
+	private Paarung.PaarungBuilder paarung(String team1, String team2) {
 		return Paarung.builder().team1(team1).team2(team2);
 	}
 
-	private de.atruvia.ase.samman.TabelleTest.TabellenPlatz.TabellenPlatzBuilder tabellenplatz() {
+	private TabellenPlatz.TabellenPlatzBuilder tabellenplatz() {
 		return TabellenPlatz.builder();
 	}
 
