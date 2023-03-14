@@ -64,8 +64,7 @@ class TabelleTest {
 		int tore, gegentore;
 
 		int punkte() {
-			Ergebnis ergebnis = ergebnis();
-			return switch (ergebnis) {
+			return switch (ergebnis()) {
 			case SIEG -> 3;
 			case UNENTSCHIEDEN -> 1;
 			case NIEDERLAGE -> 0;
