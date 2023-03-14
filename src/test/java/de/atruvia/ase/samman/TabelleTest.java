@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
@@ -111,6 +112,8 @@ class TabelleTest {
 	private void wennDieTabelleBerechnetWird() {
 		T t = new T();
 		Arrays.stream(this.paarungen).forEach(t::add);
+		
+		List<de.atruvia.ase.samman.TabelleTest.T.Entry> es = t.getEntries(); 
 
 		tabelle = new TabellenPlatz[] { //
 				a(t), //
@@ -119,6 +122,7 @@ class TabelleTest {
 	}
 
 	private TabellenPlatz b(T t) {
+		t.get(0);
 		return tabellenplatz().platz(2).team(this.paarungen[0].team2).build();
 	}
 
