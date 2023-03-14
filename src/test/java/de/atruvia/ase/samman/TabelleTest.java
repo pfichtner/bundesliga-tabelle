@@ -27,12 +27,11 @@ class TabelleTest {
 	}
 
 	private void wennDieTabelleBerechnetWird() {
-		plaetze = teams;
+//		plaetze = teams;
 	}
 
-	private void dannSindDiePlatzierungen(String team1, String team2) {
-		assertThat(platz1).isEqualTo(teams[0]);
-		assertThat(platz2).isEqualTo(teams[1]);
+	private void dannSindDiePlatzierungen(String... expected) {
+		assertThat(teams).isEqualTo(expected);
 	}
 
 	private void gegenSeienErgebisse() {
