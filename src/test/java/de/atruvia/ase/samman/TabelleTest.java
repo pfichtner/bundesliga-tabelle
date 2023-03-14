@@ -49,7 +49,8 @@ class TabelleTest {
 		this.teams = teams;
 	}
 
-	private void gegenSeienDiePaarungen(de.atruvia.ase.samman.TabelleTest.Paarung.PaarungBuilder... paarungeb) {
+	private void gegenSeienDiePaarungen(TabelleTest.Paarung.PaarungBuilder... paarungen) {
+		Arrays.stream(paarungen).map(TabellenPlatz.TabellenPlatzBuilder::build).toArray(TabellenPlatz[]::new)
 		// TODO Auto-generated method stub
 	}
 
