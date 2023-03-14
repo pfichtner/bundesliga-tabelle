@@ -102,7 +102,7 @@ class TabelleTest {
 		@Builder
 		static class Eintrag {
 			
-			Eintrag NULL = Eintrag.builder().build();
+			static Eintrag NULL = Eintrag.builder().build();
 			
 			int punkte;
 			int tore;
@@ -127,7 +127,7 @@ class TabelleTest {
 
 		private void addInternal(Paarung paarung) {
 			Eintrag value = new Eintrag(paarung.punkte(), paarung.tore, paarung.gegentore);
-			eintraege.merge(paarung.getTeam1(), value,
+			eintraege.merge(paarung.getTeam1(), paarung.isGespielt()? value:Eintrag.NULL,
 					Eintrag::merge);
 		}
 
