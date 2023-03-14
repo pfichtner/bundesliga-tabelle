@@ -20,7 +20,7 @@ import lombok.Value;
 class TabelleTest {
 
 	public enum Ergebnis {
-		SIEG,UNENTSCHIEDEN,NIEDERLAGE;
+		SIEG, UNENTSCHIEDEN, NIEDERLAGE;
 	}
 
 	@Value
@@ -66,8 +66,9 @@ class TabelleTest {
 		}
 
 		public Ergebnis ergebnis() {
-			return tore == gegentore ? Ergebnis.U : tore > gegentore ? Ergebnis.S : Ergebnis.N;
+			return tore == gegentore ? Ergebnis.UNENTSCHIEDEN : tore > gegentore ? Ergebnis.SIEG : Ergebnis.NIEDERLAGE;
 		}
+
 		private Paarung swap() {
 			return toBuilder().team1(team2).team2(team1).tore(gegentore).gegentore(tore).build();
 		}
@@ -82,7 +83,6 @@ class TabelleTest {
 			}
 
 		}
-
 
 	}
 
