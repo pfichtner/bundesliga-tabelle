@@ -123,10 +123,6 @@ class TabelleTest {
 		private final Map<String, Entry> entries = new HashMap<>();
 
 		void add(Paarung p) {
-			Entry entry1 = entries.computeIfAbsent(p.getTeam1(), k -> new Entry());
-			entry1.add(p.points1(), p.score1, p.score2);
-			entries.put(p.getTeam1(), entry1);
-
 			entries.merge(p.getTeam1(), new Entry(p.points1(), p.score1, p.score2), (e1, e2) -> {
 				e1.add(e2.punkte, e2.tore, e2.gegentore);
 				return e1;
