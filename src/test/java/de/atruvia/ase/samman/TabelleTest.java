@@ -9,8 +9,10 @@ import org.junit.jupiter.api.Test;
 
 class TabelleTest {
 
+	private String[] teams;
 	private String platz1;
 	private String platz2;
+	private String[] plaetze;
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {
@@ -20,14 +22,12 @@ class TabelleTest {
 		dannSindDiePlatzierungen("Team1", "Team2");
 	}
 
-	private void gegebenSeien(String team1, String team2) {
-		platz1 = team1;
-		platz2 = team2;
+	private void gegebenSeien(String... teams) {
+		this.teams = teams;
 	}
 
 	private void wennDieTabelleBerechnetWird() {
-		// TODO Auto-generated method stub
-
+		plaetze = teams;
 	}
 
 	private void dannSindDiePlatzierungen(String team1, String team2) {
