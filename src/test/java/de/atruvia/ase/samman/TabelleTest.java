@@ -108,8 +108,7 @@ class TabelleTest {
 		}
 
 		public List<TabellenPlatz> getEntries() {
-			// TODO Auto-generated method stub
-			return entries.;
+			return entries.entrySet().stream().map(TabellenPlatz.builder().team(e->e.getKey()));
 		}
 
 	}
