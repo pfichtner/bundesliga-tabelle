@@ -27,7 +27,7 @@ class TabelleTest {
 	}
 
 	private void wennDieTabelleBerechnetWird() {
-//		plaetze = teams;
+		plaetze = teams;
 	}
 
 	private void dannSindDiePlatzierungen(String team1, String team2) {
