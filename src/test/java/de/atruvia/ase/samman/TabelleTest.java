@@ -65,11 +65,12 @@ class TabelleTest {
 
 		int punkte() {
 			Ergebnis ergebnis = ergebnis();
-			if (ergebnis == SIEG) {
+			switch (ergebnis) {
+			case SIEG:
 				return 3;
-			} else if (ergebnis == UNENTSCHIEDEN) {
+			case UNENTSCHIEDEN:
 				return 1;
-			} else {
+			case NIEDERLAGE:
 				return 0;
 			}
 		}
