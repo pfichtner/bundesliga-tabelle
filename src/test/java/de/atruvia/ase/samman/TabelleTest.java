@@ -133,9 +133,8 @@ class TabelleTest {
 		}
 
 		public List<TabellenPlatz> getEntries() {
-			AtomicInteger platz = new AtomicInteger();
 			return entries.entrySet().stream()
-					.map(e -> TabellenPlatz.builder().platz(platz.incrementAndGet()).team(e.getKey()) //
+					.map(e -> TabellenPlatz.builder().platz(1).team(e.getKey()) //
 							.punkte(e.getValue().punkte) //
 							.tore(e.getValue().tore) //
 							.gegentore(e.getValue().gegentore) //
