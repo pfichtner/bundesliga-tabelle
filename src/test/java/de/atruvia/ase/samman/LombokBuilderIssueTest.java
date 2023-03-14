@@ -32,7 +32,7 @@ public class LombokBuilderIssueTest {
 	}
 
 	@Test
-	void thisWorksNot() {
+	void thisWorksToo() {
 		MyPojo myPojo1 = MyPojo.builder().stringValue("string").intValue(42).activate().build();
 		MyPojo myPojo2 = myPojo1.toBuilder().build();
 		assertThat(myPojo1).isEqualTo(myPojo2);
