@@ -256,7 +256,7 @@ class TabelleTest {
 			Map<OrdnungsElement, List<TabellenPlatz>> collect = eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.collect(groupingBy(OrdnungsElement::new));
 			collect.entrySet().forEach(System.out::println);
-			Stream<TabellenPlatz> flatMap = collect.entrySet().stream().sorted(comparing(Entry::getKey))
+			Stream<TabellenPlatz> flatMap = collect.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder()))
 					.map(Entry::getValue).flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new)));
 
 			return flatMap.collect(toList());
