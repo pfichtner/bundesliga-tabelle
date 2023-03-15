@@ -248,8 +248,7 @@ class TabelleTest {
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder()))
 					.collect(groupingBy(OrdnungsElement::new));
 
-			Stream<Entry<OrdnungsElement, List<TabellenPlatz>>> sorted = a.entrySet().stream().sorted(Comparator.comparing(Entry::getKey));
-			Stream<TabellenPlatz> flatMap = sorted.flatMap(e->e.getValue().stream());
+			Stream<TabellenPlatz> flatMap = a.entrySet().stream().sorted(Comparator.comparing(Entry::getKey)).flatMap(e->e.getValue().stream());
 
 			return eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder())).collect(toList());
