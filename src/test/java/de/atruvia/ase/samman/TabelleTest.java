@@ -50,8 +50,7 @@ class TabelleTest {
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			OrdnungsElement other = (OrdnungsElement) obj;
-			return comparator.compare(this, other) == 0;
+			return comparator.compare(this, (OrdnungsElement) obj) == 0;
 		}
 
 		@Override
