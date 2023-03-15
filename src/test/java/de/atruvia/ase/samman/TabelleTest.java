@@ -234,7 +234,9 @@ class TabelleTest {
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder()))
 					.collect(groupingBy(OrdnungsElement::new));
 			
-			a.entrySet().stream().sorted(e->e.getKey());
+			a.entrySet().stream().sorted(e->{
+				return null;
+			});
 			
 			return eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder())).collect(toList());
