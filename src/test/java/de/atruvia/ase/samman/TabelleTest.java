@@ -44,11 +44,8 @@ class TabelleTest {
 
 		@Override
 		public boolean equals(Object obj) {
-			if (obj == null || getClass() != obj.getClass())
-				return false;
-			else {
-			}
-			return this == obj  || comparator.compare(this, (OrdnungsElement) obj) == 0;
+			return this == obj || (obj != null && getClass() == obj.getClass()
+					&& comparator.compare(this, (OrdnungsElement) obj) == 0);
 		}
 
 		@Override
