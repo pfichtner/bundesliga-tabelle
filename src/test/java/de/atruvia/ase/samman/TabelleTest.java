@@ -49,8 +49,8 @@ class TabelleTest {
 		}
 
 		@Override
-		public int compareTo(OrdnungsElement o) {
-			return comparator.compare(this, o);
+		public int compareTo(OrdnungsElement other) {
+			return comparator.compare(this, other);
 		}
 
 	}
