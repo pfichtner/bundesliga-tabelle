@@ -25,7 +25,7 @@ import lombok.Value;
 
 class TabelleTest {
 
-	public static class OrdnungsElement {
+	public static class OrdnungsElement implements Comparable<OrdnungsElement> {
 
 		private final TabellenPlatz tabellenPlatz;
 
@@ -44,6 +44,12 @@ class TabelleTest {
 			OrdnungsElement other = (OrdnungsElement) obj;
 			return tabellenPlatz.punkte == other.tabellenPlatz.punkte && tabellenPlatz.tore == other.tabellenPlatz.tore
 					&& tabellenPlatz.gegentore == other.tabellenPlatz.gegentore;
+		}
+
+		@Override
+		public int compareTo(OrdnungsElement o) {
+			// TODO Auto-generated method stub
+			return 0;
 		}
 
 	}
