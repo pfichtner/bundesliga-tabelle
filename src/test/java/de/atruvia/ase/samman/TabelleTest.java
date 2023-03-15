@@ -49,7 +49,10 @@ class TabelleTest {
 
 		@Override
 		public int compareTo(OrdnungsElement o) {
-			Comparator.comparing(e->e.tabellenPlatz.getPunkte());
+			Comparator<OrdnungsElement> c1 = Comparator.comparing(e -> e.tabellenPlatz.getPunkte());
+			Comparator<OrdnungsElement> c2 = c1.thenComparing(Comparator.comparing(e -> e.tabellenPlatz.getTorDifferenz()));
+			Comparator<OrdnungsElement> c3 = c2.thenComparing(Comparator.comparing(e -> e.tabellenPlatz.getTore()));
+			Comparator<OrdnungsElement> c4 = c3.thenComparing(Comparator.comparing(e -> e.tabellenPlatz.getGegentore()));
 			// TODO Auto-generated method stub
 			return 0;
 		}
@@ -241,9 +244,9 @@ class TabelleTest {
 			Map<OrdnungsElement, List<TabellenPlatz>> a = eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder()))
 					.collect(groupingBy(OrdnungsElement::new));
-			
-			a.entrySet().stream().sorted(e->e.getKey());
-			
+
+			a.entrySet().stream().sorted(e -> e.getKey());
+
 			return eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder())).collect(toList());
 		}
