@@ -249,7 +249,7 @@ class TabelleTest {
 			Stream<TabellenPlatz> flatMap = eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.collect(groupingBy(OrdnungsElement::new)).entrySet().stream()
 					.sorted(comparing(Entry::getKey, reverseOrder())).map(Entry::getValue)
-					.flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new).reversed()));
+					.flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new)));
 
 			return eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder())).collect(toList());
