@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Function;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -245,10 +246,11 @@ class TabelleTest {
 			// TODO sort mehr als nur punkte
 			// TODO platz enumerating
 
+			Comparator<TabellenPlatz> ccc = comparing(t->new OrdnungsElement(t));
 			Stream<TabellenPlatz> flatMap = eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder()))
 					.collect(groupingBy(OrdnungsElement::new)).entrySet().stream()
-					.sorted(comparing(Entry::getKey, reverseOrder())).map(Entry::getValue).flatMap(List::stream);
+					.sorted(comparing(Entry::getKey, reverseOrder())).map(Entry::getValue).flatMap(t -> t.stream().sorted(ccc));
 
 			return eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder())).collect(toList());
