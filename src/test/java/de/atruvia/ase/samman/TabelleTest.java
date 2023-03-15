@@ -41,10 +41,10 @@ class TabelleTest {
 //		If two or more teams have the same rank in the Bundesliga and there is no other criteria that can be used to separate them, then the teams will be listed in alphabetical order according to their full club name.
 
 		private static final Comparator<OrdnungsElement> comparator = comparing(
-				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte())
-				.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz()))
-				.thenComparing(comparing(e -> e.tabellenPlatz.getTore()))
-				.thenComparing(comparing(e -> e.tabellenPlatz.getGegentore())) //
+				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte()).reversed()
+				.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz())).reversed()
+				.thenComparing(comparing(e -> e.tabellenPlatz.getTore())).reversed()
+				.thenComparing(comparing(e -> e.tabellenPlatz.getGegentore())).reversed() //
 				.thenComparing(comparing(e -> e.tabellenPlatz.getTeam())) //
 		;
 
