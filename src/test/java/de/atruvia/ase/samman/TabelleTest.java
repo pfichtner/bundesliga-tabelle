@@ -246,7 +246,7 @@ class TabelleTest {
 			// TODO sort mehr als nur punkte
 			// TODO platz enumerating
 
-			Comparator<TabellenPlatz> ccc = comparing(t->new OrdnungsElement(t));
+			Comparator<TabellenPlatz> ccc = comparing(OrdnungsElement::new);
 			Stream<TabellenPlatz> flatMap = eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder()))
 					.collect(groupingBy(OrdnungsElement::new)).entrySet().stream()
