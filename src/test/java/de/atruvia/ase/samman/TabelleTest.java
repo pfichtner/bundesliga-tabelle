@@ -24,10 +24,12 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
 import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 class TabelleTest {
 
+	@RequiredArgsConstructor
 	public static class OrdnungsElement implements Comparable<OrdnungsElement> {
 
 		private static final Comparator<OrdnungsElement> comparator = comparing(
@@ -37,10 +39,6 @@ class TabelleTest {
 				.thenComparing(comparing(e -> e.tabellenPlatz.getGegentore()));
 
 		private final TabellenPlatz tabellenPlatz;
-
-		public OrdnungsElement(TabellenPlatz tabellenPlatz) {
-			this.tabellenPlatz = tabellenPlatz;
-		}
 
 		@Override
 		public boolean equals(Object other) {
