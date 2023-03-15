@@ -54,8 +54,7 @@ class TabelleTest {
 
 		@Override
 		public int hashCode() {
-			// TODO Auto-generated method stub
-			return super.hashCode();
+			return Objects.hash(tabellenPlatz.getPunkte(), tabellenPlatz.getTorDifferenz(), tabellenPlatz.getTore(),tabellenPlatz.getGegentore());
 		}
 
 		@Override
