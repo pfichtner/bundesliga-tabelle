@@ -251,7 +251,8 @@ class TabelleTest {
 			Stream<Entry<OrdnungsElement, List<TabellenPlatz>>> sorted = a.entrySet().stream().sorted(Comparator.comparing(Entry::getKey));
 			Stream<TabellenPlatz> flatMap = sorted.flatMap(e->e.getValue().stream());
 
-			return flatMap.collect(toList());
+			return eintraege.entrySet().stream().map(this::tabellenPlatz)
+					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder())).collect(toList());
 		}
 
 		private TabellenPlatz tabellenPlatz(Entry<String, TabellenPlatz> entry) {
