@@ -28,6 +28,11 @@ class TabelleTest {
 
 	public static class OrdnungsElement implements Comparable<OrdnungsElement> {
 
+		private static final Comparator<OrdnungsElement> comparator = comparing(
+				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte())
+				.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz()))
+				.thenComparing(comparing(e -> e.tabellenPlatz.getTore()))
+				.thenComparing(comparing(e -> e.tabellenPlatz.getGegentore()));
 		private final TabellenPlatz tabellenPlatz;
 
 		public OrdnungsElement(TabellenPlatz tabellenPlatz) {
@@ -49,16 +54,8 @@ class TabelleTest {
 
 		@Override
 		public int compareTo(OrdnungsElement o) {
-			Comparator<OrdnungsElement> c4 = extracted();
+			Comparator<OrdnungsElement> c4 = comparator;
 			return c4.compare(this, o);
-		}
-
-		private Comparator<OrdnungsElement> extracted() {
-			Comparator<OrdnungsElement> thenComparing = comparing((OrdnungsElement e) -> e.tabellenPlatz.getPunkte())
-					.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz()))
-					.thenComparing(comparing(e -> e.tabellenPlatz.getTore()))
-					.thenComparing(comparing(e -> e.tabellenPlatz.getGegentore()));
-			return thenComparing;
 		}
 
 	}
