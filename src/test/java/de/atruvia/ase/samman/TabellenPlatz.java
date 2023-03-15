@@ -16,16 +16,16 @@ import lombok.Value;
 @Builder
 class TabellenPlatz {
 
-	static class TabellenPlatzBuilder {
-
-//			private final Map<Ergebnis, Integer> ergebnisse = new HashMap<Ergebnis, Integer>();
-
-		public TabellenPlatz.TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
-			ergebnisse.merge(ergebnis, 1, (a, b) -> a + b);
-			return this;
-		}
-
-	}
+//	static class TabellenPlatzBuilder {
+//
+////			private final Map<Ergebnis, Integer> ergebnisse = new HashMap<Ergebnis, Integer>();
+//
+//		public TabellenPlatz.TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
+//			ergebnisse.merge(ergebnis, 1, (a, b) -> a + b);
+//			return this;
+//		}
+//
+//	}
 
 	static TabellenPlatz NULL = new TabellenPlatz(0, "", 0, emptyMap(), 0, 0, 0);
 
