@@ -233,6 +233,9 @@ class TabelleTest {
 			Map<OrdnungsElement, List<TabellenPlatz>> a = eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder()))
 					.collect(groupingBy(OrdnungsElement::new));
+			
+			a.entrySet().stream().sorted(e->e.getKey());
+			
 			return eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder())).collect(toList());
 		}
