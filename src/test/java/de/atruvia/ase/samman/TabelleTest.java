@@ -54,8 +54,10 @@ class TabelleTest {
 		}
 
 		private Comparator<OrdnungsElement> extracted() {
-			Comparator<OrdnungsElement> a = comparing(e -> e.tabellenPlatz.getPunkte());
-			return a.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz())).thenComparing(comparing(e -> e.tabellenPlatz.getTore())).thenComparing(comparing(e -> e.tabellenPlatz.getGegentore()));
+			return Comparator.comparing((OrdnungsElement e) -> e.tabellenPlatz.getPunkte())
+					.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz()))
+					.thenComparing(comparing(e -> e.tabellenPlatz.getTore()))
+					.thenComparing(comparing(e -> e.tabellenPlatz.getGegentore()));
 		}
 
 	}
