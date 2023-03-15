@@ -4,6 +4,7 @@ import static de.atruvia.ase.samman.TabelleTest.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.TabelleTest.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.TabelleTest.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Collections.emptyMap;
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -202,12 +203,12 @@ class TabelleTest {
 		}
 
 		public List<TabellenPlatz> getEntries() {
-			// TODO sort
-			return eintraege.entrySet().stream().map(this::tabellenPlatz).collect(toList());
+			// TODO platz enumerating
+			return eintraege.entrySet().stream().map(this::tabellenPlatz).sorted(comparing(p -> p.getPunkte()))
+					.collect(toList());
 		}
 
 		private TabellenPlatz tabellenPlatz(Entry<String, TabellenPlatz> entry) {
-			// TODO platz enumerating
 			TabellenPlatz eintrag = entry.getValue();
 			return TabellenPlatz.builder().platz(1).team(entry.getKey()) //
 					.ergebnisse(eintrag.getErgebnisse()).spiele(eintrag.getSpiele()) //
