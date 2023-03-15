@@ -177,7 +177,8 @@ class TabelleTest {
 		}
 
 		private TabellenPlatz newEintrag(Paarung paarung) {
-			return paarung.isGespielt() ? TabellenPlatz.builder().ergebnis(paarung.ergebnis()) //
+			return paarung.isGespielt() ? TabellenPlatz.builder() //
+					.ergebnis(paarung.ergebnis()) //
 					.punkte(paarung.punkte()) //
 					.tore(paarung.tore) //
 					.gegentore(paarung.gegentore) //
