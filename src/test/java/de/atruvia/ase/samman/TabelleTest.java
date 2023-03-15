@@ -5,11 +5,13 @@ import static de.atruvia.ase.samman.TabelleTest.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.TabelleTest.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Collections.emptyMap;
 import static java.util.Comparator.comparing;
+import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -205,8 +207,8 @@ class TabelleTest {
 		public List<TabellenPlatz> getEntries() {
 			// TODO sort mehr als nur punkte
 			// TODO platz enumerating
-			return eintraege.entrySet().stream().map(this::tabellenPlatz).sorted(comparing(p -> p.getPunkte()))
-					.collect(toList());
+			return eintraege.entrySet().stream().map(this::tabellenPlatz)
+					.sorted(comparing(p -> p.getPunkte(), reverseOrder())).collect(toList());
 		}
 
 		private TabellenPlatz tabellenPlatz(Entry<String, TabellenPlatz> entry) {
