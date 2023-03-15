@@ -156,7 +156,7 @@ class TabelleTest {
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
 				1|Team 2|1|1|0|0|3|1|0|1
-				1|Team 1|1|0|0|1|0|0|1|-1""");
+				2|Team 1|1|0|0|1|0|0|1|-1""");
 	}
 
 	@Test
