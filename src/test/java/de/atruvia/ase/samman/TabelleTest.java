@@ -30,7 +30,7 @@ class TabelleTest {
 	@Builder
 	private static class TabellenPlatz {
 
-		private static class TabellenPlatzBuilder {
+		private  class TabellenPlatzBuilder {
 
 //			private final Map<Ergebnis, Integer> ergebnisse = new HashMap<Ergebnis, Integer>();
 
