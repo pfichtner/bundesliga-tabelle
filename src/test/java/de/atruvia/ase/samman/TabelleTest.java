@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
@@ -247,11 +248,10 @@ class TabelleTest {
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder()))
 					.collect(groupingBy(OrdnungsElement::new));
 
-			Comparator<Entry<OrdnungsElement, List<TabellenPlatz>>> ccc = (o1, o2) -> 0;
-			a.entrySet().stream().sorted(ccc);
+			Stream<Entry<OrdnungsElement, List<TabellenPlatz>>> sorted = a.entrySet().stream().sorted(Comparator.comparing(Entry::getKey));
+			Stream<TabellenPlatz> flatMap = sorted.flatMap(e->e.getValue().stream());
 
-			return eintraege.entrySet().stream().map(this::tabellenPlatz)
-					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder())).collect(toList());
+			return flatMap.collect(toList());
 		}
 
 		private TabellenPlatz tabellenPlatz(Entry<String, TabellenPlatz> entry) {
