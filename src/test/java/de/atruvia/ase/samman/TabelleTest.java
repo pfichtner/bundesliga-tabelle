@@ -246,8 +246,9 @@ class TabelleTest {
 			// TODO sort mehr als nur punkte
 			// TODO platz enumerating
 
-			Stream<TabellenPlatz> flatMap = eintraege.entrySet().stream().map(this::tabellenPlatz)
-					.collect(groupingBy(OrdnungsElement::new)).entrySet().stream()
+			Map<OrdnungsElement, List<TabellenPlatz>> collect = eintraege.entrySet().stream().map(this::tabellenPlatz)
+					.collect(groupingBy(OrdnungsElement::new));
+			Stream<TabellenPlatz> flatMap = collect.entrySet().stream()
 					.sorted(comparing(Entry::getKey)).map(Entry::getValue)
 					.flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new)));
 
