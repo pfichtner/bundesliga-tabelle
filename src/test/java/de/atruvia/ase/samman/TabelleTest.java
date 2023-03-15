@@ -219,7 +219,7 @@ class TabelleTest {
 		public List<TabellenPlatz> getEntries() {
 			// TODO sort mehr als nur punkte
 			// TODO platz enumerating
-			Map<Object, List<TabellenPlatz>> a = eintraege.entrySet().stream().map(this::tabellenPlatz)
+			Map<OrdnungsElement, List<TabellenPlatz>> a = eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder()))
 					.collect(Collectors.groupingBy(OrdnungsElement::new));
 			return eintraege.entrySet().stream().map(this::tabellenPlatz)
