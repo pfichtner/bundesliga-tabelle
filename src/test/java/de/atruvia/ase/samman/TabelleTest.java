@@ -195,7 +195,7 @@ class TabelleTest {
 		private TabellenPlatz tabellenPlatz(Entry<String, TabellenPlatz> entry) {
 			// TODO platz enumerating
 			TabellenPlatz eintrag = entry.getValue();
-			return TabellenPlatz.builder().platz(1).team(entry.getKey()) //
+			return TabellenPlatz.builder().platz(1).team(eintrag.getTeam()) //
 					.ergebnisse(eintrag.getErgebnisse())
 					.spiele(eintrag.getSpiele()) //
 					.punkte(eintrag.getPunkte()) //
