@@ -32,7 +32,8 @@ class TabelleTest {
 		private static class TabellenPlatzBuilder {
 
 			public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
-				ergebnisse.merge(ergebnis, 1, null);
+				this.ergebnisse.merge(ergebnis, 1, null);
+//				ergebnisse.merge(ergebnis, 1, null);
 			}
 
 		}
