@@ -33,6 +33,7 @@ class TabelleTest {
 		private static class TabellenPlatzBuilder {
 
 			public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
+				ergebnisse = new HashMap<>();
 				ergebnisse.merge(ergebnis, 1, (a, b) -> a + b);
 				return this;
 			}
