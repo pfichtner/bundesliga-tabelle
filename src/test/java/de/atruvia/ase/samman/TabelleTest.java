@@ -43,9 +43,9 @@ class TabelleTest {
 		}
 
 		@Override
-		public boolean equals(Object obj) {
-			return this == obj || (obj != null && getClass() == obj.getClass()
-					&& comparator.compare(this, (OrdnungsElement) obj) == 0);
+		public boolean equals(Object other) {
+			return this == other || (other != null && getClass() == other.getClass()
+					&& comparator.compare(this, (OrdnungsElement) other) == 0);
 		}
 
 		@Override
