@@ -49,8 +49,8 @@ class TabelleTest {
 
 		@Override
 		public int compareTo(OrdnungsElement o) {
-			Comparator<OrdnungsElement> c1 = comparing(e -> e.tabellenPlatz.getPunkte());
-			Comparator<OrdnungsElement> c4 = c1.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz())).thenComparing(comparing(e -> e.tabellenPlatz.getTore())).thenComparing(comparing(e -> e.tabellenPlatz.getGegentore()));
+			Comparator<OrdnungsElement> a = comparing(e -> e.tabellenPlatz.getPunkte());
+			Comparator<OrdnungsElement> c4 = a.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz())).thenComparing(comparing(e -> e.tabellenPlatz.getTore())).thenComparing(comparing(e -> e.tabellenPlatz.getGegentore()));
 			// TODO Auto-generated method stub
 			return 0;
 		}
