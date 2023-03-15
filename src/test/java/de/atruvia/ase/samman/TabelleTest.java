@@ -33,8 +33,7 @@ class TabelleTest {
 		private static class TabellenPlatzBuilder {
 
 			public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
-				BiFunction<Integer, Integer, Integer> x = new ;
-				ergebnisse.merge(ergebnis, 1, x);
+				ergebnisse.merge(ergebnis, 1, (a, b) -> a + b);
 				return this;
 			}
 
