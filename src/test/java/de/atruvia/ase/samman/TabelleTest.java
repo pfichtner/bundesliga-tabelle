@@ -47,7 +47,8 @@ class TabelleTest {
 		String team;
 		@Builder.Default
 		int spiele = 1;
-		Map<Ergebnis, Integer> ergebnisse;
+		@Builder.Default
+		Map<Ergebnis, Integer> ergebnisse = new HashMap<>();
 		int punkte;
 		int tore;
 		int gegentore;
