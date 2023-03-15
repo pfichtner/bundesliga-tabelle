@@ -38,7 +38,7 @@ class TabelleTest {
 
 		}
 
-		static TabellenPlatz NULL = new TabellenPlatz(0, "", 0, 0, 0, 0, 0, 0, 0);
+		static TabellenPlatz NULL = new TabellenPlatz(0, "", 0, 0, 0, 0);
 
 		int platz;
 		String team;
