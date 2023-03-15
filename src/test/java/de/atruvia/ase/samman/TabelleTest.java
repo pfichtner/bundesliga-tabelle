@@ -203,6 +203,7 @@ class TabelleTest {
 		}
 
 		public List<TabellenPlatz> getEntries() {
+			// TODO sort mehr als nur punkte
 			// TODO platz enumerating
 			return eintraege.entrySet().stream().map(this::tabellenPlatz).sorted(comparing(p -> p.getPunkte()))
 					.collect(toList());
