@@ -25,11 +25,13 @@ import org.junit.jupiter.api.Test;
 
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import lombok.Value;
 
 class TabelleTest {
 
 	@RequiredArgsConstructor
+	@ToString
 	public static class OrdnungsElement implements Comparable<OrdnungsElement> {
 
 //	    Head-to-head goal difference: The goal difference in the matches played between the tied teams.
