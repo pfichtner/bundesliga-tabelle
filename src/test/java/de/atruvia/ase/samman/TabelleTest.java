@@ -31,7 +31,7 @@ class TabelleTest {
 
 	public static class OrdnungsElement {
 
-		public OrdnungsElement(TabellenPlatz t) {
+		public OrdnungsElement(TabellenPlatz tabellenPlatz) {
 			// TODO Auto-generated constructor stub
 		}
 
