@@ -33,6 +33,7 @@ class TabelleTest {
 				.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz()))
 				.thenComparing(comparing(e -> e.tabellenPlatz.getTore()))
 				.thenComparing(comparing(e -> e.tabellenPlatz.getGegentore()));
+
 		private final TabellenPlatz tabellenPlatz;
 
 		public OrdnungsElement(TabellenPlatz tabellenPlatz) {
