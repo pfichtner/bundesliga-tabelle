@@ -63,7 +63,7 @@ class TabelleTest {
 					.build();
 		}
 
-		private Map<Ergebnis, Integer> merge(Map<Ergebnis, Integer> map1, Map<Ergebnis, Integer> map2) {
+		private static Map<Ergebnis, Integer> merge(Map<Ergebnis, Integer> map1, Map<Ergebnis, Integer> map2) {
 			Map<Ergebnis, Integer> map = new HashMap<>();
 			map.putAll(map1);
 			map.putAll(map2);
