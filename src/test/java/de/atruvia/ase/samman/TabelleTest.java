@@ -16,7 +16,6 @@ import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
-import de.atruvia.ase.samman.TabelleTest.Ergebnis;
 import lombok.Builder;
 import lombok.Value;
 
