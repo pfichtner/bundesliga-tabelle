@@ -49,7 +49,7 @@ class TabelleTest {
 
 		@Override
 		public int compareTo(OrdnungsElement o) {
-			Comparator.comparing()
+			Comparator.comparing(e->e.tabellenPlatz.getPunkte());
 			// TODO Auto-generated method stub
 			return 0;
 		}
