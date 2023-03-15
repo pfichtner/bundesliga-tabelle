@@ -16,28 +16,28 @@ import lombok.Value;
 @Builder
 class TabellenPlatz {
 
-
 	static TabellenPlatz NULL = new TabellenPlatz(0, "", 0, emptyMap(), 0, 0, 0);
 
 	int platz;
 	String team;
 	@Builder.Default
 	int spiele = 1;
-	Map<Ergebnis, Integer> ergebnisse = new HashMap<>();
+	Map<Ergebnis, Integer> ergebnisse;
 	int punkte;
 	int tore;
 	int gegentore;
 
 	static class TabellenPlatzBuilder {
-		
-//			private final Map<Ergebnis, Integer> ergebnisse = new HashMap<Ergebnis, Integer>();
-		
+
+		TabellenPlatzBuilder() {
+			ergebnisse = new HashMap<>();
+		}
+
 		public TabellenPlatz.TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
-			Object a = this.platz;
 			ergebnisse.merge(ergebnis, 1, (a, b) -> a + b);
 			return this;
 		}
-		
+
 	}
 
 	public int getTorDifferenz() {
