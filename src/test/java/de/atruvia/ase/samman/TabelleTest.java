@@ -151,6 +151,15 @@ class TabelleTest {
 	}
 
 	@Test
+	void mannschaftMitMehrPunktenIstWeiterOben() {
+		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(0, 1), paarung("Team 2", "Team 1"));
+		wennDieTabelleBerechnetWird();
+		dannIstDieTabelle("""
+				1|Team 1|1|0|1|0|1|0|0|0
+				1|Team 2|1|0|1|0|1|0|0|0""");
+	}
+
+	@Test
 	void zweiMannschaftenZweiSpieleMitToren() {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 0), paarung("Team 2", "Team 1").ergebnis(1, 0));
 		wennDieTabelleBerechnetWird();
