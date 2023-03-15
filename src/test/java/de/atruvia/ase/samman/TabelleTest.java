@@ -62,6 +62,21 @@ class TabelleTest {
 					.build();
 		}
 
+		public Object getGewonnen() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public Object getUnentschieden() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public Object getVerloren() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	}
 
 	@Value
