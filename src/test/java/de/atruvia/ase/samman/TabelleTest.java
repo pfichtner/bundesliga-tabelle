@@ -250,16 +250,10 @@ class TabelleTest {
 		}
 
 		public List<TabellenPlatz> getEntries() {
-			// TODO sort mehr als nur punkte
 			// TODO platz enumerating
-
-			Map<OrdnungsElement, List<TabellenPlatz>> collect = eintraege.entrySet().stream().map(this::tabellenPlatz)
-					.collect(groupingBy(OrdnungsElement::new));
-			collect.entrySet().forEach(System.out::println);
-			Stream<TabellenPlatz> flatMap = collect.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder()))
-					.map(Entry::getValue).flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new)));
-
-			return flatMap.collect(toList());
+			return eintraege.entrySet().stream().map(this::tabellenPlatz).collect(groupingBy(OrdnungsElement::new))
+					.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder())).map(Entry::getValue)
+					.flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new))).collect(toList());
 		}
 
 		private TabellenPlatz tabellenPlatz(Entry<String, TabellenPlatz> entry) {
