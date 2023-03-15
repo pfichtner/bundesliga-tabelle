@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.function.BiFunction;
 
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +33,8 @@ class TabelleTest {
 		private static class TabellenPlatzBuilder {
 
 			public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
-				ergebnisse.merge(ergebnis, 1, null);
+				BiFunction<Integer, Integer, Integer> x = new ;
+				ergebnisse.merge(ergebnis, 1, x);
 				return this;
 			}
 
