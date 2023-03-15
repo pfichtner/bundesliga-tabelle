@@ -89,7 +89,7 @@ class TabelleTest {
 		}
 
 	}
-	
+
 	public enum Ergebnis {
 		SIEG, UNENTSCHIEDEN, NIEDERLAGE;
 	}
@@ -182,12 +182,15 @@ class TabelleTest {
 		}
 
 		private TabellenPlatz newEintrag(Paarung paarung) {
-			return paarung.isGespielt() ? TabellenPlatz.builder() //
+			if (!paarung.isGespielt()) {
+				return TabellenPlatz.NULL;
+			}
+			return TabellenPlatz.builder() //
 					.ergebnis(paarung.ergebnis()) //
 					.punkte(paarung.punkte()) //
 					.tore(paarung.tore) //
 					.gegentore(paarung.gegentore) //
-					.build() : TabellenPlatz.NULL;
+					.build();
 		}
 
 		public List<TabellenPlatz> getEntries() {
