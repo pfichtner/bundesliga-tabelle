@@ -56,11 +56,19 @@ class TabelleTest {
 
 		public TabellenPlatz merge(TabellenPlatz other) {
 			return TabellenPlatz.builder() //
+					.ergebnisse(merge(this.ergebnisse, other.ergebnisse))
 					.spiele(this.spiele + other.spiele) //
 					.punkte(this.punkte + other.punkte) //
 					.tore(this.tore + other.tore) //
 					.gegentore(this.gegentore + other.gegentore) //
 					.build();
+		}
+
+		private Map<Ergebnis, Integer> merge(Map<Ergebnis, Integer> map1, Map<Ergebnis, Integer> map2) {
+			Map<Ergebnis, Integer> map = new HashMap<>();
+			map.putAll(map1);
+			map.putAll(map2);
+			return map;
 		}
 
 		public int getGewonnen() {
