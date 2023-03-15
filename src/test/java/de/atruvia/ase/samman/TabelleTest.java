@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman;
 
+import static de.atruvia.ase.samman.TabelleTest.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.TabelleTest.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.TabelleTest.Ergebnis.UNENTSCHIEDEN;
 import static java.util.stream.Collectors.joining;
@@ -62,19 +63,20 @@ class TabelleTest {
 					.build();
 		}
 
-		public Object getGewonnen() {
-			// TODO Auto-generated method stub
-			return null;
+		public int getGewonnen() {
+			return ergebnis(SIEG);
 		}
 
-		public Object getUnentschieden() {
-			// TODO Auto-generated method stub
-			return null;
+		public int getUnentschieden() {
+			return ergebnis(UNENTSCHIEDEN);
 		}
 
-		public Object getVerloren() {
-			// TODO Auto-generated method stub
-			return null;
+		public int getVerloren() {
+			return ergebnis(NIEDERLAGE);
+		}
+
+		private Integer ergebnis(Ergebnis type) {
+			return ergebnisse.getOrDefault(type, 0);
 		}
 
 	}
@@ -95,7 +97,7 @@ class TabelleTest {
 		}
 
 		public Ergebnis ergebnis() {
-			return tore == gegentore ? UNENTSCHIEDEN : tore > gegentore ? Ergebnis.SIEG : Ergebnis.NIEDERLAGE;
+			return tore == gegentore ? UNENTSCHIEDEN : tore > gegentore ? Ergebnis.SIEG : NIEDERLAGE;
 		}
 
 		private Paarung swap() {
