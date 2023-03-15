@@ -53,6 +53,12 @@ class TabelleTest {
 		private final TabellenPlatz tabellenPlatz;
 
 		@Override
+		public int hashCode() {
+			// TODO Auto-generated method stub
+			return super.hashCode();
+		}
+
+		@Override
 		public boolean equals(Object other) {
 			return this == other || (other != null && getClass() == other.getClass()
 					&& comparator.compare(this, (OrdnungsElement) other) == 0);
@@ -251,9 +257,8 @@ class TabelleTest {
 			Map<OrdnungsElement, List<TabellenPlatz>> collect = eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.collect(groupingBy(OrdnungsElement::new));
 			collect.entrySet().forEach(System.out::println);
-			Stream<TabellenPlatz> flatMap = collect.entrySet().stream()
-					.sorted(comparing(Entry::getKey)).map(Entry::getValue)
-					.flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new)));
+			Stream<TabellenPlatz> flatMap = collect.entrySet().stream().sorted(comparing(Entry::getKey))
+					.map(Entry::getValue).flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new)));
 
 			return flatMap.collect(toList());
 		}
