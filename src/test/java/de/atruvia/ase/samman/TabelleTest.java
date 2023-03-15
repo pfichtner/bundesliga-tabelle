@@ -47,7 +47,6 @@ class TabelleTest {
 				.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz())).reversed()
 				.thenComparing(comparing(e -> e.tabellenPlatz.getTore())).reversed()
 				.thenComparing(comparing(e -> e.tabellenPlatz.getGegentore())).reversed() //
-				.thenComparing(comparing(e -> e.tabellenPlatz.getTeam())) //
 		;
 
 		private final TabellenPlatz tabellenPlatz;
@@ -66,7 +65,7 @@ class TabelleTest {
 
 		@Override
 		public int compareTo(OrdnungsElement other) {
-			return comparator.compare(this, other);
+			return comparator.thenComparing(comparing(e -> e.tabellenPlatz.getTeam())).compare(this, other);
 		}
 
 	}
