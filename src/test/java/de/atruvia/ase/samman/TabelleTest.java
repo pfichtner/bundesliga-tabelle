@@ -12,6 +12,7 @@ import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,7 @@ class TabelleTest {
 
 		@Override
 		public int compareTo(OrdnungsElement o) {
+			Comparator.comparing()
 			// TODO Auto-generated method stub
 			return 0;
 		}
