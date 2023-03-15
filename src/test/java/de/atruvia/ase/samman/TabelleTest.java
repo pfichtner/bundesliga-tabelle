@@ -32,6 +32,8 @@ class TabelleTest {
 
 		private static class TabellenPlatzBuilder {
 
+			private Map<Ergebnis, Integer> ergebnisse = new HashMap<Ergebnis, Integer>();
+
 			public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
 				ergebnisse.merge(ergebnis, 1, (a, b) -> a + b);
 				return this;
@@ -45,8 +47,7 @@ class TabelleTest {
 		String team;
 		@Builder.Default
 		int spiele = 1;
-		@Builder.Default
-		Map<Ergebnis, Integer> ergebnisse = new HashMap<Ergebnis, Integer>();
+		Map<Ergebnis, Integer> ergebnisse;
 		int punkte;
 		int tore;
 		int gegentore;
