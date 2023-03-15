@@ -45,7 +45,6 @@ class TabelleTest {
 
 		@Builder.Default
 		int spiele = 1;
-		int gewonnen, unentschieden, verloren;
 		int punkte;
 		int tore;
 		int gegentore;
