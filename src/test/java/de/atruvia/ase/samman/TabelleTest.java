@@ -250,8 +250,7 @@ class TabelleTest {
 					.collect(groupingBy(OrdnungsElement::new)).entrySet().stream()
 					.sorted(comparing(Entry::getKey, reverseOrder())).map(Entry::getValue).flatMap(List::stream);
 
-			return eintraege.entrySet().stream().map(this::tabellenPlatz)
-					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder())).collect(toList());
+			return flatMap.collect(toList());
 		}
 
 		private TabellenPlatz tabellenPlatz(Entry<String, TabellenPlatz> entry) {
