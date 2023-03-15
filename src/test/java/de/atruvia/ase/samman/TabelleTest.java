@@ -208,7 +208,7 @@ class TabelleTest {
 			// TODO sort mehr als nur punkte
 			// TODO platz enumerating
 			return eintraege.entrySet().stream().map(this::tabellenPlatz)
-					.sorted(comparing(p -> p.getPunkte(), reverseOrder())).collect(toList());
+					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder())).collect(toList());
 		}
 
 		private TabellenPlatz tabellenPlatz(Entry<String, TabellenPlatz> entry) {
