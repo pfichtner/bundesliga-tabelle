@@ -34,6 +34,7 @@ class TabelleTest {
 
 			public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
 //				ergebnisse.merge(ergebnis, 1, null);
+				return this;
 			}
 
 		}
