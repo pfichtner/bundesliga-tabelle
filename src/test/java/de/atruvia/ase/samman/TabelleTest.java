@@ -31,7 +31,7 @@ class TabelleTest {
 
 	@RequiredArgsConstructor
 	public static class OrdnungsElement implements Comparable<OrdnungsElement> {
-		
+
 //	    Head-to-head goal difference: The goal difference in the matches played between the tied teams.
 //	    Head-to-head away goals scored: The total number of away goals scored by the tied teams in the matches played between them.
 //	    Overall goal difference: The difference between the number of goals scored and the number of goals conceded in all matches played.
