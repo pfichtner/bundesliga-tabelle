@@ -56,8 +56,7 @@ class TabelleTest {
 
 		public TabellenPlatz merge(TabellenPlatz other) {
 			return TabellenPlatz.builder() //
-					.ergebnisse(merge(this.ergebnisse, other.ergebnisse))
-					.spiele(this.spiele + other.spiele) //
+					.ergebnisse(merge(this.ergebnisse, other.ergebnisse)).spiele(this.spiele + other.spiele) //
 					.punkte(this.punkte + other.punkte) //
 					.tore(this.tore + other.tore) //
 					.gegentore(this.gegentore + other.gegentore) //
