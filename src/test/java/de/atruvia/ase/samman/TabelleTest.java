@@ -17,13 +17,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
+import de.atruvia.ase.samman.TabelleTest.OrdnungsElement;
 import lombok.Builder;
 import lombok.Value;
 
 class TabelleTest {
+
+	public static class OrdnungsElement {
+
+	}
 
 	@Value
 	@Builder
@@ -207,9 +215,11 @@ class TabelleTest {
 		public List<TabellenPlatz> getEntries() {
 			// TODO sort mehr als nur punkte
 			// TODO platz enumerating
-			List<TabellenPlatz> collect = eintraege.entrySet().stream().map(this::tabellenPlatz)
+			Map<Object, List<TabellenPlatz>> a = eintraege.entrySet().stream().map(this::tabellenPlatz)
+					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder()))
+					.collect(Collectors.groupingBy(t -> new OrdnungsElement(t)));
+			return eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder())).collect(toList());
-			return collect;
 		}
 
 		private TabellenPlatz tabellenPlatz(Entry<String, TabellenPlatz> entry) {
