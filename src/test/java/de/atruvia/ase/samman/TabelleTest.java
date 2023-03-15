@@ -3,6 +3,7 @@ package de.atruvia.ase.samman;
 import static de.atruvia.ase.samman.TabelleTest.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.TabelleTest.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.TabelleTest.Ergebnis.UNENTSCHIEDEN;
+import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,7 +41,7 @@ class TabelleTest {
 
 		}
 
-		static TabellenPlatz NULL = new TabellenPlatz(0, "", 0, new HashMap<>(), 0, 0, 0);
+		static TabellenPlatz NULL = new TabellenPlatz(0, "", 0, emptyMap(), 0, 0, 0);
 
 		int platz;
 		String team;
@@ -195,8 +196,7 @@ class TabelleTest {
 			// TODO platz enumerating
 			TabellenPlatz eintrag = entry.getValue();
 			return TabellenPlatz.builder().platz(1).team(entry.getKey()) //
-					.ergebnisse(eintrag.getErgebnisse())
-					.spiele(eintrag.getSpiele()) //
+					.ergebnisse(eintrag.getErgebnisse()).spiele(eintrag.getSpiele()) //
 					.punkte(eintrag.getPunkte()) //
 					.tore(eintrag.getTore()) //
 					.gegentore(eintrag.getGegentore()) //
