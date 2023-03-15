@@ -75,7 +75,7 @@ class TabelleTest {
 			return ergebnis(NIEDERLAGE);
 		}
 
-		private Integer ergebnis(Ergebnis type) {
+		private int ergebnis(Ergebnis type) {
 			return ergebnisse.getOrDefault(type, 0);
 		}
 
