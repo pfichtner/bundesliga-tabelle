@@ -46,7 +46,8 @@ class TabelleTest {
 			if (getClass() != obj.getClass())
 				return false;
 			OrdnungsElement other = (OrdnungsElement) obj;
-			return tabellenPlatz.gegentore == other.tabellenPlatz.gegentore && tabellenPlatz.punkte == other.tabellenPlatz.punkte
+			return tabellenPlatz.gegentore == other.tabellenPlatz.gegentore
+					&& tabellenPlatz.punkte == other.tabellenPlatz.punkte
 					&& Objects.equals(tabellenPlatz, other.tabellenPlatz) && tore == other.tore;
 		}
 
