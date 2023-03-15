@@ -31,8 +31,23 @@ class TabelleTest {
 
 	public static class OrdnungsElement {
 
+		private final TabellenPlatz tabellenPlatz;
+
 		public OrdnungsElement(TabellenPlatz tabellenPlatz) {
-			// TODO Auto-generated constructor stub
+			this.tabellenPlatz = tabellenPlatz;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			OrdnungsElement other = (OrdnungsElement) obj;
+			return tabellenPlatz.gegentore == other.tabellenPlatz.gegentore && tabellenPlatz.punkte == other.tabellenPlatz.punkte
+					&& Objects.equals(tabellenPlatz, other.tabellenPlatz) && tore == other.tore;
 		}
 
 	}
