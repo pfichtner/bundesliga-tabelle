@@ -31,6 +31,10 @@ class TabelleTest {
 
 	public static class OrdnungsElement {
 
+		public OrdnungsElement(TabellenPlatz t) {
+			// TODO Auto-generated constructor stub
+		}
+
 	}
 
 	@Value
@@ -217,7 +221,7 @@ class TabelleTest {
 			// TODO platz enumerating
 			Map<Object, List<TabellenPlatz>> a = eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder()))
-					.collect(Collectors.groupingBy(t -> new OrdnungsElement(t)));
+					.collect(Collectors.groupingBy(OrdnungsElement::new));
 			return eintraege.entrySet().stream().map(this::tabellenPlatz)
 					.sorted(comparing(TabellenPlatz::getPunkte, reverseOrder())).collect(toList());
 		}
