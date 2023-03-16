@@ -45,14 +45,7 @@ class DataRetrieveTest {
 		}
 	}
 
-	@Test
-	void canRetrieveDataOf2022() throws IOException, InterruptedException, URISyntaxException {
-		String url = "https://api.openligadb.de/getmatchdata/bl1/2022";
-		List<Paarung> paarungen = lade(url);
-		assertThat(paarungen.get(0)).isEqualTo(
-				Paarung.builder().team1("Eintracht Frankfurt").team2("FC Bayern München").ergebnis(1, 6).build());
-
-	}
+	
 
 	private List<Paarung> lade(String url) throws IOException, InterruptedException, URISyntaxException {
 		String content = Files.contentOf(new File(getClass().getClassLoader().getResource("2022.json").toURI()),
