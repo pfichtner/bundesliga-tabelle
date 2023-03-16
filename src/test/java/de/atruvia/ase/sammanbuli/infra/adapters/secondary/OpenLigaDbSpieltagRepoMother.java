@@ -7,7 +7,9 @@ import java.io.File;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class OpenLigaDbSpieltagRepoMother {public static OpenLigaDbSpieltagRepo readFromLocalFilesystemRepo() {
+public class OpenLigaDbSpieltagRepoMother {
+
+	OpenLigaDbSpieltagRepo readFromLocalFilesystemRepo() {
 		return new OpenLigaDbSpieltagRepo() {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
