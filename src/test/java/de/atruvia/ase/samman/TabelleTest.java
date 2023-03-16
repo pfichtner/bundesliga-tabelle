@@ -18,8 +18,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
@@ -44,32 +42,19 @@ class TabelleTest {
 //	    MIS: Overall away goal difference: The difference between the number of away goals scored and the number of away goals conceded by the tied teams in matches played away from their home stadium.
 //		If two or more teams have the same rank in the Bundesliga and there is no other criteria that can be used to separate them, then the teams will be listed in alphabetical order according to their full club name.
 
-		private static final List<Function<? super OrdnungsElement, ? extends Comparable<?>>> functions = List.of( //
-				e -> e.tabellenPlatz.getPunkte(), //
-				e -> e.tabellenPlatz.getTorDifferenz(), //
-				e -> e.tabellenPlatz.getTore(), //
-				e -> e.tabellenPlatz.getToreAuswaerts() //
-		);
-
-		private static final Comparator<OrdnungsElement> comparator = new Comparator<TabelleTest.OrdnungsElement>() {
-
-			@Override
-			public int compare(OrdnungsElement o1, OrdnungsElement o2) {
-				for (Function<? super OrdnungsElement, ? extends Comparable<?>> function : functions) {
-					Comparable<?> e1 = function.apply(o1);
-					Comparable<?> e2 = function.apply(o2);
-					e1.compareTo(e2);
-				}
-				// TODO Auto-generated method stub
-				return 0;
-			}
-		}.reversed();
+		private static final Comparator<OrdnungsElement> comparator = comparing(
+				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte())
+				.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz()))
+				.thenComparing(comparing(e -> e.tabellenPlatz.getTore()))
+				.thenComparing(comparing(e -> e.tabellenPlatz.getToreAuswaerts())) //
+				.reversed();
 
 		private final TabellenPlatz tabellenPlatz;
 
 		@Override
 		public int hashCode() {
-			return Objects.hash(functions.stream().map(f -> f.apply(this)).toArray());
+			return Objects.hash(tabellenPlatz.getPunkte(), tabellenPlatz.getTorDifferenz(), tabellenPlatz.getTore(),
+					tabellenPlatz.getToreAuswaerts());
 		}
 
 		@Override
