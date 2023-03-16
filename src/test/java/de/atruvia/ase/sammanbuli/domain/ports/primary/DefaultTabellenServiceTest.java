@@ -35,7 +35,7 @@ class DefaultTabellenServiceTest {
 
 	private String print(TabellenPlatz tabellenPlatz, int length) {
 
-		String format = String.format("%- + (length + 1) + "s", tabellenPlatz.getTeam());
+		String format = String.format("%-" + (length + 1) + "s", tabellenPlatz.getTeam());
 
 		return java.util.Arrays
 				.asList(format, tabellenPlatz.getSpiele(), tabellenPlatz.getGewonnen(),
