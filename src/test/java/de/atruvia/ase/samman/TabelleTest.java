@@ -92,6 +92,10 @@ class TabelleTest {
 			return toreHeim + toreAuswaerts;
 		}
 
+		int getGegentore() {
+			return gegentoreHeim + gegentoreAuswaerts;
+		}
+
 		static class TabellenPlatzBuilder {
 
 			TabellenPlatzBuilder() {
