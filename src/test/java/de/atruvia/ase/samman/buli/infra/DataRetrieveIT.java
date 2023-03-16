@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
+import de.atruvia.ase.samman.Paarung;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
