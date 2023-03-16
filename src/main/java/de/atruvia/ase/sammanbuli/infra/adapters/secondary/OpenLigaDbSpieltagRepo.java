@@ -22,8 +22,6 @@ import lombok.ToString;
 
 public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 
-	String url = "https://api.openligadb.de/getmatchdata/bl1/2022";
-
 	@ToString
 	private class Team {
 		String teamName;
@@ -49,10 +47,12 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	}
 
 	public List<Paarung> lade(String league, String season) throws Exception {
-		return Arrays.stream(new Gson().fromJson(readJson(), Match[].class)).map(Match::toDomain).collect(toList());
+		return Arrays.stream(new Gson().fromJson(readJson(league, season), Match[].class)).map(Match::toDomain)
+				.collect(toList());
 	}
 
-	protected String readJson() throws Exception {
+	protected String readJson(String league, String season) throws Exception {
+		String url = "https://api.openligadb.de/getmatchdata/bl1/2022";
 		return HttpClient.newHttpClient().send(HttpRequest.newBuilder(URI.create(url)).build(), BodyHandlers.ofString())
 				.body();
 	}
