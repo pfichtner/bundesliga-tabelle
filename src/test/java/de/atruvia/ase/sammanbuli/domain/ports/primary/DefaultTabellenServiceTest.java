@@ -24,7 +24,7 @@ class DefaultTabellenServiceTest {
 	}
 
 	private int longestTeamName(List<TabellenPlatz> erstelleTabelle) {
-		return erstelleTabelle.stream().map(p -> p.getTeam()).mapToInt(String::length).max().orElse(0);
+		return erstelleTabelle.stream().map(TabellenPlatz::getTeam).mapToInt(String::length).max().orElse(0);
 	}
 
 	private String print(TabellenPlatz tabellenPlatz, int length) {
