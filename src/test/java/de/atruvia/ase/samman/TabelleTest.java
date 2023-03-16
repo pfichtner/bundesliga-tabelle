@@ -46,8 +46,7 @@ class TabelleTest {
 		private static final Comparator<OrdnungsElement> comparator = comparing(
 				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte()).reversed()
 				.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz())).reversed()
-				.thenComparing(comparing(e -> e.tabellenPlatz.getTore())).reversed()
-		;
+				.thenComparing(comparing(e -> e.tabellenPlatz.getTore())).reversed();
 
 		private final TabellenPlatz tabellenPlatz;
 
@@ -264,10 +263,10 @@ class TabelleTest {
 		public List<TabellenPlatz> getEntries() {
 			// TODO make it side-affect-free, does it work W/O zip!?
 			AtomicInteger platz = new AtomicInteger();
-			return eintraege.entrySet().stream().map(this::setTeam).collect(groupingBy(OrdnungsElement::new))
-					.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder()))
-					.peek(e -> platz.incrementAndGet()).map(Entry::getValue).flatMap(t -> t.stream()
-							.sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platz.get())))
+			return eintraege.entrySet().stream().map(this::setTeam).collect(groupingBy(OrdnungsElement::new)).entrySet()
+					.stream().sorted(comparing(Entry::getKey, reverseOrder())).peek(e -> platz.incrementAndGet())
+					.map(Entry::getValue).flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new))
+							.map(tp -> tp.withPlatz(platz.get())))
 					.collect(toList());
 		}
 
