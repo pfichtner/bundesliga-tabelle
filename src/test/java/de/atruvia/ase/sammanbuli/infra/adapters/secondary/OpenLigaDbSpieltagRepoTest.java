@@ -1,9 +1,9 @@
 package de.atruvia.ase.sammanbuli.infra.adapters.secondary;
 
+import static java.nio.file.Files.readString;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -17,8 +17,7 @@ class OpenLigaDbSpieltagRepoTest {
 		OpenLigaDbSpieltagRepo repo = new OpenLigaDbSpieltagRepo() {
 			@Override
 			protected String readJson() throws Exception {
-				return Files
-						.readString(new File(getClass().getClassLoader().getResource("2022.json").toURI()).toPath());
+				return readString(new File(getClass().getClassLoader().getResource("2022.json").toURI()).toPath());
 			}
 		};
 		List<Paarung> paarungen = repo.lade("bl1", "2022");
