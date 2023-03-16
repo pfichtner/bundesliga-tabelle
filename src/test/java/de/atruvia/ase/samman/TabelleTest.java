@@ -262,7 +262,7 @@ class TabelleTest {
 					.punkte(paarung.punkte());
 			if (swapped) {
 				return builder //
-						.toreHeim(paarung.tore) //
+						.toreAuswaerts(paarung.tore) //
 						.gegentore(paarung.gegentore) //
 						.build();	} else
 				return builder //
