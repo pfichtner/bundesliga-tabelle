@@ -53,7 +53,7 @@ class TabelleTest {
 		@Override
 		public int hashCode() {
 			return Objects.hash(tabellenPlatz.getPunkte(), tabellenPlatz.getTorDifferenz(), tabellenPlatz.getTore(),
-					tabellenPlatz.getGegentore());
+					tabellenPlatz.getToreAuswaerts());
 		}
 
 		@Override
