@@ -260,7 +260,11 @@ class TabelleTest {
 			TabellenPlatzBuilder builder = TabellenPlatz.builder() //
 					.ergebnis(paarung.ergebnis()) //
 					.punkte(paarung.punkte());
-			if (!swapped)
+			if (swapped) {
+				return builder //
+						.toreHeim(paarung.tore) //
+						.gegentore(paarung.gegentore) //
+						.build();	} else
 				return builder //
 						.toreHeim(paarung.tore) //
 						.gegentore(paarung.gegentore) //
