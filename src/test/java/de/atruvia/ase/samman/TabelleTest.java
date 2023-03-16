@@ -218,7 +218,7 @@ class TabelleTest {
 
 	@Test
 	void punktUndTorGleichAberMehrAUswärtsTore() {
-		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(2, 1), paarung("Team 2", "Team 1").ergebnis(1, 0));
+		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 2), paarung("Team 2", "Team 1").ergebnis(0, 1));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
 				1|Team 1|2|1|0|1|3|2|2|0
