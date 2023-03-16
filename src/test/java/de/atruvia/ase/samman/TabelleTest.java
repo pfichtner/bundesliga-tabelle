@@ -21,7 +21,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
 
-import de.atruvia.ase.samman.TabelleTest.Paarung;
 import de.atruvia.ase.samman.TabelleTest.TabellenPlatz.TabellenPlatzBuilder;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
