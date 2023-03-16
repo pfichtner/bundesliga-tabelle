@@ -21,29 +21,6 @@ import lombok.ToString;
 
 class DataRetrieveTest {
 
-	@ToString
-	class Team {
-		String teamName;
-	}
-
-	@ToString
-	class MatchResult {
-		int pointsTeam1;
-		int pointsTeam2;
-	}
-
-	@ToString
-	class Match {
-		Team team1;
-		Team team2;
-		MatchResult[] matchResults;
-
-		Paarung toDomain() {
-			PaarungBuilder b = Paarung.builder().team1(team1.teamName).team2(team2.teamName);
-			b = matchResults.length == 0 ? b : b.ergebnis(matchResults[0].pointsTeam1, matchResults[0].pointsTeam2);
-			return b.build();
-		}
-	}
 
 	
 
