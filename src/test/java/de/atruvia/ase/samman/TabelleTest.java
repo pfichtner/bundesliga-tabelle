@@ -110,7 +110,7 @@ class TabelleTest {
 		}
 
 		public int getTorDifferenz() {
-			return getTore() - gegentore;
+			return getTore() - getGegentore();
 		}
 
 		public TabellenPlatz merge(TabellenPlatz other) {
