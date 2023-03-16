@@ -44,9 +44,13 @@ class DataRetrieveIT {
 		}
 
 		return Arrays.stream(new Gson().fromJson(content, Match[].class))
-				.map(m -> Paarung.builder().team1(m.team1.teamName).team2(m.team2.teamName)
-						.ergebnis(m.matchResults[0].pointsTeam1, m.matchResults[0].pointsTeam2).build())
+				.map(m -> td(m))
 				.collect(Collectors.toList());
+	}
+
+	private Paarung td(Match m) {
+		return Paarung.builder().team1(m.team1.teamName).team2(m.team2.teamName)
+				.ergebnis(m.matchResults[0].pointsTeam1, m.matchResults[0].pointsTeam2).build();
 	}
 
 }
