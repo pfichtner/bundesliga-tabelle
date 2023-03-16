@@ -4,9 +4,7 @@ import static java.nio.file.Files.readString;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Path;
 
 import lombok.NoArgsConstructor;
 
