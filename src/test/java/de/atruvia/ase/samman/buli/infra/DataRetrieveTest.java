@@ -7,9 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,7 +24,7 @@ import lombok.experimental.FieldDefaults;
 class DataRetrieveTest {
 
 	@Test
-	void canRetrieveDataOf2022() throws IOException, InterruptedException {
+	void canRetrieveDataOf2022() throws IOException, InterruptedException, URISyntaxException {
 		String url = "https://api.openligadb.de/getmatchdata/bl1/2022";
 		List<Paarung> paarungen = lade(url);
 		assertThat(paarungen.get(0)).isEqualTo(
