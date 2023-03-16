@@ -85,7 +85,8 @@ class TabelleTest {
 		int punkte;
 		int toreHeim;
 		int toreAuswaerts;
-		int gegentore;
+		int gegentoreHeim;
+		int gegentoreAuswaerts;
 
 		int getTore() {
 			return toreHeim + toreAuswaerts;
