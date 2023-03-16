@@ -1,8 +1,8 @@
 package de.atruvia.ase.samman;
 
-import static de.atruvia.ase.samman.TabelleTest.Ergebnis.NIEDERLAGE;
-import static de.atruvia.ase.samman.TabelleTest.Ergebnis.SIEG;
-import static de.atruvia.ase.samman.TabelleTest.Ergebnis.UNENTSCHIEDEN;
+import static de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis.NIEDERLAGE;
+import static de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis.SIEG;
+import static de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Collections.emptyMap;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
 
-import de.atruvia.ase.samman.TabelleTest.TabellenPlatz.TabellenPlatzBuilder;
+import de.atruvia.ase.sammanbuli.domain.TabelleTest.TabellenPlatz.TabellenPlatzBuilder;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
