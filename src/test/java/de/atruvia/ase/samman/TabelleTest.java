@@ -82,11 +82,12 @@ class TabelleTest {
 		int spiele = 1;
 		Map<Ergebnis, Integer> ergebnisse;
 		int punkte;
-		int tore;
+		int toreHeim;
+		int toreAuswaerts;
 		int gegentore;
 
 		int getTore() {
-			return tore;
+			return toreHeim + toreAuswaerts;
 		}
 
 		static class TabellenPlatzBuilder {
