@@ -286,10 +286,10 @@ class TabelleTest {
 	}
 
 	private String toString(List<TabellenPlatz> plaetze) {
-		return plaetze.stream().map(this::toString).collect(joining("\n"));
+		return plaetze.stream().map(this::printer).collect(joining("\n"));
 	}
 
-	private String toString(TabellenPlatz platz) {
+	private String printer(TabellenPlatz platz) {
 		return Arrays
 				.asList(platz.getPlatz(), platz.getTeam(), platz.getSpiele(), platz.getGewonnen(),
 						platz.getUnentschieden(), platz.getVerloren(), platz.getPunkte(), platz.getTore(),
