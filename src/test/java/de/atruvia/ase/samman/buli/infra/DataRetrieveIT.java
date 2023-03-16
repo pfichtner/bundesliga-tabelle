@@ -1,4 +1,4 @@
-package de.atruvia.ase.samman;
+package de.atruvia.ase.samman.buli.infra;
 
 import static java.util.stream.Collectors.toList;
 import static lombok.AccessLevel.PUBLIC;
@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
+import de.atruvia.ase.samman.Paarung;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
