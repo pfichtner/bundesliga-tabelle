@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import de.atruvia.ase.samman.TabelleTest.TabellenPlatz.TabellenPlatzBuilder;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -256,9 +257,10 @@ class TabelleTest {
 			if (!paarung.isGespielt()) {
 				return TabellenPlatz.NULL;
 			}
-			return TabellenPlatz.builder() //
+			TabellenPlatzBuilder punkte = TabellenPlatz.builder() //
 					.ergebnis(paarung.ergebnis()) //
-					.punkte(paarung.punkte()) //
+					.punkte(paarung.punkte());
+			return punkte //
 					.toreHeim(paarung.tore) //
 					.gegentore(paarung.gegentore) //
 					.build();
