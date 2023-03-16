@@ -1,5 +1,8 @@
 package de.atruvia.ase.samman.buli;
 
+import java.util.List;
+
+import de.atruvia.ase.sammanbuli.domain.TabellenPlatz;
 import de.atruvia.ase.sammanbuli.domain.ports.primary.DefaultTabellenService;
 import de.atruvia.ase.sammanbuli.domain.ports.primary.TabellenService;
 import de.atruvia.ase.sammanbuli.domain.ports.secondary.SpieltagRepo;
@@ -11,7 +14,10 @@ public class Main {
 		SpieltagRepo repo = new OpenLigaDbSpieltagRepo();
 		TabellenService tabellenService = new DefaultTabellenService(repo);
 		
-		tabellenService.erstelleTabelle("bl1", "2022");
+		for (TabellenPlatz tabellenPlatz : tabellenService.erstelleTabelle("bl1", "2022")) {
+			System.out.println(tabellenPlatz);
+		}
+
 		
 		
 	}
