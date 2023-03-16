@@ -36,11 +36,11 @@ public class TabellenPlatz {
 	int gegentoreHeim;
 	int gegentoreAuswaerts;
 
-	int getTore() {
+	public int getTore() {
 		return toreHeim + toreAuswaerts;
 	}
 
-	int getGegentore() {
+	public int getGegentore() {
 		return gegentoreHeim + gegentoreAuswaerts;
 	}
 
