@@ -4,8 +4,6 @@ import static java.nio.charset.Charset.defaultCharset;
 import static java.util.stream.Collectors.toList;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
