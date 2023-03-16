@@ -54,7 +54,6 @@ class DataRetrieveIT {
 			}
 		}
 		
-		System.out.println(content);
 
 		return Arrays.stream(new Gson().fromJson(content, Match[].class)).map(Match::toDomain).collect(toList());
 	}
