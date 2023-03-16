@@ -1,6 +1,8 @@
 package de.atruvia.ase.sammanbuli.domain.ports.primary;
 
 import static de.atruvia.ase.sammanbuli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.readFromLocalFilesystemRepo;
+import static java.util.stream.Collectors.joining;
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -24,19 +26,11 @@ class DefaultTabellenServiceTest {
 	}
 
 	private String print(TabellenPlatz tabellenPlatz) {
-		List<Object> asList = java.util.Arrays.asList(
-		tabellenPlatz.getTeam(),
-		tabellenPlatz.getSpiele(),
-		tabellenPlatz.getGewonnen(),
-		tabellenPlatz.getUnentschieden(),
-		tabellenPlatz.getVerloren(),
-		tabellenPlatz.getTore(),
-		tabellenPlatz.getGegentore(),
-		tabellenPlatz.getTorDifferenz(),
-		tabellenPlatz.getPunkte()
-		);
-		// TODO Auto-generated method stub
-		return null;
+		return java.util.Arrays
+				.asList(tabellenPlatz.getTeam(), tabellenPlatz.getSpiele(), tabellenPlatz.getGewonnen(),
+						tabellenPlatz.getUnentschieden(), tabellenPlatz.getVerloren(), tabellenPlatz.getTore(),
+						tabellenPlatz.getGegentore(), tabellenPlatz.getTorDifferenz(), tabellenPlatz.getPunkte())
+				.stream().map(Object::toString).collect(joining("\t|"));
 	}
 
 }
