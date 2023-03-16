@@ -5,6 +5,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Path;
 
 import lombok.NoArgsConstructor;
@@ -16,15 +17,14 @@ public final class OpenLigaDbSpieltagRepoMother {
 		return new OpenLigaDbSpieltagRepo() {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
-				return readString(
-						extracted(league, season));
+				return readString(new File(url(league, season).toURI()).toPath());
 			}
 
-			private Path extracted(String league, String season) throws URISyntaxException {
-				return new File(getClass().getClassLoader().getResource(league + "/" + season + ".json").toURI())
-						.toPath();
-			}
 		};
+	}
+
+	private static URL url(String league, String season) {
+		return getClass().getClassLoader().getResource(league + "/" + season + ".json");
 	}
 
 }
