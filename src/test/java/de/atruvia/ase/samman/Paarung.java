@@ -35,10 +35,15 @@ import lombok.Value;
 
 	static class PaarungBuilder {
 
-		public Paarung.PaarungBuilder ergebnis(int tore, int gegentore) {
+		Paarung.PaarungBuilder ergebnis(int tore, int gegentore) {
 			this.gespielt = true;
 			this.tore = tore;
 			this.gegentore = gegentore;
+			return this;
+		}
+
+		private Paarung.PaarungBuilder gespielt(boolean gespielt) {
+			this.gespielt = gespielt;
 			return this;
 		}
 
