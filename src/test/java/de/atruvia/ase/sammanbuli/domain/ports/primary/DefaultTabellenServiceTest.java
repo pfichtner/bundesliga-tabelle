@@ -26,6 +26,7 @@ class DefaultTabellenServiceTest {
 	}
 
 	private String print(TabellenPlatz tabellenPlatz) {
+		tabellenPlatz.
 		// TODO Auto-generated method stub
 		return null;
 	}
