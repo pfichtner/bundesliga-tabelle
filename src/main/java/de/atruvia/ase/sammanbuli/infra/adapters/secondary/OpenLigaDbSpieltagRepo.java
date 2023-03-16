@@ -4,7 +4,11 @@ import static java.nio.charset.Charset.defaultCharset;
 import static java.util.stream.Collectors.toList;
 
 import java.io.File;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
@@ -48,9 +52,14 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		return Arrays.stream(new Gson().fromJson(readJson(), Match[].class)).map(Match::toDomain).collect(toList());
 	}
 
-	private String readJson() throws Exception {
-		File file = new File(getClass().getClassLoader().getResource("2022.json").toURI());
+	protected String readJson() throws Exception {
+		URI uri = URI.create(url);
+		HttpRequest request = HttpRequest.newBuilder(uri).build();
+		return HttpClient.newHttpClient().send(request, BodyHandlers.ofString()).body();
+	}
 
+	private String d() throws URISyntaxException {
+		File file = new File(getClass().getClassLoader().getResource("2022.json").toURI());
 		String content = Files.contentOf(file, defaultCharset());
 		return content;
 	}
