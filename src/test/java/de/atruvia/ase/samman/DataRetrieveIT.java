@@ -1,6 +1,7 @@
 package de.atruvia.ase.samman;
 
 import static java.util.stream.Collectors.toList;
+import static lombok.AccessLevel.PUBLIC;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
@@ -17,6 +18,8 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.ToString;
+import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 
 class DataRetrieveIT {
 
@@ -35,11 +38,13 @@ class DataRetrieveIT {
 		String content = HttpClient.newHttpClient().send(request, BodyHandlers.ofString()).body();
 
 		@ToString
+		@FieldDefaults(level = PUBLIC)
 		class Team {
 			@SerializedName("teamName")
 			String teamName;
 		}
 		@ToString
+		@FieldDefaults(level = PUBLIC)
 		class MatchResult {
 			@SerializedName("pointsTeam1")
 			int pointsTeam1;
@@ -47,6 +52,7 @@ class DataRetrieveIT {
 			int pointsTeam2;
 		}
 		@ToString
+		@FieldDefaults(level = PUBLIC)
 		class Match {
 			@SerializedName("team1")
 			Team team1;
