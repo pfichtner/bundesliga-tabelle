@@ -151,10 +151,6 @@ class TabelleTest {
 
 	}
 
-	public enum Ergebnis {
-		SIEG, UNENTSCHIEDEN, NIEDERLAGE;
-	}
-
 	private Paarung[] paarungen;
 	private Tabelle sut = new Tabelle();
 
