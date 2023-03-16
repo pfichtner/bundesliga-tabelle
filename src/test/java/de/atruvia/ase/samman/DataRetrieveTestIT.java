@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import com.google.gson.Gson;
 
-class DataRetrieveTest {
+class DataRetrieveTestIT {
 
 	@Test
 	void canRetrieveDataOf2022() throws IOException, InterruptedException {
