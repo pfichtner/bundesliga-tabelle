@@ -7,7 +7,7 @@ import de.atruvia.ase.sammanbuli.domain.ports.secondary.SpieltagRepo;
 
 public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 
-	public List<Paarung> lade(String string, String string2) {
+	public List<Paarung> lade(String league, String season) {
 		// TODO Auto-generated method stub
 		return null;
 	}
