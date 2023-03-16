@@ -4,13 +4,16 @@ import static de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis.SIEG;
 import static de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis.UNENTSCHIEDEN;
 
-import de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis;
 import lombok.Builder;
 import lombok.Value;
 
 @Value
 @Builder(toBuilder = true)
 public class Paarung {
+
+	public enum Ergebnis {
+		SIEG, UNENTSCHIEDEN, NIEDERLAGE;
+	}
 
 	boolean gespielt;
 	String team1, team2;
