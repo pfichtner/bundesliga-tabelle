@@ -1,6 +1,7 @@
 package de.atruvia.ase.sammanbuli.domain.ports.primary;
 
 import static de.atruvia.ase.sammanbuli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.readFromLocalFilesystemRepo;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
@@ -21,7 +22,7 @@ class DefaultTabellenServiceTest {
 
 		String s = erstelleTabelle.stream().map(f -> print(f)).collect(Collectors.joining("\n"));
 
-		fail("Not yet implemented");
+		assertThat(s).isEqualTo("");
 	}
 
 	private String print(TabellenPlatz tabellenPlatz) {
