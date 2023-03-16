@@ -5,8 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -20,13 +22,8 @@ class OpenLigaDbSpieltagRepoTest {
 		OpenLigaDbSpieltagRepo repo = new OpenLigaDbSpieltagRepo() {
 			@Override
 			protected String readJson() throws Exception {
-				return d();
-			}
-			
-			private String d() throws URISyntaxException {
-				File file = new File(getClass().getClassLoader().getResource("2022.json").toURI());
-				String content = Files.contentOf(file, defaultCharset());
-				return content;
+				return Files
+						.readString(new File(getClass().getClassLoader().getResource("2022.json").toURI()).toPath());
 			}
 		};
 		List<Paarung> paarungen = repo.lade("bl1", "2022");
