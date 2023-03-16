@@ -13,7 +13,6 @@ public class Main {
 	public static void main(String[] args) {
 		SpieltagRepo repo = new OpenLigaDbSpieltagRepo();
 		TabellenService tabellenService = new DefaultTabellenService(repo);
-		
 		for (TabellenPlatz tabellenPlatz : tabellenService.erstelleTabelle("bl1", "2022")) {
 			System.out.println(tabellenPlatz);
 		}
