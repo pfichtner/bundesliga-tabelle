@@ -1,6 +1,8 @@
 package de.atruvia.ase.sammanbuli.domain;
 
-import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.*;
+import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.NIEDERLAGE;
+import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.SIEG;
+import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Collections.emptyMap;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
