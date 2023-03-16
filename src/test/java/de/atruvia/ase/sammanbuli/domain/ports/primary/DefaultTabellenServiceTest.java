@@ -36,7 +36,8 @@ class DefaultTabellenServiceTest {
 	}
 
 	private String stringFormat(TabellenPlatz tabellenPlatz, int length) {
-		return String.format("%-" + (length + 1) + "s", tabellenPlatz.getTeam());
+		String team = tabellenPlatz.getTeam();
+		return String.format("%-" + (length + 1) + "s", team);
 	}
 
 	private String format(Object o) {
