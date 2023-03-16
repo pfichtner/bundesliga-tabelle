@@ -10,9 +10,6 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import de.atruvia.ase.samman.buli.infra.DataRetrieveTest.Match;
-import de.atruvia.ase.samman.buli.infra.DataRetrieveTest.MatchResult;
-import de.atruvia.ase.samman.buli.infra.DataRetrieveTest.Team;
 import de.atruvia.ase.sammanbuli.domain.Paarung;
 import de.atruvia.ase.sammanbuli.domain.Paarung.PaarungBuilder;
 import de.atruvia.ase.sammanbuli.domain.ports.secondary.SpieltagRepo;
