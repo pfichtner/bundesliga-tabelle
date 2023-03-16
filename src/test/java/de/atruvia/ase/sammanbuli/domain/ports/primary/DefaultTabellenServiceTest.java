@@ -20,7 +20,7 @@ class DefaultTabellenServiceTest {
 		TabellenService sut = new DefaultTabellenService(readFromLocalFilesystemRepo());
 		List<TabellenPlatz> erstelleTabelle = sut.erstelleTabelle("bl1", "2022");
 
-		longestTeamName(erstelleTabelle);
+		int longestTeamName = longestTeamName(erstelleTabelle);
 		String s = erstelleTabelle.stream().map(f -> print(f)).collect(joining("\n"));
 
 		System.out.println(s);
@@ -28,8 +28,8 @@ class DefaultTabellenServiceTest {
 		assertThat(s).isEqualTo("");
 	}
 
-	private void longestTeamName(List<TabellenPlatz> erstelleTabelle) {
-		int longestTeamName = erstelleTabelle.stream().map(p -> p.getTeam()).mapToInt(String::length).max().orElse(0);
+	private int longestTeamName(List<TabellenPlatz> erstelleTabelle) {
+		return erstelleTabelle.stream().map(p -> p.getTeam()).mapToInt(String::length).max().orElse(0);
 	}
 
 	private String print(TabellenPlatz tabellenPlatz) {
