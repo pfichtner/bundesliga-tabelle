@@ -3,8 +3,6 @@ package de.atruvia.ase.sammanbuli.domain;
 import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
-import static de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis.*;
-import static de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis.NIEDERLAGE;
 
 import lombok.Builder;
 import lombok.Value;
