@@ -14,12 +14,12 @@ class OpenLigaDbSpieltagRepoTest {
 
 	@Test
 	void canRetrieveDataOf2022() throws Exception {
-		List<Paarung> paarungen = repo().lade("bl1", "2022");
+		List<Paarung> paarungen = readFromLocalFilesystemRepo().lade("bl1", "2022");
 		assertThat(paarungen.get(0)).isEqualTo(
 				Paarung.builder().team1("Eintracht Frankfurt").team2("FC Bayern München").ergebnis(1, 6).build());
 	}
 
-	private static OpenLigaDbSpieltagRepo repo() {
+	private static OpenLigaDbSpieltagRepo readFromLocalFilesystemRepo() {
 		return new OpenLigaDbSpieltagRepo() {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
