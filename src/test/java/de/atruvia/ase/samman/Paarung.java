@@ -35,7 +35,7 @@ public class Paarung {
 
 	public static class PaarungBuilder {
 
-		Paarung.PaarungBuilder ergebnis(int tore, int gegentore) {
+		public Paarung.PaarungBuilder ergebnis(int tore, int gegentore) {
 			this.gespielt = true;
 			this.tore = tore;
 			this.gegentore = gegentore;
