@@ -33,7 +33,7 @@ public class Paarung {
 		return toBuilder().team1(team2).team2(team1).tore(gegentore).gegentore(tore).build();
 	}
 
-	static class PaarungBuilder {
+	public static class PaarungBuilder {
 
 		Paarung.PaarungBuilder ergebnis(int tore, int gegentore) {
 			this.gespielt = true;
