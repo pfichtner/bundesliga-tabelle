@@ -8,11 +8,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import de.atruvia.ase.sammanbuli.domain.TabelleTest.OrdnungsElement;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
