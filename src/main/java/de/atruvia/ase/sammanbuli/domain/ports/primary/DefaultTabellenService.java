@@ -1,5 +1,6 @@
 package de.atruvia.ase.sammanbuli.domain.ports.primary;
 
+import de.atruvia.ase.sammanbuli.domain.Tabelle;
 import de.atruvia.ase.sammanbuli.domain.ports.secondary.SpieltagRepo;
 import lombok.RequiredArgsConstructor;
 
@@ -10,7 +11,8 @@ public class DefaultTabellenService implements TabellenService {
 
 	@Override
 	public void erstelleTabelle(String league, String season) {
-		Tabelle
+		Tabelle tabelle = new Tabelle();
+		tabelle.add(p);
 		
 		
 		// TODO Auto-generated method stub
