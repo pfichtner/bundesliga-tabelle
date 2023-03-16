@@ -28,9 +28,8 @@ class DefaultTabellenServiceTest {
 	}
 
 	private String print(TabellenPlatz tabellenPlatz, int length) {
-		String format = stringFormatter(tabellenPlatz, length);
 		return Arrays
-				.asList(format, tabellenPlatz.getSpiele(), tabellenPlatz.getGewonnen(),
+				.asList(stringFormatter(tabellenPlatz, length), tabellenPlatz.getSpiele(), tabellenPlatz.getGewonnen(),
 						tabellenPlatz.getUnentschieden(), tabellenPlatz.getVerloren(), tabellenPlatz.getTore(),
 						tabellenPlatz.getGegentore(), tabellenPlatz.getTorDifferenz(), tabellenPlatz.getPunkte())
 				.stream().map(o -> format(o)).collect(joining(" | "));
