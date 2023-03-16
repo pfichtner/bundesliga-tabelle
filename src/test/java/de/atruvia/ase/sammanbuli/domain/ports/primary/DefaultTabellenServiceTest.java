@@ -28,12 +28,17 @@ class DefaultTabellenServiceTest {
 	}
 
 	private String print(TabellenPlatz tabellenPlatz, int length) {
-		String format = String.format("%-" + (length + 1) + "s", tabellenPlatz.getTeam());
+		String format = stringFormatter(tabellenPlatz, length);
 		return Arrays
 				.asList(format, tabellenPlatz.getSpiele(), tabellenPlatz.getGewonnen(),
 						tabellenPlatz.getUnentschieden(), tabellenPlatz.getVerloren(), tabellenPlatz.getTore(),
 						tabellenPlatz.getGegentore(), tabellenPlatz.getTorDifferenz(), tabellenPlatz.getPunkte())
 				.stream().map(o -> format(o)).collect(joining(" | "));
+	}
+
+	private String stringFormatter(TabellenPlatz tabellenPlatz, int length) {
+		String format = String.format("%-" + (length + 1) + "s", tabellenPlatz.getTeam());
+		return format;
 	}
 
 	private String format(Object o) {
