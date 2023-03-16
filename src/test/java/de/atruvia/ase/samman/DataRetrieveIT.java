@@ -48,6 +48,7 @@ class DataRetrieveIT {
 			MatchResult[] matchResults;
 
 			Paarung toDomain() {
+				System.out.println(this);
 				return Paarung.builder().team1(team1.teamName).team2(team2.teamName)
 						.ergebnis(matchResults[0].pointsTeam1, matchResults[0].pointsTeam2).build();
 			}
