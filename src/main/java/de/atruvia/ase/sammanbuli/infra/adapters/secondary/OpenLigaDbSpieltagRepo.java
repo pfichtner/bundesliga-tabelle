@@ -53,7 +53,8 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	}
 
 	protected String readJson() throws Exception {
-		return HttpClient.newHttpClient().send(HttpRequest.newBuilder(URI.create(url)).build(), BodyHandlers.ofString()).body();
+		return HttpClient.newHttpClient().send(HttpRequest.newBuilder(URI.create(url)).build(), BodyHandlers.ofString())
+				.body();
 	}
 
 	private String d() throws URISyntaxException {
