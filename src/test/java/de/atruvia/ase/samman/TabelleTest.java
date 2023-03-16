@@ -49,6 +49,16 @@ class TabelleTest {
 				e -> e.tabellenPlatz.getTore(), //
 				e -> e.tabellenPlatz.getToreAuswaerts() //
 		);
+		
+		private static final Comparator<OrdnungsElement> comparatorX = functions.stream()
+			    .reduce((f1, f2) -> 
+			            Comparator.comparing((Function<OrdnungsElement, Comparable<?>>) f1)
+			                .thenComparing(f2))
+			    .map(comparator -> comparator.reversed())
+			    .orElseThrow();
+
+
+		
 
 		private static final Comparator<OrdnungsElement> comparator = comparing(
 				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte())
