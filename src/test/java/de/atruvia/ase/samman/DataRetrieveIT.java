@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman;
 
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
@@ -9,7 +10,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -48,8 +48,7 @@ class DataRetrieveIT {
 			}
 		}
 
-		return Arrays.stream(new Gson().fromJson(content, Match[].class)).map(Match::toDomain)
-				.collect(Collectors.toList());
+		return Arrays.stream(new Gson().fromJson(content, Match[].class)).map(Match::toDomain).collect(toList());
 	}
 
 }
