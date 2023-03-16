@@ -22,7 +22,7 @@ class DefaultTabellenServiceTest {
 
 		int longestTeamName = longestTeamName(erstelleTabelle);
 		
-		String s = erstelleTabelle.stream().map(f -> print(f)).collect(joining("\n"));
+		String s = erstelleTabelle.stream().map(f -> print(f, longestTeamName)).collect(joining("\n"));
 
 		System.out.println(s);
 
@@ -33,7 +33,10 @@ class DefaultTabellenServiceTest {
 		return erstelleTabelle.stream().map(p -> p.getTeam()).mapToInt(String::length).max().orElse(0);
 	}
 
-	private String print(TabellenPlatz tabellenPlatz) {
+	private String print(TabellenPlatz tabellenPlatz, String length) {
+		
+		return String.format("%1$" + length + "s", inputString).replace(' ', '0');
+		
 		return java.util.Arrays
 				.asList(tabellenPlatz.getTeam(), tabellenPlatz.getSpiele(), tabellenPlatz.getGewonnen(),
 						tabellenPlatz.getUnentschieden(), tabellenPlatz.getVerloren(), tabellenPlatz.getTore(),
