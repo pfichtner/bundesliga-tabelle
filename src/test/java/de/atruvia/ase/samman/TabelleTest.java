@@ -254,14 +254,14 @@ class TabelleTest {
 		public List<TabellenPlatz> getEntries() {
 			// TODO make it side-affect-free, does it work W/O zip!?
 			AtomicInteger platz = new AtomicInteger();
-			return eintraege.entrySet().stream().map(this::tabellenPlatz).collect(groupingBy(OrdnungsElement::new))
+			return eintraege.entrySet().stream().map(this::useTeam).collect(groupingBy(OrdnungsElement::new))
 					.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder()))
 					.peek(e -> platz.incrementAndGet()).map(Entry::getValue).flatMap(t -> t.stream()
 							.sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platz.get())))
 					.collect(toList());
 		}
 
-		private TabellenPlatz tabellenPlatz(Entry<String, TabellenPlatz> entry) {
+		private TabellenPlatz useTeam(Entry<String, TabellenPlatz> entry) {
 			return entry.getValue().withTeam(entry.getKey());
 		}
 
