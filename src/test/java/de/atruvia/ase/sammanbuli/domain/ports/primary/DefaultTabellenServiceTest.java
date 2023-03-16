@@ -23,8 +23,8 @@ class DefaultTabellenServiceTest {
 		verify(tabelle);
 	}
 
-	private int longestTeamName(List<TabellenPlatz> erstelleTabelle) {
-		return erstelleTabelle.stream().map(TabellenPlatz::getTeam).mapToInt(String::length).max().orElse(0);
+	private int longestTeamName(List<TabellenPlatz> tabellenPlaetze) {
+		return tabellenPlaetze.stream().map(TabellenPlatz::getTeam).mapToInt(String::length).max().orElse(0);
 	}
 
 	private String print(TabellenPlatz tabellenPlatz, int length) {
