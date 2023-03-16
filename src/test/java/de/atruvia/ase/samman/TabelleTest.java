@@ -19,7 +19,6 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import de.atruvia.ase.samman.TabelleTest.TabellenPlatz.TabellenPlatzBuilder;
