@@ -47,10 +47,6 @@ class DataRetrieveTest {
 
 	
 
-	private List<Paarung> lade(String url) throws IOException, InterruptedException, URISyntaxException {
-		String content = Files.contentOf(new File(getClass().getClassLoader().getResource("2022.json").toURI()),
-				defaultCharset());
-		return Arrays.stream(new Gson().fromJson(content, Match[].class)).map(Match::toDomain).collect(toList());
-	}
+	
 
 }
