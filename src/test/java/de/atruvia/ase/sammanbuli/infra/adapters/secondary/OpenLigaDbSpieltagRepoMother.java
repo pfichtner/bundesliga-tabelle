@@ -1,15 +1,16 @@
 package de.atruvia.ase.sammanbuli.infra.adapters.secondary;
 
 import static java.nio.file.Files.readString;
+import static lombok.AccessLevel.PRIVATE;
 
 import java.io.File;
 
-import lombok.experimental.UtilityClass;
+import lombok.NoArgsConstructor;
 
-@UtilityClass
-public class OpenLigaDbSpieltagRepoMother {
+@NoArgsConstructor(access = PRIVATE)
+public final class OpenLigaDbSpieltagRepoMother {
 
-	public OpenLigaDbSpieltagRepo readFromLocalFilesystemRepo() {
+	public static OpenLigaDbSpieltagRepo readFromLocalFilesystemRepo() {
 		return new OpenLigaDbSpieltagRepo() {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
