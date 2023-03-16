@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-class Tabelle {
+public class Tabelle {
 	
 	@RequiredArgsConstructor
 	@ToString
