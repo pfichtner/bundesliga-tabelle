@@ -33,7 +33,6 @@ class DataRetrieveTest {
 	}
 
 	private class Team {
-		@SerializedName("teamName")
 		String teamName;
 	}
 
