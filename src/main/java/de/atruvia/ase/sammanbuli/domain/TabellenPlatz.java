@@ -4,9 +4,11 @@ import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Collections.emptyMap;
+import static java.util.stream.Collectors.toMap;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis;
 import lombok.Builder;
@@ -70,11 +72,8 @@ public class TabellenPlatz {
 	}
 
 	private static Map<Ergebnis, Integer> merge(Map<Ergebnis, Integer> map1, Map<Ergebnis, Integer> map2) {
-		Map<Ergebnis, Integer> map = new HashMap<>();
-		map.putAll(map1);
-		map.putAll(map2);
-		System.out.println("merging " + map1 + "+" + map2 + "=" + map);
-		return map;
+		return Stream.of(map1, map2).flatMap(m -> m.entrySet().stream())
+				.collect(toMap(Map.Entry::getKey, Map.Entry::getValue, Integer::sum));
 	}
 
 	public int getGewonnen() {
