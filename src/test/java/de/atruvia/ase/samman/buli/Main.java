@@ -8,8 +8,8 @@ import de.atruvia.ase.sammanbuli.infra.adapters.secondary.OpenLigaDbSpieltagRepo
 public class Main {
 	
 	public static void main(String[] args) {
-		SpieltagRepo r = new OpenLigaDbSpieltagRepo();
-		TabellenService tabellenService = new DefaultTabellenService();
+		SpieltagRepo repo = new OpenLigaDbSpieltagRepo();
+		TabellenService tabellenService = new DefaultTabellenService(repo);
 		
 		
 	}
