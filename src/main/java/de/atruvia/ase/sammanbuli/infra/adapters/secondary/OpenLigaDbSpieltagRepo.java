@@ -44,15 +44,13 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		}
 	}
 
-	public List<Paarung> lade(String league, String season) {
-		String content = readJson();
-		return Arrays.stream(new Gson().fromJson(content, Match[].class)).map(Match::toDomain).collect(toList());
+	public List<Paarung> lade(String league, String season) throws Exception {
+		return Arrays.stream(new Gson().fromJson(readJson(), Match[].class)).map(Match::toDomain).collect(toList());
 	}
 
-	private String readJson() throws URISyntaxException {
+	private String readJson() throws Exception {
 		File file = new File(getClass().getClassLoader().getResource("2022.json").toURI());
-		
-		
+
 		String content = Files.contentOf(file, defaultCharset());
 		return content;
 	}
