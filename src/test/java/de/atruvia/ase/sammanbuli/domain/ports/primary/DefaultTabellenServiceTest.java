@@ -4,6 +4,7 @@ import static de.atruvia.ase.sammanbuli.infra.adapters.secondary.OpenLigaDbSpiel
 import static java.util.stream.Collectors.joining;
 import static org.approvaltests.Approvals.verify;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,10 +28,8 @@ class DefaultTabellenServiceTest {
 	}
 
 	private String print(TabellenPlatz tabellenPlatz, int length) {
-
 		String format = String.format("%-" + (length + 1) + "s", tabellenPlatz.getTeam());
-
-		return java.util.Arrays
+		return Arrays
 				.asList(format, tabellenPlatz.getSpiele(), tabellenPlatz.getGewonnen(),
 						tabellenPlatz.getUnentschieden(), tabellenPlatz.getVerloren(), tabellenPlatz.getTore(),
 						tabellenPlatz.getGegentore(), tabellenPlatz.getTorDifferenz(), tabellenPlatz.getPunkte())
