@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import de.atruvia.ase.sammanbuli.domain.Paarung;
 
-class OpenLigaDbSpieltagRepoTest2 {
+class OpenLigaDbSpieltagRepoIT {
 
 	@Test
 	void canRetrieveDataOf2022() throws Exception {
