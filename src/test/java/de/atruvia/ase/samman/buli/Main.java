@@ -11,6 +11,8 @@ public class Main {
 		SpieltagRepo repo = new OpenLigaDbSpieltagRepo();
 		TabellenService tabellenService = new DefaultTabellenService(repo);
 		
+		tabellenService.erstelleTabelle("bl1", "2022");
+		
 		
 	}
 
