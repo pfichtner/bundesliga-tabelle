@@ -13,6 +13,7 @@ import lombok.Value;
 @Value
 @Builder(toBuilder = true)
 class Paarung {
+
 	boolean gespielt;
 	String team1, team2;
 	int tore;
