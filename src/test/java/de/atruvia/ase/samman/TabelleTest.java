@@ -51,13 +51,6 @@ class TabelleTest {
 				e -> e.tabellenPlatz.getToreAuswaerts() //
 		);
 
-		{
-			
-			Stream<Object> xxx = functions.stream().map(f->Comparator.comparing(f));
-			
-			
-		}
-
 		private static final Comparator<OrdnungsElement> comparator = comparing(
 				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte())
 				.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz()))
