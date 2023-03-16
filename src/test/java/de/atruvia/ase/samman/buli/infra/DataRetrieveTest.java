@@ -4,14 +4,16 @@ import static java.util.stream.Collectors.toList;
 import static lombok.AccessLevel.PUBLIC;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse.BodyHandlers;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
+import org.assertj.core.util.Files;
 import org.junit.jupiter.api.Test;
 
 import com.google.gson.Gson;
@@ -32,10 +34,9 @@ class DataRetrieveTest {
 
 	}
 
-	private List<Paarung> lade(String url) throws IOException, InterruptedException {
-		URI uri = URI.create(url);
-		HttpRequest request = HttpRequest.newBuilder(uri).build();
-		String content = HttpClient.newHttpClient().send(request, BodyHandlers.ofString()).body();
+	private List<Paarung> lade(String url) throws IOException, InterruptedException, URISyntaxException {
+		String content = Files.contentOf(new File(getClass().getClassLoader().getResource("2022.json").toURI()),
+				Charset.defaultCharset());
 
 		@ToString
 		@FieldDefaults(level = PUBLIC)
