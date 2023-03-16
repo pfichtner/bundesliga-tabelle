@@ -32,7 +32,8 @@ class DataRetrieveTest {
 
 	}
 
-	private class Team {
+	@ToString
+	class Team {
 		String teamName;
 	}
 
