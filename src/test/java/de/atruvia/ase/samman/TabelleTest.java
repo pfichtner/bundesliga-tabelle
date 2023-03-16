@@ -245,22 +245,23 @@ class TabelleTest {
 		private final Map<String, TabellenPlatz> eintraege = new HashMap<>();
 
 		private void add(Paarung paarung) {
-			addInternal(paarung);
-			addInternal(paarung.swap());
+			addInternal(paarung, false);
+			addInternal(paarung.swap(), true);
 		}
 
-		private void addInternal(Paarung paarung) {
-			eintraege.merge(paarung.getTeam1(), newEintrag(paarung), TabellenPlatz::merge);
+		private void addInternal(Paarung paarung, boolean swapped) {
+			eintraege.merge(paarung.getTeam1(), newEintrag(paarung, swapped), TabellenPlatz::merge);
 		}
 
-		private TabellenPlatz newEintrag(Paarung paarung) {
+		private TabellenPlatz newEintrag(Paarung paarung, boolean swapped) {
 			if (!paarung.isGespielt()) {
 				return TabellenPlatz.NULL;
 			}
-			TabellenPlatzBuilder punkte = TabellenPlatz.builder() //
+			TabellenPlatzBuilder builder = TabellenPlatz.builder() //
 					.ergebnis(paarung.ergebnis()) //
 					.punkte(paarung.punkte());
-			return punkte //
+			if (!swapped)
+			return builder //
 					.toreHeim(paarung.tore) //
 					.gegentore(paarung.gegentore) //
 					.build();
