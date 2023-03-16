@@ -1,6 +1,6 @@
 package de.atruvia.ase.sammanbuli.domain;
 
-import static Ergebni;
+import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.*;
 import static java.util.Collections.emptyMap;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
