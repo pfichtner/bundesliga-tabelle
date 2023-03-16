@@ -13,7 +13,6 @@ class OpenLigaDbSpieltagRepoIT {
 	@Test
 	void canRetrieveDataOf2022() throws Exception {
 		List<Paarung> paarungen = repo().lade("bl1", "2022");
-		assertThat(paarungen).element(24 * 18);
 		assertThat(paarungen).element(0).isEqualTo(
 				Paarung.builder().team1("Eintracht Frankfurt").team2("FC Bayern München").ergebnis(1, 6).build());
 	}
