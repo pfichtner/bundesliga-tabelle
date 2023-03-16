@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 
 import com.google.gson.Gson;
 
+import lombok.ToString;
+
 class DataRetrieveIT {
 
 	@Test
@@ -31,13 +33,16 @@ class DataRetrieveIT {
 		HttpRequest request = HttpRequest.newBuilder(uri).build();
 		String content = HttpClient.newHttpClient().send(request, BodyHandlers.ofString()).body();
 
+		@ToString
 		class Team {
 			String teamName;
 		}
+		@ToString
 		class MatchResult {
 //			String resultName;
 			int pointsTeam1, pointsTeam2;
 		}
+		@ToString
 		class Match {
 			Team team1, team2;
 			MatchResult[] matchResults;
