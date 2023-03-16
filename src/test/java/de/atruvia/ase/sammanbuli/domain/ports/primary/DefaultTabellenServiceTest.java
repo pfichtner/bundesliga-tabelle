@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.joining;
 import static org.approvaltests.Approvals.verify;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +34,14 @@ class DefaultTabellenServiceTest {
 				.asList(format, tabellenPlatz.getSpiele(), tabellenPlatz.getGewonnen(),
 						tabellenPlatz.getUnentschieden(), tabellenPlatz.getVerloren(), tabellenPlatz.getTore(),
 						tabellenPlatz.getGegentore(), tabellenPlatz.getTorDifferenz(), tabellenPlatz.getPunkte())
-				.stream().map(Object::toString).collect(joining("\t|"));
+				.stream().map(o->format(o)).collect(joining("\t|"));
+	}
+
+	private String format(Object o) {
+		if (o instanceof Number) {
+			return String.format("%3d", o);
+		}
+		return Objects.toString(o);
 	}
 
 }
