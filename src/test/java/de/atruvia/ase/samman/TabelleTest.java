@@ -259,7 +259,7 @@ class TabelleTest {
 			return TabellenPlatz.builder() //
 					.ergebnis(paarung.ergebnis()) //
 					.punkte(paarung.punkte()) //
-					.tore(paarung.tore) //
+					.toreHeim(paarung.tore) //
 					.gegentore(paarung.gegentore) //
 					.build();
 		}
