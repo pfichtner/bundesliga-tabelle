@@ -33,12 +33,12 @@ class DefaultTabellenServiceTest {
 		return erstelleTabelle.stream().map(p -> p.getTeam()).mapToInt(String::length).max().orElse(0);
 	}
 
-	private String print(TabellenPlatz tabellenPlatz, String length) {
+	private String print(TabellenPlatz tabellenPlatz, int length) {
 		
-		return String.format("%1$" + length + "s", inputString).replace(' ', '0');
+		String format = String.format("%1$" + length + "s", tabellenPlatz.getTeam());
 		
 		return java.util.Arrays
-				.asList(tabellenPlatz.getTeam(), tabellenPlatz.getSpiele(), tabellenPlatz.getGewonnen(),
+				.asList(format, tabellenPlatz.getSpiele(), tabellenPlatz.getGewonnen(),
 						tabellenPlatz.getUnentschieden(), tabellenPlatz.getVerloren(), tabellenPlatz.getTore(),
 						tabellenPlatz.getGegentore(), tabellenPlatz.getTorDifferenz(), tabellenPlatz.getPunkte())
 				.stream().map(Object::toString).collect(joining("\t|"));
