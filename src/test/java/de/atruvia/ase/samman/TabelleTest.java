@@ -42,6 +42,11 @@ class TabelleTest {
 //	    MIS: Overall away goal difference: The difference between the number of away goals scored and the number of away goals conceded by the tied teams in matches played away from their home stadium.
 //		If two or more teams have the same rank in the Bundesliga and there is no other criteria that can be used to separate them, then the teams will be listed in alphabetical order according to their full club name.
 
+		private static final Comparator<OrdnungsElement> comparators = List.of( 
+				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte(),
+				comparing(e -> e.tabellenPlatz.getTorDifferenz()),
+				comparing(e -> e.tabellenPlatz.getTore()),
+				comparing(e -> e.tabellenPlatz.getToreAuswaerts()));
 		private static final Comparator<OrdnungsElement> comparator = comparing(
 				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte())
 				.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz()))
