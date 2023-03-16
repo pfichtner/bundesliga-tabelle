@@ -4,6 +4,7 @@ import java.util.List;
 
 import de.atruvia.ase.sammanbuli.domain.Paarung;
 import de.atruvia.ase.sammanbuli.domain.Tabelle;
+import de.atruvia.ase.sammanbuli.domain.TabellenPlatz;
 import de.atruvia.ase.sammanbuli.domain.ports.secondary.SpieltagRepo;
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +17,8 @@ public class DefaultTabellenService implements TabellenService {
 	public void erstelleTabelle(String league, String season) {
 		Tabelle tabelle = new Tabelle();
 		setzeSpiele(league, season, tabelle);
+		List<TabellenPlatz> entries = tabelle.getEntries();
+		
 
 	}
 
