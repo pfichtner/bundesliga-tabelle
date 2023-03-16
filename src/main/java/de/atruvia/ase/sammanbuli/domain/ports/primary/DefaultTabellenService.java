@@ -13,11 +13,14 @@ public class DefaultTabellenService implements TabellenService {
 	private final SpieltagRepo spieltagRepo;
 
 	@Override
-	public void erstelleTabelle(String league, String season) throws Exception {
+	public void erstelleTabelle(String league, String season) {
 		Tabelle tabelle = new Tabelle();
 
-		List<Paarung> lade = spieltagRepo.lade(league, season);
-		lade.forEach(tabelle::add);
+		try {
+			spieltagRepo.lade(league, season).forEach(tabelle::add);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 
 		// TODO Auto-generated method stub
 
