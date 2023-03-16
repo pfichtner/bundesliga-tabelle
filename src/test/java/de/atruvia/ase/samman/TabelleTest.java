@@ -251,6 +251,7 @@ class TabelleTest {
 		}
 
 		public List<TabellenPlatz> getEntries() {
+			// TODO make it side-affect-free, does it work W/O zip!?
 			AtomicInteger platz = new AtomicInteger();
 			return eintraege.entrySet().stream().map(this::tabellenPlatz).collect(groupingBy(OrdnungsElement::new))
 					.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder()))
