@@ -12,6 +12,9 @@ public class DefaultTabellenService implements TabellenService {
 	@Override
 	public void erstelleTabelle(String league, String season) {
 		Tabelle tabelle = new Tabelle();
+		
+		spieltagRepo.l
+		
 		tabelle.add(p);
 		
 		

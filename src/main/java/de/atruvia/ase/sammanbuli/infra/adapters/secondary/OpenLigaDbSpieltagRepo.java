@@ -1,15 +1,11 @@
 package de.atruvia.ase.sammanbuli.infra.adapters.secondary;
 
-import static java.nio.charset.Charset.defaultCharset;
 import static java.util.stream.Collectors.toList;
 
-import java.io.File;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 
