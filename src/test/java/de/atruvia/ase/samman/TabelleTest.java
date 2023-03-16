@@ -45,7 +45,7 @@ class TabelleTest {
 //		If two or more teams have the same rank in the Bundesliga and there is no other criteria that can be used to separate them, then the teams will be listed in alphabetical order according to their full club name.
 
 		private static final Comparator<OrdnungsElement> comparator = comparing(
-				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte())
+				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte()).reversed()
 				.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz())).reversed()
 				.thenComparing(comparing(e -> e.tabellenPlatz.getTore())).reversed();
 
@@ -266,11 +266,7 @@ class TabelleTest {
 			AtomicInteger platz = new AtomicInteger();
 			Map<OrdnungsElement, List<TabellenPlatz>> gruppiertMitPlatz = eintraege.entrySet().stream()
 					.map(this::setTeam).collect(groupingBy(OrdnungsElement::new));
-			
-			gruppiertMitPlatz.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder())).forEach(System.out::println);
-			
-			
-			return gruppiertMitPlatz.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder()))
+			return gruppiertMitPlatz.entrySet().stream().sorted(comparing(Entry::getKey))
 					.peek(e -> platz.incrementAndGet()).map(Entry::getValue).flatMap(t -> t.stream()
 							.sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platz.get())))
 					.collect(toList());
