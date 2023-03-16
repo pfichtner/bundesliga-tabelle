@@ -9,7 +9,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
@@ -45,13 +44,9 @@ class DataRetrieveIT {
 		}
 
 		return Arrays.stream(new Gson().fromJson(content, Match[].class))
-				.map(toDOmain())
+				.map(m -> Paarung.builder().team1(m.team1.teamName).team2(m.team2.teamName)
+						.ergebnis(m.matchResults[0].pointsTeam1, m.matchResults[0].pointsTeam2).build())
 				.collect(Collectors.toList());
-	}
-
-	private Function<? super Match, ? extends Paarung> toDOmain() {
-		return m -> Paarung.builder().team1(m.team1.teamName).team2(m.team2.teamName)
-				.ergebnis(m.matchResults[0].pointsTeam1, m.matchResults[0].pointsTeam2).build();
 	}
 
 }
