@@ -6,8 +6,10 @@ import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toMap;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Stream;
 
 import de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis;
@@ -72,8 +74,8 @@ public class TabellenPlatz {
 	}
 
 	private static Map<Ergebnis, Integer> merge(Map<Ergebnis, Integer> map1, Map<Ergebnis, Integer> map2) {
-		return Stream.of(map1, map2).flatMap(m -> m.entrySet().stream())
-				.collect(toMap(Map.Entry::getKey, Map.Entry::getValue, Integer::sum));
+		return Stream.of(map1, map2).map(Map::entrySet).flatMap(Collection::stream)
+				.collect(toMap(Entry::getKey, Entry::getValue, Integer::sum));
 	}
 
 	public int getGewonnen() {
