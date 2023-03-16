@@ -42,13 +42,14 @@ class DataRetrieveIT {
 			Team team1, team2;
 			MatchResult[] matchResults;
 
-			private Paarung td() {
+			Paarung toDomain() {
 				return Paarung.builder().team1(team1.teamName).team2(team2.teamName)
 						.ergebnis(matchResults[0].pointsTeam1, matchResults[0].pointsTeam2).build();
 			}
 		}
 
-		return Arrays.stream(new Gson().fromJson(content, Match[].class)).map(m -> m.td()).collect(Collectors.toList());
+		return Arrays.stream(new Gson().fromJson(content, Match[].class)).map(Match::toDomain)
+				.collect(Collectors.toList());
 	}
 
 }
