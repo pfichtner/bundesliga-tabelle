@@ -24,7 +24,7 @@ public final class OpenLigaDbSpieltagRepoMother {
 	}
 
 	private static URL url(String league, String season) {
-		return getClass().getClassLoader().getResource(league + "/" + season + ".json");
+		return OpenLigaDbSpieltagRepoMother.class.getClassLoader().getResource(league + "/" + season + ".json");
 	}
 
 }
