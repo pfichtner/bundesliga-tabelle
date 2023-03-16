@@ -10,14 +10,14 @@ import lombok.Value;
 
 @Value
 @Builder(toBuilder = true)
-class Paarung {
+public class Paarung {
 
 	boolean gespielt;
 	String team1, team2;
 	int tore;
 	int gegentore;
 
-	int punkte() {
+	private int punkte() {
 		return switch (ergebnis()) {
 		case SIEG -> 3;
 		case UNENTSCHIEDEN -> 1;
