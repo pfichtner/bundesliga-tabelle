@@ -264,7 +264,8 @@ class TabelleTest {
 				return builder //
 						.toreAuswaerts(paarung.tore) //
 						.gegentore(paarung.gegentore) //
-						.build();	} else
+						.build();
+			} else
 				return builder //
 						.toreHeim(paarung.tore) //
 						.gegentore(paarung.gegentore) //
