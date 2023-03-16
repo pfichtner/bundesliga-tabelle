@@ -39,7 +39,6 @@ class DataRetrieveTest {
 		MatchResult[] matchResults;
 
 		Paarung toDomain() {
-			System.out.println(this);
 			PaarungBuilder b = Paarung.builder().team1(team1.teamName).team2(team2.teamName);
 			b = matchResults.length == 0 ? b.ergebnis(matchResults[0].pointsTeam1, matchResults[0].pointsTeam2) : b;
 			return b.build();
