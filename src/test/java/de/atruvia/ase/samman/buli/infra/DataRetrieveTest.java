@@ -40,10 +40,8 @@ class DataRetrieveTest {
 
 		Paarung toDomain() {
 			System.out.println(this);
-			PaarungBuilder builder = Paarung.builder().team1(team1.teamName).team2(team2.teamName);
-			PaarungBuilder b = matchResults.length = 0
-					? builder.ergebnis(matchResults[0].pointsTeam1, matchResults[0].pointsTeam2)
-					: b;
+			PaarungBuilder b = Paarung.builder().team1(team1.teamName).team2(team2.teamName);
+			b = matchResults.length = 0 ? b.ergebnis(matchResults[0].pointsTeam1, matchResults[0].pointsTeam2) : b;
 			return b.build();
 		}
 	}
