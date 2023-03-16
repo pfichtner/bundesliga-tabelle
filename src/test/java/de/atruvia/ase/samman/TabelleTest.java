@@ -61,7 +61,7 @@ class TabelleTest {
 
 		@Override
 		public int hashCode() {
-			functions.map(f->f.apply(tabellenPlatz));
+			functions.stream(). map(f->f.apply(this));
 			return Objects.hash(tabellenPlatz.getPunkte(), tabellenPlatz.getTorDifferenz(), tabellenPlatz.getTore(),
 					tabellenPlatz.getToreAuswaerts());
 		}
