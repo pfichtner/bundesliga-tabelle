@@ -238,8 +238,12 @@ class TabelleTest {
 		private final Map<String, TabellenPlatz> eintraege = new HashMap<>();
 
 		private void add(Paarung paarung) {
-			addInternal(paarung);
-			addInternal(paarung.swap());
+			if (!paarung.isGespielt()) {
+				
+			}else {
+				addInternal(paarung);
+				addInternal(paarung.swap());
+			}
 		}
 
 		private void addInternal(Paarung paarung) {
