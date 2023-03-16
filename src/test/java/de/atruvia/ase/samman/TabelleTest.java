@@ -261,10 +261,10 @@ class TabelleTest {
 					.ergebnis(paarung.ergebnis()) //
 					.punkte(paarung.punkte());
 			if (!swapped)
-			return builder //
-					.toreHeim(paarung.tore) //
-					.gegentore(paarung.gegentore) //
-					.build();
+				return builder //
+						.toreHeim(paarung.tore) //
+						.gegentore(paarung.gegentore) //
+						.build();
 		}
 
 		public List<TabellenPlatz> getEntries() {
