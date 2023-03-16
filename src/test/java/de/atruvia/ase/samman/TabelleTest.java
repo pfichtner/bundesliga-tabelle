@@ -21,6 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
 
+import de.atruvia.ase.samman.TabelleTest.Paarung;
 import de.atruvia.ase.samman.TabelleTest.TabellenPlatz.TabellenPlatzBuilder;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -153,42 +154,6 @@ class TabelleTest {
 
 	public enum Ergebnis {
 		SIEG, UNENTSCHIEDEN, NIEDERLAGE;
-	}
-
-	@Value
-	@Builder(toBuilder = true)
-	private static class Paarung {
-		boolean gespielt;
-		String team1, team2;
-		int tore, gegentore;
-
-		int punkte() {
-			return switch (ergebnis()) {
-			case SIEG -> 3;
-			case UNENTSCHIEDEN -> 1;
-			case NIEDERLAGE -> 0;
-			};
-		}
-
-		public Ergebnis ergebnis() {
-			return tore == gegentore ? UNENTSCHIEDEN : tore > gegentore ? SIEG : NIEDERLAGE;
-		}
-
-		private Paarung swap() {
-			return toBuilder().team1(team2).team2(team1).tore(gegentore).gegentore(tore).build();
-		}
-
-		private static class PaarungBuilder {
-
-			public PaarungBuilder ergebnis(int tore, int gegentore) {
-				this.gespielt = true;
-				this.tore = tore;
-				this.gegentore = gegentore;
-				return this;
-			}
-
-		}
-
 	}
 
 	private Paarung[] paarungen;
