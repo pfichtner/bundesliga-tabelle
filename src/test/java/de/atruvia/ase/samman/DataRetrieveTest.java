@@ -18,8 +18,7 @@ class DataRetrieveTest {
 	}
 
 	private List<Paarung> lade(String url) {
-		// TODO Auto-generated method stub
-		return null;
+		return List.of();
 	}
 
 }
