@@ -19,6 +19,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
@@ -50,12 +51,13 @@ class TabelleTest {
 				e -> e.tabellenPlatz.getToreAuswaerts() //
 		);
 		
-		private static final Comparator<OrdnungsElement> comparatorX = functions.stream()
-			    .reduce((f1, f2) -> 
-			            Comparator.comparing((Function<OrdnungsElement, Comparable<?>>) f1)
-			                .thenComparing(f2))
-			    .map(comparator -> comparator.reversed())
-			    .orElseThrow();
+
+		{
+			
+			Stream<Object> xxx = functions.stream().map(f->comparing(f));
+			
+			
+		}
 
 
 		
