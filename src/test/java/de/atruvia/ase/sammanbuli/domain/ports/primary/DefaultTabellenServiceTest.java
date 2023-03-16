@@ -21,6 +21,7 @@ class DefaultTabellenServiceTest {
 		List<TabellenPlatz> erstelleTabelle = sut.erstelleTabelle("bl1", "2022");
 
 		int longestTeamName = longestTeamName(erstelleTabelle);
+		
 		String s = erstelleTabelle.stream().map(f -> print(f)).collect(joining("\n"));
 
 		System.out.println(s);
