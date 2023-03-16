@@ -34,7 +34,7 @@ class DefaultTabellenServiceTest {
 				.asList(format, tabellenPlatz.getSpiele(), tabellenPlatz.getGewonnen(),
 						tabellenPlatz.getUnentschieden(), tabellenPlatz.getVerloren(), tabellenPlatz.getTore(),
 						tabellenPlatz.getGegentore(), tabellenPlatz.getTorDifferenz(), tabellenPlatz.getPunkte())
-				.stream().map(o -> format(o)).collect(joining(" |"));
+				.stream().map(o -> format(o)).collect(joining(" | "));
 	}
 
 	private String format(Object o) {
