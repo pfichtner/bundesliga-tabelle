@@ -16,8 +16,7 @@ public class Main {
 	}
 
 	private static SpieltagRepo spieltagRepo() {
-		SpieltagRepo repo = new OpenLigaDbSpieltagRepo();
-		return repo;
+		return new OpenLigaDbSpieltagRepo();
 	}
 
 }
