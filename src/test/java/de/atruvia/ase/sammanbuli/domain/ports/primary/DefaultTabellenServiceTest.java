@@ -21,6 +21,8 @@ class DefaultTabellenServiceTest {
 		List<TabellenPlatz> erstelleTabelle = sut.erstelleTabelle("bl1", "2022");
 
 		String s = erstelleTabelle.stream().map(f -> print(f)).collect(Collectors.joining("\n"));
+		
+		System.out.println(s);
 
 		assertThat(s).isEqualTo("");
 	}
