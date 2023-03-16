@@ -14,7 +14,8 @@ import lombok.Value;
 import lombok.With;
 
 @Value
-@Builder class TabellenPlatz {
+@Builder
+public class TabellenPlatz {
 
 	static TabellenPlatz NULL = new TabellenPlatz(0, "", 0, emptyMap(), 0, 0, 0, 0, 0);
 
