@@ -23,15 +23,6 @@ import lombok.experimental.FieldDefaults;
 
 class DataRetrieveTest {
 
-	@Test
-	void canRetrieveDataOf2022() throws IOException, InterruptedException, URISyntaxException {
-		String url = "https://api.openligadb.de/getmatchdata/bl1/2022";
-		List<Paarung> paarungen = lade(url);
-		assertThat(paarungen.get(0)).isEqualTo(
-				Paarung.builder().team1("Eintracht Frankfurt").team2("FC Bayern München").ergebnis(1, 6).build());
-
-	}
-
 	@ToString
 	class Team {
 		String teamName;
@@ -60,6 +51,15 @@ class DataRetrieveTest {
 			return Paarung.builder().team1(team1.teamName).team2(team2.teamName)
 					.ergebnis(matchResults[0].pointsTeam1, matchResults[0].pointsTeam2).build();
 		}
+	}
+
+	@Test
+	void canRetrieveDataOf2022() throws IOException, InterruptedException, URISyntaxException {
+		String url = "https://api.openligadb.de/getmatchdata/bl1/2022";
+		List<Paarung> paarungen = lade(url);
+		assertThat(paarungen.get(0)).isEqualTo(
+				Paarung.builder().team1("Eintracht Frankfurt").team2("FC Bayern München").ergebnis(1, 6).build());
+
 	}
 
 	private List<Paarung> lade(String url) throws IOException, InterruptedException, URISyntaxException {
