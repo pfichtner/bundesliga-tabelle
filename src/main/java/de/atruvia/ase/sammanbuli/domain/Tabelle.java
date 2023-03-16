@@ -59,7 +59,7 @@ public class Tabelle {
 
 	private final Map<String, TabellenPlatz> eintraege = new HashMap<>();
 
-	void add(Paarung paarung) {
+	public void add(Paarung paarung) {
 		addInternal(paarung, false);
 		addInternal(paarung.swap(), true);
 	}
