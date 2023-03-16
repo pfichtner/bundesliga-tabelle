@@ -158,7 +158,7 @@ class TabelleTest {
 		}
 
 		public Ergebnis ergebnis() {
-			return tore == gegentore ? UNENTSCHIEDEN : tore > gegentore ? Ergebnis.SIEG : NIEDERLAGE;
+			return tore == gegentore ? UNENTSCHIEDEN : tore > gegentore ? SIEG : NIEDERLAGE;
 		}
 
 		private Paarung swap() {
