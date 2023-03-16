@@ -21,7 +21,7 @@ class DefaultTabellenServiceTest {
 		List<TabellenPlatz> erstelleTabelle = sut.erstelleTabelle("bl1", "2022");
 
 		int longestTeamName = longestTeamName(erstelleTabelle);
-		
+
 		String s = erstelleTabelle.stream().map(f -> print(f, longestTeamName)).collect(joining("\n"));
 
 		System.out.println(s);
@@ -34,9 +34,9 @@ class DefaultTabellenServiceTest {
 	}
 
 	private String print(TabellenPlatz tabellenPlatz, int length) {
-		
-		String format = String.format("%1$" + length + "s", tabellenPlatz.getTeam());
-		
+
+		String format = String.format("%1$" + (length + 1) + "s", tabellenPlatz.getTeam());
+
 		return java.util.Arrays
 				.asList(format, tabellenPlatz.getSpiele(), tabellenPlatz.getGewonnen(),
 						tabellenPlatz.getUnentschieden(), tabellenPlatz.getVerloren(), tabellenPlatz.getTore(),
