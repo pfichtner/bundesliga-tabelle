@@ -51,12 +51,14 @@ class TabelleTest {
 				e -> e.tabellenPlatz.getToreAuswaerts() //
 		);
 
-		private static final Comparator<OrdnungsElement> comparator = comparing(
-				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte())
-				.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz()))
-				.thenComparing(comparing(e -> e.tabellenPlatz.getTore()))
-				.thenComparing(comparing(e -> e.tabellenPlatz.getToreAuswaerts())) //
-				.reversed();
+		private static final Comparator<OrdnungsElement> comparator = new Comparator<TabelleTest.OrdnungsElement>() {
+
+			@Override
+			public int compare(OrdnungsElement o1, OrdnungsElement o2) {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+		}.reversed();
 
 		private final TabellenPlatz tabellenPlatz;
 
