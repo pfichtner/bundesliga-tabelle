@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -250,9 +251,10 @@ class TabelleTest {
 		}
 
 		public List<TabellenPlatz> getEntries() {
-			// TODO platz enumerating
+			AtomicInteger platz = new AtomicInteger();
 			return eintraege.entrySet().stream().map(this::tabellenPlatz).collect(groupingBy(OrdnungsElement::new))
-					.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder())).map(Entry::getValue)
+					.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder()))
+					.peek(e -> platz.incrementAndGet()).map(Entry::getValue)
 					.flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new))).collect(toList());
 		}
 
