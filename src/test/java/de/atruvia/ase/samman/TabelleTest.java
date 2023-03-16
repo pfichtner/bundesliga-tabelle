@@ -17,10 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.function.Function;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +26,7 @@ import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.Value;
+import lombok.With;
 
 class TabelleTest {
 
@@ -77,6 +76,7 @@ class TabelleTest {
 
 		static TabellenPlatz NULL = new TabellenPlatz(0, "", 0, emptyMap(), 0, 0, 0);
 
+		@With
 		int platz;
 		String team;
 		@Builder.Default
@@ -254,8 +254,9 @@ class TabelleTest {
 			AtomicInteger platz = new AtomicInteger();
 			return eintraege.entrySet().stream().map(this::tabellenPlatz).collect(groupingBy(OrdnungsElement::new))
 					.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder()))
-					.peek(e -> platz.incrementAndGet()).map(Entry::getValue)
-					.flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp)).collect(toList());
+					.peek(e -> platz.incrementAndGet()).map(Entry::getValue).flatMap(t -> t.stream()
+							.sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platz.get())))
+					.collect(toList());
 		}
 
 		private TabellenPlatz tabellenPlatz(Entry<String, TabellenPlatz> entry) {
