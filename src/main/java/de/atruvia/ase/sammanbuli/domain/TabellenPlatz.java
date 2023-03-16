@@ -50,7 +50,7 @@ public class TabellenPlatz {
 			ergebnisse = new HashMap<>();
 		}
 
-		public TabellenPlatz.TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
+		public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
 			ergebnisse.merge(ergebnis, 1, (a, b) -> a + b);
 			return this;
 		}
@@ -62,7 +62,7 @@ public class TabellenPlatz {
 	}
 
 	public TabellenPlatz merge(TabellenPlatz other) {
-		return TabellenPlatz.builder() //
+		return builder() //
 				.ergebnisse(merge(this.ergebnisse, other.ergebnisse)) //
 				.spiele(this.spiele + other.spiele) //
 				.punkte(this.punkte + other.punkte) //
