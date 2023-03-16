@@ -53,9 +53,7 @@ class TabelleTest {
 
 		{
 			
-			Stream<Object> xxx = functions.stream().map(f->comparing(new Function<OrdnungsElement, Comparable<?>>() {
-				
-			}));
+			Stream<Object> xxx = functions.stream().map(f->comparing(f));
 			
 			
 		}
