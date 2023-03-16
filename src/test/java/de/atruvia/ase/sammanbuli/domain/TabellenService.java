@@ -1,5 +1,5 @@
-package de.atruvia.ase.sammanbuli.domain;
+package de.atruvia.ase.sammanbuli.domain.ports.primary;
 
-public class TabellenService {
+public interface TabellenService {
 
 }
