@@ -8,4 +8,10 @@ public class DefaultTabellenService implements TabellenService {
 
 	private final SpieltagRepo spieltagRepo;
 
+	@Override
+	public void erstelleTabelle(String league, String season) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
