@@ -52,13 +52,13 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	}
 
 	protected String readJson(String league, String season) throws Exception {
-		return HttpClient.newHttpClient().send(HttpRequest.newBuilder(URI.create(makeUrl(league, season))).build(), BodyHandlers.ofString())
+		return HttpClient.newHttpClient()
+				.send(HttpRequest.newBuilder(URI.create(makeUrl(league, season))).build(), BodyHandlers.ofString())
 				.body();
 	}
 
 	private String makeUrl(String league, String season) {
-		String url = "https://api.openligadb.de/getmatchdata/" + league + "/" + season;
-		return url;
+		return "https://api.openligadb.de/getmatchdata/" + league + "/" + season;
 	}
 
 }
