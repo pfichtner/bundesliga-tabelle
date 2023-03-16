@@ -17,7 +17,6 @@ public class DefaultTabellenService implements TabellenService {
 		Tabelle tabelle = new Tabelle();
 		setzeSpiele(league, season, tabelle);
 		return tabelle.getEntries();
-
 	}
 
 	private void setzeSpiele(String league, String season, Tabelle tabelle) {
