@@ -57,10 +57,4 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 				.body();
 	}
 
-	private String d() throws URISyntaxException {
-		File file = new File(getClass().getClassLoader().getResource("2022.json").toURI());
-		String content = Files.contentOf(file, defaultCharset());
-		return content;
-	}
-
 }
