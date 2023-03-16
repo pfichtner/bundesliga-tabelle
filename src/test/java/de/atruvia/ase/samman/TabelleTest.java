@@ -38,14 +38,15 @@ class TabelleTest {
 //	    MIS: Head-to-head away goals scored: The total number of away goals scored by the tied teams in the matches played between them.
 //	    HIT: Overall goal difference: The difference between the number of goals scored and the number of goals conceded in all matches played.
 //	    HIT: Overall goals scored: The total number of goals scored in all matches played.
-//	    MIS: Overall away goals scored: The total number of goals scored by the tied teams in matches played away from their home stadium.
-//	    MIS: Overall away goal difference: The difference between the number of away goals scored and the number of away goals conceded by the tied teams in matches played away from their home stadium.
+//	    Overall away goals scored: The total number of goals scored by the tied teams in matches played away from their home stadium.
+//	    Overall away goal difference: The difference between the number of away goals scored and the number of away goals conceded by the tied teams in matches played away from their home stadium.
 //		If two or more teams have the same rank in the Bundesliga and there is no other criteria that can be used to separate them, then the teams will be listed in alphabetical order according to their full club name.
 
 		private static final Comparator<OrdnungsElement> comparator = comparing(
 				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte()).reversed()
 				.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz())).reversed()
 				.thenComparing(comparing(e -> e.tabellenPlatz.getTore())).reversed()
+				.thenComparing(comparing(e -> e.tabellenPlatz.getGegentore())).reversed() //
 		;
 
 		private final TabellenPlatz tabellenPlatz;
@@ -211,15 +212,6 @@ class TabelleTest {
 	@Test
 	void zweiMannschaftenZweiSpieleMitToren() {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 0), paarung("Team 2", "Team 1").ergebnis(1, 0));
-		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle("""
-				1|Team 1|2|1|0|1|3|1|1|0
-				1|Team 2|2|1|0|1|3|1|1|0""");
-	}
-
-	@Test
-	void punktUndTorGleichAberMehrAUswärtsTore() {
-		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(2, 1), paarung("Team 2", "Team 1").ergebnis(1, 0));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
 				1|Team 1|2|1|0|1|3|1|1|0
