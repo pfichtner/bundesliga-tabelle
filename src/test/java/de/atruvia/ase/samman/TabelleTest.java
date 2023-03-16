@@ -266,8 +266,11 @@ class TabelleTest {
 			AtomicInteger platz = new AtomicInteger();
 			Map<OrdnungsElement, List<TabellenPlatz>> gruppiertMitPlatz = eintraege.entrySet().stream()
 					.map(this::setTeam).collect(groupingBy(OrdnungsElement::new));
-			Stream<Entry<OrdnungsElement, List<TabellenPlatz>>> sorted = gruppiertMitPlatz.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder()));
-			return sorted
+			
+			gruppiertMitPlatz.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder())).forEach(System.out::println);
+			
+			
+			return gruppiertMitPlatz.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder()))
 					.peek(e -> platz.incrementAndGet()).map(Entry::getValue).flatMap(t -> t.stream()
 							.sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platz.get())))
 					.collect(toList());
