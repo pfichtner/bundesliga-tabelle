@@ -19,7 +19,7 @@ class OpenLigaDbSpieltagRepoTest {
 				Paarung.builder().team1("Eintracht Frankfurt").team2("FC Bayern München").ergebnis(1, 6).build());
 	}
 
-	private OpenLigaDbSpieltagRepo repo() {
+	private static OpenLigaDbSpieltagRepo repo() {
 		return new OpenLigaDbSpieltagRepo() {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
