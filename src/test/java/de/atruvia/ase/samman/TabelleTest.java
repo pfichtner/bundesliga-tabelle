@@ -221,8 +221,8 @@ class TabelleTest {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 2), paarung("Team 2", "Team 1").ergebnis(0, 1));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
-				1|Team 1|2|1|0|1|3|2|2|0
-				1|Team 2|2|1|0|1|3|2|2|0""");
+				1|Team 2|2|1|0|1|3|2|2|0
+				2|Team 1|2|1|0|1|3|2|2|0""");
 	}
 
 	private Paarung.PaarungBuilder paarung(String team1, String team2) {
