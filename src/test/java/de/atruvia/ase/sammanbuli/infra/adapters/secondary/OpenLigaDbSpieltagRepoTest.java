@@ -23,7 +23,9 @@ class OpenLigaDbSpieltagRepoTest {
 		return new OpenLigaDbSpieltagRepo() {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
-				return readString(new File(getClass().getClassLoader().getResource(season + ".json").toURI()).toPath());
+				return readString(
+						new File(getClass().getClassLoader().getResource(league + "/" + season + ".json").toURI())
+								.toPath());
 			}
 		};
 	}
