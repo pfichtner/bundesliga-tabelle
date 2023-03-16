@@ -52,7 +52,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	}
 
 	protected String readJson(String league, String season) throws Exception {
-		String url = "https://api.openligadb.de/getmatchdata/bl1/2022";
+		String url = "https://api.openligadb.de/getmatchdata/" + league + "/" + season;
 		return HttpClient.newHttpClient().send(HttpRequest.newBuilder(URI.create(url)).build(), BodyHandlers.ofString())
 				.body();
 	}
