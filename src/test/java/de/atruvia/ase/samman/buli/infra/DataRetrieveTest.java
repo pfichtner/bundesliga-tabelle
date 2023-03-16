@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import com.google.gson.Gson;
 
 import de.atruvia.ase.samman.Paarung;
+import de.atruvia.ase.samman.Paarung.PaarungBuilder;
 import lombok.ToString;
 
 class DataRetrieveTest {
@@ -39,7 +40,8 @@ class DataRetrieveTest {
 
 		Paarung toDomain() {
 			System.out.println(this);
-			return Paarung.builder().team1(team1.teamName).team2(team2.teamName)
+			PaarungBuilder team22 = Paarung.builder().team1(team1.teamName).team2(team2.teamName);
+			return team22
 					.ergebnis(matchResults[0].pointsTeam1, matchResults[0].pointsTeam2).build();
 		}
 	}
