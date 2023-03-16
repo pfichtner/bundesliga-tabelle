@@ -16,12 +16,16 @@ public class DefaultTabellenService implements TabellenService {
 	public void erstelleTabelle(String league, String season) {
 		Tabelle tabelle = new Tabelle();
 
+		setzeSpiele(league, season, tabelle);
+
+	}
+
+	private void setzeSpiele(String league, String season, Tabelle tabelle) {
 		try {
 			spieltagRepo.lade(league, season).forEach(tabelle::add);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
 	}
 
 }
