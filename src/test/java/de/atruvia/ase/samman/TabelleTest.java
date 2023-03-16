@@ -217,6 +217,15 @@ class TabelleTest {
 				1|Team 2|2|1|0|1|3|1|1|0""");
 	}
 
+	@Test
+	void punktUndTorGleichAberMehrAUswärtsTore() {
+		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(2, 1), paarung("Team 2", "Team 1").ergebnis(1, 0));
+		wennDieTabelleBerechnetWird();
+		dannIstDieTabelle("""
+				1|Team 1|2|1|0|1|3|1|1|0
+				1|Team 2|2|1|0|1|3|1|1|0""");
+	}
+
 	private Paarung.PaarungBuilder paarung(String team1, String team2) {
 		return Paarung.builder().team1(team1).team2(team2);
 	}
