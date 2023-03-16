@@ -1,5 +1,5 @@
 package de.atruvia.ase.sammanbuli.domain;
 
-public class TableService {
+public class TabellenService {
 
 }
