@@ -85,6 +85,10 @@ class TabelleTest {
 		int tore;
 		int gegentore;
 
+		int getTore() {
+			return tore;
+		}
+
 		static class TabellenPlatzBuilder {
 
 			TabellenPlatzBuilder() {
