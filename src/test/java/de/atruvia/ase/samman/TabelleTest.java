@@ -55,6 +55,11 @@ class TabelleTest {
 
 			@Override
 			public int compare(OrdnungsElement o1, OrdnungsElement o2) {
+				for (Function<? super OrdnungsElement, ? extends Comparable<?>> function : functions) {
+					Comparable<?> e1 = function.apply(o1);
+					Comparable<?> e2 = function.apply(o2);
+					e1.compareTo(e2);
+				}
 				// TODO Auto-generated method stub
 				return 0;
 			}
