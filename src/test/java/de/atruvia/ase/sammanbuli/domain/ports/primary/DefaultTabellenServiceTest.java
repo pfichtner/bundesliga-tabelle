@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.OptionalInt;
 
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,8 @@ class DefaultTabellenServiceTest {
 		TabellenService sut = new DefaultTabellenService(readFromLocalFilesystemRepo());
 		List<TabellenPlatz> erstelleTabelle = sut.erstelleTabelle("bl1", "2022");
 
-		String s = erstelleTabelle.stream().map(f -> print(f)).collect(Collectors.joining("\n"));
+		int longestTeamName = erstelleTabelle.stream().map(p->p.getTeam()).mapToInt(String::length).max().orElse(0);
+		String s = erstelleTabelle.stream().map(f -> print(f)).collect(joining("\n"));
 		
 		System.out.println(s);
 
