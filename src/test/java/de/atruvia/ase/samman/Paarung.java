@@ -17,7 +17,7 @@ public class Paarung {
 	int tore;
 	int gegentore;
 
-	private int punkte() {
+	public int punkte() {
 		return switch (ergebnis()) {
 		case SIEG -> 3;
 		case UNENTSCHIEDEN -> 1;
