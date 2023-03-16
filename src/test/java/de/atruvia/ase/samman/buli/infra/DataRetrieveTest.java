@@ -32,9 +32,7 @@ class DataRetrieveTest {
 
 	}
 
-	@ToString
-	@FieldDefaults(level = PUBLIC)
-	class Team {
+	private class Team {
 		@SerializedName("teamName")
 		String teamName;
 	}
