@@ -120,7 +120,8 @@ class TabelleTest {
 					.punkte(this.punkte + other.punkte) //
 					.toreHeim(this.toreHeim + other.toreHeim) //
 					.toreAuswaerts(this.toreAuswaerts + other.toreAuswaerts) //
-					.gegentore(this.gegentore + other.gegentore) //
+					.gegentoreHeim(this.gegentoreHeim + other.gegentoreHeim) //
+					.gegentoreAuswaertes(this.gegentoreAuswaerts + other.gegentoreAuswaerts) //
 					.build();
 		}
 
