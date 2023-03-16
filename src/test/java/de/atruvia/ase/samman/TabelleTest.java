@@ -121,7 +121,7 @@ class TabelleTest {
 					.toreHeim(this.toreHeim + other.toreHeim) //
 					.toreAuswaerts(this.toreAuswaerts + other.toreAuswaerts) //
 					.gegentoreHeim(this.gegentoreHeim + other.gegentoreHeim) //
-					.gegentoreAuswaertes(this.gegentoreAuswaerts + other.gegentoreAuswaerts) //
+					.gegentoreAuswaerts(this.gegentoreAuswaerts + other.gegentoreAuswaerts) //
 					.build();
 		}
 
