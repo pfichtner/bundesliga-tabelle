@@ -2,13 +2,10 @@ package de.atruvia.ase.sammanbuli.domain.ports.primary;
 
 import static de.atruvia.ase.sammanbuli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.readFromLocalFilesystemRepo;
 import static java.util.stream.Collectors.joining;
-import static org.assertj.core.api.Assertions.as;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.approvaltests.Approvals.verify;
 
 import java.util.List;
-import java.util.OptionalInt;
 
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import de.atruvia.ase.sammanbuli.domain.TabellenPlatz;
@@ -16,17 +13,12 @@ import de.atruvia.ase.sammanbuli.domain.TabellenPlatz;
 class DefaultTabellenServiceTest {
 
 	@Test
-	void test() {
+	void tabelleBl12022Spieltag24() {
 		TabellenService sut = new DefaultTabellenService(readFromLocalFilesystemRepo());
 		List<TabellenPlatz> erstelleTabelle = sut.erstelleTabelle("bl1", "2022");
-
-		int longestTeamName = longestTeamName(erstelleTabelle);
-
-		String s = erstelleTabelle.stream().map(f -> print(f, longestTeamName)).collect(joining("\n"));
-
-		System.out.println(s);
-
-		assertThat(s).isEqualTo("");
+		String tabelle = erstelleTabelle.stream().map(f -> print(f, longestTeamName(erstelleTabelle)))
+				.collect(joining("\n"));
+		verify(tabelle);
 	}
 
 	private int longestTeamName(List<TabellenPlatz> erstelleTabelle) {
