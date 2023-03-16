@@ -73,6 +73,7 @@ public class TabellenPlatz {
 		Map<Ergebnis, Integer> map = new HashMap<>();
 		map.putAll(map1);
 		map.putAll(map2);
+		System.out.println("merging " + map1 + "+" + map2 + "=" + map);
 		return map;
 	}
 
