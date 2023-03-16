@@ -44,9 +44,9 @@ class TabelleTest {
 
 		private static final List<Comparator<OrdnungsElement>> comparators = List.of( 
 				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte(),
-				comparing(e -> e.tabellenPlatz.getTorDifferenz()),
-				comparing(e -> e.tabellenPlatz.getTore()),
-				comparing(e -> e.tabellenPlatz.getToreAuswaerts()));
+				e -> e.tabellenPlatz.getTorDifferenz(),
+				e -> e.tabellenPlatz.getTore(),
+				e -> e.tabellenPlatz.getToreAuswaerts());
 		private static final Comparator<OrdnungsElement> comparator = comparing(
 				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte())
 				.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz()))
