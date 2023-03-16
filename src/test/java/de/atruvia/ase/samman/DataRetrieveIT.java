@@ -14,6 +14,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
 import lombok.ToString;
 
@@ -35,16 +36,22 @@ class DataRetrieveIT {
 
 		@ToString
 		class Team {
+			@SerializedName("teamName")
 			String teamName;
 		}
 		@ToString
 		class MatchResult {
-//			String resultName;
-			int pointsTeam1, pointsTeam2;
+			@SerializedName("pointsTeam1")
+			int pointsTeam1;
+			@SerializedName("pointsTeam2")
+			int pointsTeam2;
 		}
 		@ToString
 		class Match {
-			Team team1, team2;
+			@SerializedName("team1")
+			Team team1;
+			@SerializedName("team2")
+			Team team2;
 			MatchResult[] matchResults;
 
 			Paarung toDomain() {
