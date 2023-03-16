@@ -269,12 +269,12 @@ class TabelleTest {
 			if (swapped) {
 				return builder //
 						.toreAuswaerts(paarung.tore) //
-						.gegentore(paarung.gegentore) //
+						.gegentoreAuswaerts(paarung.gegentore) //
 						.build();
 			} else
 				return builder //
 						.toreHeim(paarung.tore) //
-						.gegentore(paarung.gegentore) //
+						.gegentoreHeim(paarung.gegentore) //
 						.build();
 		}
 
