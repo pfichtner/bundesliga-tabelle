@@ -262,7 +262,7 @@ class TabelleTest {
 
 		private TabellenPlatz tabellenPlatz(Entry<String, TabellenPlatz> entry) {
 			TabellenPlatz eintrag = entry.getValue();
-			return TabellenPlatz.builder().platz(1).team(entry.getKey()) //
+			return TabellenPlatz.builder().team(entry.getKey()) //
 					.ergebnisse(eintrag.getErgebnisse()).spiele(eintrag.getSpiele()) //
 					.punkte(eintrag.getPunkte()) //
 					.tore(eintrag.getTore()) //
