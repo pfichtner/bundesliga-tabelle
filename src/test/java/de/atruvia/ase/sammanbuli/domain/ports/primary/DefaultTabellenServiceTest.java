@@ -11,8 +11,7 @@ class DefaultTabellenServiceTest {
 
 	@Test
 	void test() {
-		SpieltagRepo repo = readFromLocalFilesystemRepo();
-		DefaultTabellenService sut = new DefaultTabellenService(repo);
+		DefaultTabellenService sut = new DefaultTabellenService(readFromLocalFilesystemRepo());
 		fail("Not yet implemented");
 	}
 
