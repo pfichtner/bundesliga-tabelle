@@ -264,9 +264,9 @@ class TabelleTest {
 		public List<TabellenPlatz> getEntries() {
 			// TODO make it side-affect-free, does it work W/O zip!?
 			AtomicInteger platz = new AtomicInteger();
-			Map<OrdnungsElement, List<TabellenPlatz>> gruppiertMitPlatz = eintraege.entrySet().stream()
+			Map<OrdnungsElement, List<TabellenPlatz>> platzGruppen = eintraege.entrySet().stream()
 					.map(this::setTeam).collect(groupingBy(OrdnungsElement::new));
-			return gruppiertMitPlatz.entrySet().stream().sorted(comparing(Entry::getKey))
+			return platzGruppen.entrySet().stream().sorted(comparing(Entry::getKey))
 					.peek(e -> platz.incrementAndGet()).map(Entry::getValue).flatMap(t -> t.stream()
 							.sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platz.get())))
 					.collect(toList());
