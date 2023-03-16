@@ -13,8 +13,8 @@ class DataRetrieveTest {
 		String url = "https://api.openligadb.de/getmatchdata/bl1/2022";
 		List<Paarung> paarungen = lade(url);
 
-		assertThat(paarungen.get(0)).isEqualTo(Paarung.builder().team1("Eintracht Frankfurt").team2("FC Bayern München").tore(1).gegentore(6)
-				.build());
+		assertThat(paarungen.get(0)).isEqualTo(
+				Paarung.builder().team1("Eintracht Frankfurt").team2("FC Bayern München").ergebnis(1, 6).build());
 
 	}
 
