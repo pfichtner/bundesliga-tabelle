@@ -293,7 +293,7 @@ class TabelleTest {
 				.asList(platz.getPlatz(), platz.getTeam(), platz.getSpiele(), platz.getGewonnen(),
 						platz.getUnentschieden(), platz.getVerloren(), platz.getPunkte(), platz.getTore(),
 						platz.getGegentore(), platz.getTorDifferenz())
-				.stream().map(Objects::toString).collect(joining("\t|"));
+				.stream().map(Objects::toString).collect(joining("|"));
 	}
 
 }
