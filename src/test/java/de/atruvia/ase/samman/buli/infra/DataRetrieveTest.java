@@ -32,39 +32,41 @@ class DataRetrieveTest {
 
 	}
 
+	@ToString
+	@FieldDefaults(level = PUBLIC)
+	class Team {
+		@SerializedName("teamName")
+		String teamName;
+	}
+
+	@ToString
+	@FieldDefaults(level = PUBLIC)
+	class MatchResult {
+		@SerializedName("pointsTeam1")
+		int pointsTeam1;
+		@SerializedName("pointsTeam2")
+		int pointsTeam2;
+	}
+
+	@ToString
+	@FieldDefaults(level = PUBLIC)
+	class Match {
+		@SerializedName("team1")
+		Team team1;
+		@SerializedName("team2")
+		Team team2;
+		MatchResult[] matchResults;
+
+		Paarung toDomain() {
+			System.out.println(this);
+			return Paarung.builder().team1(team1.teamName).team2(team2.teamName)
+					.ergebnis(matchResults[0].pointsTeam1, matchResults[0].pointsTeam2).build();
+		}
+	}
+
 	private List<Paarung> lade(String url) throws IOException, InterruptedException, URISyntaxException {
 		String content = Files.contentOf(new File(getClass().getClassLoader().getResource("2022.json").toURI()),
 				defaultCharset());
-
-		@ToString
-		@FieldDefaults(level = PUBLIC)
-		class Team {
-			@SerializedName("teamName")
-			String teamName;
-		}
-		@ToString
-		@FieldDefaults(level = PUBLIC)
-		class MatchResult {
-			@SerializedName("pointsTeam1")
-			int pointsTeam1;
-			@SerializedName("pointsTeam2")
-			int pointsTeam2;
-		}
-		@ToString
-		@FieldDefaults(level = PUBLIC)
-		class Match {
-			@SerializedName("team1")
-			Team team1;
-			@SerializedName("team2")
-			Team team2;
-			MatchResult[] matchResults;
-
-			Paarung toDomain() {
-				System.out.println(this);
-				return Paarung.builder().team1(team1.teamName).team2(team2.teamName)
-						.ergebnis(matchResults[0].pointsTeam1, matchResults[0].pointsTeam2).build();
-			}
-		}
 
 		return Arrays.stream(new Gson().fromJson(content, Match[].class)).map(Match::toDomain).collect(toList());
 	}
