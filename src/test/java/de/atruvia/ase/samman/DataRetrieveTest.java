@@ -31,8 +31,16 @@ class DataRetrieveTest {
 		HttpRequest request = HttpRequest.newBuilder(uri).build();
 		String content = HttpClient.newHttpClient().send(request, BodyHandlers.ofString()).body();
 
+		class Team {
+			private String teamName;
+		}
+		class MatchResult {
+			private String resultName;
+			private int pointsTeam1, pointsTeam2;
+		}
 		class Match {
-
+			private Team team1, team2;
+			private MatchResult[] matchResults;
 		}
 
 		Match[] fromJson = new Gson().fromJson(content, Match[].class);
