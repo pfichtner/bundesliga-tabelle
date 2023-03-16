@@ -38,7 +38,7 @@ class TabelleTest {
 //	    MIS: Head-to-head away goals scored: The total number of away goals scored by the tied teams in the matches played between them.
 //	    HIT: Overall goal difference: The difference between the number of goals scored and the number of goals conceded in all matches played.
 //	    HIT: Overall goals scored: The total number of goals scored in all matches played.
-//	    MIS: Overall away goals scored: The total number of goals scored by the tied teams in matches played away from their home stadium.
+//	    HIT: Overall away goals scored: The total number of goals scored by the tied teams in matches played away from their home stadium.
 //	    MIS: Overall away goal difference: The difference between the number of away goals scored and the number of away goals conceded by the tied teams in matches played away from their home stadium.
 //		If two or more teams have the same rank in the Bundesliga and there is no other criteria that can be used to separate them, then the teams will be listed in alphabetical order according to their full club name.
 
