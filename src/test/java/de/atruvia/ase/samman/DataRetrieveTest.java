@@ -2,6 +2,12 @@ package de.atruvia.ase.samman;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse.BodyHandlers;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -17,7 +23,11 @@ class DataRetrieveTest {
 
 	}
 
-	private List<Paarung> lade(String url) {
+	private List<Paarung> lade(String url) throws IOException, InterruptedException {
+		URI uri = URI.create(url);
+		HttpRequest request = HttpRequest.newBuilder(uri).build();
+		String content = HttpClient.newHttpClient().send(request, BodyHandlers.ofString()).body();
+
 		return List.of();
 	}
 
