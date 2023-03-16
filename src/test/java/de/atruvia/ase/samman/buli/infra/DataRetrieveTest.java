@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman.buli.infra;
 
+import static java.nio.charset.Charset.defaultCharset;
 import static java.util.stream.Collectors.toList;
 import static lombok.AccessLevel.PUBLIC;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,7 +10,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,7 +36,7 @@ class DataRetrieveTest {
 
 	private List<Paarung> lade(String url) throws IOException, InterruptedException, URISyntaxException {
 		String content = Files.contentOf(new File(getClass().getClassLoader().getResource("2022.json").toURI()),
-				Charset.defaultCharset());
+				defaultCharset());
 
 		@ToString
 		@FieldDefaults(level = PUBLIC)
