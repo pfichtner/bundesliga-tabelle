@@ -22,8 +22,6 @@ public class DefaultTabellenService implements TabellenService {
 			throw new RuntimeException(e);
 		}
 
-		// TODO Auto-generated method stub
-
 	}
 
 }
