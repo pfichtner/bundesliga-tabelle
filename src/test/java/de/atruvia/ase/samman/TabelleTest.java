@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -265,7 +266,8 @@ class TabelleTest {
 			AtomicInteger platz = new AtomicInteger();
 			Map<OrdnungsElement, List<TabellenPlatz>> gruppiertMitPlatz = eintraege.entrySet().stream()
 					.map(this::setTeam).collect(groupingBy(OrdnungsElement::new));
-			return gruppiertMitPlatz.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder()))
+			Stream<Entry<OrdnungsElement, List<TabellenPlatz>>> sorted = gruppiertMitPlatz.entrySet().stream().sorted(comparing(Entry::getKey, reverseOrder()));
+			return sorted
 					.peek(e -> platz.incrementAndGet()).map(Entry::getValue).flatMap(t -> t.stream()
 							.sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platz.get())))
 					.collect(toList());
