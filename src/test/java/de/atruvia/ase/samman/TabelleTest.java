@@ -72,7 +72,7 @@ class TabelleTest {
 	@Builder
 	static class TabellenPlatz {
 
-		static TabellenPlatz NULL = new TabellenPlatz(0, "", 0, emptyMap(), 0, 0, 0);
+		static TabellenPlatz NULL = new TabellenPlatz(0, "", 0, emptyMap(), 0, 0, 0, 0);
 
 		@With
 		int platz;
