@@ -112,7 +112,8 @@ class TabelleTest {
 					.ergebnisse(merge(this.ergebnisse, other.ergebnisse)) //
 					.spiele(this.spiele + other.spiele) //
 					.punkte(this.punkte + other.punkte) //
-					.tore(this.tore + other.tore) //
+					.toreHeim(this.toreHeim + other.toreHeim) //
+					.toreAuswaerts(this.toreAuswaerts + other.toreAuswaerts) //
 					.gegentore(this.gegentore + other.gegentore) //
 					.build();
 		}
