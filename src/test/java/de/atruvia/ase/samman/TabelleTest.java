@@ -282,10 +282,10 @@ class TabelleTest {
 	}
 
 	private void dannIstDieTabelle(String expected) {
-		assertThat(toString(sut.getEntries())).isEqualTo(expected);
+		assertThat(print(sut.getEntries())).isEqualTo(expected).describedAs(sut.getEntries().toString());
 	}
 
-	private String toString(List<TabellenPlatz> plaetze) {
+	private String print(List<TabellenPlatz> plaetze) {
 		return plaetze.stream().map(this::print).collect(joining("\n"));
 	}
 
