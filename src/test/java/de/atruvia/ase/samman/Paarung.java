@@ -5,9 +5,7 @@ import static de.atruvia.ase.samman.TabelleTest.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.TabelleTest.Ergebnis.UNENTSCHIEDEN;
 
 import de.atruvia.ase.samman.TabelleTest.Ergebnis;
-import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Setter;
 import lombok.Value;
 
 @Value
