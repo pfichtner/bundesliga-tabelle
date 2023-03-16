@@ -2,7 +2,6 @@ package de.atruvia.ase.samman.buli.infra;
 
 import static java.nio.charset.Charset.defaultCharset;
 import static java.util.stream.Collectors.toList;
-import static lombok.AccessLevel.PUBLIC;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
@@ -15,11 +14,9 @@ import org.assertj.core.util.Files;
 import org.junit.jupiter.api.Test;
 
 import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
 
 import de.atruvia.ase.samman.Paarung;
 import lombok.ToString;
-import lombok.experimental.FieldDefaults;
 
 class DataRetrieveTest {
 
@@ -29,20 +26,14 @@ class DataRetrieveTest {
 	}
 
 	@ToString
-	@FieldDefaults(level = PUBLIC)
 	class MatchResult {
-		@SerializedName("pointsTeam1")
 		int pointsTeam1;
-		@SerializedName("pointsTeam2")
 		int pointsTeam2;
 	}
 
 	@ToString
-	@FieldDefaults(level = PUBLIC)
 	class Match {
-		@SerializedName("team1")
 		Team team1;
-		@SerializedName("team2")
 		Team team2;
 		MatchResult[] matchResults;
 
