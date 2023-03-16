@@ -13,13 +13,10 @@ public class DefaultTabellenService implements TabellenService {
 	private final SpieltagRepo spieltagRepo;
 
 	@Override
-	public void erstelleTabelle(String league, String season) {
+	public List<TabellenPlatz> erstelleTabelle(String league, String season) {
 		Tabelle tabelle = new Tabelle();
 		setzeSpiele(league, season, tabelle);
-		List<TabellenPlatz> entries = tabelle.getEntries();
-		for (TabellenPlatz tabellenPlatz : entries) {
-			System.out.println(tabellenPlatz);
-		}
+		return tabelle.getEntries();
 
 	}
 
