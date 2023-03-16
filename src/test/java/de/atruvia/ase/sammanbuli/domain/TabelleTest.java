@@ -1,8 +1,6 @@
 package de.atruvia.ase.sammanbuli.domain;
 
-import static de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis.NIEDERLAGE;
-import static de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis.SIEG;
-import static de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis.UNENTSCHIEDEN;
+import static Ergebni;
 import static java.util.Collections.emptyMap;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
