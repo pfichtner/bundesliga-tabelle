@@ -67,7 +67,8 @@ class DataRetrieveIT {
 			}
 		}
 
-		return Arrays.stream(new Gson().fromJson(content, Match[].class)).map(Match::toDomain).collect(toList());
+		return Arrays.stream(new Gson().fromJson(content, Match[].class)).peek(System.out::println).map(Match::toDomain)
+				.collect(toList());
 	}
 
 }
