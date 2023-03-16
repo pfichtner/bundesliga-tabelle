@@ -19,9 +19,9 @@ import de.atruvia.ase.sammanbuli.domain.ports.secondary.SpieltagRepo;
 import lombok.ToString;
 
 public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
-	
+
 	String url = "https://api.openligadb.de/getmatchdata/bl1/2022";
-	
+
 	@ToString
 	private class Team {
 		String teamName;
@@ -45,7 +45,6 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 			return b.build();
 		}
 	}
-
 
 	public List<Paarung> lade(String league, String season) {
 		String content = Files.contentOf(new File(getClass().getClassLoader().getResource("2022.json").toURI()),
