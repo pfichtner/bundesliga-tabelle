@@ -53,6 +53,8 @@ class DataRetrieveIT {
 						.ergebnis(matchResults[0].pointsTeam1, matchResults[0].pointsTeam2).build();
 			}
 		}
+		
+		System.out.println(content);
 
 		return Arrays.stream(new Gson().fromJson(content, Match[].class)).map(Match::toDomain).collect(toList());
 	}
