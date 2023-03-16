@@ -1,10 +1,10 @@
 package de.atruvia.ase.samman;
 
-import static de.atruvia.ase.samman.TabelleTest.Ergebnis.NIEDERLAGE;
-import static de.atruvia.ase.samman.TabelleTest.Ergebnis.SIEG;
-import static de.atruvia.ase.samman.TabelleTest.Ergebnis.UNENTSCHIEDEN;
+import static de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis.NIEDERLAGE;
+import static de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis.SIEG;
+import static de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis.UNENTSCHIEDEN;
 
-import de.atruvia.ase.samman.TabelleTest.Ergebnis;
+import de.atruvia.ase.sammanbuli.domain.TabelleTest.Ergebnis;
 import lombok.Builder;
 import lombok.Value;
 

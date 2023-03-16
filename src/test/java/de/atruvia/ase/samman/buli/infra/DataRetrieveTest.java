@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Test;
 
 import com.google.gson.Gson;
 
-import de.atruvia.ase.samman.Paarung;
-import de.atruvia.ase.samman.Paarung.PaarungBuilder;
+import de.atruvia.ase.sammanbuli.domain.Paarung;
+import de.atruvia.ase.sammanbuli.domain.Paarung.PaarungBuilder;
 import lombok.ToString;
 
 class DataRetrieveTest {
