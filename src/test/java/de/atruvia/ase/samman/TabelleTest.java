@@ -46,7 +46,6 @@ class TabelleTest {
 				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte()).reversed()
 				.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz())).reversed()
 				.thenComparing(comparing(e -> e.tabellenPlatz.getTore())).reversed()
-				.thenComparing(comparing(e -> e.tabellenPlatz.getToreAuswaerts())).reversed()
 				;
 
 		private final TabellenPlatz tabellenPlatz;
