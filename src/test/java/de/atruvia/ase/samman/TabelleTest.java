@@ -78,6 +78,7 @@ class TabelleTest {
 
 		@With
 		int platz;
+		@With
 		String team;
 		@Builder.Default
 		int spiele = 1;
@@ -263,6 +264,7 @@ class TabelleTest {
 		private TabellenPlatz tabellenPlatz(Entry<String, TabellenPlatz> entry) {
 			TabellenPlatz tabellenPlatz = entry.getValue();
 			String team = entry.getKey();
+			tabellenPlatz.withTeam();
 			return TabellenPlatz.builder().team(team) //
 					.ergebnisse(tabellenPlatz.getErgebnisse()) //
 					.spiele(tabellenPlatz.getSpiele()) //
