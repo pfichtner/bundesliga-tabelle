@@ -50,7 +50,7 @@ public class TabellenPlatz {
 			ergebnisse = new HashMap<>();
 		}
 
-		public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
+		TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
 			ergebnisse.merge(ergebnis, 1, (a, b) -> a + b);
 			return this;
 		}
