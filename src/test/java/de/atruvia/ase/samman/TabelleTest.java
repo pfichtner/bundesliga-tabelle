@@ -221,8 +221,8 @@ class TabelleTest {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(2, 1), paarung("Team 2", "Team 1").ergebnis(1, 0));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
-				1|Team 1|2|1|0|1|3|1|1|0
-				1|Team 2|2|1|0|1|3|1|1|0""");
+				1|Team 1|2|1|0|1|3|2|2|0
+				1|Team 2|2|1|0|1|3|2|2|0""");
 	}
 
 	private Paarung.PaarungBuilder paarung(String team1, String team2) {
@@ -261,11 +261,11 @@ class TabelleTest {
 		public List<TabellenPlatz> getEntries() {
 			// TODO make it side-affect-free, does it work W/O zip!?
 			AtomicInteger platz = new AtomicInteger();
-			Map<OrdnungsElement, List<TabellenPlatz>> platzGruppen = eintraege.entrySet().stream()
-					.map(this::setTeam).collect(groupingBy(OrdnungsElement::new));
-			return platzGruppen.entrySet().stream().sorted(comparing(Entry::getKey))
-					.peek(e -> platz.incrementAndGet()).map(Entry::getValue).flatMap(t -> t.stream()
-							.sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platz.get())))
+			Map<OrdnungsElement, List<TabellenPlatz>> platzGruppen = eintraege.entrySet().stream().map(this::setTeam)
+					.collect(groupingBy(OrdnungsElement::new));
+			return platzGruppen.entrySet().stream().sorted(comparing(Entry::getKey)).peek(e -> platz.incrementAndGet())
+					.map(Entry::getValue).flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new))
+							.map(tp -> tp.withPlatz(platz.get())))
 					.collect(toList());
 		}
 
