@@ -35,7 +35,7 @@ class DataRetrieveIT {
 			String teamName;
 		}
 		class MatchResult {
-			String resultName;
+//			String resultName;
 			int pointsTeam1, pointsTeam2;
 		}
 		class Match {
