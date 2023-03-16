@@ -34,14 +34,11 @@ class DefaultTabellenServiceTest {
 				.asList(format, tabellenPlatz.getSpiele(), tabellenPlatz.getGewonnen(),
 						tabellenPlatz.getUnentschieden(), tabellenPlatz.getVerloren(), tabellenPlatz.getTore(),
 						tabellenPlatz.getGegentore(), tabellenPlatz.getTorDifferenz(), tabellenPlatz.getPunkte())
-				.stream().map(o->format(o)).collect(joining("\t|"));
+				.stream().map(o -> format(o)).collect(joining("\t|"));
 	}
 
 	private String format(Object o) {
-		if (o instanceof Number) {
-			return String.format("%3d", o);
-		}
-		return Objects.toString(o);
+		return o instanceof Number ? String.format("%3d", o) : Objects.toString(o);
 	}
 
 }
