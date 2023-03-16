@@ -233,13 +233,13 @@ class TabelleTest {
 					.punkte(paarung.punkte());
 			if (swapped) {
 				return builder //
-						.toreAuswaerts(paarung.tore) //
-						.gegentoreAuswaerts(paarung.gegentore) //
+						.toreAuswaerts(paarung.getTore()) //
+						.gegentoreAuswaerts(paarung.getGegentore()) //
 						.build();
 			} else
 				return builder //
-						.toreHeim(paarung.tore) //
-						.gegentoreHeim(paarung.gegentore) //
+						.toreHeim(paarung.getTore()) //
+						.gegentoreHeim(paarung.getGegentore()) //
 						.build();
 		}
 
