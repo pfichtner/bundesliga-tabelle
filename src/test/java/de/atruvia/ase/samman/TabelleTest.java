@@ -5,7 +5,6 @@ import static de.atruvia.ase.samman.TabelleTest.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.TabelleTest.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Collections.emptyMap;
 import static java.util.Comparator.comparing;
-import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
@@ -19,7 +18,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
