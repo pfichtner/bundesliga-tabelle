@@ -45,8 +45,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 
 	public List<Paarung> lade(String league, String season) {
 		File file = new File(getClass().getClassLoader().getResource("2022.json").toURI());
-		String content = Files.contentOf(file,
-				defaultCharset());
+		String content = Files.contentOf(file, defaultCharset());
 		return Arrays.stream(new Gson().fromJson(content, Match[].class)).map(Match::toDomain).collect(toList());
 	}
 
