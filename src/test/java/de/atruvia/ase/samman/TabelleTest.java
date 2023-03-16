@@ -262,8 +262,7 @@ class TabelleTest {
 		}
 
 		private TabellenPlatz tabellenPlatz(Entry<String, TabellenPlatz> entry) {
-			String team = entry.getKey();
-			return entry.getValue().withTeam(team);
+			return entry.getValue().withTeam(entry.getKey());
 		}
 
 	}
