@@ -46,7 +46,7 @@ public class TabellenPlatz {
 
 	private static class TabellenPlatzBuilder {
 
-		TabellenPlatzBuilder() {
+		private TabellenPlatzBuilder() {
 			ergebnisse = new HashMap<>();
 		}
 
