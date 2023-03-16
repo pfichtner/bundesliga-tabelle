@@ -9,8 +9,7 @@ import de.atruvia.ase.sammanbuli.infra.adapters.secondary.OpenLigaDbSpieltagRepo
 public class Main {
 
 	public static void main(String[] args) {
-		TabellenService tabellenService = new DefaultTabellenService(spieltagRepo());
-		for (TabellenPlatz tabellenPlatz : tabellenService.erstelleTabelle("bl1", "2022")) {
+		for (TabellenPlatz tabellenPlatz : new DefaultTabellenService(spieltagRepo()).erstelleTabelle("bl1", "2022")) {
 			System.out.println(tabellenPlatz);
 		}
 	}
