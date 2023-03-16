@@ -1,5 +1,6 @@
 package de.atruvia.ase.sammanbuli.infra.adapters.secondary;
 
+import static de.atruvia.ase.sammanbuli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.readFromLocalFilesystemRepo;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -12,7 +13,7 @@ class OpenLigaDbSpieltagRepoTest {
 
 	@Test
 	void canRetrieveDataOf2022() throws Exception {
-		List<Paarung> paarungen = OpenLigaDbSpieltagRepoMother.readFromLocalFilesystemRepo().lade("bl1", "2022");
+		List<Paarung> paarungen = readFromLocalFilesystemRepo().lade("bl1", "2022");
 		assertThat(paarungen.get(0)).isEqualTo(
 				Paarung.builder().team1("Eintracht Frankfurt").team2("FC Bayern München").ergebnis(1, 6).build());
 	}
