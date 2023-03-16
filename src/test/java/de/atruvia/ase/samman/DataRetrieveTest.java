@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 class DataRetrieveTest {
 
 	@Test
-	void canRetrieveDataOf2022() {
+	void canRetrieveDataOf2022() throws IOException, InterruptedException {
 		String url = "https://api.openligadb.de/getmatchdata/bl1/2022";
 		List<Paarung> paarungen = lade(url);
 		assertThat(paarungen.get(0)).isEqualTo(
