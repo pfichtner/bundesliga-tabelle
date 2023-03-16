@@ -20,7 +20,6 @@ public class DefaultTabellenService implements TabellenService {
 		List<TabellenPlatz> entries = tabelle.getEntries();
 		for (TabellenPlatz tabellenPlatz : entries) {
 			System.out.println(tabellenPlatz);
-			
 		}
 
 	}
