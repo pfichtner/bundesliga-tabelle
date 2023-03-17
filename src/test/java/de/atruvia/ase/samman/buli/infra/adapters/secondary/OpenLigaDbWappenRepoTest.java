@@ -11,8 +11,7 @@ class OpenLigaDbWappenRepoTest {
 
 	@Test
 	void canRetrieveDataOf2022() throws Exception {
-		String str = "https://i.imgur.com/X8NFkOb.png";
-		assertTeamHasWappen("Eintracht Frankfurt", str);
+		assertTeamHasWappen("Eintracht Frankfurt", "https://i.imgur.com/X8NFkOb.png");
 		assertThat(wappenFsRepo().getWappen("bl1", "2022", "FC Bayern München"))
 				.isEqualTo(URI.create("https://i.imgur.com/jJEsJrj.png"));
 	}
