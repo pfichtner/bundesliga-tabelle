@@ -24,7 +24,7 @@ class OpenLigaDbWappenRepo implements TeamRepo {
 		String teamName;
 		String teamIconUrl;
 
-		JsonTeam toDomain() {
+		Team toDomain() {
 			return null;
 		}
 
@@ -32,7 +32,7 @@ class OpenLigaDbWappenRepo implements TeamRepo {
 
 	@Override
 	public List<Team> getTeams(String league, String season) throws Exception {
-		return Arrays.stream(new Gson().fromJson(readJson(league, season), OpenLigaDbWappenRepo.Team[].class)).map(JsonTeam::toDomain)
+		return Arrays.stream(new Gson().fromJson(readJson(league, season), JsonTeam[].class)).map(JsonTeam::toDomain)
 				.collect(Collectors.toList())
 	}
 
