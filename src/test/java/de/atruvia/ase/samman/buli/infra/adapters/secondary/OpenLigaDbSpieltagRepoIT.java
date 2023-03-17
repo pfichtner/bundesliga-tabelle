@@ -17,7 +17,7 @@ class OpenLigaDbSpieltagRepoIT {
 		assertThat(paarungen).element(0)
 				.isEqualTo(Paarung.builder().team1("Eintracht Frankfurt").team2("FC Bayern München").ergebnis(1, 6)
 						.wappen1(URI.create("https://i.imgur.com/X8NFkOb.png"))
-						.wappen2(URI.create("https://i.imgur.com/jJEsJrj.png")));
+						.wappen2(URI.create("https://i.imgur.com/jJEsJrj.png")).build());
 	}
 
 	private OpenLigaDbSpieltagRepo repo() {
