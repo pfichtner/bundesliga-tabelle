@@ -1,12 +1,13 @@
 package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
+import static java.util.stream.Collectors.toList;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
@@ -33,7 +34,7 @@ class OpenLigaDbWappenRepo implements TeamRepo {
 	@Override
 	public List<Team> getTeams(String league, String season) throws Exception {
 		return Arrays.stream(new Gson().fromJson(readJson(league, season), JsonTeam[].class)).map(JsonTeam::toDomain)
-				.collect(Collectors.toList())
+				.collect(toList());
 	}
 
 	protected String readJson(String league, String season) throws Exception {
