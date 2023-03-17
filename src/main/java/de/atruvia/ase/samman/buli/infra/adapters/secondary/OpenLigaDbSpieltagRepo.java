@@ -24,6 +24,7 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	@ToString
 	private class Team {
 		String teamName;
+		String teamIconUrl;
 	}
 
 	@ToString
