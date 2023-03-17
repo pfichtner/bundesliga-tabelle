@@ -25,7 +25,7 @@ class OpenLigaDbWappenRepo implements TeamRepo {
 		String teamIconUrl;
 
 		Team toDomain() {
-			return Team.builder().name(teamName).wappen(teamIconUrl == null ? null :URI.create(teamIconUrl)).build();
+			return Team.builder().name(teamName).wappen(teamIconUrl == null ? null : URI.create(teamIconUrl)).build();
 		}
 
 	}
