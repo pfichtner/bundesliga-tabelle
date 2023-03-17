@@ -12,12 +12,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 
 import de.atruvia.ase.samman.buli.domain.ports.secondary.WappenRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-@RequiredArgsConstructor
 public class Tabelle {
 
 	@RequiredArgsConstructor
@@ -63,6 +63,28 @@ public class Tabelle {
 	private final Map<String, TabellenPlatz> eintraege = new HashMap<>();
 	private final WappenRepo wappenRepository;
 
+	public Tabelle(WappenRepo wr) {
+		// TODO better caching
+		this.wappenRepository = new WappenRepo() {
+
+			Map<String, URI> cache = new HashMap<>();
+
+			@Override
+			public URI getWappen(String league, String season, String team) throws Exception {
+				return cache.computeIfAbsent(team, (Function<String, URI>) t -> {
+					try {
+						return wr.getWappen(league, season, team);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						return null;
+					}
+				});
+			}
+		};
+
+	}
+
 	public void add(Paarung paarung) {
 		addInternal(paarung, false);
 		addInternal(paarung.swap(), true);
@@ -97,9 +119,8 @@ public class Tabelle {
 		Map<OrdnungsElement, List<TabellenPlatz>> platzGruppen = eintraege.entrySet().stream().map(this::setTeam)
 				.collect(groupingBy(OrdnungsElement::new));
 		return platzGruppen.entrySet().stream().sorted(comparing(Entry::getKey)).peek(e -> platz.incrementAndGet())
-				.map(Entry::getValue)
-				.flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platz.get()))
-						.map(tp -> tp.withWappen(wappen(tp))))
+				.map(Entry::getValue).flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new))
+						.map(tp -> tp.withPlatz(platz.get())).map(tp -> tp.withWappen(wappen(tp))))
 				.collect(toList());
 	}
 
