@@ -12,12 +12,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import de.atruvia.ase.sammanbuli.domain.ports.primary.DefaultTabellenService;
 import de.atruvia.ase.sammanbuli.infra.adapters.secondary.OpenLigaDbSpieltagRepo;
 
 @SpringBootTest(classes = { TabellenHttpAdapter.class, DefaultTabellenService.class, OpenLigaDbSpieltagRepo.class })
-@WebAppConfiguration
+@EnableWebMvc
 @AutoConfigureMockMvc
 class HttpAdapterTest {
 
