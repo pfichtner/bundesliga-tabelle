@@ -78,11 +78,13 @@ public class Tabelle {
 				.punkte(paarung.punkte());
 		if (swapped) {
 			return builder //
+					.wappen(paarung.getWappen2()) //
 					.toreAuswaerts(paarung.getTore()) //
 					.gegentoreAuswaerts(paarung.getGegentore()) //
 					.build();
 		} else
 			return builder //
+					.wappen(paarung.getWappen1()) //
 					.toreHeim(paarung.getTore()) //
 					.gegentoreHeim(paarung.getGegentore()) //
 					.build();
