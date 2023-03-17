@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
+import java.net.URI;
 import java.util.stream.Stream;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ public class TabellenHttpAdapter {
 	private static class JsonTabellenPlatz {
 
 		int platz;
+		URI wappen;
 		String team;
 		int spiele;
 		int punkte;
@@ -30,6 +32,7 @@ public class TabellenHttpAdapter {
 		private static JsonTabellenPlatz fromDomain(TabellenPlatz domain) {
 			return builder() //
 					.platz(domain.getPlatz()) //
+					.wappen(domain.getWappen()) //
 					.team(domain.getTeam()) //
 					.spiele(domain.getSpiele()) //
 					.punkte(domain.getPunkte()) //
