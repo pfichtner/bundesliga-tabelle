@@ -1,6 +1,6 @@
 package de.atruvia.ase.samman.buli.domain.ports.primary;
 
-import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.spieltagFsRepo;
+import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.*;
 import static java.util.stream.Collectors.joining;
 import static org.approvaltests.Approvals.verify;
 
@@ -16,7 +16,7 @@ class DefaultTabellenServiceTest {
 
 	@Test
 	void tabelleBl12022Spieltag24() {
-		TabellenService sut = new DefaultTabellenService(spieltagFsRepo());
+		TabellenService sut = new DefaultTabellenService(spieltagFsRepo(), wappenFsRepo());
 		List<TabellenPlatz> erstelleTabelle = sut.erstelleTabelle("bl1", "2022");
 		String tabelle = erstelleTabelle.stream().map(f -> print(f, longestTeamName(erstelleTabelle)))
 				.collect(joining("\n"));
