@@ -70,6 +70,10 @@ class TabelleTest {
 		String expected = """
 				proto://wappenNeu1
 				proto://wappenNeu2""";
+		dannSindDieWappen(entries, expected);
+	}
+
+	private void dannSindDieWappen(List<TabellenPlatz> entries, String expected) {
 		assertThat(entries.stream().map(t -> t.getWappen().toASCIIString()).collect(joining("\n"))).isEqualTo(expected);
 	}
 
