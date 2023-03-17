@@ -17,7 +17,7 @@ public final class OpenLigaDbSpieltagRepoMother {
 		return new OpenLigaDbSpieltagRepo() {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
-				return readString(new File(url("getmatchdata", league, season).toURI()).toPath());
+				return readString(path("getmatchdata", league, season));
 			}
 		};
 	}
@@ -26,13 +26,14 @@ public final class OpenLigaDbSpieltagRepoMother {
 		return new OpenLigaDbTeamRepo() {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
-				return readString(extracted(league, season));
+				return readString(path("getavailableteams", league, season));
 			}
 
-			private Path extracted(String league, String season) throws URISyntaxException {
-				return new File(url("getavailableteams", league, season).toURI()).toPath();
-			}
 		};
+	}
+
+	private static Path path(String base, String league, String season) throws URISyntaxException {
+		return new File(url(base, league, season).toURI()).toPath();
 	}
 
 	private static URL url(String base, String league, String season) {
