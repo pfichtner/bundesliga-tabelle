@@ -19,8 +19,8 @@ class TabelleTest {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
-				1|Team 1|0|0|0|0|0|0|0|0
-				1|Team 2|0|0|0|0|0|0|0|0""");
+				1|Team 1|0|0|0|0|0|0|0|0|ic1
+				1|Team 2|0|0|0|0|0|0|0|0|ic2""");
 	}
 
 	@Test
@@ -28,8 +28,8 @@ class TabelleTest {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(0, 0), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
-				1|Team 1|1|0|1|0|1|0|0|0
-				1|Team 2|1|0|1|0|1|0|0|0""");
+				1|Team 1|1|0|1|0|1|0|0|0|ic1
+				1|Team 2|1|0|1|0|1|0|0|0|ic2""");
 	}
 
 	@Test
@@ -37,8 +37,8 @@ class TabelleTest {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(0, 1), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
-				1|Team 2|1|1|0|0|3|1|0|1
-				2|Team 1|1|0|0|1|0|0|1|-1""");
+				1|Team 2|1|1|0|0|3|1|0|1|ic2
+				2|Team 1|1|0|0|1|0|0|1|-1|ic1""");
 	}
 
 	@Test
@@ -46,8 +46,8 @@ class TabelleTest {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 0), paarung("Team 2", "Team 1").ergebnis(1, 0));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
-				1|Team 1|2|1|0|1|3|1|1|0
-				1|Team 2|2|1|0|1|3|1|1|0""");
+				1|Team 1|2|1|0|1|3|1|1|0|ic1
+				1|Team 2|2|1|0|1|3|1|1|0|ic2""");
 	}
 
 	@Test
@@ -55,8 +55,8 @@ class TabelleTest {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 2), paarung("Team 2", "Team 1").ergebnis(0, 1));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
-				1|Team 2|2|1|0|1|3|2|2|0
-				2|Team 1|2|1|0|1|3|2|2|0""");
+				1|Team 2|2|1|0|1|3|2|2|0|ic2
+				2|Team 1|2|1|0|1|3|2|2|0|ic1""");
 	}
 
 	private Paarung.PaarungBuilder paarung(String team1, String team2) {
