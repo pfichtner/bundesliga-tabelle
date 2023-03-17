@@ -4,7 +4,9 @@ import static java.nio.file.Files.readString;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Path;
 
 import lombok.NoArgsConstructor;
 
@@ -24,7 +26,11 @@ public final class OpenLigaDbSpieltagRepoMother {
 		return new OpenLigaDbTeamRepo() {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
-				return readString(new File(url("getavailableteams", league, season).toURI()).toPath());
+				return readString(extracted(league, season));
+			}
+
+			private Path extracted(String league, String season) throws URISyntaxException {
+				return new File(url("getavailableteams", league, season).toURI()).toPath();
 			}
 		};
 	}
