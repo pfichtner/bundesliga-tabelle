@@ -16,7 +16,7 @@ class OpenLigaDbWappenRepoTest {
 	}
 
 	private void assertTeamHasWappen(String teamName, String str) throws Exception {
-		assertThat(wappenFsRepo().getWappen("bl1", "2022", teamName)).isEqualTo(URI.create(str));
+		assertThat(wappenFsRepo().getTeam("bl1", "2022", teamName)).isEqualTo(URI.create(str));
 	}
 
 }

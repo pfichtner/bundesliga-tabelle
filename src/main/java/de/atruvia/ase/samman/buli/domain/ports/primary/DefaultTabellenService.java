@@ -28,13 +28,13 @@ class DefaultTabellenService implements TabellenService {
 			private final Map<String, URI> cache = new HashMap<>();
 
 			@Override
-			public URI getWappen(String league, String season, String team) throws Exception {
+			public URI getTeam(String league, String season, String team) throws Exception {
 				return cache.computeIfAbsent(team, t -> load(wappenRepo, league, season, team));
 			}
 
 			private URI load(TeamRepo wappenRepo, String league, String season, String team) {
 				try {
-					return wappenRepo.getWappen(league, season, team);
+					return wappenRepo.getTeam(league, season, team);
 				} catch (Exception e) {
 					// TODO Log error
 					e.printStackTrace();
