@@ -40,7 +40,7 @@ class OpenLigaDbWappenRepo implements WappenRepository {
 	}
 
 	private String makeUrl(String league, String season) {
-		return "https://api.openligadb.de/getmatchdata/" + league + "/" + season;
+		return "https://api.openligadb.de/getavailableteams/" + league + "/" + season;
 	}
 
 }
