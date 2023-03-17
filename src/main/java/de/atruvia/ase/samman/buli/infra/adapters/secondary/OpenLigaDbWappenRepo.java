@@ -42,12 +42,6 @@ class OpenLigaDbWappenRepo implements WappenRepository {
 	}
 
 	@Override
-	public URI getWappen(String team) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<URI> lade(String league, String season) throws Exception {
 		return Arrays.stream(new Gson().fromJson(readJson(league, season), TeamInfo[].class)).map(TeamInfo::toDomain)
 				.collect(toList());
