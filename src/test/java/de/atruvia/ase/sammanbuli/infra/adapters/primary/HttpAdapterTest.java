@@ -1,13 +1,16 @@
 package de.atruvia.ase.sammanbuli.infra.adapters.primary;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +44,11 @@ class HttpAdapterTest {
 				.toreAuswaerts(25).build();
 		Mockito.when(tabellenService.erstelleTabelle("bl1", "2022")).thenReturn(List.of(p1, p2));
 
-		this.mockMvc.perform(get("/tabelle/bl1/2022")).andDo(print()).andExpect(status().isOk())
-				.andExpect(content().string(containsString("Hello, World")));
+		this.mockMvc.perform(get("/tabelle/bl1/2022")) //
+				.andDo(print()) //
+				.andExpect(status().isOk()) //
+				.andExpect(jsonPath("$.[0].team", is("Team 10"))) //
+		;
 	}
 
 }
