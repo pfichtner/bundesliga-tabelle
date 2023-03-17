@@ -22,11 +22,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import de.atruvia.ase.samman.buli.Main;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
-import de.atruvia.ase.samman.buli.domain.ports.primary.DefaultTabellenService;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
-import de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepo;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest
 @AutoConfigureMockMvc
 class TabellenHttpAdapterTest {
 
