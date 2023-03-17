@@ -63,7 +63,7 @@ public class Tabelle {
 	private final Map<String, TabellenPlatz> eintraege = new HashMap<>();
 	private final WappenRepo wappenRepository;
 
-	public Tabelle(WappenRepo wr) {
+	public Tabelle(WappenRepo wappenRepo) {
 		// TODO better caching
 		this.wappenRepository = new WappenRepo() {
 
@@ -72,13 +72,13 @@ public class Tabelle {
 			@Override
 			public URI getWappen(String league, String season, String team) throws Exception {
 				return cache.computeIfAbsent(team, t -> {
-					return load(wr, league, season, team);
+					return load(wappenRepo, league, season, team);
 				});
 			}
 
-			private URI load(WappenRepo wr, String league, String season, String team) {
+			private URI load(WappenRepo repo, String league, String season, String team) {
 				try {
-					return wr.getWappen(league, season, team);
+					return repo.getWappen(league, season, team);
 				} catch (Exception e) {
 					// TODO wenn das Wappen nicht geladen werden kann -> loggen, aber weitermachen
 					e.printStackTrace();
