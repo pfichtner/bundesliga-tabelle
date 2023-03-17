@@ -2,6 +2,7 @@ package de.atruvia.ase.samman.buli.domain;
 
 import static java.util.stream.Collectors.joining;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.endsWith;
 
 import java.net.URI;
 import java.util.Arrays;
@@ -67,6 +68,7 @@ class TabelleTest {
 				paarung("Team 2", "Team 1", URI.create("proto://wappenNeu1"), URI.create("proto://wappenNeu2")));
 		wennDieTabelleBerechnetWird();
 		List<TabellenPlatz> entries = sut.getEntries();
+		System.out.println(endsWith(null));
 		assertThat(entries.stream().map(t -> t.getWappen().toASCIIString()).collect(joining("\n")))
 				.isEqualTo("""
 						a
