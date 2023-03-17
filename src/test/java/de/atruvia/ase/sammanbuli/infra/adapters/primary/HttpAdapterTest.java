@@ -12,7 +12,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-@SpringBootTest
+import com.sun.tools.javac.Main;
+
+@SpringBootTest(classes = Main.class)
 @AutoConfigureMockMvc
 class HttpAdapterTest {
 
