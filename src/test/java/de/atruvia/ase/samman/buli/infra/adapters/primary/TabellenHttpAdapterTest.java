@@ -1,4 +1,4 @@
-package de.atruvia.ase.sammanbuli.infra.adapters.primary;
+package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;

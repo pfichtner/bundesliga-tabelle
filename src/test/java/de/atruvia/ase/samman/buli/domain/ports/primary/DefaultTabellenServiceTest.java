@@ -1,4 +1,4 @@
-package de.atruvia.ase.sammanbuli.domain.ports.primary;
+package de.atruvia.ase.samman.buli.domain.ports.primary;
 
 import static de.atruvia.ase.sammanbuli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.readFromLocalFilesystemRepo;
 import static java.util.stream.Collectors.joining;
