@@ -26,8 +26,7 @@ import de.atruvia.ase.samman.buli.domain.ports.primary.DefaultTabellenService;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 import de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepo;
 
-@SpringBootTest(classes = { Main.class, TabellenHttpAdapter.class, DefaultTabellenService.class,
-		OpenLigaDbSpieltagRepo.class })
+@SpringBootTest(classes = Main.class)
 @AutoConfigureMockMvc
 class TabellenHttpAdapterTest {
 
