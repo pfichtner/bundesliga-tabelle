@@ -24,7 +24,6 @@ import de.atruvia.ase.samman.buli.Main;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.ports.primary.DefaultTabellenService;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
-import de.atruvia.ase.samman.buli.infra.adapters.primary.TabellenHttpAdapter;
 import de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepo;
 
 @SpringBootTest(classes = { Main.class, TabellenHttpAdapter.class, DefaultTabellenService.class,
