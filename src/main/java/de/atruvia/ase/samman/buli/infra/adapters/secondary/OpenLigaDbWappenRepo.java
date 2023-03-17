@@ -19,18 +19,18 @@ import lombok.ToString;
 class OpenLigaDbWappenRepo implements TeamRepo {
 
 	@ToString
-	private class Team {
+	private class JsonTeam {
 		String teamName;
 		String teamIconUrl;
 
-		Team toDomain() {
+		JsonTeam toDomain() {
 			return null;
 		}
 
 	}
 
 	@Override
-	public List<de.atruvia.ase.samman.buli.domain.Team> getTeams(String league, String season) throws Exception {
+	public List<Team> getTeams(String league, String season) throws Exception {
 		return Arrays.stream(new Gson().fromJson(readJson(league, season), OpenLigaDbWappenRepo.Team[].class)).map(OpenLigaDbWappenRepo.Team::toDomain)
 				.collect(Collectors.toList())
 	}
