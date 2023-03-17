@@ -2,7 +2,6 @@ package de.atruvia.ase.samman.buli.domain;
 
 import static java.util.stream.Collectors.joining;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.endsWith;
 
 import java.net.URI;
 import java.util.Arrays;
