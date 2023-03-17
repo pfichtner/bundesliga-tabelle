@@ -1,4 +1,4 @@
-package de.atruvia.ase.sammanbuli.infra.adapters.primary;
+package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
 import java.util.List;
 
