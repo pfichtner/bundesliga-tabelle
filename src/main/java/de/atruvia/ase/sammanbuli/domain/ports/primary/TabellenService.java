@@ -2,7 +2,7 @@ package de.atruvia.ase.sammanbuli.domain.ports.primary;
 
 import java.util.List;
 
-import de.atruvia.ase.sammanbuli.domain.TabellenPlatz;
+import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 
 public interface TabellenService {
 

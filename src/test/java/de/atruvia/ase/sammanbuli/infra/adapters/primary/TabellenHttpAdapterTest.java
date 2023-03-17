@@ -21,9 +21,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import de.atruvia.ase.samman.buli.Main;
-import de.atruvia.ase.sammanbuli.domain.TabellenPlatz;
-import de.atruvia.ase.sammanbuli.domain.ports.primary.DefaultTabellenService;
-import de.atruvia.ase.sammanbuli.domain.ports.primary.TabellenService;
+import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
+import de.atruvia.ase.samman.buli.domain.ports.primary.DefaultTabellenService;
+import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 import de.atruvia.ase.sammanbuli.infra.adapters.secondary.OpenLigaDbSpieltagRepo;
 
 @SpringBootTest(classes = { Main.class, TabellenHttpAdapter.class, DefaultTabellenService.class,

@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
 
-import de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis;
+import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;
