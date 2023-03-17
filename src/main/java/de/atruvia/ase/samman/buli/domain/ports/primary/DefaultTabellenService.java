@@ -10,8 +10,8 @@ import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class DefaultTabellenService implements TabellenService {
 
 	private final SpieltagRepo spieltagRepo;
