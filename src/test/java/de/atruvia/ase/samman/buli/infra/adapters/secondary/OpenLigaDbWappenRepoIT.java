@@ -21,7 +21,7 @@ class OpenLigaDbWappenRepoIT {
 	}
 
 	private OpenLigaDbTeamRepo repo() {
-		return teamFsRepo();
+		return new OpenLigaDbTeamRepo();
 	}
 
 }
