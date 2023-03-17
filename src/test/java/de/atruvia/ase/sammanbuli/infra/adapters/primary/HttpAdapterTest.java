@@ -13,8 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import de.atruvia.ase.sammanbuli.domain.ports.primary.DefaultTabellenService;
+import de.atruvia.ase.sammanbuli.infra.adapters.secondary.OpenLigaDbSpieltagRepo;
 
-@SpringBootTest(classes = { TabellenHttpAdapter.class, DefaultTabellenService.class })
+@SpringBootTest(classes = { TabellenHttpAdapter.class, DefaultTabellenService.class, OpenLigaDbSpieltagRepo.class })
 @AutoConfigureMockMvc
 class HttpAdapterTest {
 
