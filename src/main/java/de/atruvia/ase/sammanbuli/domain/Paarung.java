@@ -1,8 +1,8 @@
 package de.atruvia.ase.sammanbuli.domain;
 
-import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.NIEDERLAGE;
-import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.SIEG;
-import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 
 import lombok.Builder;
 import lombok.Value;

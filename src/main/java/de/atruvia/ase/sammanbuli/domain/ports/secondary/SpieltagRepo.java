@@ -2,7 +2,7 @@ package de.atruvia.ase.sammanbuli.domain.ports.secondary;
 
 import java.util.List;
 
-import de.atruvia.ase.sammanbuli.domain.Paarung;
+import de.atruvia.ase.samman.buli.domain.Paarung;
 
 public interface SpieltagRepo {
 

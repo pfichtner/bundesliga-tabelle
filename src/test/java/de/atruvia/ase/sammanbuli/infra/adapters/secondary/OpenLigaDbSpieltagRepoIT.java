@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import de.atruvia.ase.sammanbuli.domain.Paarung;
+import de.atruvia.ase.samman.buli.domain.Paarung;
 
 class OpenLigaDbSpieltagRepoIT {
 
