@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Tabelle;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
@@ -24,7 +25,8 @@ public class DefaultTabellenService implements TabellenService {
 
 	private void setzeSpiele(String league, String season, Tabelle tabelle) {
 		try {
-			spieltagRepo.lade(league, season).forEach(tabelle::add);
+			List<Paarung> lade = spieltagRepo.lade(league, season);
+			lade.forEach(tabelle::add);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
