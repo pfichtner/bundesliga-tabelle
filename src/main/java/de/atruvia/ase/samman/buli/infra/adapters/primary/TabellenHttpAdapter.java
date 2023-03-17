@@ -31,7 +31,7 @@ public class TabellenHttpAdapter {
 		int unentschienden;
 		int niederlagen;
 
-		public static JsonTabellenPlatz fromDomain(TabellenPlatz t) {
+		public static JsonTabellenPlatz fromDomain(TabellenPlatz domain) {
 			// TODO Auto-generated method stub
 			return null;
 		}
