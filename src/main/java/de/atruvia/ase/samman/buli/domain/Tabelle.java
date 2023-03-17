@@ -79,12 +79,12 @@ public class Tabelle {
 				.ergebnis(paarung.ergebnis()) //
 				.punkte(paarung.punkte());
 		if (swapped) {
-			return builder //
+			return b //
 					.toreAuswaerts(paarung.getTore()) //
 					.gegentoreAuswaerts(paarung.getGegentore()) //
 					.build();
 		} else
-			return builder //
+			return b //
 					.toreHeim(paarung.getTore()) //
 					.gegentoreHeim(paarung.getGegentore()) //
 					.build();
