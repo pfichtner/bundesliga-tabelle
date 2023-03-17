@@ -4,6 +4,8 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 
+import java.net.URI;
+
 import lombok.Builder;
 import lombok.Value;
 
@@ -17,6 +19,7 @@ public class Paarung {
 
 	boolean gespielt;
 	String team1, team2;
+	URI wappen1, wappen2;
 	int tore;
 	int gegentore;
 
