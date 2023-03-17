@@ -1,4 +1,4 @@
-package de.atruvia.ase.sammanbuli.domain;
+package de.atruvia.ase.samman.buli.domain;
 
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
