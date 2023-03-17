@@ -64,6 +64,16 @@ class HttpAdapterTest {
 				.andExpect(jsonPath("$.[0].gegentore", is(platz1.getGegentore()))) //
 				.andExpect(jsonPath("$.[0].torDifferenz", is(platz1.getTorDifferenz()))) //
 				.andExpect(jsonPath("$.[0].punkte", is(platz1.getPunkte()))) //
+				//
+				.andExpect(jsonPath("$.[1].team", is(platz2.getTeam()))) //
+				.andExpect(jsonPath("$.[1].spiele", is(platz2.getSpiele()))) //
+				.andExpect(jsonPath("$.[1].gewonnen", is(platz2.getGewonnen()))) //
+				.andExpect(jsonPath("$.[1].unentschieden", is(platz2.getUnentschieden()))) //
+				.andExpect(jsonPath("$.[1].verloren", is(platz2.getVerloren()))) //
+				.andExpect(jsonPath("$.[1].tore", is(platz2.getTore()))) //
+				.andExpect(jsonPath("$.[1].gegentore", is(platz2.getGegentore()))) //
+				.andExpect(jsonPath("$.[1].torDifferenz", is(platz2.getTorDifferenz()))) //
+				.andExpect(jsonPath("$.[1].punkte", is(platz2.getPunkte()))) //
 		;
 
 	}
