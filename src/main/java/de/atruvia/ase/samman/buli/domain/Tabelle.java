@@ -12,7 +12,6 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
@@ -60,7 +59,6 @@ public class Tabelle {
 	}
 
 	private final Map<String, TabellenPlatz> eintraege = new HashMap<>();
-
 	public void add(Paarung paarung) {
 		addInternal(paarung, false);
 		addInternal(paarung.swap(), true);
@@ -71,20 +69,20 @@ public class Tabelle {
 	}
 
 	private TabellenPlatz newEintrag(Paarung paarung, boolean swapped) {
-		TabellenPlatzBuilder b = TabellenPlatz.builder().wappen(paarung.getWappen1());
+//		.wappen(paarung.getWappen1()) //
 		if (!paarung.isGespielt()) {
-			return b.build();
+			return TabellenPlatz.NULL.withWappen(paarung.getWappen1());
 		}
-		b = b //
+		TabellenPlatz.TabellenPlatzBuilder builder = TabellenPlatz.builder() //
 				.ergebnis(paarung.ergebnis()) //
 				.punkte(paarung.punkte());
 		if (swapped) {
-			return b //
+			return builder //
 					.toreAuswaerts(paarung.getTore()) //
 					.gegentoreAuswaerts(paarung.getGegentore()) //
 					.build();
 		} else
-			return b //
+			return builder //
 					.toreHeim(paarung.getTore()) //
 					.gegentoreHeim(paarung.getGegentore()) //
 					.build();
