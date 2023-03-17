@@ -86,7 +86,7 @@ public class TabellenPlatz {
 		return ergebnis(UNENTSCHIEDEN);
 	}
 
-	public int getVerloren() {
+	public int getNiederlagen() {
 		return ergebnis(NIEDERLAGE);
 	}
 
