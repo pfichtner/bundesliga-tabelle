@@ -35,10 +35,12 @@ class HttpAdapterTest {
 
 	@Test
 	void shouldReturnDefaultMessage() throws Exception {
-		
-		TabellenPlatz a = TabellenPlatz.builder().team("Team 1");
-		Mockito.when(tabellenService.erstelleTabelle("bl1", "2022")).thenReturn(List.of(a));
-		
+		TabellenPlatz p1 = TabellenPlatz.builder().team("Team 10").platz(11).spiele(12).punkte(13).toreHeim(14)
+				.toreAuswaerts(15).build();
+		TabellenPlatz p2 = TabellenPlatz.builder().team("Team 20").platz(21).spiele(22).punkte(23).toreHeim(24)
+				.toreAuswaerts(25).build();
+		Mockito.when(tabellenService.erstelleTabelle("bl1", "2022")).thenReturn(List.of(p1, p2));
+
 		this.mockMvc.perform(get("/tabelle/bl1/2022")).andDo(print()).andExpect(status().isOk())
 				.andExpect(content().string(containsString("Hello, World")));
 	}
