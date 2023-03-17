@@ -26,6 +26,7 @@ public class TabellenHttpAdapter {
 		int punkte;
 		int tore;
 		int gegentore;
+		int tordifferenz;
 
 		int siege;
 		int unentschieden;
@@ -39,6 +40,7 @@ public class TabellenHttpAdapter {
 					.punkte(domain.getPunkte()) //
 					.tore(domain.getTore()) //
 					.gegentore(domain.getGegentore()) //
+					.tordifferenz(domain.getTorDifferenz()) //
 					.siege(domain.getGewonnen()) //
 					.unentschieden(domain.getUnentschieden()) //
 					.niederlagen(domain.getVerloren()) //
