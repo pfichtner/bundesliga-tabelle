@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
+import de.atruvia.ase.sammanbuli.domain.TabellenPlatz;
 import de.atruvia.ase.sammanbuli.domain.ports.primary.TabellenService;
 import lombok.RequiredArgsConstructor;
 
