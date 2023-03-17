@@ -65,7 +65,7 @@ class TabelleTest {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2", URI.create("wappenAlt1"), URI.create("wappenAlt2")),
 				paarung("Team 2", "Team 1", URI.create("wappenNeu1"), URI.create("wappenNeu2")));
 		wennDieTabelleBerechnetWird();
-		assertThat(sut.getEntries().stream().map(t -> t.getWappen().toASCIIString()).collect(joining("\n")))
+		assertThat(sut.getEntries().stream().map(t -> t.getWappen() = null ? "": t.getWappen().toASCIIString()).collect(joining("\n")))
 				.isEqualTo("""
 						a
 						b""");
