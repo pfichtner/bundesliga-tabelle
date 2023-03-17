@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
 
-class OpenLigaDbWappenRepoRepoTest {
+class OpenLigaDbWappenRepoTest {
 
 	@Test
 	void canRetrieveDataOf2022() throws Exception {

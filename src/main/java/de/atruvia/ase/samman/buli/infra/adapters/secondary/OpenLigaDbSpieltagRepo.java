@@ -19,7 +19,7 @@ import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
 import lombok.ToString;
 
 @Repository
-public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
+class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 
 	@ToString
 	private class Team {
