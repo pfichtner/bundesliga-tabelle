@@ -12,9 +12,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import de.atruvia.ase.samman.buli.Main;
+import de.atruvia.ase.sammanbuli.domain.ports.primary.DefaultTabellenService;
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = { TabellenHttpAdapter.class, DefaultTabellenService.class })
 @AutoConfigureMockMvc
 class HttpAdapterTest {
 
