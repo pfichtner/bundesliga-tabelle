@@ -75,7 +75,7 @@ public class Tabelle {
 					try {
 						return wr.getWappen(league, season, team);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
+						// TODO wenn das Wappen nicht geladen werden kann -> loggen, aber weitermachen
 						e.printStackTrace();
 						return null;
 					}
