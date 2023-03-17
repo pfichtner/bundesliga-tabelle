@@ -41,14 +41,14 @@ public class Paarung {
 
 	public static class PaarungBuilder {
 
-		public Paarung.PaarungBuilder ergebnis(int tore, int gegentore) {
+		public PaarungBuilder ergebnis(int tore, int gegentore) {
 			this.gespielt = true;
 			this.tore = tore;
 			this.gegentore = gegentore;
 			return this;
 		}
 
-		private Paarung.PaarungBuilder gespielt(boolean gespielt) {
+		private PaarungBuilder gespielt(boolean gespielt) {
 			this.gespielt = gespielt;
 			return this;
 		}
