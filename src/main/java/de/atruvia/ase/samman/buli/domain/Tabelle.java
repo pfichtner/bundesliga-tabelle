@@ -76,6 +76,7 @@ public class Tabelle {
 
 			private URI load(WappenRepo repo, String league, String season, String team) {
 				try {
+					System.out.println("Loading " + team);
 					return repo.getWappen(league, season, team);
 				} catch (Exception e) {
 					// TODO wenn das Wappen nicht geladen werden kann -> loggen, aber weitermachen
