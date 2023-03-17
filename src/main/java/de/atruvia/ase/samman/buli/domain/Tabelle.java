@@ -105,6 +105,7 @@ public class Tabelle {
 
 	private URI wappen(TabellenPlatz tp) {
 		try {
+			// TODO hart kodierte Daten
 			return wappenRepository.getWappen("bl1", "2022", tp.getTeam());
 		} catch (Exception e) {
 			// TODO wenn das Wappen nicht geladen werden kann -> loggen, aber weitermachen
