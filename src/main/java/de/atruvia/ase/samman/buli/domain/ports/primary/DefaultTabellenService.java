@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 class DefaultTabellenService implements TabellenService {
 
 	private final SpieltagRepo spieltagRepo;
-	private final TeamRepo wappenRepo;
 
 	@Override
 	public List<TabellenPlatz> erstelleTabelle(String league, String season) {
