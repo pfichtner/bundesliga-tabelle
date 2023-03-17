@@ -1,8 +1,8 @@
 package de.atruvia.ase.sammanbuli.infra.adapters.primary;
 
-import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.NIEDERLAGE;
-import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.SIEG;
-import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.util.stream.Collectors.joining;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsString;
@@ -26,7 +26,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import de.atruvia.ase.samman.buli.Main;
-import de.atruvia.ase.sammanbuli.domain.TabellenPlatz;
+import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.sammanbuli.domain.ports.primary.DefaultTabellenService;
 import de.atruvia.ase.sammanbuli.domain.ports.primary.TabellenService;
 import de.atruvia.ase.sammanbuli.infra.adapters.secondary.OpenLigaDbSpieltagRepo;
