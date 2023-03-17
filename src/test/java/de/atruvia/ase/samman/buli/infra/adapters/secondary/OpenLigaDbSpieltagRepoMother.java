@@ -28,7 +28,6 @@ public final class OpenLigaDbSpieltagRepoMother {
 			protected String readJson(String league, String season) throws Exception {
 				return readString(path("getavailableteams", league, season));
 			}
-
 		};
 	}
 
