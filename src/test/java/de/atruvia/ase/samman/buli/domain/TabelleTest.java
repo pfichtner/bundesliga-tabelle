@@ -71,6 +71,17 @@ class TabelleTest {
 				proto://wappenNeu2""");
 	}
 
+	@Test
+	void nullWappenWerdenNichtUebernommen() {
+		gegenSeienDiePaarungen(
+				paarung("Team 1", "Team 2", URI.create("proto://wappenAlt1"), URI.create("proto://wappenAlt2")),
+				paarung("Team 2", "Team 1", URI.create("proto://wappenNeu2"), null));
+		wennDieTabelleBerechnetWird();
+		dannSindDieWappen("""
+				proto://wappenAlt1
+				proto://wappenNeu2""");
+	}
+
 	private Paarung.PaarungBuilder paarung(String team1, String team2) {
 		return Paarung.builder().team1(team1).team2(team2);
 	}
