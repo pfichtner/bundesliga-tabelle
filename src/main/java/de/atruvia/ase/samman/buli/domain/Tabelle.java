@@ -4,6 +4,7 @@ import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
+import java.net.URI;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -98,8 +99,17 @@ public class Tabelle {
 		return platzGruppen.entrySet().stream().sorted(comparing(Entry::getKey)).peek(e -> platz.incrementAndGet())
 				.map(Entry::getValue)
 				.flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platz.get()))
-						.map(tp -> tp.withWappen(wappenRepository.getWappen(tp.getTeam()))))
+						.map(tp -> tp.withWappen(wappen(tp))))
 				.collect(toList());
+	}
+
+	private URI wappen(TabellenPlatz tp) {
+		try {
+			return wappenRepository.getWappen(tp.getTeam(), null, null);
+		} catch (Exception e) {
+			// TODO wenn das Wappen nicht geladen werden kann -> loggen, aber weitermachen
+			return null;
+		}
 	}
 
 	private TabellenPlatz setTeam(Entry<String, TabellenPlatz> entry) {
