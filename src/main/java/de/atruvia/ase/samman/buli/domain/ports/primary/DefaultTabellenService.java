@@ -18,7 +18,7 @@ class DefaultTabellenService implements TabellenService {
 
 	@Override
 	public List<TabellenPlatz> erstelleTabelle(String league, String season) {
-		Tabelle tabelle = new Tabelle((league1, season1, team) -> null);
+		Tabelle tabelle = new Tabelle((league, season, team) -> null);
 		lade(league, season).forEach(tabelle::add);
 		return tabelle.getEntries();
 	}
