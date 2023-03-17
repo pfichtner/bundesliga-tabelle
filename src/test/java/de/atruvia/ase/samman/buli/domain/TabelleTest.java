@@ -88,7 +88,7 @@ class TabelleTest {
 				paarung("Team 2", "Team 1", null, URI.create("proto://wappen1")));
 		wennDieTabelleBerechnetWird();
 		dannSindDieWappen("""
-				proto://wappenAlt1
+				proto://wappen1
 				null""");
 	}
 
