@@ -16,6 +16,7 @@ import de.atruvia.ase.samman.buli.domain.ports.secondary.WappenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+@RequiredArgsConstructor
 public class Tabelle {
 
 	@RequiredArgsConstructor
