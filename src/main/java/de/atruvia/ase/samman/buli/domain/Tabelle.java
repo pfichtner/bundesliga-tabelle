@@ -60,6 +60,7 @@ public class Tabelle {
 	}
 
 	private final Map<String, TabellenPlatz> eintraege = new HashMap<>();
+
 	public void add(Paarung paarung) {
 		addInternal(paarung, false);
 		addInternal(paarung.swap(), true);
@@ -70,12 +71,11 @@ public class Tabelle {
 	}
 
 	private TabellenPlatz newEintrag(Paarung paarung, boolean swapped) {
-//		.wappen(paarung.getWappen1()) //
+		TabellenPlatzBuilder b = TabellenPlatz.builder().wappen(paarung.getWappen1());
 		if (!paarung.isGespielt()) {
-			return TabellenPlatz.NULL;
+			return b.build();
 		}
-		TabellenPlatzBuilder builder2 = TabellenPlatz.builder();
-		TabellenPlatz.TabellenPlatzBuilder builder = builder2 //
+		b = b //
 				.ergebnis(paarung.ergebnis()) //
 				.punkte(paarung.punkte());
 		if (swapped) {
