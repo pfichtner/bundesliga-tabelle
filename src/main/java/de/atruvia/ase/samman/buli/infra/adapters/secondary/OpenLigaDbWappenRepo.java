@@ -23,7 +23,7 @@ class OpenLigaDbWappenRepo implements TeamRepo {
 		String teamName;
 		String teamIconUrl;
 
-		URI toDomain() {
+		de.atruvia.ase.samman.buli.domain.Team toDomain() {
 			return URI.create(teamIconUrl);
 		}
 
