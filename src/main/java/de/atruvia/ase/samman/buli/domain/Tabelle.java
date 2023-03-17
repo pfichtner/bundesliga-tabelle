@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import de.atruvia.ase.samman.buli.domain.ports.secondary.WappenRepository;
+import de.atruvia.ase.samman.buli.domain.ports.secondary.WappenRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
@@ -61,7 +61,7 @@ public class Tabelle {
 	}
 
 	private final Map<String, TabellenPlatz> eintraege = new HashMap<>();
-	private final WappenRepository wappenRepository;
+	private final WappenRepo wappenRepository;
 
 	public void add(Paarung paarung) {
 		addInternal(paarung, false);

@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 
 import com.google.gson.Gson;
 
-import de.atruvia.ase.samman.buli.domain.ports.secondary.WappenRepository;
+import de.atruvia.ase.samman.buli.domain.ports.secondary.WappenRepo;
 import lombok.ToString;
 
 @Repository
-class OpenLigaDbWappenRepo implements WappenRepository {
+class OpenLigaDbWappenRepo implements WappenRepo {
 
 	@ToString
 	private class TeamInfo {
