@@ -71,7 +71,7 @@ public class Tabelle {
 
 			@Override
 			public URI getWappen(String league, String season, String team) throws Exception {
-				return cache.computeIfAbsent(team, (Function<String, URI>) t -> {
+				return cache.computeIfAbsent(team, t -> {
 					try {
 						return wr.getWappen(league, season, team);
 					} catch (Exception e) {
