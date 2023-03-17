@@ -4,6 +4,6 @@ import java.net.URI;
 
 public interface TeamRepo {
 
-	URI getWappen(String league, String season, String team) throws Exception;
+	URI getTeam(String league, String season, String team) throws Exception;
 
 }
