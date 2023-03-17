@@ -28,10 +28,12 @@ class DefaultTabellenServiceTest {
 	}
 
 	private String print(TabellenPlatz tabellenPlatz, int length) {
-		return Arrays.asList(stringFormat(length, tabellenPlatz.getTeam()), tabellenPlatz.getSpiele(),
-				tabellenPlatz.getSiege(), tabellenPlatz.getUnentschieden(), tabellenPlatz.getNiederlagen(),
-				tabellenPlatz.getTore(), tabellenPlatz.getGegentore(), tabellenPlatz.getTorDifferenz(),
-				tabellenPlatz.getPunkte()).stream().map(this::format).collect(joining(" | "));
+		return Arrays
+				.asList(stringFormat(length, tabellenPlatz.getTeam()), tabellenPlatz.getSpiele(),
+						tabellenPlatz.getSiege(), tabellenPlatz.getUnentschieden(), tabellenPlatz.getNiederlagen(),
+						tabellenPlatz.getTore(), tabellenPlatz.getGegentore(), tabellenPlatz.getTorDifferenz(),
+						tabellenPlatz.getPunkte(), tabellenPlatz.getWappen())
+				.stream().map(this::format).collect(joining(" | "));
 	}
 
 	private String stringFormat(int length, String team) {
