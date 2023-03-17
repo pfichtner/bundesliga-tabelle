@@ -1,7 +1,9 @@
 package de.atruvia.ase.samman.buli.domain.ports.secondary;
 
+import java.net.URI;
+
 public interface WappenRepository {
 
-	Object getWappen(String team);
+	URI getWappen(String team);
 
 }
