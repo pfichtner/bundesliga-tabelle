@@ -19,7 +19,7 @@ import lombok.ToString;
 class OpenLigaDbWappenRepo implements TeamRepo {
 
 	@ToString
-	private class TeamInfo {
+	private class Team {
 		String teamName;
 		String teamIconUrl;
 
@@ -29,17 +29,10 @@ class OpenLigaDbWappenRepo implements TeamRepo {
 
 	}
 
-	
-	
-	@Override
-	public URI getTeams(String league, String season, String teamName) throws Exception {
-		return getTeams(league, season);
-	}
-
 	@Override
 	public List<Team> getTeams(String league, String season) throws Exception {
-		return Arrays.stream(new Gson().fromJson(readJson(league, season), TeamInfo[].class))
-				.filter(t -> t.teamName.equals(teamName)).findFirst().map(TeamInfo::toDomain).orElse(null);
+		return Arrays.stream(new Gson().fromJson(readJson(league, season), Team[].class)).map(Team::toDomain)
+				.orElse(null);
 	}
 
 	protected String readJson(String league, String season) throws Exception {
