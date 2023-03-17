@@ -27,6 +27,8 @@ class OpenLigaDbWappenRepo implements TeamRepo {
 
 	}
 
+	
+	
 	@Override
 	public URI getTeams(String league, String season, String teamName) throws Exception {
 		return getTeams(league, season);
