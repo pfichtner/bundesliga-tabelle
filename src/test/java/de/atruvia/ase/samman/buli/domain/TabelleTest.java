@@ -67,9 +67,10 @@ class TabelleTest {
 				paarung("Team 2", "Team 1", URI.create("proto://wappenNeu2"), URI.create("proto://wappenNeu1")));
 		wennDieTabelleBerechnetWird();
 		List<TabellenPlatz> entries = sut.getEntries();
-		assertThat(entries.stream().map(t -> t.getWappen().toASCIIString()).collect(joining("\n"))).isEqualTo("""
+		String expected = """
 				proto://wappenNeu1
-				proto://wappenNeu2""");
+				proto://wappenNeu2""";
+		assertThat(entries.stream().map(t -> t.getWappen().toASCIIString()).collect(joining("\n"))).isEqualTo(expected);
 	}
 
 	private Paarung.PaarungBuilder paarung(String team1, String team2) {
