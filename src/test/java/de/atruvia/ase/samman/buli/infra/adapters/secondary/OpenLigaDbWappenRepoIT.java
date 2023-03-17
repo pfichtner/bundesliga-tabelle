@@ -1,6 +1,5 @@
 package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
-import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.teamFsRepo;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.URI;
