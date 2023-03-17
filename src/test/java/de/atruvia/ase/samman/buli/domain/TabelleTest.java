@@ -62,8 +62,9 @@ class TabelleTest {
 
 	@Test
 	void wappenIstImmerDasDerLetztenPaarung() {
-		gegenSeienDiePaarungen(paarung("Team 1", "Team 2", URI.create("wappenAlt1"), URI.create("wappenAlt2")),
-				paarung("Team 2", "Team 1", URI.create("wappenNeu1"), URI.create("wappenNeu2")));
+		gegenSeienDiePaarungen(
+				paarung("Team 1", "Team 2", URI.create("proto://wappenAlt1"), URI.create("proto://wappenAlt2")),
+				paarung("Team 2", "Team 1", URI.create("proto://wappenNeu1"), URI.create("proto://wappenNeu2")));
 		wennDieTabelleBerechnetWird();
 		assertThat(sut.getEntries().stream().map(t -> t.getWappen().toASCIIString()).collect(joining("\n")))
 				.isEqualTo("""
