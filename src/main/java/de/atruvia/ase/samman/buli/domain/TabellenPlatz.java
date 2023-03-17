@@ -6,6 +6,7 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toMap;
 
+import java.net.URI;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,8 +22,9 @@ import lombok.With;
 @Builder
 public class TabellenPlatz {
 
-	static TabellenPlatz NULL = new TabellenPlatz(0, "", 0, emptyMap(), 0, 0, 0, 0, 0);
+	static TabellenPlatz NULL = new TabellenPlatz(null, 0, "", 0, emptyMap(), 0, 0, 0, 0, 0);
 
+	URI wappen;
 	@With
 	int platz;
 	@With
