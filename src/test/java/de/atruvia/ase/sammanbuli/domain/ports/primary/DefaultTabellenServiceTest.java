@@ -10,7 +10,7 @@ import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
-import de.atruvia.ase.sammanbuli.domain.TabellenPlatz;
+import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 
 class DefaultTabellenServiceTest {
 

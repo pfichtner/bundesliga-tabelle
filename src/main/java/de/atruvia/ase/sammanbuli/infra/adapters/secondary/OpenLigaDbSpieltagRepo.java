@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import com.google.gson.Gson;
 
-import de.atruvia.ase.sammanbuli.domain.Paarung;
-import de.atruvia.ase.sammanbuli.domain.Paarung.PaarungBuilder;
+import de.atruvia.ase.samman.buli.domain.Paarung;
+import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 import de.atruvia.ase.sammanbuli.domain.ports.secondary.SpieltagRepo;
 import lombok.ToString;
 

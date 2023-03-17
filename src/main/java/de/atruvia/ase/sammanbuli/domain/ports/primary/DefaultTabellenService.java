@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import de.atruvia.ase.sammanbuli.domain.Tabelle;
-import de.atruvia.ase.sammanbuli.domain.TabellenPlatz;
+import de.atruvia.ase.samman.buli.domain.Tabelle;
+import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.sammanbuli.domain.ports.secondary.SpieltagRepo;
 import lombok.RequiredArgsConstructor;
 
