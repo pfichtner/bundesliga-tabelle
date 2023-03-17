@@ -13,10 +13,14 @@ class OpenLigaDbWappenRepoTest {
 	void canRetrieveDataOf2022() throws Exception {
 		String teamName = "Eintracht Frankfurt";
 		String str = "https://i.imgur.com/X8NFkOb.png";
-		assertThat(wappenFsRepo().getWappen("bl1", "2022", teamName))
-				.isEqualTo(URI.create(str));
+		assertTeamHasWappen(teamName, str);
 		assertThat(wappenFsRepo().getWappen("bl1", "2022", "FC Bayern München"))
 				.isEqualTo(URI.create("https://i.imgur.com/jJEsJrj.png"));
+	}
+
+	private void assertTeamHasWappen(String teamName, String str) throws Exception {
+		assertThat(wappenFsRepo().getWappen("bl1", "2022", teamName))
+				.isEqualTo(URI.create(str));
 	}
 
 }
