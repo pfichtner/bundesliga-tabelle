@@ -4,7 +4,6 @@ import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
-import java.net.URI;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
 
 import de.atruvia.ase.samman.buli.domain.ports.secondary.WappenRepo;
 import lombok.RequiredArgsConstructor;
@@ -98,19 +96,9 @@ public class Tabelle {
 		Map<OrdnungsElement, List<TabellenPlatz>> platzGruppen = eintraege.entrySet().stream().map(this::setTeam)
 				.collect(groupingBy(OrdnungsElement::new));
 		return platzGruppen.entrySet().stream().sorted(comparing(Entry::getKey)).peek(e -> platz.incrementAndGet())
-				.map(Entry::getValue).flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new))
-						.map(tp -> tp.withPlatz(platz.get())).map(tp -> tp.withWappen(wappen(tp))))
+				.map(Entry::getValue)
+				.flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platz.get())))
 				.collect(toList());
-	}
-
-	private URI wappen(TabellenPlatz tp) {
-		try {
-			// TODO hart kodierte Daten
-			return wappenRepository.getWappen("bl1", "2022", tp.getTeam());
-		} catch (Exception e) {
-			// TODO wenn das Wappen nicht geladen werden kann -> loggen, aber weitermachen
-			return null;
-		}
 	}
 
 	private TabellenPlatz setTeam(Entry<String, TabellenPlatz> entry) {
