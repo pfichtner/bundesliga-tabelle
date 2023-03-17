@@ -27,24 +27,24 @@ class OpenLigaDbWappenRepo implements WappenRepository {
 	private class TeamInfo {
 		String teamName;
 		String teamIconUrl;
-		
+
 		URI toDomain() {
 			return URI.create(teamIconUrl);
 		}
-		
+
 	}
-	
-	
+
 	@Override
-	public URI getWappen(String league, String season, String team) {
+	public URI getWappen(String league, String season, String teamName) {
 		Stream<TeamInfo> stream = Arrays.stream(new Gson().fromJson(readJson(league, season), TeamInfo[].class));
-		stream.filter(t->t.)
+		Stream<TeamInfo> filter = stream.filter(t->t.teamName.equals(teamName));
+		return filter.findFirst().map(x->x.toDomain()) orElse(null);
 		
 		
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public URI getWappen(String team) {
 		// TODO Auto-generated method stub
