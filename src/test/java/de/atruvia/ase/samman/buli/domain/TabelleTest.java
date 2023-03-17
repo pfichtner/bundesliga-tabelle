@@ -84,8 +84,7 @@ class TabelleTest {
 
 	@Test
 	void wennEinWappenInAllenPaarungenNullIstIstEsNull() {
-		gegenSeienDiePaarungen(
-				paarung("Team 1", "Team 2", URI.create("proto://wappen1"), null),
+		gegenSeienDiePaarungen(paarung("Team 1", "Team 2", URI.create("proto://wappen1"), null),
 				paarung("Team 2", "Team 1", null, URI.create("proto://wappen1")));
 		wennDieTabelleBerechnetWird();
 		dannSindDieWappen("""
@@ -114,8 +113,8 @@ class TabelleTest {
 	}
 
 	private void dannSindDieWappen(String expected) {
-		assertThat(sut.getEntries().stream().map(t -> t.getWappen().toASCIIString()).collect(joining("\n")))
-				.isEqualTo(expected);
+		assertThat(sut.getEntries().stream().map(t -> t.getWappen() == null ? "null" : t.getWappen().toASCIIString())
+				.collect(joining("\n"))).isEqualTo(expected);
 	}
 
 	private String print(List<TabellenPlatz> plaetze) {
