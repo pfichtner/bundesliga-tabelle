@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.google.gson.Gson;
 
+import de.atruvia.ase.samman.buli.domain.Team;
 import de.atruvia.ase.samman.buli.domain.ports.secondary.TeamRepo;
 import lombok.ToString;
 
