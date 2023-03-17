@@ -4,6 +4,6 @@ import java.net.URI;
 
 public interface WappenRepository {
 
-	URI getWappen(String team);
+	URI getWappen(String league, String season, String team);
 
 }

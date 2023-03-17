@@ -16,10 +16,11 @@ import com.google.gson.Gson;
 import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
+import de.atruvia.ase.samman.buli.domain.ports.secondary.WappenRepository;
 import lombok.ToString;
 
 @Repository
-class OpenLigaDbWappenRepo implements SpieltagRepo {
+class OpenLigaDbWappenRepo implements WappenRepository {
 
 	@ToString
 	private class TeamInfo {
@@ -30,9 +31,16 @@ class OpenLigaDbWappenRepo implements SpieltagRepo {
 		}
 		
 	}
+	
+	@Override
+	public URI getWappen(String team) {
+		Arrays.stream(new Gson().fromJson(readJson(team), TeamInfo[].class))
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
-	public List<Paarung> lade(String league, String season) throws Exception {
+	public List<URI> lade(String league, String season) throws Exception {
 		return Arrays.stream(new Gson().fromJson(readJson(league, season), TeamInfo[].class)).map(TeamInfo::toDomain)
 				.collect(toList());
 	}
