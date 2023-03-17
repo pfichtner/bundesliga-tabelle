@@ -19,14 +19,13 @@ public class DefaultTabellenService implements TabellenService {
 	@Override
 	public List<TabellenPlatz> erstelleTabelle(String league, String season) {
 		Tabelle tabelle = new Tabelle();
-		setzeSpiele(league, season, tabelle);
+		lade(league, season).forEach(tabelle::add);
 		return tabelle.getEntries();
 	}
 
-	private void setzeSpiele(String league, String season, Tabelle tabelle) {
+	private List<Paarung> lade(String league, String season) {
 		try {
-			List<Paarung> lade = spieltagRepo.lade(league, season);
-			lade.forEach(tabelle::add);
+			return spieltagRepo.lade(league, season);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
