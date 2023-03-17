@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import org.springframework.stereotype.Repository;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
@@ -35,7 +36,7 @@ class OpenLigaDbWappenRepo implements WappenRepository {
 	}
 
 	@Override
-	public URI getWappen(String league, String season, String teamName) {
+	public URI getWappen(String league, String season, String teamName) throws JsonSyntaxException, Exception {
 		return Arrays.stream(new Gson().fromJson(readJson(league, season), TeamInfo[].class))
 				.filter(t -> t.teamName.equals(teamName)).findFirst().map(TeamInfo::toDomain).orElse(null);
 	}
