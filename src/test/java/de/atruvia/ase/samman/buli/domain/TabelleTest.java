@@ -66,14 +66,9 @@ class TabelleTest {
 				paarung("Team 1", "Team 2", URI.create("proto://wappenAlt1"), URI.create("proto://wappenAlt2")),
 				paarung("Team 2", "Team 1", URI.create("proto://wappenNeu2"), URI.create("proto://wappenNeu1")));
 		wennDieTabelleBerechnetWird();
-		List<TabellenPlatz> entries = sut.getEntries();
-		dannSindDieWappen(entries, """
+		dannSindDieWappen("""
 				proto://wappenNeu1
 				proto://wappenNeu2""");
-	}
-
-	private void dannSindDieWappen(List<TabellenPlatz> entries, String expected) {
-		assertThat(entries.stream().map(t -> t.getWappen().toASCIIString()).collect(joining("\n"))).isEqualTo(expected);
 	}
 
 	private Paarung.PaarungBuilder paarung(String team1, String team2) {
@@ -94,6 +89,11 @@ class TabelleTest {
 
 	private void dannIstDieTabelle(String expected) {
 		assertThat(print(sut.getEntries())).isEqualTo(expected);
+	}
+
+	private void dannSindDieWappen(String expected) {
+		assertThat(sut.getEntries().stream().map(t -> t.getWappen().toASCIIString()).collect(joining("\n")))
+				.isEqualTo(expected);
 	}
 
 	private String print(List<TabellenPlatz> plaetze) {
