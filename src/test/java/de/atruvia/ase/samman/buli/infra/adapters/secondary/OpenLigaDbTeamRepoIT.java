@@ -6,7 +6,7 @@ import java.net.URI;
 
 import org.junit.jupiter.api.Test;
 
-class OpenLigaDbWappenRepoIT {
+class OpenLigaDbTeamRepoIT {
 
 	@Test
 	void canRetrieveDataOf2022() throws Exception {
