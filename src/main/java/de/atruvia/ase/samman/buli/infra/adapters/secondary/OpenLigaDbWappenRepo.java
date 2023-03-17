@@ -8,6 +8,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Repository;
 
@@ -24,17 +25,28 @@ class OpenLigaDbWappenRepo implements WappenRepository {
 
 	@ToString
 	private class TeamInfo {
+		String teamName;
 		String teamIconUrl;
 		
-		static URI toDomain(TeamInfo teamInfo) {
-			return URI.create(teamInfo.teamIconUrl);
+		URI toDomain() {
+			return URI.create(teamIconUrl);
 		}
 		
 	}
 	
+	
+	@Override
+	public URI getWappen(String league, String season, String team) {
+		Stream<TeamInfo> stream = Arrays.stream(new Gson().fromJson(readJson(league, season), TeamInfo[].class));
+		stream.filter(t->t.)
+		
+		
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	@Override
 	public URI getWappen(String team) {
-		Arrays.stream(new Gson().fromJson(readJson(team), TeamInfo[].class))
 		// TODO Auto-generated method stub
 		return null;
 	}
