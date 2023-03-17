@@ -1,4 +1,4 @@
-package de.atruvia.ase.sammanbuli.infra.adapters.secondary;
+package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
