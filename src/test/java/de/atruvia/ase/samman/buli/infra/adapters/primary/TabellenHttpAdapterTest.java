@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -38,9 +39,9 @@ class TabellenHttpAdapterTest {
 		String league = "bl1";
 		String season = "2022";
 
-		TabellenPlatz platz1 = TabellenPlatz.builder().wappen("wappen-team-10").team("Team 10").spiele(11)
-				.ergebnisse(Map.of(SIEG, 12, UNENTSCHIEDEN, 13, NIEDERLAGE, 14)).toreHeim(15).toreAuswaerts(16)
-				.gegentoreHeim(17).gegentoreAuswaerts(18).punkte(19).build();
+		TabellenPlatz platz1 = TabellenPlatz.builder().wappen(URI.create("proto://wappen-team-10")).team("Team 10")
+				.spiele(11).ergebnisse(Map.of(SIEG, 12, UNENTSCHIEDEN, 13, NIEDERLAGE, 14)).toreHeim(15)
+				.toreAuswaerts(16).gegentoreHeim(17).gegentoreAuswaerts(18).punkte(19).build();
 		TabellenPlatz platz2 = TabellenPlatz.builder().team("Team 20").spiele(21)
 				.ergebnisse(Map.of(SIEG, 22, UNENTSCHIEDEN, 23, NIEDERLAGE, 24)).toreHeim(25).toreAuswaerts(26)
 				.gegentoreHeim(27).gegentoreAuswaerts(28).punkte(29).build();
