@@ -67,10 +67,9 @@ class TabelleTest {
 				paarung("Team 2", "Team 1", URI.create("proto://wappenNeu2"), URI.create("proto://wappenNeu1")));
 		wennDieTabelleBerechnetWird();
 		List<TabellenPlatz> entries = sut.getEntries();
-		String expected = """
+		dannSindDieWappen(entries, """
 				proto://wappenNeu1
-				proto://wappenNeu2""";
-		dannSindDieWappen(entries, expected);
+				proto://wappenNeu2""");
 	}
 
 	private void dannSindDieWappen(List<TabellenPlatz> entries, String expected) {
