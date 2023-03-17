@@ -9,6 +9,10 @@ import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
+import de.atruvia.ase.samman.buli.domain.Paarung;
+import de.atruvia.ase.samman.buli.domain.Tabelle;
+import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
+
 class TabelleTest {
 
 	private Paarung[] paarungen;
