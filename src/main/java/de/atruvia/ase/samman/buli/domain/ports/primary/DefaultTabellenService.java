@@ -13,17 +13,17 @@ import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Tabelle;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
-import de.atruvia.ase.samman.buli.domain.ports.secondary.WappenRepo;
+import de.atruvia.ase.samman.buli.domain.ports.secondary.TeamRepo;
 
 @Service
 class DefaultTabellenService implements TabellenService {
 
 	private final SpieltagRepo spieltagRepo;
-	private final WappenRepo wappenRepo;
+	private final TeamRepo wappenRepo;
 
-	public DefaultTabellenService(SpieltagRepo spieltagRepo, WappenRepo wappenRepo) {
+	public DefaultTabellenService(SpieltagRepo spieltagRepo, TeamRepo wappenRepo) {
 		this.spieltagRepo = spieltagRepo;
-		this.wappenRepo = new WappenRepo() {
+		this.wappenRepo = new TeamRepo() {
 
 			private final Map<String, URI> cache = new HashMap<>();
 
@@ -32,7 +32,7 @@ class DefaultTabellenService implements TabellenService {
 				return cache.computeIfAbsent(team, t -> load(wappenRepo, league, season, team));
 			}
 
-			private URI load(WappenRepo wappenRepo, String league, String season, String team) {
+			private URI load(TeamRepo wappenRepo, String league, String season, String team) {
 				try {
 					return wappenRepo.getWappen(league, season, team);
 				} catch (Exception e) {
