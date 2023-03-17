@@ -36,13 +36,8 @@ class OpenLigaDbWappenRepo implements WappenRepository {
 
 	@Override
 	public URI getWappen(String league, String season, String teamName) {
-		Stream<TeamInfo> stream = Arrays.stream(new Gson().fromJson(readJson(league, season), TeamInfo[].class));
-		Stream<TeamInfo> filter = stream.filter(t->t.teamName.equals(teamName));
-		return filter.findFirst().map(x->x.toDomain()) orElse(null);
-		
-		
-		// TODO Auto-generated method stub
-		return null;
+		return Arrays.stream(new Gson().fromJson(readJson(league, season), TeamInfo[].class))
+				.filter(t -> t.teamName.equals(teamName)).findFirst().map(TeamInfo::toDomain).orElse(null);
 	}
 
 	@Override
