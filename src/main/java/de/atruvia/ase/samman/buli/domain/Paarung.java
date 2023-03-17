@@ -36,7 +36,9 @@ public class Paarung {
 	}
 
 	Paarung swap() {
-		return toBuilder().team1(team2).team2(team1).wappen1(wappen2).wappen2(wappen1).tore(gegentore).gegentore(tore)
+		return toBuilder().team1(team2).team2(team1) //
+				.wappen1(wappen2).wappen2(wappen1) //
+				.tore(gegentore).gegentore(tore) //
 				.build();
 	}
 
