@@ -32,7 +32,7 @@ public class TabellenHttpAdapter {
 		int unentschieden;
 		int niederlagen;
 
-		public static JsonTabellenPlatz fromDomain(TabellenPlatz domain) {
+		private static JsonTabellenPlatz fromDomain(TabellenPlatz domain) {
 			return builder() //
 					.platz(domain.getPlatz()) //
 					.team(domain.getTeam()) //
