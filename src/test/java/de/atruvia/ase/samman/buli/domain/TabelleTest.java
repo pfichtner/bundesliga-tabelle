@@ -81,7 +81,7 @@ class TabelleTest {
 
 	private String print(TabellenPlatz platz) {
 		return Arrays
-				.asList(platz.getPlatz(), platz.getTeam(), platz.getSpiele(), platz.getGewonnen(),
+				.asList(platz.getPlatz(), platz.getTeam(), platz.getSpiele(), platz.getSiege(),
 						platz.getUnentschieden(), platz.getVerloren(), platz.getPunkte(), platz.getTore(),
 						platz.getGegentore(), platz.getTorDifferenz())
 				.stream().map(Objects::toString).collect(joining("|"));
