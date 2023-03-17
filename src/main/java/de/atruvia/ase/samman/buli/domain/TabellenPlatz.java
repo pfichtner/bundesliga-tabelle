@@ -24,7 +24,6 @@ public class TabellenPlatz {
 
 	static TabellenPlatz NULL = new TabellenPlatz(null, 0, "", 0, emptyMap(), 0, 0, 0, 0, 0);
 
-	@With
 	URI wappen;
 	@With
 	int platz;
