@@ -72,14 +72,18 @@ public class Tabelle {
 			@Override
 			public URI getWappen(String league, String season, String team) throws Exception {
 				return cache.computeIfAbsent(team, t -> {
-					try {
-						return wr.getWappen(league, season, team);
-					} catch (Exception e) {
-						// TODO wenn das Wappen nicht geladen werden kann -> loggen, aber weitermachen
-						e.printStackTrace();
-						return null;
-					}
+					return load(wr, league, season, team);
 				});
+			}
+
+			private URI load(WappenRepo wr, String league, String season, String team) {
+				try {
+					return wr.getWappen(league, season, team);
+				} catch (Exception e) {
+					// TODO wenn das Wappen nicht geladen werden kann -> loggen, aber weitermachen
+					e.printStackTrace();
+					return null;
+				}
 			}
 		};
 
