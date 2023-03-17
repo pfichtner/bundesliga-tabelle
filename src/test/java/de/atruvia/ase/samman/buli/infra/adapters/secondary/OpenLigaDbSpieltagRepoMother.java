@@ -24,7 +24,7 @@ public final class OpenLigaDbSpieltagRepoMother {
 		return new OpenLigaDbWappenRepo() {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
-				return readString(new File(url("getmatchdata", league, season).toURI()).toPath());
+				return readString(new File(url("getavailableteams", league, season).toURI()).toPath());
 			}
 		};
 	}
