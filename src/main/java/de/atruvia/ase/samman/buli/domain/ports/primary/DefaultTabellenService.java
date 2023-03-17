@@ -29,12 +29,17 @@ class DefaultTabellenService implements TabellenService {
 
 			@Override
 			public URI getTeams(String league, String season, String team) throws Exception {
+				return getTeams(league, season);
+			}
+
+			@Override
+			public URI getTeams(String league, String season) throws Exception {
 				return cache.computeIfAbsent(team, t -> load(wappenRepo, league, season, team));
 			}
 
 			private URI load(TeamRepo wappenRepo, String league, String season, String team) {
 				try {
-					return wappenRepo.getTeams(league, season, team);
+					return wappenRepo.getTeams(league, season);
 				} catch (Exception e) {
 					// TODO Log error
 					e.printStackTrace();

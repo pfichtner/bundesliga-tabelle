@@ -4,6 +4,6 @@ import java.net.URI;
 
 public interface TeamRepo {
 
-	URI getTeam(String league, String season, String team) throws Exception;
+	URI getTeams(String league, String season, String team) throws Exception;
 
 }

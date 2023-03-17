@@ -29,6 +29,11 @@ class OpenLigaDbWappenRepo implements TeamRepo {
 
 	@Override
 	public URI getTeams(String league, String season, String teamName) throws Exception {
+		return getTeams(league, season);
+	}
+
+	@Override
+	public URI getTeams(String league, String season) throws Exception {
 		return Arrays.stream(new Gson().fromJson(readJson(league, season), TeamInfo[].class))
 				.filter(t -> t.teamName.equals(teamName)).findFirst().map(TeamInfo::toDomain).orElse(null);
 	}
