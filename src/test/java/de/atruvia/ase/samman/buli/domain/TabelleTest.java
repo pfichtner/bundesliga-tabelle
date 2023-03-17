@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class TabelleTest {
 
 	private Paarung[] paarungen;
-	private Tabelle sut = new Tabelle();
+	private Tabelle sut = new Tabelle(t -> null);
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {
