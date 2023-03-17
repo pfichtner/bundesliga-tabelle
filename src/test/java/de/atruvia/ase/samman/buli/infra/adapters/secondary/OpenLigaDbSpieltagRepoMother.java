@@ -15,7 +15,7 @@ public final class OpenLigaDbSpieltagRepoMother {
 		return new OpenLigaDbSpieltagRepo() {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
-				return readString(new File(url(league, season).toURI()).toPath());
+				return readString(new File(url("getmatchdata", league, season).toURI()).toPath());
 			}
 		};
 	}
@@ -24,14 +24,14 @@ public final class OpenLigaDbSpieltagRepoMother {
 		return new OpenLigaDbWappenRepo() {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
-				return readString(new File(url(league, season).toURI()).toPath());
+				return readString(new File(url("getmatchdata", league, season).toURI()).toPath());
 			}
 		};
 	}
 
-	private static URL url(String league, String season) {
+	private static URL url(String base, String league, String season) {
 		return OpenLigaDbSpieltagRepoMother.class.getClassLoader()
-				.getResource(String.format("getmatchdata/%s/%s.json", league, season));
+				.getResource(String.format(base + "/%s/%s.json", league, season));
 	}
 
 }
