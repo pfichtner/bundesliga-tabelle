@@ -1,4 +1,4 @@
-package de.atruvia.ase.sammanbuli.domain.ports.primary;
+package de.atruvia.ase.samman.buli.domain.ports.primary;
 
 import java.util.List;
 
