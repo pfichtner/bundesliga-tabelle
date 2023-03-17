@@ -3,6 +3,7 @@ package de.atruvia.ase.samman.buli.domain;
 import static java.util.stream.Collectors.joining;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -59,8 +60,23 @@ class TabelleTest {
 				2|Team 1|2|1|0|1|3|2|2|0""");
 	}
 
+	@Test
+	void wappenIstImmerDasDerLetztenPaarung() {
+		gegenSeienDiePaarungen(paarung("Team 1", "Team 2", URI.create("wappenAlt1"), URI.create("wappenAlt2")),
+				paarung("Team 2", "Team 1", URI.create("wappenNeu1"), URI.create("wappenNeu2")));
+		wennDieTabelleBerechnetWird();
+		assertThat(sut.getEntries().stream().map(t -> t.getWappen().toASCIIString()).collect(joining("\n")))
+				.isEqualTo("""
+						a
+						b""");
+	}
+
 	private Paarung.PaarungBuilder paarung(String team1, String team2) {
 		return Paarung.builder().team1(team1).team2(team2);
+	}
+
+	private Paarung.PaarungBuilder paarung(String team1, String team2, URI wappen1, URI wappen2) {
+		return paarung(team1, team2).wappen1(wappen1).wappen2(wappen2);
 	}
 
 	private void gegenSeienDiePaarungen(Paarung.PaarungBuilder... paarungen) {
@@ -80,13 +96,11 @@ class TabelleTest {
 	}
 
 	private String print(TabellenPlatz platz) {
-		return data(platz).stream().map(Objects::toString).collect(joining("|"));
-	}
-
-	private List<Object> data(TabellenPlatz platz) {
-		return Arrays.asList(platz.getPlatz(), platz.getTeam(), platz.getSpiele(), platz.getSiege(),
-				platz.getUnentschieden(), platz.getNiederlagen(), platz.getPunkte(), platz.getTore(),
-				platz.getGegentore(), platz.getTorDifferenz());
+		return Arrays
+				.asList(platz.getPlatz(), platz.getTeam(), platz.getSpiele(), platz.getSiege(),
+						platz.getUnentschieden(), platz.getNiederlagen(), platz.getPunkte(), platz.getTore(),
+						platz.getGegentore(), platz.getTorDifferenz())
+				.stream().map(Objects::toString).collect(joining("|"));
 	}
 
 }
