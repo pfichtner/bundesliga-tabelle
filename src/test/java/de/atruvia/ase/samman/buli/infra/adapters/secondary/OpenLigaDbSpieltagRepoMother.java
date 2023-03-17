@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PRIVATE)
 public final class OpenLigaDbSpieltagRepoMother {
 
-	public static OpenLigaDbSpieltagRepo readFromLocalFilesystemRepo() {
+	public static OpenLigaDbSpieltagRepo spieltagFsRepo() {
 		return new OpenLigaDbSpieltagRepo() {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
