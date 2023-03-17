@@ -85,8 +85,8 @@ class TabelleTest {
 	@Test
 	void wennEinWappenInAllenPaarungenNullIstIstEsNull() {
 		gegenSeienDiePaarungen(
-				paarung("Team 1", "Team 2", URI.create("proto://wappenAlt1"), URI.create("proto://wappenAlt2")),
-				paarung("Team 2", "Team 1", null, null));
+				paarung("Team 1", "Team 2", URI.create("proto://wappen1"), null),
+				paarung("Team 2", "Team 1", null, URI.create("proto://wappen1")));
 		wennDieTabelleBerechnetWird();
 		dannSindDieWappen("""
 				proto://wappenAlt1
