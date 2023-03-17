@@ -73,7 +73,7 @@ public class TabellenPlatz {
 				.toreAuswaerts(this.toreAuswaerts + other.toreAuswaerts) //
 				.gegentoreHeim(this.gegentoreHeim + other.gegentoreHeim) //
 				.gegentoreAuswaerts(this.gegentoreAuswaerts + other.gegentoreAuswaerts) //
-				.wappen(other.wappen) //
+				.wappen(other.wappen == null ? this.wappen : other.wappen) //
 				.build();
 	}
 
