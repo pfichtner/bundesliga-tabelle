@@ -1,7 +1,5 @@
 package de.atruvia.ase.samman.buli.domain.ports.secondary;
 
-import java.net.URI;
-
 import de.atruvia.ase.samman.buli.domain.Team;
 
 public interface TeamRepo {
