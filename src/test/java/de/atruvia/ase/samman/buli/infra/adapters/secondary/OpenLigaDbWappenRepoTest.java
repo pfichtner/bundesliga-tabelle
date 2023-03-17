@@ -1,6 +1,6 @@
 package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
-import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.wappenFsRepo;
+import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.teamFsRepo;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.URI;
@@ -16,7 +16,7 @@ class OpenLigaDbWappenRepoTest {
 	}
 
 	private void assertTeamHasWappen(String teamName, String str) throws Exception {
-		assertThat(wappenFsRepo().getTeams("bl1", "2022")).isEqualTo(URI.create(str));
+		assertThat(teamFsRepo().getTeams("bl1", "2022")).isEqualTo(URI.create(str));
 	}
 
 }

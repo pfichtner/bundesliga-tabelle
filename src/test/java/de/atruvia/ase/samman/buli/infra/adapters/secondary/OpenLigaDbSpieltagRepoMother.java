@@ -20,7 +20,7 @@ public final class OpenLigaDbSpieltagRepoMother {
 		};
 	}
 
-	public static OpenLigaDbTeamRepo wappenFsRepo() {
+	public static OpenLigaDbTeamRepo teamFsRepo() {
 		return new OpenLigaDbTeamRepo() {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
