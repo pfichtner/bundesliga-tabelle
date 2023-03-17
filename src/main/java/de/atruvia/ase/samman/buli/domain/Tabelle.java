@@ -74,6 +74,7 @@ public class Tabelle {
 			return TabellenPlatz.NULL.withWappen(paarung.getWappen1());
 		}
 		TabellenPlatz.TabellenPlatzBuilder builder = TabellenPlatz.builder() //
+				.wappen(paarung.getWappen1()) //
 				.ergebnis(paarung.ergebnis()) //
 				.punkte(paarung.punkte());
 		if (swapped) {
