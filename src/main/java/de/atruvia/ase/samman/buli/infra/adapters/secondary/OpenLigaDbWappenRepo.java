@@ -23,15 +23,15 @@ class OpenLigaDbWappenRepo implements TeamRepo {
 		String teamName;
 		String teamIconUrl;
 
-		de.atruvia.ase.samman.buli.domain.Team toDomain() {
-			return URI.create(teamIconUrl);
+		Team toDomain() {
+			return null;
 		}
 
 	}
 
 	@Override
 	public List<Team> getTeams(String league, String season) throws Exception {
-		return Arrays.stream(new Gson().fromJson(readJson(league, season), OpenLigaDbWappenRepo.Team[].class)).map(Team::toDomain)
+		return Arrays.stream(new Gson().fromJson(readJson(league, season), OpenLigaDbWappenRepo.Team[].class)).map(OpenLigaDbWappenRepo.Team::toDomain)
 				.collect(Collectors.toList())
 	}
 
