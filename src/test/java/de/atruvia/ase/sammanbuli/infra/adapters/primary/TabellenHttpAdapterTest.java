@@ -34,7 +34,7 @@ import de.atruvia.ase.sammanbuli.infra.adapters.secondary.OpenLigaDbSpieltagRepo
 @SpringBootTest(classes = { Main.class, TabellenHttpAdapter.class, DefaultTabellenService.class,
 		OpenLigaDbSpieltagRepo.class })
 @AutoConfigureMockMvc
-class HttpAdapterTest {
+class TabellenHttpAdapterTest {
 
 	@Autowired
 	private MockMvc mockMvc;
