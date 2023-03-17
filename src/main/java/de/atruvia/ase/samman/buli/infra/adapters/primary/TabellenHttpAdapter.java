@@ -22,7 +22,7 @@ public class TabellenHttpAdapter {
 
 		int platz;
 		String team;
-		int spiele = 1;
+		int spiele;
 		int punkte;
 		int tore;
 		int gegentore;
@@ -32,8 +32,17 @@ public class TabellenHttpAdapter {
 		int niederlagen;
 
 		public static JsonTabellenPlatz fromDomain(TabellenPlatz domain) {
-			// TODO Auto-generated method stub
-			return null;
+			return builder() //
+					.platz(domain.getPlatz()) //
+					.team(domain.getTeam()) //
+					.spiele(domain.getSpiele()) //
+					.punkte(domain.getPunkte()) //
+					.tore(domain.getTore()) //
+					.gegentore(domain.getGegentore()) //
+					.siege(domain.getGewonnen()) //
+					.unentschienden(domain.getUnentschieden()) //
+					.niederlagen(domain.getVerloren()) //
+					.build();
 		}
 
 	}
