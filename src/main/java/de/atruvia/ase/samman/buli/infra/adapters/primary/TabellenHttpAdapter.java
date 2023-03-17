@@ -22,7 +22,7 @@ public class TabellenHttpAdapter {
 	private static class JsonTabellenPlatz {
 
 		int platz;
-		URI wappen;
+		String wappen;
 		String team;
 		int spiele;
 		int punkte;
@@ -32,7 +32,7 @@ public class TabellenHttpAdapter {
 		private static JsonTabellenPlatz fromDomain(TabellenPlatz domain) {
 			return builder() //
 					.platz(domain.getPlatz()) //
-					.wappen(domain.getWappen()) //
+					.wappen(domain.getWappen() == null ? null : domain.getWappen().toASCIIString()) //
 					.team(domain.getTeam()) //
 					.spiele(domain.getSpiele()) //
 					.punkte(domain.getPunkte()) //
