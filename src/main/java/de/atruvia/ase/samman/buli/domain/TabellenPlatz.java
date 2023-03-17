@@ -78,7 +78,7 @@ public class TabellenPlatz {
 				.collect(toMap(Entry::getKey, Entry::getValue, Integer::sum));
 	}
 
-	public int getGewonnen() {
+	public int getSiege() {
 		return ergebnis(SIEG);
 	}
 

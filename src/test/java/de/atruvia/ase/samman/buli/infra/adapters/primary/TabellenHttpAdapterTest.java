@@ -51,7 +51,7 @@ class TabellenHttpAdapterTest {
 				.andExpect(status().isOk()) //
 				.andExpect(jsonPath("$.[0].team", is(platz1.getTeam()))) //
 				.andExpect(jsonPath("$.[0].spiele", is(platz1.getSpiele()))) //
-				.andExpect(jsonPath("$.[0].siege", is(platz1.getGewonnen()))) //
+				.andExpect(jsonPath("$.[0].siege", is(platz1.getSiege()))) //
 				.andExpect(jsonPath("$.[0].unentschieden", is(platz1.getUnentschieden()))) //
 				.andExpect(jsonPath("$.[0].niederlagen", is(platz1.getVerloren()))) //
 				.andExpect(jsonPath("$.[0].tore", is(platz1.getTore()))) //
@@ -61,7 +61,7 @@ class TabellenHttpAdapterTest {
 				//
 				.andExpect(jsonPath("$.[1].team", is(platz2.getTeam()))) //
 				.andExpect(jsonPath("$.[1].spiele", is(platz2.getSpiele()))) //
-				.andExpect(jsonPath("$.[1].siege", is(platz2.getGewonnen()))) //
+				.andExpect(jsonPath("$.[1].siege", is(platz2.getSiege()))) //
 				.andExpect(jsonPath("$.[1].unentschieden", is(platz2.getUnentschieden()))) //
 				.andExpect(jsonPath("$.[1].niederlagen", is(platz2.getVerloren()))) //
 				.andExpect(jsonPath("$.[1].tore", is(platz2.getTore()))) //

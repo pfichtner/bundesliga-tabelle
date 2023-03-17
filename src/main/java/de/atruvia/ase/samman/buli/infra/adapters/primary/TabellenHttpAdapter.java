@@ -36,7 +36,7 @@ public class TabellenHttpAdapter {
 					.tore(domain.getTore()) //
 					.gegentore(domain.getGegentore()) //
 					.tordifferenz(domain.getTorDifferenz()) //
-					.siege(domain.getGewonnen()) //
+					.siege(domain.getSiege()) //
 					.unentschieden(domain.getUnentschieden()) //
 					.niederlagen(domain.getVerloren()) //
 					.build();
