@@ -69,7 +69,6 @@ public class Tabelle {
 	}
 
 	private TabellenPlatz newEintrag(Paarung paarung, boolean swapped) {
-//		.wappen(paarung.getWappen1()) //
 		if (!paarung.isGespielt()) {
 			return TabellenPlatz.NULL.withWappen(paarung.getWappen1());
 		}
