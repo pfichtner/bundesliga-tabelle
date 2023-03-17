@@ -18,6 +18,7 @@ import de.atruvia.ase.samman.buli.domain.ports.secondary.WappenRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+@RequiredArgsConstructor
 public class Tabelle {
 
 	@RequiredArgsConstructor
@@ -62,31 +63,6 @@ public class Tabelle {
 
 	private final Map<String, TabellenPlatz> eintraege = new HashMap<>();
 	private final WappenRepo wappenRepository;
-
-	public Tabelle(WappenRepo wappenRepo) {
-		// TODO better caching
-		this.wappenRepository = new WappenRepo() {
-
-			Map<String, URI> cache = new HashMap<>();
-
-			@Override
-			public URI getWappen(String league, String season, String team) throws Exception {
-				return cache.computeIfAbsent(team, t -> load(wappenRepo, league, season, team));
-			}
-
-			private URI load(WappenRepo repo, String league, String season, String team) {
-				try {
-					System.out.println("Loading " + team);
-					return repo.getWappen(league, season, team);
-				} catch (Exception e) {
-					// TODO wenn das Wappen nicht geladen werden kann -> loggen, aber weitermachen
-					e.printStackTrace();
-					return null;
-				}
-			}
-		};
-
-	}
 
 	public void add(Paarung paarung) {
 		addInternal(paarung, false);
