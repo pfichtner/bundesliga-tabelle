@@ -1,8 +1,8 @@
 package de.atruvia.ase.sammanbuli.domain;
 
-import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.NIEDERLAGE;
-import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.SIEG;
-import static de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toMap;
 
@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
 
-import de.atruvia.ase.sammanbuli.domain.Paarung.Ergebnis;
+import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;
