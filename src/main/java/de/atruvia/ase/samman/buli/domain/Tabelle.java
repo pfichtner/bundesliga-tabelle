@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 public class Tabelle {
-	
+
 	@RequiredArgsConstructor
 	@ToString
 	private static class OrdnungsElement implements Comparable<OrdnungsElement> {
@@ -95,8 +95,9 @@ public class Tabelle {
 		Map<OrdnungsElement, List<TabellenPlatz>> platzGruppen = eintraege.entrySet().stream().map(this::setTeam)
 				.collect(groupingBy(OrdnungsElement::new));
 		return platzGruppen.entrySet().stream().sorted(comparing(Entry::getKey)).peek(e -> platz.incrementAndGet())
-				.map(Entry::getValue).flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new))
-						.map(tp -> tp.withPlatz(platz.get())).map(tp->tp.withWappen(wappenRepository.getWappen(tp.getTeam()))))
+				.map(Entry::getValue)
+				.flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platz.get()))
+						.map(tp -> tp.withWappen(wappenRepository.getWappen(tp.getTeam()))))
 				.collect(toList());
 	}
 
