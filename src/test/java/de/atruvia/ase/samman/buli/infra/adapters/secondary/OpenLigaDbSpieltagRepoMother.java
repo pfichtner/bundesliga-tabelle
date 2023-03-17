@@ -17,7 +17,6 @@ public final class OpenLigaDbSpieltagRepoMother {
 			protected String readJson(String league, String season) throws Exception {
 				return readString(new File(url(league, season).toURI()).toPath());
 			}
-
 		};
 	}
 
