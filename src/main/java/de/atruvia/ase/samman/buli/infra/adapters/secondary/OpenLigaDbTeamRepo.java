@@ -18,7 +18,7 @@ import de.atruvia.ase.samman.buli.domain.ports.secondary.TeamRepo;
 import lombok.ToString;
 
 @Repository
-class OpenLigaDbWappenRepo implements TeamRepo {
+class OpenLigaDbTeamRepo implements TeamRepo {
 
 	@ToString
 	private class JsonTeam {
