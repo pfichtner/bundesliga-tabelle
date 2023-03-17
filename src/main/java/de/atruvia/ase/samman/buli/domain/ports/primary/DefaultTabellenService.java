@@ -48,18 +48,10 @@ class DefaultTabellenService implements TabellenService {
 	public List<TabellenPlatz> erstelleTabelle(String league, String season) {
 		Tabelle tabelle = new Tabelle(wappenRepo);
 		lade(league, season).forEach(tabelle::add);
-		return tabelle.getEntries().stream().map(tp -> tp.withWappen(wappen(tp, league, season))).collect(toList());
+		return tabelle.getEntries();
 	}
 
-	private URI wappen(TabellenPlatz tp, String league, String season) {
-		try {
-			// TODO hart kodierte Daten
-			return wappenRepo.getWappen(league, season, tp.getTeam());
-		} catch (Exception e) {
-			// TODO wenn das Wappen nicht geladen werden kann -> loggen, aber weitermachen
-			return null;
-		}
-	}
+	
 
 	private List<Paarung> lade(String league, String season) {
 		try {
