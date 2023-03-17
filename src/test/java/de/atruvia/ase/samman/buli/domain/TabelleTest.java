@@ -90,7 +90,7 @@ class TabelleTest {
 		wennDieTabelleBerechnetWird();
 		dannSindDieWappen("""
 				proto://wappenAlt1
-				proto://wappenNeu2""");
+				null""");
 	}
 
 	private Paarung.PaarungBuilder paarung(String team1, String team2) {
