@@ -20,8 +20,8 @@ public final class OpenLigaDbSpieltagRepoMother {
 		};
 	}
 
-	public static OpenLigaDbWappenRepo wappenFsRepo() {
-		return new OpenLigaDbWappenRepo() {
+	public static OpenLigaDbTeamRepo wappenFsRepo() {
+		return new OpenLigaDbTeamRepo() {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
 				return readString(new File(url("getavailableteams", league, season).toURI()).toPath());
