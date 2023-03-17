@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import de.atruvia.ase.samman.buli.domain.ports.secondary.WappenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
@@ -58,6 +59,7 @@ public class Tabelle {
 	}
 
 	private final Map<String, TabellenPlatz> eintraege = new HashMap<>();
+	private final WappenRepository wappenRepo;
 
 	public void add(Paarung paarung) {
 		addInternal(paarung, false);
@@ -94,7 +96,7 @@ public class Tabelle {
 				.collect(groupingBy(OrdnungsElement::new));
 		return platzGruppen.entrySet().stream().sorted(comparing(Entry::getKey)).peek(e -> platz.incrementAndGet())
 				.map(Entry::getValue).flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new))
-						.map(tp -> tp.withPlatz(platz.get())))
+						.map(tp -> tp.withPlatz(platz.get())).map(tp->tp.withWappen(wappenRepo.getWappen(tp.getTeam()))))
 				.collect(toList());
 	}
 
