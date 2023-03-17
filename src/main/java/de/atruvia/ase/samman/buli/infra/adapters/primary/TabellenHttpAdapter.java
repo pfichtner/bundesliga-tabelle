@@ -24,13 +24,8 @@ public class TabellenHttpAdapter {
 		String team;
 		int spiele;
 		int punkte;
-		int tore;
-		int gegentore;
-		int tordifferenz;
-
-		int siege;
-		int unentschieden;
-		int niederlagen;
+		int tore, gegentore, tordifferenz;
+		int siege, unentschieden, niederlagen;
 
 		private static JsonTabellenPlatz fromDomain(TabellenPlatz domain) {
 			return builder() //
