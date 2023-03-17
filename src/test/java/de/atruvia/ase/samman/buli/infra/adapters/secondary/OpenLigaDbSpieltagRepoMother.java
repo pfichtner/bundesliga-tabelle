@@ -6,7 +6,6 @@ import static lombok.AccessLevel.PRIVATE;
 import java.io.File;
 import java.net.URL;
 
-import de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepo;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = PRIVATE)
