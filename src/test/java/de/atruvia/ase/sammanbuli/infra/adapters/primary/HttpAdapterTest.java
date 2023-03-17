@@ -62,7 +62,7 @@ class HttpAdapterTest {
 				.andExpect(jsonPath("$.[0].verloren", is(platz1.getVerloren()))) //
 				.andExpect(jsonPath("$.[0].tore", is(platz1.getTore()))) //
 				.andExpect(jsonPath("$.[0].gegentore", is(platz1.getGegentore()))) //
-				.andExpect(jsonPath("$.[0].tordifferenz", is(platz1.getTorDifferenz()))) //
+				.andExpect(jsonPath("$.[0].torDifferenz", is(platz1.getTorDifferenz()))) //
 				.andExpect(jsonPath("$.[0].punkte", is(platz1.getPunkte()))) //
 		;
 
