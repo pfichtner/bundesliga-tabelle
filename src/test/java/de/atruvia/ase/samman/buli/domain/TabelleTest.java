@@ -51,7 +51,7 @@ class TabelleTest {
 	}
 
 	@Test
-	void punktUndTorGleichAberMehrAUswärtsTore() {
+	void punktUndTorGleichAberMehrAuswärtsTore() {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 2), paarung("Team 2", "Team 1").ergebnis(0, 1));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
@@ -83,7 +83,7 @@ class TabelleTest {
 		return Arrays
 				.asList(platz.getPlatz(), platz.getTeam(), platz.getSpiele(), platz.getSiege(),
 						platz.getUnentschieden(), platz.getNiederlagen(), platz.getPunkte(), platz.getTore(),
-						platz.getGegentore(), platz.getTorDifferenz())
+						platz.getGegentore(), platz.getTorDifferenz(), platz.getWappen())
 				.stream().map(Objects::toString).collect(joining("|"));
 	}
 
