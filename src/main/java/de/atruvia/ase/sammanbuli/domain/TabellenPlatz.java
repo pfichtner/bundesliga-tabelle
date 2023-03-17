@@ -44,7 +44,7 @@ public class TabellenPlatz {
 		return gegentoreHeim + gegentoreAuswaerts;
 	}
 
-	static class TabellenPlatzBuilder {
+	public static class TabellenPlatzBuilder {
 
 		TabellenPlatzBuilder() {
 			ergebnisse = new HashMap<>();
