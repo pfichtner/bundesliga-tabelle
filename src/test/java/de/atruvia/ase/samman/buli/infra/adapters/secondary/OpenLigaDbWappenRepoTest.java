@@ -4,8 +4,11 @@ import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpie
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.URI;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
+import de.atruvia.ase.samman.buli.domain.Team;
 
 class OpenLigaDbWappenRepoTest {
 
@@ -16,7 +19,8 @@ class OpenLigaDbWappenRepoTest {
 	}
 
 	private void assertTeamHasWappen(String teamName, String str) throws Exception {
-		assertThat(teamFsRepo().getTeams("bl1", "2022")).isEqualTo(URI.create(str));
+		List<Team> teams = teamFsRepo().getTeams("bl1", "2022");
+		assertThat(teams).isEqualTo(URI.create(str));
 	}
 
 }
