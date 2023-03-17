@@ -71,9 +71,7 @@ public class Tabelle {
 
 			@Override
 			public URI getWappen(String league, String season, String team) throws Exception {
-				return cache.computeIfAbsent(team, t -> {
-					return load(wappenRepo, league, season, team);
-				});
+				return cache.computeIfAbsent(team, t -> load(wappenRepo, league, season, team));
 			}
 
 			private URI load(WappenRepo repo, String league, String season, String team) {
