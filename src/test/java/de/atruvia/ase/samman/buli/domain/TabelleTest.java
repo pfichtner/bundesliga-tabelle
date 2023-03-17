@@ -69,8 +69,8 @@ class TabelleTest {
 		List<TabellenPlatz> entries = sut.getEntries();
 		assertThat(entries.stream().map(t -> t.getWappen().toASCIIString()).collect(joining("\n")))
 				.isEqualTo("""
-						a
-						b""");
+						"proto://wappenNeu1"
+						"proto://wappenNeu2"""");
 	}
 
 	private Paarung.PaarungBuilder paarung(String team1, String team2) {
