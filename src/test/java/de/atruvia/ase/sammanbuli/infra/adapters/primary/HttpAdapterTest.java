@@ -10,12 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import de.atruvia.ase.sammanbuli.domain.ports.primary.DefaultTabellenService;
 import de.atruvia.ase.sammanbuli.infra.adapters.secondary.OpenLigaDbSpieltagRepo;
 
 @SpringBootTest(classes = { TabellenHttpAdapter.class, DefaultTabellenService.class, OpenLigaDbSpieltagRepo.class })
+@WebAppConfiguration
 @AutoConfigureMockMvc
 class HttpAdapterTest {
 
