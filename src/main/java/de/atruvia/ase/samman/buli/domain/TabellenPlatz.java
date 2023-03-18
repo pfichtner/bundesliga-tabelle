@@ -5,11 +5,11 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.lang.Math.max;
 import static java.util.Collections.emptyList;
+import static java.util.Collections.reverse;
 import static java.util.stream.Collectors.toList;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -97,9 +97,9 @@ public class TabellenPlatz {
 	}
 
 	public List<Ergebnis> getLetzte(int count) {
-		List<Ergebnis> copy = new ArrayList<>(ergebnisse.subList(max(0, ergebnisse.size() - 5), ergebnisse.size()));
-		Collections.reverse(copy);
-		return copy;
+		List<Ergebnis> lastN = new ArrayList<>(ergebnisse.subList(max(0, ergebnisse.size() - 5), ergebnisse.size()));
+		reverse(lastN);
+		return lastN;
 	}
 
 }
