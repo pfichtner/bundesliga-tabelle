@@ -4,6 +4,7 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Collections.emptyList;
+import static java.util.Collections.reverse;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
@@ -96,7 +97,9 @@ public class TabellenPlatz {
 	}
 
 	public String getLetzte(int count) {
-		return ergebnisse.stream().limit(count).map(e -> e.name().substring(0, 1)).collect(joining());
+		List<Ergebnis> copy = new ArrayList<>(ergebnisse);
+		reverse(copy);
+		return copy.stream().limit(count).map(e -> e.name().substring(0, 1)).collect(joining());
 	}
 
 }
