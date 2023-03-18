@@ -43,11 +43,11 @@ class TabellenHttpAdapterTest {
 		String season = "2022";
 
 		TabellenPlatz platz1 = TabellenPlatz.builder().wappen(URI.create("proto://wappen-team-10")).team("Team 10")
-				.spiele(11).ergebnisse(makeList(SIEG, 12, UNENTSCHIEDEN, 13, NIEDERLAGE, 14)).toreHeim(15)
+				.spiele(11).ergebnisse(List.of(SIEG, SIEG, UNENTSCHIEDEN, NIEDERLAGE, NIEDERLAGE)).toreHeim(15)
 				.toreAuswaerts(16).gegentoreHeim(17).gegentoreAuswaerts(18).punkte(19).build();
 		TabellenPlatz platz2 = TabellenPlatz.builder().wappen(URI.create("proto://wappen-team-20")).team("Team 20")
-				.spiele(21).ergebnisse(makeList(SIEG, 22, UNENTSCHIEDEN, 23, NIEDERLAGE, 24)).toreHeim(25)
-				.toreAuswaerts(26).gegentoreHeim(27).gegentoreAuswaerts(28).punkte(29).build();
+				.spiele(21).ergebnisse(List.of()).toreHeim(25).toreAuswaerts(26).gegentoreHeim(27)
+				.gegentoreAuswaerts(28).punkte(29).build();
 		when(tabellenService.erstelleTabelle(league, season)).thenReturn(List.of(platz1, platz2));
 
 		this.mockMvc.perform(get("/tabelle/" + league + "/" + season)) //
