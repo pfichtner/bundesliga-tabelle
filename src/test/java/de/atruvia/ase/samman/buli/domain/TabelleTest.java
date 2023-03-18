@@ -137,8 +137,12 @@ class TabelleTest {
 
 	private void dannIstDieTendenz(String expected) {
 		assertThat(sut.getEntries().stream()
-				.map(t -> t.getLetzte(5).stream().map(e -> e.name().substring(0, 1)).collect(joining()))
+				.map(t -> getTendenz(t))
 				.collect(joining("\n"))).isEqualTo(expected);
+	}
+
+	private String getTendenz(TabellenPlatz t) {
+		return t.getLetzte(5).stream().map(e -> e.name().substring(0, 1)).collect(joining());
 	}
 
 	private String print(List<TabellenPlatz> plaetze) {
