@@ -96,12 +96,12 @@ class TabelleTest {
 	void keineSpieleKeineTendenz() {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
-		dannIsDieTendenz("""
+		dannIstDieTendenz("""
 				
 				""");
 	}
 
-	private void dannIsDieTendenz(String expected) {
+	private void dannIstDieTendenz(String expected) {
 		assertThat(sut.getEntries().stream()
 				.map(t -> t.getLetzte(5).stream().map(e -> e.name().substring(0, 1)).collect(joining()))
 				.collect(joining("\n"))).isEqualTo(expected);
