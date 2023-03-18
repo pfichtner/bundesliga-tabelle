@@ -49,7 +49,8 @@ public class TabellenHttpAdapter {
 		}
 
 		private static List<Ergebnis> convert(TabellenPlatz domain) {
-			return domain.getLetzte(5);
+			List<Ergebnis> letzte = domain.getLetzte(5);
+			return letzte;
 		}
 
 	}
