@@ -32,7 +32,7 @@ class DefaultTabellenServiceTest {
 				.asList(stringFormat(length, tabellenPlatz.getTeam()), tabellenPlatz.getSpiele(),
 						tabellenPlatz.getSiege(), tabellenPlatz.getUnentschieden(), tabellenPlatz.getNiederlagen(),
 						tabellenPlatz.getTore(), tabellenPlatz.getGegentore(), tabellenPlatz.getTorDifferenz(),
-						tabellenPlatz.getPunkte(), tabellenPlatz.getWappen(), tabellenPlatz.getLetzte(5))
+						tabellenPlatz.getPunkte(), tabellenPlatz.getLetzte(5), tabellenPlatz.getWappen())
 				.stream().map(this::format).collect(joining(" | "));
 	}
 
