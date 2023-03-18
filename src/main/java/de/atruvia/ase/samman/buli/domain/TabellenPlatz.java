@@ -66,7 +66,7 @@ public class TabellenPlatz {
 
 	public TabellenPlatz merge(TabellenPlatz other) {
 		return builder() //
-				.ergebnisse(merge(this.ergebnisseOld, other.ergebnisseOld)) //
+				.ergebnisseOld(merge(this.ergebnisseOld, other.ergebnisseOld)) //
 				.spiele(this.spiele + other.spiele) //
 				.punkte(this.punkte + other.punkte) //
 				.toreHeim(this.toreHeim + other.toreHeim) //
