@@ -4,8 +4,6 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Collections.emptyList;
-import static java.util.Comparator.naturalOrder;
-import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.toList;
 
 import java.net.URI;
