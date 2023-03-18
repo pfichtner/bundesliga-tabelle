@@ -51,9 +51,7 @@ public class TabellenHttpAdapter {
 		}
 
 		private static String convert(TabellenPlatz platz) {
-			List<Ergebnis> letzte = platz.getLetzte(5);
-			return "";
-//			return letzte.stream().map(e -> e.name().substring(0, 1)).collect(joining());
+			return platz.getLetzte(5).stream().map(e -> e.name().substring(0, 1)).collect(joining());
 		}
 
 	}
