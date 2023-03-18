@@ -4,12 +4,12 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.hamcrest.Matcher;
@@ -98,7 +98,7 @@ public class TabellenPlatz {
 	}
 
 	public String getLetzte(int count) {
-		return ergebnisse.stream().map(e -> e.name().substring(0, 1)).collect(Collectors.joining());
+		return ergebnisse.stream().map(e -> e.name().substring(0, 1)).collect(joining());
 	}
 
 }
