@@ -4,11 +4,12 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Collections.emptyList;
+import static java.util.Comparator.naturalOrder;
+import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.toList;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -96,8 +97,7 @@ public class TabellenPlatz {
 	}
 
 	public List<Ergebnis> getLetzte(int count) {
-		return ergebnisse.stream().sorted(Comparator.reverseOrder()).limit(count).sorted(Comparator.naturalOrder())
-				.collect(toList());
+		return ergebnisse.stream().sorted(reverseOrder()).limit(count).sorted(naturalOrder()).collect(toList());
 	}
 
 }
