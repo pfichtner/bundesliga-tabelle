@@ -80,11 +80,4 @@ class TabellenHttpAdapterTest {
 
 	}
 
-	private List<Ergebnis> makeList(Ergebnis e1, int count1, Ergebnis e2, int count2, Ergebnis e3, int count3) {
-		Stream<Ergebnis> s1 = IntStream.range(0, count1).mapToObj(__ -> e1);
-		Stream<Ergebnis> s2 = IntStream.range(0, count2).mapToObj(__ -> e2);
-		Stream<Ergebnis> s3 = IntStream.range(0, count3).mapToObj(__ -> e3);
-		return Stream.concat(Stream.concat(s1, s2), s3).collect(toList());
-	}
-
 }
