@@ -97,14 +97,17 @@ class TabelleTest {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTendenz("""
-				
+
 				""");
 	}
 
-	private void dannIstDieTendenz(String expected) {
-		assertThat(sut.getEntries().stream()
-				.map(t -> t.getLetzte(5).stream().map(e -> e.name().substring(0, 1)).collect(joining()))
-				.collect(joining("\n"))).isEqualTo(expected);
+	@Test
+	void zweiSpieleTendenz() {
+		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 0), paarung("Team 2", "Team 1").ergebnis(1, 1));
+		wennDieTabelleBerechnetWird();
+		dannIstDieTendenz("""
+				
+				""");
 	}
 
 	private Paarung.PaarungBuilder paarung(String team1, String team2) {
@@ -129,6 +132,12 @@ class TabelleTest {
 
 	private void dannSindDieWappen(String expected) {
 		assertThat(sut.getEntries().stream().map(t -> t.getWappen() == null ? "null" : t.getWappen().toASCIIString())
+				.collect(joining("\n"))).isEqualTo(expected);
+	}
+
+	private void dannIstDieTendenz(String expected) {
+		assertThat(sut.getEntries().stream()
+				.map(t -> t.getLetzte(5).stream().map(e -> e.name().substring(0, 1)).collect(joining()))
 				.collect(joining("\n"))).isEqualTo(expected);
 	}
 
