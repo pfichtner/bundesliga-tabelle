@@ -10,6 +10,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -97,7 +98,9 @@ public class TabellenPlatz {
 	}
 
 	public List<Ergebnis> getLetzte(int count) {
-		return ergebnisse.stream().sorted(reverseOrder()).limit(count).sorted(naturalOrder()).collect(toList());
+		List<Ergebnis> copy = ergebnisse.subList(0, 4);
+		Collections.reverse(copy);
+		return copy;
 	}
 
 }
