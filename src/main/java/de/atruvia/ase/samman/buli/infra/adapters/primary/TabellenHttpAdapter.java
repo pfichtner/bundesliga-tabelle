@@ -51,8 +51,9 @@ public class TabellenHttpAdapter {
 		}
 
 		private static String convert(TabellenPlatz platz) {
-			String collect = platz.getLetzte(5).stream().map(e -> e.name().substring(0, 1)).collect(joining());
-			return collect;
+			return String
+					.format("%-5s", platz.getLetzte(5).stream().map(e -> e.name().substring(0, 1)).collect(joining()))
+					.replace(' ', '-');
 		}
 
 	}
