@@ -107,7 +107,7 @@ public class TabellenPlatz {
 	}
 
 	private int ergebnis(Ergebnis type) {
-		return ergebnisseOld.getOrDefault(type, 0);
+		return (int) ergebnisse.stream().filter(type::equals).count();
 	}
 
 }
