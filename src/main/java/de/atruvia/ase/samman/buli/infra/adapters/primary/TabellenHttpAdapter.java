@@ -28,6 +28,7 @@ public class TabellenHttpAdapter {
 		int punkte;
 		int tore, gegentore, tordifferenz;
 		int siege, unentschieden, niederlagen;
+		String letzte5;
 
 		private static JsonTabellenPlatz fromDomain(TabellenPlatz domain) {
 			return builder() //
@@ -42,6 +43,7 @@ public class TabellenHttpAdapter {
 					.siege(domain.getSiege()) //
 					.unentschieden(domain.getUnentschieden()) //
 					.niederlagen(domain.getNiederlagen()) //
+					.letzte5(domain.getLetzte(5)) //
 					.build();
 		}
 
