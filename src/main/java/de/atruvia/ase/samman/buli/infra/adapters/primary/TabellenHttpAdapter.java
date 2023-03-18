@@ -1,6 +1,5 @@
 package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
-import java.net.URI;
 import java.util.stream.Stream;
 
 import org.springframework.web.bind.annotation.GetMapping;
