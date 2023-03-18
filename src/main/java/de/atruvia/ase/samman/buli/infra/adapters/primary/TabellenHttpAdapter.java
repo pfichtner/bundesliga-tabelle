@@ -2,12 +2,14 @@ package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
 import static java.util.stream.Collectors.joining;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 import lombok.Builder;
@@ -49,8 +51,9 @@ public class TabellenHttpAdapter {
 		}
 
 		private static String convert(TabellenPlatz platz) {
+			List<Ergebnis> letzte = platz.getLetzte(5);
 			return "";
-//			return platz.getLetzte(5).stream().map(e -> e.name().substring(0, 1)).collect(joining());
+//			return letzte.stream().map(e -> e.name().substring(0, 1)).collect(joining());
 		}
 
 	}
