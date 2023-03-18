@@ -98,7 +98,7 @@ public class TabellenPlatz {
 	}
 
 	public List<Ergebnis> getLetzte(int count) {
-		List<Ergebnis> copy = ergebnisse.subList(0, 4);
+		List<Ergebnis> copy = ergebnisse.subList(0, 5);
 		Collections.reverse(copy);
 		return copy;
 	}
