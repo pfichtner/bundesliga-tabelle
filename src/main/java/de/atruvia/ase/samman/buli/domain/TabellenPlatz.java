@@ -98,7 +98,7 @@ public class TabellenPlatz {
 	}
 
 	public String getLetzte(int count) {
-		return ergebnisse.stream().map(e -> e.name().substring(0, 1)).collect(joining());
+		return ergebnisse.stream().limit(count).map(e -> e.name().substring(0, 1)).collect(joining());
 	}
 
 }
