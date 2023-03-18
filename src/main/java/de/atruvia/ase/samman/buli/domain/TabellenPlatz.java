@@ -5,14 +5,10 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
@@ -68,8 +64,7 @@ public class TabellenPlatz {
 
 	public TabellenPlatz merge(TabellenPlatz other) {
 		return builder() //
-				.ergebnisse(merge(this.ergebnisse, other.ergebnisse))
-				.spiele(this.spiele + other.spiele) //
+				.ergebnisse(merge(this.ergebnisse, other.ergebnisse)).spiele(this.spiele + other.spiele) //
 				.punkte(this.punkte + other.punkte) //
 				.toreHeim(this.toreHeim + other.toreHeim) //
 				.toreAuswaerts(this.toreAuswaerts + other.toreAuswaerts) //
@@ -81,11 +76,6 @@ public class TabellenPlatz {
 
 	private List<Ergebnis> merge(List<Ergebnis> ergebnisse1, List<Ergebnis> ergebnisse2) {
 		return Stream.concat(ergebnisse1.stream(), ergebnisse2.stream()).collect(toList());
-	}
-
-	private static Map<Ergebnis, Integer> merge(Map<Ergebnis, Integer> map1, Map<Ergebnis, Integer> map2) {
-		return Stream.of(map1, map2).map(Map::entrySet).flatMap(Collection::stream)
-				.collect(toMap(Entry::getKey, Entry::getValue, Integer::sum));
 	}
 
 	public int getSiege() {
