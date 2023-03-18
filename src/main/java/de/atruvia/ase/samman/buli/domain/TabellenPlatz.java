@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.hamcrest.Matcher;
-
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import lombok.Builder;
 import lombok.Value;
