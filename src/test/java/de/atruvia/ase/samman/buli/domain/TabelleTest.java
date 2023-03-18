@@ -136,9 +136,8 @@ class TabelleTest {
 	}
 
 	private void dannIstDieTendenz(String expected) {
-		assertThat(sut.getEntries().stream()
-				.map(t -> getTendenz(t))
-				.collect(joining("\n"))).isEqualTo(expected);
+		assertThat(sut.getEntries().stream().map(t -> t.getTeam() + "|" + getTendenz(t)).collect(joining("\n")))
+				.isEqualTo(expected);
 	}
 
 	private String getTendenz(TabellenPlatz t) {
