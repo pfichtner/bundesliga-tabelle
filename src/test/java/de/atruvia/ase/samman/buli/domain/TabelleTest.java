@@ -106,8 +106,8 @@ class TabelleTest {
 		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 0), paarung("Team 2", "Team 1").ergebnis(1, 1));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTendenz("""
-				
-				""");
+				US
+				UN""");
 	}
 
 	private Paarung.PaarungBuilder paarung(String team1, String team2) {
