@@ -32,7 +32,7 @@ public class TabellenPlatz {
 	String team;
 	@Builder.Default
 	int spiele = 1;
-	Map<Ergebnis, Integer> ergebnisse;
+	Map<Ergebnis, Integer> ergebnisseOld;
 	int punkte;
 	int toreHeim;
 	int toreAuswaerts;
@@ -66,7 +66,7 @@ public class TabellenPlatz {
 
 	public TabellenPlatz merge(TabellenPlatz other) {
 		return builder() //
-				.ergebnisse(merge(this.ergebnisse, other.ergebnisse)) //
+				.ergebnisse(merge(this.ergebnisseOld, other.ergebnisseOld)) //
 				.spiele(this.spiele + other.spiele) //
 				.punkte(this.punkte + other.punkte) //
 				.toreHeim(this.toreHeim + other.toreHeim) //
@@ -95,7 +95,7 @@ public class TabellenPlatz {
 	}
 
 	private int ergebnis(Ergebnis type) {
-		return ergebnisse.getOrDefault(type, 0);
+		return ergebnisseOld.getOrDefault(type, 0);
 	}
 
 }
