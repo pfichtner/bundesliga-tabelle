@@ -26,7 +26,7 @@ import lombok.With;
 @Builder
 public class TabellenPlatz {
 
-	static TabellenPlatz NULL = new TabellenPlatz(null, 0, "", 0, emptyMap(), emptyList(), 0, 0, 0, 0, 0);
+	static TabellenPlatz NULL = new TabellenPlatz(null, 0, "", 0, emptyList(), 0, 0, 0, 0, 0);
 
 	@With
 	URI wappen;
@@ -36,7 +36,6 @@ public class TabellenPlatz {
 	String team;
 	@Builder.Default
 	int spiele = 1;
-	Map<Ergebnis, Integer> ergebnisseOld;
 	List<Ergebnis> ergebnisse;
 	int punkte;
 	int toreHeim;
@@ -56,12 +55,10 @@ public class TabellenPlatz {
 
 		public TabellenPlatzBuilder() {
 			ergebnisse = new ArrayList<>();
-			ergebnisseOld = new HashMap<>();
 		}
 
 		public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
 			ergebnisse.add(ergebnis);
-			ergebnisseOld.merge(ergebnis, 1, (a, b) -> a + b);
 			return this;
 		}
 
@@ -74,7 +71,6 @@ public class TabellenPlatz {
 	public TabellenPlatz merge(TabellenPlatz other) {
 		return builder() //
 				.ergebnisse(merge(this.ergebnisse, other.ergebnisse))
-				.ergebnisseOld(merge(this.ergebnisseOld, other.ergebnisseOld)) //
 				.spiele(this.spiele + other.spiele) //
 				.punkte(this.punkte + other.punkte) //
 				.toreHeim(this.toreHeim + other.toreHeim) //
