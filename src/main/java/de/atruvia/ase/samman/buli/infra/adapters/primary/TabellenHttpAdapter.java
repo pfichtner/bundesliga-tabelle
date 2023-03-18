@@ -51,9 +51,10 @@ public class TabellenHttpAdapter {
 		}
 
 		private static String convert(TabellenPlatz platz) {
-			return String
-					.format("%-5s", platz.getLetzte(5).stream().map(e -> e.name().substring(0, 1)).collect(joining()))
-					.replace(' ', '-');
+			String str = platz.getLetzte(5).stream().map(e -> e.name().substring(0, 1)).collect(joining());
+			int width = 5;
+			String paddedStr = String.format("%" + width + "s", str).replace(' ', '-');
+			return paddedStr;
 		}
 
 	}
