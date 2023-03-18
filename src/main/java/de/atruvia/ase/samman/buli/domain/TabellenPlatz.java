@@ -3,7 +3,6 @@ package de.atruvia.ase.samman.buli.domain;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
-import static java.lang.Math.min;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
@@ -97,9 +96,9 @@ public class TabellenPlatz {
 	}
 
 	public List<Ergebnis> getLetzte(int count) {
-		List<Ergebnis> copy = new ArrayList<>(ergebnisse);
+		List<Ergebnis> copy = new ArrayList<>(ergebnisse.subList(ergebnisse.size() - 5, ergebnisse.size()));
 		Collections.reverse(copy);
-		return copy.subList(0, min(5, copy.size()));
+		return copy;
 	}
 
 }
