@@ -75,7 +75,7 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[1].gegentore", is(platz2.getGegentore()))) //
 				.andExpect(jsonPath("$.[1].tordifferenz", is(platz2.getTorDifferenz()))) //
 				.andExpect(jsonPath("$.[1].punkte", is(platz2.getPunkte()))) //
-				.andExpect(jsonPath("$.[1].letzte5", is(platz1.getLetzte(5)))) //
+				.andExpect(jsonPath("$.[1].letzte5", is(platz2.getLetzte(5)))) //
 		;
 
 	}
