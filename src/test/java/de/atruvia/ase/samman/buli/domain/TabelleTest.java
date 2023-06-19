@@ -17,7 +17,7 @@ class TabelleTest {
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {
-		gegenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
 				1|Team 1|0|0|0|0|0|0|0|0
@@ -26,7 +26,7 @@ class TabelleTest {
 
 	@Test
 	void zweiMannschaftenEinSpielKeineTore() {
-		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(0, 0), paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(0, 0), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
 				1|Team 1|1|0|1|0|1|0|0|0
@@ -35,7 +35,7 @@ class TabelleTest {
 
 	@Test
 	void mannschaftMitMehrPunktenIstWeiterOben() {
-		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(0, 1), paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(0, 1), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
 				1|Team 2|1|1|0|0|3|1|0|1
@@ -44,7 +44,7 @@ class TabelleTest {
 
 	@Test
 	void zweiMannschaftenZweiSpieleMitToren() {
-		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 0), paarung("Team 2", "Team 1").ergebnis(1, 0));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 0), paarung("Team 2", "Team 1").ergebnis(1, 0));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
 				1|Team 1|2|1|0|1|3|1|1|0
@@ -53,7 +53,7 @@ class TabelleTest {
 
 	@Test
 	void punktUndTorGleichAberMehrAuswärtsTore() {
-		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 2), paarung("Team 2", "Team 1").ergebnis(0, 1));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 2), paarung("Team 2", "Team 1").ergebnis(0, 1));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
 				1|Team 2|2|1|0|1|3|2|2|0
@@ -62,7 +62,7 @@ class TabelleTest {
 
 	@Test
 	void wappenIstImmerDasDerLetztenPaarung() {
-		gegenSeienDiePaarungen(
+		gegebenSeienDiePaarungen(
 				paarung("Team 1", "Team 2", URI.create("proto://wappenAlt1"), URI.create("proto://wappenAlt2")),
 				paarung("Team 2", "Team 1", URI.create("proto://wappenNeu2"), URI.create("proto://wappenNeu1")));
 		wennDieTabelleBerechnetWird();
@@ -73,7 +73,7 @@ class TabelleTest {
 
 	@Test
 	void nullWappenWerdenNichtUebernommen() {
-		gegenSeienDiePaarungen(
+		gegebenSeienDiePaarungen(
 				paarung("Team 1", "Team 2", URI.create("proto://wappenAlt1"), URI.create("proto://wappenAlt2")),
 				paarung("Team 2", "Team 1", URI.create("proto://wappenNeu2"), null));
 		wennDieTabelleBerechnetWird();
@@ -84,7 +84,7 @@ class TabelleTest {
 
 	@Test
 	void wennEinWappenInAllenPaarungenNullIstIstEsNull() {
-		gegenSeienDiePaarungen(paarung("Team 1", "Team 2", URI.create("proto://wappen1"), null),
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2", URI.create("proto://wappen1"), null),
 				paarung("Team 2", "Team 1", null, URI.create("proto://wappen1")));
 		wennDieTabelleBerechnetWird();
 		dannSindDieWappen("""
@@ -94,7 +94,7 @@ class TabelleTest {
 
 	@Test
 	void keineSpieleKeineTendenz() {
-		gegenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTendenz("""
 				Team 1|
@@ -103,7 +103,7 @@ class TabelleTest {
 
 	@Test
 	void zweiSpieleTendenz() {
-		gegenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 0), paarung("Team 2", "Team 1").ergebnis(1, 1));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 0), paarung("Team 2", "Team 1").ergebnis(1, 1));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTendenz("""
 				Team 1|US
@@ -118,7 +118,7 @@ class TabelleTest {
 		return paarung(team1, team2).wappen1(wappen1).wappen2(wappen2);
 	}
 
-	private void gegenSeienDiePaarungen(Paarung.PaarungBuilder... paarungen) {
+	private void gegebenSeienDiePaarungen(Paarung.PaarungBuilder... paarungen) {
 		this.paarungen = Arrays.stream(paarungen).map(Paarung.PaarungBuilder::build).toArray(Paarung[]::new);
 	}
 
