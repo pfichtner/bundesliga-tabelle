@@ -96,6 +96,14 @@ public class TabellenPlatz {
 		return (int) ergebnisse.stream().filter(type::equals).count();
 	}
 
+	/**
+	 * Liefert die letzten n Ergebnisse. Sind weniger als n Ergebnisse vorhanden, so
+	 * beinhaltet die Liste nur die vorhandenen Ergebnisse. Das jüngste Ergebnis ist
+	 * vorne, das älteste Ergebnis hinten in der Liste.
+	 * 
+	 * @param count (maximale) Anzahl an Ergebnissen die zurückgegeben werden sollen
+	 * @return Liste der letzen n Ergebnisse
+	 */
 	public List<Ergebnis> getLetzte(int count) {
 		List<Ergebnis> lastN = new ArrayList<>(ergebnisse.subList(max(0, ergebnisse.size() - 5), ergebnisse.size()));
 		reverse(lastN);
