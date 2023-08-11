@@ -43,7 +43,7 @@ class ContractVerificationTest {
 	int port;
 
 	@MockBean
-	SpieltagRepo spieltagFakeRepo;
+	SpieltagRepo spieltagRepoMock;
 
 	@Autowired
 	TabellenService tabellenService;
@@ -73,7 +73,7 @@ class ContractVerificationTest {
 //		Paarung paarung2 = ergebnis(team1, team2, MAX_VALUE, MAX_VALUE);
 		Paarung paarung2 = ergebnis(team2, team1, MAX_VALUE, MAX_VALUE);
 		Paarung paarung3 = ergebnis(team1, team2, MIN_VALUE, MAX_VALUE);
-		when(spieltagFakeRepo.lade(anyString(), anyString())).thenReturn(asList(paarung1, paarung2, paarung3));
+		when(spieltagRepoMock.lade(anyString(), anyString())).thenReturn(asList(paarung1, paarung2, paarung3));
 		assertIsNus(team1);
 	}
 
