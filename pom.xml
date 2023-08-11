@@ -13,7 +13,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>15</java.version>
-		<pact.version>4.1.7</pact.version>
+		<pact.version>4.1.41</pact.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -63,12 +63,6 @@
 			<groupId>com.approvaltests</groupId>
 			<artifactId>approvaltests</artifactId>
 			<version>18.5.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>au.com.dius.pact.consumer</groupId>
-			<artifactId>junit5</artifactId>
-			<version>${pact.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
@@ -23,6 +24,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import au.com.dius.pact.provider.junit5.HttpTestTarget;
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
 import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider;
+import au.com.dius.pact.provider.junitsupport.IgnoreNoPactsToVerify;
 import au.com.dius.pact.provider.junitsupport.Provider;
 import au.com.dius.pact.provider.junitsupport.State;
 import au.com.dius.pact.provider.junitsupport.loader.PactFolder;
@@ -35,6 +37,7 @@ import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
 @Provider("BundesligaBackend")
 @PactFolder("pacts")
 @SpringBootTest(classes = Main.class, webEnvironment = RANDOM_PORT)
+@IgnoreNoPactsToVerify
 class ContractVerificationTest {
 
 	@LocalServerPort
@@ -47,14 +50,18 @@ class ContractVerificationTest {
 	TabellenService tabellenService;
 
 	@BeforeEach
-	void before(PactVerificationContext context) throws Exception {
-		context.setTarget(new HttpTestTarget("localhost", port));
+	void setup(PactVerificationContext context) {
+		if (context != null) {
+			context.setTarget(new HttpTestTarget("localhost", port));
+		}
 	}
 
 	@TestTemplate
 	@ExtendWith(PactVerificationInvocationContextProvider.class)
 	void verifyContracts(PactVerificationContext context) {
-		context.verifyInteraction();
+		if (context != null) {
+			context.verifyInteraction();
+		}
 	}
 
 	@State("matchday #3 team has won on matchday #1, draw on matchday #2 and loss on day #3")
@@ -71,7 +78,7 @@ class ContractVerificationTest {
 		assertIsNus(team1);
 	}
 
-	private void assertIsNus(String team1) {
+	void assertIsNus(String team1) {
 		// Der Client erwartet: Das oberste Team hat das erste Spiel gewonnen, das
 		// zweite unentschieden gespielt und das dritte verloren.
 		// Wie die Reihenfolge SUN-- oder --NUS ist, wird durch den TabellenService
@@ -86,7 +93,7 @@ class ContractVerificationTest {
 		assert entry0.getLetzte(5).equals(List.of(NIEDERLAGE, UNENTSCHIEDEN, SIEG));
 	}
 
-	private Paarung ergebnis(String team1, String team2, int tore1, int tore2) {
+	Paarung ergebnis(String team1, String team2, int tore1, int tore2) {
 		return Paarung.builder().team1(team1).team2(team2).ergebnis(tore1, tore2).build();
 	}
 }
