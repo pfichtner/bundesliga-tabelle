@@ -7,17 +7,18 @@ import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
 import static java.util.Arrays.asList;
 import static java.util.UUID.randomUUID;
+import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -33,7 +34,6 @@ import de.atruvia.ase.samman.buli.Main;
 import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
-import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
 
 @Provider("BundesligaBackend")
@@ -47,9 +47,6 @@ class ContractVerificationTest {
 
 	@MockBean
 	SpieltagRepo spieltagRepoMock;
-
-	@Autowired
-	TabellenService tabellenService;
 
 	@BeforeEach
 	void setup(PactVerificationContext context) {
@@ -71,7 +68,21 @@ class ContractVerificationTest {
 		String teamName = "anyTeamName";
 		List<Paarung> paarungen = asList(SIEG, UNENTSCHIEDEN, NIEDERLAGE).stream().map(e -> createPaarung(teamName, e))
 				.collect(toList());
+		assert teamHasPlayedThreeMatches(teamName, paarungen);
+		assert allOtherThanTeamHasPlayedOneMatch(teamName, paarungen);
 		when(spieltagRepoMock.lade(anyString(), anyString())).thenReturn(paarungen);
+	}
+
+	private boolean allOtherThanTeamHasPlayedOneMatch(String teamName, List<Paarung> paarungen) {
+		return paarungen.stream().filter(not(team1Is(teamName))).count() == 1;
+	}
+
+	private boolean teamHasPlayedThreeMatches(String teamName, List<Paarung> paarungen) {
+		return paarungen.stream().filter(team1Is(teamName)).count() == 3;
+	}
+
+	private Predicate<? super Paarung> team1Is(String teamName) {
+		return p -> p.getTeam1().equals(teamName);
 	}
 
 	private static Paarung createPaarung(String team, Ergebnis ergebnis) {
