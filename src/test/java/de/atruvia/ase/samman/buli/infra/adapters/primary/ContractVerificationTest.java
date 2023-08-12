@@ -6,6 +6,8 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
 import static java.util.Arrays.asList;
+import static java.util.UUID.randomUUID;
+import static java.util.stream.Collectors.toList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -29,7 +31,8 @@ import au.com.dius.pact.provider.junitsupport.State;
 import au.com.dius.pact.provider.junitsupport.loader.PactFolder;
 import de.atruvia.ase.samman.buli.Main;
 import de.atruvia.ase.samman.buli.domain.Paarung;
-import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
+import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
+import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
 
@@ -65,31 +68,47 @@ class ContractVerificationTest {
 
 	@State("matchday #3 team has won on matchday #1, draw on matchday #2 and loss on day #3")
 	void matchdayThreeWinDrawLoss() throws Exception {
-		String team1 = "Team 1";
-		String team2 = "Team 2";
-		Paarung paarung1 = ergebnis(team1, team2, MAX_VALUE, MIN_VALUE);
-		// Es macht tatsächlich einen Unterschied ob Team 1 unentschiden gegen Team 2
-		// oder umgekehrt spielt!
-//		Paarung paarung2 = ergebnis(team1, team2, MAX_VALUE, MAX_VALUE);
-		Paarung paarung2 = ergebnis(team2, team1, MAX_VALUE, MAX_VALUE);
-		Paarung paarung3 = ergebnis(team1, team2, MIN_VALUE, MAX_VALUE);
-		when(spieltagRepoMock.lade(anyString(), anyString())).thenReturn(asList(paarung1, paarung2, paarung3));
-		assertIsNus(team1);
+		String teamName = "anyTeamName";
+		List<Paarung> paarungen = asList(SIEG, UNENTSCHIEDEN, NIEDERLAGE).stream().map(e -> createPaarung(teamName, e))
+				.collect(toList());
+		when(spieltagRepoMock.lade(anyString(), anyString())).thenReturn(paarungen);
 	}
 
-	void assertIsNus(String team1) {
-		// Der Client erwartet: Das oberste Team hat das erste Spiel gewonnen, das
-		// zweite unentschieden gespielt und das dritte verloren.
-		// Wie die Reihenfolge SUN-- oder --NUS ist, wird durch den TabellenService
-		// bestimmt: D.h. wir dürfen nicht den TabellenService mocken, sondern das
-		// SpieltagRepo. Nun könnte es aber sein, dass bei Team1 vs Team2 bei 1:0, 1:1
-		// und 0:1 Team2 in der Tabelle VOR Team 1 steht (Team1 ist SUN, Team2 ist NUS),
-		// wäre Team2 also vor Team1 würden wir hier u.U. etwas verifizieren, was nicht
-		// der Erwartung enspricht. Von daher stellen wir hier noch via assert sicher,
-		// dass Team1 (das SUN Team) auch das erste Team ist.
-		TabellenPlatz entry0 = tabellenService.erstelleTabelle("", "").get(0);
-		assert entry0.getTeam().equals(team1) : entry0.getTeam();
-		assert entry0.getLetzte(5).equals(List.of(NIEDERLAGE, UNENTSCHIEDEN, SIEG));
+	private static Paarung createPaarung(String team, Ergebnis ergebnis) {
+		return createPaarungBuilder(team, ergebnis).build();
+	}
+
+	private static PaarungBuilder createPaarungBuilder(String team, Ergebnis ergebnis) {
+		String otherTeam = randomTeamOtherThan(team);
+		switch (ergebnis) {
+		case SIEG:
+			return sieg(team, otherTeam);
+		case UNENTSCHIEDEN:
+			return unentschieden(team, otherTeam);
+		case NIEDERLAGE:
+			return niederlage(team, otherTeam);
+		}
+		throw new IllegalStateException("Unknown type " + ergebnis);
+	}
+
+	private static String randomTeamOtherThan(String team) {
+		return "not(" + team + ") " + randomUUID();
+	}
+
+	private static PaarungBuilder niederlage(String team1, String team2) {
+		return paarung(team1, team2).ergebnis(MIN_VALUE, MAX_VALUE);
+	}
+
+	private static PaarungBuilder unentschieden(String team1, String team2) {
+		return paarung(team2, team1).ergebnis(MAX_VALUE, MAX_VALUE);
+	}
+
+	private static PaarungBuilder sieg(String team1, String team2) {
+		return paarung(team1, team2).ergebnis(MAX_VALUE, MIN_VALUE);
+	}
+
+	private static Paarung.PaarungBuilder paarung(String team1, String team2) {
+		return Paarung.builder().team1(team1).team2(team2);
 	}
 
 	Paarung ergebnis(String team1, String team2, int tore1, int tore2) {

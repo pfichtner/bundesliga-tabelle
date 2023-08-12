@@ -10,7 +10,7 @@ import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
-class TabelleTest {
+public class TabelleTest {
 
 	private Paarung[] paarungen;
 	private Tabelle sut = new Tabelle();
@@ -44,7 +44,8 @@ class TabelleTest {
 
 	@Test
 	void zweiMannschaftenZweiSpieleMitToren() {
-		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 0), paarung("Team 2", "Team 1").ergebnis(1, 0));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 0),
+				paarung("Team 2", "Team 1").ergebnis(1, 0));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
 				1|Team 1|2|1|0|1|3|1|1|0
@@ -53,7 +54,8 @@ class TabelleTest {
 
 	@Test
 	void punktUndTorGleichAberMehrAuswärtsTore() {
-		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 2), paarung("Team 2", "Team 1").ergebnis(0, 1));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 2),
+				paarung("Team 2", "Team 1").ergebnis(0, 1));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
 				1|Team 2|2|1|0|1|3|2|2|0
@@ -103,14 +105,15 @@ class TabelleTest {
 
 	@Test
 	void zweiSpieleTendenz() {
-		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 0), paarung("Team 2", "Team 1").ergebnis(1, 1));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 0),
+				paarung("Team 2", "Team 1").ergebnis(1, 1));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTendenz("""
 				Team 1|US
 				Team 2|UN""");
 	}
 
-	private Paarung.PaarungBuilder paarung(String team1, String team2) {
+	private static Paarung.PaarungBuilder paarung(String team1, String team2) {
 		return Paarung.builder().team1(team1).team2(team2);
 	}
 
