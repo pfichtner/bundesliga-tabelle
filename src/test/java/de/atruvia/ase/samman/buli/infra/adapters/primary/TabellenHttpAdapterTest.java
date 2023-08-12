@@ -39,7 +39,7 @@ class TabellenHttpAdapterTest {
 		String season = "2022";
 
 		TabellenPlatz platz1 = TabellenPlatz.builder().wappen(URI.create("proto://wappen-team-10")).team("Team 10")
-				.spiele(11).ergebnisse(List.of(SIEG, UNENTSCHIEDEN, NIEDERLAGE)).toreHeim(15).toreAuswaerts(16)
+				.spiele(11).ergebnisse(List.of(NIEDERLAGE, UNENTSCHIEDEN, SIEG)).toreHeim(15).toreAuswaerts(16)
 				.gegentoreHeim(17).gegentoreAuswaerts(18).punkte(19).build();
 		TabellenPlatz platz2 = TabellenPlatz.builder().wappen(URI.create("proto://wappen-team-20")).team("Team 20")
 				.spiele(21).ergebnisse(List.of()).toreHeim(25).toreAuswaerts(26).gegentoreHeim(27)
@@ -59,7 +59,7 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[0].gegentore", is(platz1.getGegentore()))) //
 				.andExpect(jsonPath("$.[0].tordifferenz", is(platz1.getTorDifferenz()))) //
 				.andExpect(jsonPath("$.[0].punkte", is(platz1.getPunkte()))) //
-				.andExpect(jsonPath("$.[0].letzte5", is("--NUS"))) //
+				.andExpect(jsonPath("$.[0].letzte5", is("SUN--"))) //
 				//
 				.andExpect(jsonPath("$.[1].wappen", is(platz2.getWappen().toASCIIString()))) //
 				.andExpect(jsonPath("$.[1].team", is(platz2.getTeam()))) //
