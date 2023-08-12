@@ -8,6 +8,7 @@ import static java.lang.Integer.MIN_VALUE;
 import static java.util.Arrays.asList;
 import static java.util.UUID.randomUUID;
 import static java.util.function.Predicate.not;
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -66,30 +67,27 @@ class ContractVerificationTest {
 	@State("matchday #3 team has won on matchday #1, draw on matchday #2 and loss on day #3")
 	void matchdayThreeWinDrawLoss() throws Exception {
 		String teamName = "anyTeamName";
-		List<Paarung> paarungen = asList(SIEG, UNENTSCHIEDEN, NIEDERLAGE).stream().map(e -> createPaarung(teamName, e))
+		List<Paarung> paarungen = asList(SIEG, UNENTSCHIEDEN, NIEDERLAGE).stream().map(e -> paarung(teamName, e))
 				.collect(toList());
 		assert teamHasPlayedThreeMatches(teamName, paarungen);
 		assert allOtherThanTeamHasPlayedOneMatch(teamName, paarungen);
 		when(spieltagRepoMock.lade(anyString(), anyString())).thenReturn(paarungen);
 	}
 
-	private boolean allOtherThanTeamHasPlayedOneMatch(String teamName, List<Paarung> paarungen) {
-		return paarungen.stream().filter(not(team1Is(teamName))).count() == 1;
+	private static boolean allOtherThanTeamHasPlayedOneMatch(String teamName, List<Paarung> paarungen) {
+		return paarungen.stream().filter(not(team1Is(teamName))).collect(groupingBy(Paarung::getTeam1)).values()
+				.stream().allMatch(l -> l.size() == 1);
 	}
 
-	private boolean teamHasPlayedThreeMatches(String teamName, List<Paarung> paarungen) {
+	private static boolean teamHasPlayedThreeMatches(String teamName, List<Paarung> paarungen) {
 		return paarungen.stream().filter(team1Is(teamName)).count() == 3;
 	}
 
-	private Predicate<? super Paarung> team1Is(String teamName) {
+	private static Predicate<Paarung> team1Is(String teamName) {
 		return p -> p.getTeam1().equals(teamName);
 	}
 
-	private static Paarung createPaarung(String team, Ergebnis ergebnis) {
-		return createPaarungBuilder(team, ergebnis).build();
-	}
-
-	private static PaarungBuilder createPaarungBuilder(String team, Ergebnis ergebnis) {
+	private static Paarung paarung(String team, Ergebnis ergebnis) {
 		String otherTeam = randomTeamOtherThan(team);
 		switch (ergebnis) {
 		case SIEG:
@@ -103,26 +101,27 @@ class ContractVerificationTest {
 	}
 
 	private static String randomTeamOtherThan(String team) {
-		return "not(" + team + ") " + randomUUID();
+		return "not(" + team + ")-" + randomUUID();
 	}
 
-	private static PaarungBuilder niederlage(String team1, String team2) {
-		return paarung(team1, team2).ergebnis(MIN_VALUE, MAX_VALUE);
+	private static Paarung niederlage(String team1, String team2) {
+		return ergebnis(team1, team2, MIN_VALUE, MAX_VALUE);
 	}
 
-	private static PaarungBuilder unentschieden(String team1, String team2) {
-		return paarung(team2, team1).ergebnis(MAX_VALUE, MAX_VALUE);
+	private static Paarung unentschieden(String team1, String team2) {
+		return ergebnis(team1, team2, MAX_VALUE, MAX_VALUE);
 	}
 
-	private static PaarungBuilder sieg(String team1, String team2) {
-		return paarung(team1, team2).ergebnis(MAX_VALUE, MIN_VALUE);
+	private static Paarung sieg(String team1, String team2) {
+		return ergebnis(team1, team2, MAX_VALUE, MIN_VALUE);
 	}
 
-	private static Paarung.PaarungBuilder paarung(String team1, String team2) {
+	private static Paarung ergebnis(String team1, String team2, int tore1, int tore2) {
+		return paarung(team1, team2).ergebnis(tore1, tore2).build();
+	}
+
+	private static PaarungBuilder paarung(String team1, String team2) {
 		return Paarung.builder().team1(team1).team2(team2);
 	}
 
-	Paarung ergebnis(String team1, String team2, int tore1, int tore2) {
-		return Paarung.builder().team1(team1).team2(team2).ergebnis(tore1, tore2).build();
-	}
 }
