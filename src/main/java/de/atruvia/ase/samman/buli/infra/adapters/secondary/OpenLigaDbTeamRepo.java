@@ -1,7 +1,5 @@
 package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
-import static java.util.stream.Collectors.toList;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -34,7 +32,7 @@ class OpenLigaDbTeamRepo implements TeamRepo {
 	@Override
 	public List<Team> getTeams(String league, String season) throws Exception {
 		return Arrays.stream(new Gson().fromJson(readJson(league, season), JsonTeam[].class)).map(JsonTeam::toDomain)
-				.collect(toList());
+				.toList();
 	}
 
 	protected String readJson(String league, String season) throws Exception {

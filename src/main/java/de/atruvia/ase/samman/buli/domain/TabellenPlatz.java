@@ -6,12 +6,11 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.lang.Math.max;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.reverse;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Stream.concat;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import lombok.Builder;
@@ -77,7 +76,7 @@ public class TabellenPlatz {
 	}
 
 	private List<Ergebnis> merge(List<Ergebnis> ergebnisse1, List<Ergebnis> ergebnisse2) {
-		return Stream.concat(ergebnisse1.stream(), ergebnisse2.stream()).collect(toList());
+		return concat(ergebnisse1.stream(), ergebnisse2.stream()).toList();
 	}
 
 	public int getSiege() {

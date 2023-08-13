@@ -9,7 +9,6 @@ import static java.util.Arrays.asList;
 import static java.util.UUID.randomUUID;
 import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -68,10 +67,15 @@ class ContractVerificationTest {
 	void matchdayThreeWinDrawLoss() throws Exception {
 		String teamName = "anyTeamName";
 		List<Paarung> paarungen = asList(SIEG, UNENTSCHIEDEN, NIEDERLAGE).stream().map(e -> paarung(teamName, e))
-				.collect(toList());
+				.toList();
+		assert teamIsInTheFirstPlace(teamName, paarungen);
 		assert teamHasPlayedThreeMatches(teamName, paarungen);
 		assert allOtherThanTeamHasPlayedOneMatch(teamName, paarungen);
 		when(spieltagRepoMock.lade(anyString(), anyString())).thenReturn(paarungen);
+	}
+
+	private boolean teamIsInTheFirstPlace(String teamName, List<Paarung> paarungen) {
+		return paarungen.size() >= 1 && paarungen.get(0).getTeam1().equals(teamName);
 	}
 
 	private static boolean allOtherThanTeamHasPlayedOneMatch(String teamName, List<Paarung> paarungen) {

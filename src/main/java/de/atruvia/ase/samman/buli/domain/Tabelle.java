@@ -2,7 +2,6 @@ package de.atruvia.ase.samman.buli.domain;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -81,11 +80,11 @@ public class Tabelle {
 					.toreAuswaerts(paarung.getTore()) //
 					.gegentoreAuswaerts(paarung.getGegentore()) //
 					.build();
-		} else
-			return builder //
-					.toreHeim(paarung.getTore()) //
-					.gegentoreHeim(paarung.getGegentore()) //
-					.build();
+		}
+		return builder //
+				.toreHeim(paarung.getTore()) //
+				.gegentoreHeim(paarung.getGegentore()) //
+				.build();
 	}
 
 	public List<TabellenPlatz> getEntries() {
@@ -96,7 +95,7 @@ public class Tabelle {
 		return platzGruppen.entrySet().stream().sorted(comparing(Entry::getKey)).peek(e -> platz.incrementAndGet())
 				.map(Entry::getValue)
 				.flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platz.get())))
-				.collect(toList());
+				.toList();
 	}
 
 	private TabellenPlatz setTeam(Entry<String, TabellenPlatz> entry) {
