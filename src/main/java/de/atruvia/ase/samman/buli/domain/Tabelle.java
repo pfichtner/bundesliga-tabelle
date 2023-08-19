@@ -77,13 +77,13 @@ public class Tabelle {
 				.punkte(paarung.punkte());
 		if (swapped) {
 			return builder //
-					.toreAuswaerts(paarung.getTore()) //
-					.gegentoreAuswaerts(paarung.getGegentore()) //
+					.toreAuswaerts(paarung.getToreTeam1()) //
+					.gegentoreAuswaerts(paarung.getToreTeam2()) //
 					.build();
 		}
 		return builder //
-				.toreHeim(paarung.getTore()) //
-				.gegentoreHeim(paarung.getGegentore()) //
+				.toreHeim(paarung.getToreTeam1()) //
+				.gegentoreHeim(paarung.getToreTeam2()) //
 				.build();
 	}
 

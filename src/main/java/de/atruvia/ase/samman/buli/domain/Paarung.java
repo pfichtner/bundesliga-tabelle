@@ -20,8 +20,8 @@ public class Paarung {
 	boolean gespielt;
 	String team1, team2;
 	URI wappen1, wappen2;
-	int tore;
-	int gegentore;
+	int toreTeam1;
+	int toreTeam2;
 
 	public int punkte() {
 		return switch (ergebnis()) {
@@ -32,22 +32,22 @@ public class Paarung {
 	}
 
 	public Ergebnis ergebnis() {
-		return tore == gegentore ? UNENTSCHIEDEN : tore > gegentore ? SIEG : NIEDERLAGE;
+		return toreTeam1 == toreTeam2 ? UNENTSCHIEDEN : toreTeam1 > toreTeam2 ? SIEG : NIEDERLAGE;
 	}
 
 	public Paarung swap() {
 		return toBuilder().team1(team2).team2(team1) //
 				.wappen1(wappen2).wappen2(wappen1) //
-				.tore(gegentore).gegentore(tore) //
+				.toreTeam1(toreTeam2).toreTeam2(toreTeam1) //
 				.build();
 	}
 
 	public static class PaarungBuilder {
 
-		public PaarungBuilder ergebnis(int tore, int gegentore) {
+		public PaarungBuilder ergebnis(int toreTeam1, int toreTeam2) {
 			this.gespielt = true;
-			this.tore = tore;
-			this.gegentore = gegentore;
+			this.toreTeam1 = toreTeam1;
+			this.toreTeam2 = toreTeam2;
 			return this;
 		}
 
