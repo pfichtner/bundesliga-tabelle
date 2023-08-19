@@ -28,10 +28,10 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 
 	@ToString
 	private class MatchResult {
-		static final int RESULTTYPEID_ENDERGEBIS = 2;
+		static final int RESULTTYPEID_ENDERGEBNIS = 2;
 
 		boolean isEndergebnis() {
-			return resultTypeID == RESULTTYPEID_ENDERGEBIS;
+			return resultTypeID == RESULTTYPEID_ENDERGEBNIS;
 		}
 
 		int resultTypeID;
