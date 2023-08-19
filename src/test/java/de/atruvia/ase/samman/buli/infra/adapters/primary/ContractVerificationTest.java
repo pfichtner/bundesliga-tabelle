@@ -14,6 +14,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -67,28 +69,13 @@ class ContractVerificationTest {
 	void matchdayThreeWinDrawLoss() throws Exception {
 		String teamName = "anyTeamName";
 		List<Paarung> paarungen = asList(SIEG, UNENTSCHIEDEN, NIEDERLAGE).stream().map(e -> paarung(teamName, e))
-				.toList();
-		assert teamIsInTheFirstPlace(teamName, paarungen);
-		assert teamHasPlayedThreeMatches(teamName, paarungen);
-		assert allOtherThanTeamHasPlayedOneMatch(teamName, paarungen);
+				.map(reverseEverySecond()).toList();
 		when(spieltagRepoMock.lade(anyString(), anyString())).thenReturn(paarungen);
 	}
 
-	private boolean teamIsInTheFirstPlace(String teamName, List<Paarung> paarungen) {
-		return paarungen.size() >= 1 && paarungen.get(0).getTeam1().equals(teamName);
-	}
-
-	private static boolean allOtherThanTeamHasPlayedOneMatch(String teamName, List<Paarung> paarungen) {
-		return paarungen.stream().filter(not(team1Is(teamName))).collect(groupingBy(Paarung::getTeam1)).values()
-				.stream().allMatch(l -> l.size() == 1);
-	}
-
-	private static boolean teamHasPlayedThreeMatches(String teamName, List<Paarung> paarungen) {
-		return paarungen.stream().filter(team1Is(teamName)).count() == 3;
-	}
-
-	private static Predicate<Paarung> team1Is(String teamName) {
-		return p -> p.getTeam1().equals(teamName);
+	private Function<Paarung, Paarung> reverseEverySecond() {
+		AtomicBoolean isSecond = new AtomicBoolean(false);
+		return p -> isSecond.getAndSet(!isSecond.get()) ? p.swap() : p;
 	}
 
 	private static Paarung paarung(String team, Ergebnis ergebnis) {

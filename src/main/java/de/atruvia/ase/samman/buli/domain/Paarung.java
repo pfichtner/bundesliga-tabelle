@@ -35,7 +35,7 @@ public class Paarung {
 		return tore == gegentore ? UNENTSCHIEDEN : tore > gegentore ? SIEG : NIEDERLAGE;
 	}
 
-	Paarung swap() {
+	public Paarung swap() {
 		return toBuilder().team1(team2).team2(team1) //
 				.wappen1(wappen2).wappen2(wappen1) //
 				.tore(gegentore).gegentore(tore) //
