@@ -8,6 +8,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Repository;
 
@@ -49,16 +50,11 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		Paarung toDomain() {
 			PaarungBuilder b = Paarung.builder().team1(team1.teamName).team2(team2.teamName);
 			b = b.wappen1(URI.create(team1.teamIconUrl)).wappen2(URI.create(team2.teamIconUrl));
-			if (matchResults.length > 0) {
-				MatchResult finalResult = stream(matchResults).filter(MatchResult::isEndergebnis).findFirst()
-						.orElseThrow(() -> new IllegalStateException("No final result found"));
-				b = b.ergebnis(finalResult.pointsTeam1, finalResult.pointsTeam2);
+			Optional<MatchResult> finalResult = stream(matchResults).filter(MatchResult::isEndergebnis).findFirst();
+			if (finalResult.isPresent()) {
+				b = b.ergebnis(finalResult.get().pointsTeam1, finalResult.get().pointsTeam2);
 			}
 			return b.build();
-		}
-
-		private static Optional<MatchResult> endergebnis(MatchResult[] matchResults) {
-			return stream(matchResults).filter(MatchResult::isEndergebnis).findFirst();
 		}
 
 	}
