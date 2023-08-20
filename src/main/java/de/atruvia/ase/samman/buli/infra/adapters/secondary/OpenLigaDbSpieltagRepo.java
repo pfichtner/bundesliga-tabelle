@@ -46,7 +46,7 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		MatchResult[] matchResults;
 
 		Paarung toDomain() {
-			PaarungBuilder b = Paarung.builder().team1(team1.teamName).team2(team2.teamName);
+			PaarungBuilder b = Paarung.builder().teamHeim(team1.teamName).teamGast(team2.teamName);
 			b = b.wappen1(URI.create(team1.teamIconUrl)).wappen2(URI.create(team2.teamIconUrl));
 			b = setFinalResult(b, matchResults);
 			return b.build();

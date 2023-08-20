@@ -64,7 +64,7 @@ public class Tabelle {
 	}
 
 	private void addInternal(Paarung paarung, boolean swapped) {
-		eintraege.merge(paarung.getTeam1(), newEintrag(paarung, swapped), TabellenPlatz::merge);
+		eintraege.merge(paarung.getTeamHeim(), newEintrag(paarung, swapped), TabellenPlatz::merge);
 	}
 
 	private TabellenPlatz newEintrag(Paarung paarung, boolean swapped) {

@@ -16,7 +16,7 @@ class OpenLigaDbSpieltagRepoTest {
 	void canRetrieveDataOf2022() throws Exception {
 		List<Paarung> paarungen = repo().lade("bl1", "2022");
 		assertThat(paarungen).hasSize(306).element(0)
-				.isEqualTo(Paarung.builder().team1("Eintracht Frankfurt").team2("FC Bayern München").ergebnis(1, 6)
+				.isEqualTo(Paarung.builder().teamHeim("Eintracht Frankfurt").teamGast("FC Bayern München").ergebnis(1, 6)
 						.wappen1(wappenFrankfurt()).wappen2(wappenMuenchen()).build());
 	}
 
@@ -25,8 +25,8 @@ class OpenLigaDbSpieltagRepoTest {
 		// 2022: "endergebnis" was first element of array, 2023 it was last -> filter
 		// "resultTypeID" = 2 for now
 		List<Paarung> paarungen = repo().lade("bl1", "2023");
-		assertThat(paarungen).hasSize(9).element(0).isEqualTo(Paarung.builder().team1("Werder Bremen")
-				.team2("FC Bayern München").ergebnis(0, 4).wappen1(wappenBremen()).wappen2(wappenMuenchen()).build());
+		assertThat(paarungen).hasSize(9).element(0).isEqualTo(Paarung.builder().teamHeim("Werder Bremen")
+				.teamGast("FC Bayern München").ergebnis(0, 4).wappen1(wappenBremen()).wappen2(wappenMuenchen()).build());
 	}
 
 	URI wappenFrankfurt() {

@@ -77,15 +77,11 @@ class ContractVerificationTest {
 
 	private static Paarung paarung(String team, Ergebnis ergebnis) {
 		String otherTeam = randomTeamOtherThan(team);
-		switch (ergebnis) {
-		case SIEG:
-			return sieg(team, otherTeam);
-		case UNENTSCHIEDEN:
-			return unentschieden(team, otherTeam);
-		case NIEDERLAGE:
-			return niederlage(team, otherTeam);
-		}
-		throw new IllegalStateException("Unknown type " + ergebnis);
+		return switch (ergebnis) {
+		case SIEG -> sieg(team, otherTeam);
+		case UNENTSCHIEDEN -> unentschieden(team, otherTeam);
+		case NIEDERLAGE -> niederlage(team, otherTeam);
+		};
 	}
 
 	private static String randomTeamOtherThan(String team) {
@@ -109,7 +105,7 @@ class ContractVerificationTest {
 	}
 
 	private static PaarungBuilder paarung(String team1, String team2) {
-		return Paarung.builder().team1(team1).team2(team2);
+		return Paarung.builder().teamHeim(team1).teamGast(team2);
 	}
 
 }

@@ -113,12 +113,12 @@ public class TabelleTest {
 				Team 2|UN""");
 	}
 
-	private static Paarung.PaarungBuilder paarung(String team1, String team2) {
-		return Paarung.builder().team1(team1).team2(team2);
+	private static Paarung.PaarungBuilder paarung(String teamHeim, String teamGast) {
+		return Paarung.builder().teamHeim(teamHeim).teamGast(teamGast);
 	}
 
-	private Paarung.PaarungBuilder paarung(String team1, String team2, URI wappen1, URI wappen2) {
-		return paarung(team1, team2).wappen1(wappen1).wappen2(wappen2);
+	private Paarung.PaarungBuilder paarung(String teamHeim, String teamGast, URI wappen1, URI wappen2) {
+		return paarung(teamHeim, teamGast).wappen1(wappen1).wappen2(wappen2);
 	}
 
 	private void gegebenSeienDiePaarungen(Paarung.PaarungBuilder... paarungen) {

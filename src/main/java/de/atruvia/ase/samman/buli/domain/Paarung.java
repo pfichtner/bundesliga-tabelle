@@ -18,7 +18,7 @@ public class Paarung {
 	}
 
 	boolean gespielt;
-	String team1, team2;
+	String teamHeim, teamGast;
 	URI wappen1, wappen2;
 	int toreTeam1;
 	int toreTeam2;
@@ -36,7 +36,7 @@ public class Paarung {
 	}
 
 	public Paarung swap() {
-		return toBuilder().team1(team2).team2(team1) //
+		return toBuilder().teamHeim(teamGast).teamGast(teamHeim) //
 				.wappen1(wappen2).wappen2(wappen1) //
 				.toreTeam1(toreTeam2).toreTeam2(toreTeam1) //
 				.build();

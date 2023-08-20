@@ -15,7 +15,7 @@ class OpenLigaDbSpieltagRepoIT {
 	void canRetrieveDataOf2022() throws Exception {
 		List<Paarung> paarungen = repo().lade("bl1", "2022");
 		assertThat(paarungen).element(0)
-				.isEqualTo(Paarung.builder().team1("Eintracht Frankfurt").team2("FC Bayern München").ergebnis(1, 6)
+				.isEqualTo(Paarung.builder().teamHeim("Eintracht Frankfurt").teamGast("FC Bayern München").ergebnis(1, 6)
 						.wappen1(URI.create("https://i.imgur.com/X8NFkOb.png"))
 						.wappen2(URI.create("https://i.imgur.com/jJEsJrj.png")).build());
 	}
