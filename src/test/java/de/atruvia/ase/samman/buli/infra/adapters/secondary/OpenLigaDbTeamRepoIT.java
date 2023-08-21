@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.URI;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +40,11 @@ class OpenLigaDbTeamRepoIT {
 	}
 
 	Optional<Team> team(String teamName, String league, String season) throws Exception {
-		return repo().getTeams(league, season).stream().filter(t -> t.getName().equals(teamName)).findFirst();
+		return teams(league, season).filter(t -> t.getName().equals(teamName)).findFirst();
+	}
+
+	Stream<Team> teams(String league, String season) throws Exception {
+		return repo().getTeams(league, season).stream();
 	}
 
 	OpenLigaDbTeamRepo repo() {
