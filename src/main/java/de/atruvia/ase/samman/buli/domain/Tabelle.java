@@ -94,9 +94,8 @@ public class Tabelle {
 		Map<OrdnungsElement, List<TabellenPlatz>> platzGruppen = eintraege.entrySet().stream().map(this::setTeam)
 				.collect(groupingBy(OrdnungsElement::new));
 		return platzGruppen.entrySet().stream().sorted(comparing(Entry::getKey)).map(Entry::getValue).flatMap(t -> {
-			int platzBeforeInc = platz.get();
-			platz.addAndGet(t.size());
-			return t.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platzBeforeInc));
+			int no = platz.getAndAdd(t.size());
+			return t.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(no));
 		}).toList();
 	}
 
