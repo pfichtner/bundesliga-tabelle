@@ -58,6 +58,7 @@ public class Tabelle {
 	}
 
 	private final Map<String, TabellenPlatz> eintraege = new HashMap<>();
+
 	public void add(Paarung paarung) {
 		addInternal(paarung, false);
 		addInternal(paarung.swap(), true);
@@ -89,13 +90,14 @@ public class Tabelle {
 
 	public List<TabellenPlatz> getEntries() {
 		// TODO make it side-affect-free, does it work W/O zip!?
-		AtomicInteger platz = new AtomicInteger();
+		AtomicInteger platz = new AtomicInteger(1);
 		Map<OrdnungsElement, List<TabellenPlatz>> platzGruppen = eintraege.entrySet().stream().map(this::setTeam)
 				.collect(groupingBy(OrdnungsElement::new));
-		return platzGruppen.entrySet().stream().sorted(comparing(Entry::getKey)).peek(e -> platz.incrementAndGet())
-				.map(Entry::getValue)
-				.flatMap(t -> t.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platz.get())))
-				.toList();
+		return platzGruppen.entrySet().stream().sorted(comparing(Entry::getKey)).map(Entry::getValue).flatMap(t -> {
+			int platzBeforeInc = platz.get();
+			platz.addAndGet(t.size());
+			return t.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(platzBeforeInc));
+		}).toList();
 	}
 
 	private TabellenPlatz setTeam(Entry<String, TabellenPlatz> entry) {

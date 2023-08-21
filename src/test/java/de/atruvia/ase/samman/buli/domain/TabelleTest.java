@@ -53,6 +53,17 @@ public class TabelleTest {
 	}
 
 	@Test
+	void dieFolgendeMannschaftIstPlatzDrei() {
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 0), paarung("Team 2", "Team 1").ergebnis(1, 0),
+				paarung("Team 1", "Team 3").ergebnis(1, 0), paarung("Team 2", "Team 3").ergebnis(1, 0));
+		wennDieTabelleBerechnetWird();
+		dannIstDieTabelle("""
+				1|Team 1|3|2|0|1|6|2|1|1
+				1|Team 2|3|2|0|1|6|2|1|1
+				3|Team 3|2|0|0|2|0|0|2|-2""");
+	}
+
+	@Test
 	void punktUndTorGleichAberMehrAuswärtsTore() {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(1, 2),
 				paarung("Team 2", "Team 1").ergebnis(0, 1));
