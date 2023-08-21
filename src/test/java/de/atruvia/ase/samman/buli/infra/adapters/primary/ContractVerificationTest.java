@@ -39,6 +39,7 @@ import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
 @PactFolder("pacts")
 @SpringBootTest(classes = Main.class, webEnvironment = RANDOM_PORT)
 @IgnoreNoPactsToVerify
+@ContractTest
 class ContractVerificationTest {
 
 	@LocalServerPort
