@@ -17,7 +17,7 @@ class OpenLigaDbSpieltagRepoTest {
 		List<Paarung> paarungen = repo().lade("bl1", "2022");
 		assertThat(paarungen).hasSize(306).element(0)
 				.isEqualTo(Paarung.builder().teamHeim("Eintracht Frankfurt").teamGast("FC Bayern München").ergebnis(1, 6)
-						.wappen1(wappenFrankfurt()).wappen2(wappenMuenchen()).build());
+						.wappenHeim(wappenFrankfurt()).wappenGast(wappenMuenchen()).build());
 	}
 
 	@Test
@@ -26,7 +26,7 @@ class OpenLigaDbSpieltagRepoTest {
 		// "resultTypeID" = 2 for now
 		List<Paarung> paarungen = repo().lade("bl1", "2023");
 		assertThat(paarungen).hasSize(9).element(0).isEqualTo(Paarung.builder().teamHeim("Werder Bremen")
-				.teamGast("FC Bayern München").ergebnis(0, 4).wappen1(wappenBremen()).wappen2(wappenMuenchen()).build());
+				.teamGast("FC Bayern München").ergebnis(0, 4).wappenHeim(wappenBremen()).wappenGast(wappenMuenchen()).build());
 	}
 
 	URI wappenFrankfurt() {

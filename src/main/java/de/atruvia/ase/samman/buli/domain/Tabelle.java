@@ -1,7 +1,9 @@
 package de.atruvia.ase.samman.buli.domain;
 
+import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
+import static lombok.AccessLevel.PRIVATE;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -10,7 +12,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
@@ -29,25 +33,35 @@ public class Tabelle {
 //	    MIS: Overall away goal difference: The difference between the number of away goals scored and the number of away goals conceded by the tied teams in matches played away from their home stadium.
 //		If two or more teams have the same rank in the Bundesliga and there is no other criteria that can be used to separate them, then the teams will be listed in alphabetical order according to their full club name.
 
-		private static final Comparator<OrdnungsElement> comparator = comparing(
-				(OrdnungsElement e) -> e.tabellenPlatz.getPunkte())
-				.thenComparing(comparing(e -> e.tabellenPlatz.getTorDifferenz()))
-				.thenComparing(comparing(e -> e.tabellenPlatz.getTore()))
-				.thenComparing(comparing(e -> e.tabellenPlatz.getToreAuswaerts())) //
-				.reversed();
+		private static final List<Function<TabellenPlatz, Comparable<?>>> comparators = asList( //
+				e -> e.getPunkte(), //
+				e -> e.getTorDifferenz(), //
+				e -> e.getTore(), //
+				e -> e.getToreAuswaerts() //
+		);
 
+		private static final Function<OrdnungsElement, TabellenPlatz> getTabellenPlatz = OrdnungsElement::getTabellenPlatz;
+		private static final List<Function<OrdnungsElement, Comparable<?>>> extractors = comparators.stream()
+				.map(t -> getTabellenPlatz.andThen(t)).toList();
+
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		private static final Comparator<OrdnungsElement> comparator = extractors.stream() //
+				.map(f -> comparing((Function) f)) //
+				.reduce(Comparator::thenComparing).orElseThrow().reversed();
+
+		@Getter(value = PRIVATE)
 		private final TabellenPlatz tabellenPlatz;
 
 		@Override
 		public int hashCode() {
-			return Objects.hash(tabellenPlatz.getPunkte(), tabellenPlatz.getTorDifferenz(), tabellenPlatz.getTore(),
-					tabellenPlatz.getToreAuswaerts());
+			return extractors.stream().map(e -> e.apply(this)).map(Object::hashCode).reduce(1,
+					(h1, h2) -> 31 * h1 + h2);
 		}
 
 		@Override
 		public boolean equals(Object other) {
-			return this == other || (other != null && getClass() == other.getClass()
-					&& comparator.compare(this, (OrdnungsElement) other) == 0);
+			return this == other || (other != null && getClass() == other.getClass() && extractors.stream()
+					.allMatch(e -> Objects.equals(e.apply(this), e.apply((OrdnungsElement) other))));
 		}
 
 		@Override
@@ -70,21 +84,21 @@ public class Tabelle {
 
 	private TabellenPlatz newEintrag(Paarung paarung, boolean swapped) {
 		if (!paarung.isGespielt()) {
-			return TabellenPlatz.NULL.withWappen(paarung.getWappen1());
+			return TabellenPlatz.NULL.withWappen(paarung.getWappenHeim());
 		}
 		TabellenPlatz.TabellenPlatzBuilder builder = TabellenPlatz.builder() //
-				.wappen(paarung.getWappen1()) //
+				.wappen(paarung.getWappenHeim()) //
 				.ergebnis(paarung.ergebnis()) //
 				.punkte(paarung.punkte());
 		if (swapped) {
 			return builder //
-					.toreAuswaerts(paarung.getToreTeam1()) //
-					.gegentoreAuswaerts(paarung.getToreTeam2()) //
+					.toreAuswaerts(paarung.getToreTeamHeim()) //
+					.gegentoreAuswaerts(paarung.getToreTeamGast()) //
 					.build();
 		}
 		return builder //
-				.toreHeim(paarung.getToreTeam1()) //
-				.gegentoreHeim(paarung.getToreTeam2()) //
+				.toreHeim(paarung.getToreTeamHeim()) //
+				.gegentoreHeim(paarung.getToreTeamGast()) //
 				.build();
 	}
 

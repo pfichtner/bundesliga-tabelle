@@ -128,8 +128,8 @@ public class TabelleTest {
 		return Paarung.builder().teamHeim(teamHeim).teamGast(teamGast);
 	}
 
-	private Paarung.PaarungBuilder paarung(String teamHeim, String teamGast, URI wappen1, URI wappen2) {
-		return paarung(teamHeim, teamGast).wappen1(wappen1).wappen2(wappen2);
+	private Paarung.PaarungBuilder paarung(String teamHeim, String teamGast, URI wappenHeim, URI wappenGast) {
+		return paarung(teamHeim, teamGast).wappenHeim(wappenHeim).wappenGast(wappenGast);
 	}
 
 	private void gegebenSeienDiePaarungen(Paarung.PaarungBuilder... paarungen) {

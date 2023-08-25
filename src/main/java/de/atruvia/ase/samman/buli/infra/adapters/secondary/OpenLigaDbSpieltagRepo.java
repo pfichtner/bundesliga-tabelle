@@ -1,8 +1,8 @@
 package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
+import static java.net.URI.create;
 import static java.util.Arrays.stream;
 
-import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
@@ -45,11 +45,11 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		Team team2;
 		MatchResult[] matchResults;
 
-		Paarung toDomain() {
-			PaarungBuilder b = Paarung.builder().teamHeim(team1.teamName).teamGast(team2.teamName);
-			b = b.wappen1(URI.create(team1.teamIconUrl)).wappen2(URI.create(team2.teamIconUrl));
-			b = setFinalResult(b, matchResults);
-			return b.build();
+		private Paarung toDomain() {
+			PaarungBuilder b = Paarung.builder() //
+					.teamHeim(team1.teamName).teamGast(team2.teamName) //
+					.wappenHeim(create(team1.teamIconUrl)).wappenGast(create(team2.teamIconUrl));
+			return setFinalResult(b, matchResults).build();
 		}
 
 		private static PaarungBuilder setFinalResult(PaarungBuilder builder, MatchResult[] matchResults) {
@@ -66,8 +66,7 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 
 	protected String readJson(String league, String season) throws Exception {
 		return HttpClient.newHttpClient()
-				.send(HttpRequest.newBuilder(URI.create(makeUrl(league, season))).build(), BodyHandlers.ofString())
-				.body();
+				.send(HttpRequest.newBuilder(create(makeUrl(league, season))).build(), BodyHandlers.ofString()).body();
 	}
 
 	private String makeUrl(String league, String season) {
