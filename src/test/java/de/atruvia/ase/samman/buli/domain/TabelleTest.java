@@ -164,8 +164,8 @@ public class TabelleTest {
 
 	private String print(TabellenPlatz platz) {
 		return Arrays
-				.asList(platz.getPlatz(), platz.getTeam(), platz.getSpiele(), platz.getSiege(),
-						platz.getUnentschieden(), platz.getNiederlagen(), platz.getPunkte(), platz.getTore(),
+				.asList(platz.getPlatz(), platz.getTeam(), platz.getSpiele(), platz.anzahlSiege(),
+						platz.anzahlUnentschieden(), platz.anzahlNiederlagen(), platz.getPunkte(), platz.getTore(),
 						platz.getGegentore(), platz.getTorDifferenz())
 				.stream().map(Objects::toString).collect(joining("|"));
 	}

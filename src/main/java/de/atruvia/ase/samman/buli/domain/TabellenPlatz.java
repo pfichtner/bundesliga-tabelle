@@ -79,19 +79,19 @@ public class TabellenPlatz {
 		return concat(ergebnisse1.stream(), ergebnisse2.stream()).toList();
 	}
 
-	public int getSiege() {
-		return ergebnis(SIEG);
+	public int anzahlSiege() {
+		return countAnzahl(SIEG);
 	}
 
-	public int getUnentschieden() {
-		return ergebnis(UNENTSCHIEDEN);
+	public int anzahlUnentschieden() {
+		return countAnzahl(UNENTSCHIEDEN);
 	}
 
-	public int getNiederlagen() {
-		return ergebnis(NIEDERLAGE);
+	public int anzahlNiederlagen() {
+		return countAnzahl(NIEDERLAGE);
 	}
 
-	private int ergebnis(Ergebnis type) {
+	private int countAnzahl(Ergebnis type) {
 		return (int) ergebnisse.stream().filter(type::equals).count();
 	}
 
