@@ -30,7 +30,7 @@ class DefaultTabellenServiceTest {
 
 	private String print(TabellenPlatz tabellenPlatz, int length) {
 		return Arrays.asList(stringFormat(length, tabellenPlatz.getTeam()), tabellenPlatz.getSpiele(),
-				tabellenPlatz.anzahlSiege(), tabellenPlatz.anzahlUnentschieden(), tabellenPlatz.anzahlNiederlagen(),
+				tabellenPlatz.getAnzahlSiege(), tabellenPlatz.getAnzahlUnentschieden(), tabellenPlatz.getAnzahlNiederlagen(),
 				tabellenPlatz.getTore(), tabellenPlatz.getGegentore(), tabellenPlatz.getTorDifferenz(),
 				tabellenPlatz.getPunkte(), firstCharOf(tabellenPlatz.getLetzte(5)), tabellenPlatz.getWappen()).stream()
 				.map(this::format).collect(joining(" | "));

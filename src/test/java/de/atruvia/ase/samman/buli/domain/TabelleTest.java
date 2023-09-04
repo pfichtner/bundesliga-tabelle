@@ -1,12 +1,19 @@
 package de.atruvia.ase.samman.buli.domain;
 
+import static com.google.common.collect.Streams.concat;
+import static java.beans.Introspector.getBeanInfo;
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.joining;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +27,7 @@ public class TabelleTest {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
+				platz|team|spiele|anzahlSiege|anzahlUnentschieden|anzahlNiederlagen|punkte|tore|gegentore|torDifferenz
 				1|Team 1|0|0|0|0|0|0|0|0
 				1|Team 2|0|0|0|0|0|0|0|0""");
 	}
@@ -29,6 +37,7 @@ public class TabelleTest {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(0, 0), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
+				platz|team|spiele|anzahlSiege|anzahlUnentschieden|anzahlNiederlagen|punkte|tore|gegentore|torDifferenz
 				1|Team 1|1|0|1|0|1|0|0|0
 				1|Team 2|1|0|1|0|1|0|0|0""");
 	}
@@ -38,6 +47,7 @@ public class TabelleTest {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(0, 1), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
+				platz|team|spiele|anzahlSiege|anzahlUnentschieden|anzahlNiederlagen|punkte|tore|gegentore|torDifferenz
 				1|Team 2|1|1|0|0|3|1|0|1
 				2|Team 1|1|0|0|1|0|0|1|-1""");
 	}
@@ -48,6 +58,7 @@ public class TabelleTest {
 				paarung("Team 2", "Team 1").ergebnis(1, 0));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
+				platz|team|spiele|anzahlSiege|anzahlUnentschieden|anzahlNiederlagen|punkte|tore|gegentore|torDifferenz
 				1|Team 1|2|1|0|1|3|1|1|0
 				1|Team 2|2|1|0|1|3|1|1|0""");
 	}
@@ -58,6 +69,7 @@ public class TabelleTest {
 				paarung("Team 1", "Team 3").ergebnis(1, 0), paarung("Team 2", "Team 3").ergebnis(1, 0));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
+				platz|team|spiele|anzahlSiege|anzahlUnentschieden|anzahlNiederlagen|punkte|tore|gegentore|torDifferenz
 				1|Team 1|3|2|0|1|6|2|1|1
 				1|Team 2|3|2|0|1|6|2|1|1
 				3|Team 3|2|0|0|2|0|0|2|-2""");
@@ -69,6 +81,7 @@ public class TabelleTest {
 				paarung("Team 2", "Team 1").ergebnis(0, 1));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
+				platz|team|spiele|anzahlSiege|anzahlUnentschieden|anzahlNiederlagen|punkte|tore|gegentore|torDifferenz
 				1|Team 2|2|1|0|1|3|2|2|0
 				2|Team 1|2|1|0|1|3|2|2|0""");
 	}
@@ -158,16 +171,39 @@ public class TabelleTest {
 		return t.getLetzte(5).stream().map(e -> e.name().substring(0, 1)).collect(joining());
 	}
 
-	private String print(List<TabellenPlatz> plaetze) {
-		return plaetze.stream().map(this::print).collect(joining("\n"));
+	private static String print(List<TabellenPlatz> plaetze) {
+		List<String> attribs = asList("platz", "team", "spiele", "anzahlSiege", "anzahlUnentschieden",
+				"anzahlNiederlagen", "punkte", "tore", "gegentore", "torDifferenz");
+		Stream<String> header = Stream.of(line(attribs.stream()));
+		Stream<String> values = plaetze.stream().map(t -> print(t, attribs));
+		return concat(header, values).collect(joining("\n"));
 	}
 
-	private String print(TabellenPlatz platz) {
-		return Arrays
-				.asList(platz.getPlatz(), platz.getTeam(), platz.getSpiele(), platz.anzahlSiege(),
-						platz.anzahlUnentschieden(), platz.anzahlNiederlagen(), platz.getPunkte(), platz.getTore(),
-						platz.getGegentore(), platz.getTorDifferenz())
-				.stream().map(Objects::toString).collect(joining("|"));
+	private static String print(TabellenPlatz platz, List<String> attribs) {
+		return line(values(attribs, platz).stream());
+	}
+
+	private static String line(Stream<?> objects) {
+		return objects.map(Object::toString).collect(joining("|"));
+	}
+
+	private static List<Object> values(List<String> attribs, TabellenPlatz platz) {
+		try {
+			List<PropertyDescriptor> descriptors = asList(getBeanInfo(platz.getClass()).getPropertyDescriptors());
+			return attribs.stream().map(a -> readValue(platz, descriptors, a)).toList();
+		} catch (IntrospectionException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private static Object readValue(Object bean, List<PropertyDescriptor> descriptors, String attribName) {
+		Method readMethod = descriptors.stream().filter(p -> p.getName().equals(attribName)).findFirst()
+				.orElseThrow(() -> new IllegalStateException("no attribute with name " + attribName)).getReadMethod();
+		try {
+			return readMethod.invoke(bean);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

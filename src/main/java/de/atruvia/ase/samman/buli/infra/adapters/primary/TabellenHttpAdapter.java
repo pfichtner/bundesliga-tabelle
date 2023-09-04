@@ -41,9 +41,9 @@ public class TabellenHttpAdapter {
 					.tore(domain.getTore()) //
 					.gegentore(domain.getGegentore()) //
 					.tordifferenz(domain.getTorDifferenz()) //
-					.siege(domain.anzahlSiege()) //
-					.unentschieden(domain.anzahlUnentschieden()) //
-					.niederlagen(domain.anzahlNiederlagen()) //
+					.siege(domain.getAnzahlSiege()) //
+					.unentschieden(domain.getAnzahlUnentschieden()) //
+					.niederlagen(domain.getAnzahlNiederlagen()) //
 					.letzte5(convert(domain)) //
 					.build();
 		}

@@ -79,15 +79,15 @@ public class TabellenPlatz {
 		return concat(ergebnisse1.stream(), ergebnisse2.stream()).toList();
 	}
 
-	public int anzahlSiege() {
+	public int getAnzahlSiege() {
 		return countAnzahl(SIEG);
 	}
 
-	public int anzahlUnentschieden() {
+	public int getAnzahlUnentschieden() {
 		return countAnzahl(UNENTSCHIEDEN);
 	}
 
-	public int anzahlNiederlagen() {
+	public int getAnzahlNiederlagen() {
 		return countAnzahl(NIEDERLAGE);
 	}
 
