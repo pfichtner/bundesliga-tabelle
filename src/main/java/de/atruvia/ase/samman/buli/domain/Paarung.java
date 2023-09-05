@@ -32,11 +32,16 @@ public class Paarung {
 	}
 
 	public Ergebnis ergebnis() {
-		return toreTeamHeim == toreTeamGast ? UNENTSCHIEDEN : toreTeamHeim > toreTeamGast ? SIEG : NIEDERLAGE;
+		return toreTeamHeim == toreTeamGast //
+				? UNENTSCHIEDEN //
+				: toreTeamHeim > toreTeamGast //
+						? SIEG //
+						: NIEDERLAGE;
 	}
 
 	public Paarung swap() {
-		return toBuilder().teamHeim(teamGast).teamGast(teamHeim) //
+		return toBuilder() //
+				.teamHeim(teamGast).teamGast(teamHeim) //
 				.wappenHeim(wappenGast).wappenGast(wappenHeim) //
 				.toreTeamHeim(toreTeamGast).toreTeamGast(toreTeamHeim) //
 				.build();
@@ -49,10 +54,9 @@ public class Paarung {
 		}
 
 		public PaarungBuilder ergebnis(int toreTeamHeim, int toreTeamGast) {
-			this.gespielt = true;
 			this.toreTeamHeim = toreTeamHeim;
 			this.toreTeamGast = toreTeamGast;
-			return this;
+			return gespielt(true);
 		}
 
 		private PaarungBuilder gespielt(boolean gespielt) {

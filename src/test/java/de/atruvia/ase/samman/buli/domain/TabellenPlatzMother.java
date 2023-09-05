@@ -2,6 +2,8 @@ package de.atruvia.ase.samman.buli.domain;
 
 import static de.atruvia.ase.samman.buli.domain.PaarungMother.paarungen;
 
+import java.util.Objects;
+
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
 
@@ -25,7 +27,7 @@ public final class TabellenPlatzMother {
 		String firstTeam = "anyTeamName";
 		Tabelle tabelle = new Tabelle();
 		paarungen(firstTeam, ergebnisse).stream().forEach(tabelle::add);
-		return tabelle.getEntries().stream().filter(e -> e.getTeam().equals(firstTeam)).findFirst().get();
+		return tabelle.getEntries().stream().filter(e -> Objects.equals(e.getTeam(), firstTeam)).findFirst().get();
 	}
 
 }

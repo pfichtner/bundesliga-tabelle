@@ -14,6 +14,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
+import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -79,27 +80,23 @@ public class Tabelle {
 	}
 
 	private void addInternal(Paarung paarung, boolean swapped) {
-		eintraege.merge(paarung.getTeamHeim(), newEintrag(paarung, swapped), TabellenPlatz::merge);
+		eintraege.merge(paarung.getTeamHeim(), newEntry(paarung, swapped), TabellenPlatz::merge);
 	}
 
-	private TabellenPlatz newEintrag(Paarung paarung, boolean swapped) {
+	private TabellenPlatz newEntry(Paarung paarung, boolean swapped) {
 		if (!paarung.isGespielt()) {
 			return TabellenPlatz.NULL.withWappen(paarung.getWappenHeim());
 		}
-		TabellenPlatz.TabellenPlatzBuilder builder = TabellenPlatz.builder() //
+		TabellenPlatzBuilder builder = TabellenPlatz.builder() //
 				.wappen(paarung.getWappenHeim()) //
 				.ergebnis(paarung.ergebnis()) //
 				.punkte(paarung.punkte());
-		if (swapped) {
-			return builder //
-					.toreAuswaerts(paarung.getToreTeamHeim()) //
-					.gegentoreAuswaerts(paarung.getToreTeamGast()) //
-					.build();
-		}
-		return builder //
-				.toreHeim(paarung.getToreTeamHeim()) //
-				.gegentoreHeim(paarung.getToreTeamGast()) //
-				.build();
+		int toreTeamHeim = paarung.getToreTeamHeim();
+		int toreTeamGast = paarung.getToreTeamGast();
+		return (swapped //
+				? builder.toreAuswaerts(toreTeamHeim).gegentoreAuswaerts(toreTeamGast) //
+				: builder.toreHeim(toreTeamHeim).gegentoreHeim(toreTeamGast) //
+		).build();
 	}
 
 	public List<TabellenPlatz> getEntries() {
