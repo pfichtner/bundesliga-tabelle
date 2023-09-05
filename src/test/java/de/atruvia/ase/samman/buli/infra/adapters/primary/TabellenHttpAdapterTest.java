@@ -1,6 +1,9 @@
 package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
-import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.siegDannUnentschiedenDannNiederlage;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
+import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.erzeugeErgebnisse;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -36,7 +39,7 @@ class TabellenHttpAdapterTest {
 		String league = "bl1";
 		String season = "2022";
 
-		TabellenPlatz platz1 = siegDannUnentschiedenDannNiederlage(TabellenPlatz.builder())
+		TabellenPlatz platz1 = erzeugeErgebnisse(TabellenPlatz.builder(), SIEG, UNENTSCHIEDEN, NIEDERLAGE)
 				.wappen(URI.create("proto://wappen-team-10")).team("Team 10").spiele(11).toreHeim(15).toreAuswaerts(16)
 				.gegentoreHeim(17).gegentoreAuswaerts(18).punkte(19).build();
 		TabellenPlatz platz2 = TabellenPlatz.builder().wappen(URI.create("proto://wappen-team-20")).team("Team 20")

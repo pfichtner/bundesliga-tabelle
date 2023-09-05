@@ -14,11 +14,11 @@ public final class TabellenPlatzMother {
 		super();
 	}
 
-	public static TabellenPlatzBuilder siegDannUnentschiedenDannNiederlage(TabellenPlatzBuilder builder) {
+	public static TabellenPlatzBuilder erzeugeErgebnisse(TabellenPlatzBuilder builder, Ergebnis... ergebnisse) {
 		// wir könnten hier direkt die Ergebnisse "SIEG, UNENTSCHIEDEN, NIEDERLAGE"
 		// ablegen, allerdings bestünde damit die Gefahr, dass wir Tabellenplätze anders
 		// erzeugen, als es die echte Tabelle tut.
-		return builder.ergebnisse(tabellenPlatzCalculatedByTabelle(SIEG, UNENTSCHIEDEN, NIEDERLAGE).getErgebnisse());
+		return builder.ergebnisse(tabellenPlatzCalculatedByTabelle(ergebnisse).getErgebnisse());
 	}
 
 	private static TabellenPlatz tabellenPlatzCalculatedByTabelle(Ergebnis... ergebnisse) {
