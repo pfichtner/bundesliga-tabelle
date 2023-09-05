@@ -44,6 +44,10 @@ public class Paarung {
 
 	public static class PaarungBuilder {
 
+		public static Paarung.PaarungBuilder paarung(String teamHeim, String teamGast) {
+			return Paarung.builder().teamHeim(teamHeim).teamGast(teamGast);
+		}
+
 		public PaarungBuilder ergebnis(int toreTeamHeim, int toreTeamGast) {
 			this.gespielt = true;
 			this.toreTeamHeim = toreTeamHeim;

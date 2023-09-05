@@ -1,6 +1,9 @@
 package de.atruvia.ase.samman.buli.domain;
 
 import static com.google.common.collect.Streams.concat;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.beans.Introspector.getBeanInfo;
 import static java.net.URI.create;
 import static java.util.Arrays.asList;
@@ -18,6 +21,8 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
+import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
+
 public class TabelleTest {
 
 	private Paarung[] paarungen;
@@ -25,7 +30,7 @@ public class TabelleTest {
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {
-		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2"), PaarungBuilder.paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
 				"""
@@ -36,7 +41,7 @@ public class TabelleTest {
 
 	@Test
 	void zweiMannschaftenEinSpielKeineTore() {
-		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(0, 0), paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(0, 0), PaarungBuilder.paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
 				"""
@@ -47,7 +52,7 @@ public class TabelleTest {
 
 	@Test
 	void mannschaftMitMehrPunktenIstWeiterOben() {
-		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(0, 1), paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(0, 1), PaarungBuilder.paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
 				"""
@@ -59,8 +64,8 @@ public class TabelleTest {
 	@Test
 	void zweiMannschaftenZweiSpieleMitToren() {
 		gegebenSeienDiePaarungen( //
-				paarung("Team 1", "Team 2").ergebnis(1, 0), //
-				paarung("Team 2", "Team 1").ergebnis(1, 0) //
+				PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(1, 0), //
+				PaarungBuilder.paarung("Team 2", "Team 1").ergebnis(1, 0) //
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
@@ -73,10 +78,10 @@ public class TabelleTest {
 	@Test
 	void dieFolgendeMannschaftIstPlatzDrei() {
 		gegebenSeienDiePaarungen( //
-				paarung("Team 1", "Team 2").ergebnis(1, 0), //
-				paarung("Team 2", "Team 1").ergebnis(1, 0), //
-				paarung("Team 1", "Team 3").ergebnis(1, 0), //
-				paarung("Team 2", "Team 3").ergebnis(1, 0) //
+				PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(1, 0), //
+				PaarungBuilder.paarung("Team 2", "Team 1").ergebnis(1, 0), //
+				PaarungBuilder.paarung("Team 1", "Team 3").ergebnis(1, 0), //
+				PaarungBuilder.paarung("Team 2", "Team 3").ergebnis(1, 0) //
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
@@ -90,8 +95,8 @@ public class TabelleTest {
 	@Test
 	void punktUndTorGleichAberMehrAuswärtsTore() {
 		gegebenSeienDiePaarungen( //
-				paarung("Team 1", "Team 2").ergebnis(1, 2), //
-				paarung("Team 2", "Team 1").ergebnis(0, 1) //
+				PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(1, 2), //
+				PaarungBuilder.paarung("Team 2", "Team 1").ergebnis(0, 1) //
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
@@ -137,31 +142,29 @@ public class TabelleTest {
 
 	@Test
 	void keineSpieleKeineTendenz() {
-		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2"), PaarungBuilder.paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
-		dannIstDieTendenz("""
-				Team 1|
-				Team 2|""");
+		assertThat(sut.getEntries()).satisfiesExactly( //
+				e1 -> assertThat(e1.getErgebnisse()).isEmpty(), //
+				e2 -> assertThat(e2.getErgebnisse()).isEmpty() //
+		);
 	}
 
 	@Test
-	void zweiSpieleTendenz() {
+	void zweiSpieleTendenz_dieLetztePaarungIstVorneInDerListe() {
 		gegebenSeienDiePaarungen( //
-				paarung("Team 1", "Team 2").ergebnis(1, 0), //
-				paarung("Team 2", "Team 1").ergebnis(1, 1) //
+				PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(1, 0), //
+				PaarungBuilder.paarung("Team 2", "Team 1").ergebnis(1, 1) //
 		);
 		wennDieTabelleBerechnetWird();
-		dannIstDieTendenz("""
-				Team 1|US
-				Team 2|UN""");
-	}
-
-	private static Paarung.PaarungBuilder paarung(String teamHeim, String teamGast) {
-		return Paarung.builder().teamHeim(teamHeim).teamGast(teamGast);
+		assertThat(sut.getEntries()).satisfiesExactly( //
+				e1 -> assertThat(e1.getErgebnisse()).containsExactly(SIEG, UNENTSCHIEDEN), //
+				e2 -> assertThat(e2.getErgebnisse()).containsExactly(NIEDERLAGE, UNENTSCHIEDEN) //
+		);
 	}
 
 	private Paarung.PaarungBuilder paarung(String teamHeim, String teamGast, URI wappenHeim, URI wappenGast) {
-		return paarung(teamHeim, teamGast).wappenHeim(wappenHeim).wappenGast(wappenGast);
+		return PaarungBuilder.paarung(teamHeim, teamGast).wappenHeim(wappenHeim).wappenGast(wappenGast);
 	}
 
 	private void gegebenSeienDiePaarungen(Paarung.PaarungBuilder... paarungen) {
@@ -179,15 +182,6 @@ public class TabelleTest {
 	private void dannSindDieWappen(String expected) {
 		assertThat(sut.getEntries().stream().map(t -> t.getWappen() == null ? "null" : t.getWappen().toASCIIString())
 				.collect(joining("\n"))).isEqualTo(expected);
-	}
-
-	private void dannIstDieTendenz(String expected) {
-		assertThat(sut.getEntries().stream().map(t -> t.getTeam() + "|" + getTendenz(t)).collect(joining("\n")))
-				.isEqualTo(expected);
-	}
-
-	private String getTendenz(TabellenPlatz platz) {
-		return platz.getLetzte(5).stream().map(e -> e.name().substring(0, 1)).collect(joining());
 	}
 
 	private static String print(List<TabellenPlatz> plaetze) {
