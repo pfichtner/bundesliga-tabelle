@@ -23,14 +23,6 @@ public class Paarung {
 	int toreTeamHeim;
 	int toreTeamGast;
 
-	public int punkte() {
-		return switch (ergebnis()) {
-		case SIEG -> 3;
-		case UNENTSCHIEDEN -> 1;
-		case NIEDERLAGE -> 0;
-		};
-	}
-
 	public Ergebnis ergebnis() {
 		return toreTeamHeim == toreTeamGast //
 				? UNENTSCHIEDEN //
@@ -54,14 +46,7 @@ public class Paarung {
 		}
 
 		public PaarungBuilder ergebnis(int toreTeamHeim, int toreTeamGast) {
-			this.toreTeamHeim = toreTeamHeim;
-			this.toreTeamGast = toreTeamGast;
-			return gespielt(true);
-		}
-
-		private PaarungBuilder gespielt(boolean gespielt) {
-			this.gespielt = gespielt;
-			return this;
+			return toreTeamHeim(toreTeamHeim).toreTeamGast(toreTeamGast).gespielt(true);
 		}
 
 	}

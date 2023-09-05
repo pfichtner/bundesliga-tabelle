@@ -14,6 +14,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
+import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -87,16 +88,25 @@ public class Tabelle {
 		if (!paarung.isGespielt()) {
 			return TabellenPlatz.NULL.withWappen(paarung.getWappenHeim());
 		}
+		Ergebnis ergebnis = paarung.ergebnis();
 		TabellenPlatzBuilder builder = TabellenPlatz.builder() //
 				.wappen(paarung.getWappenHeim()) //
-				.ergebnis(paarung.ergebnis()) //
-				.punkte(paarung.punkte());
+				.ergebnis(ergebnis) //
+				.punkte(punkte(ergebnis));
 		int toreTeamHeim = paarung.getToreTeamHeim();
 		int toreTeamGast = paarung.getToreTeamGast();
 		return (swapped //
 				? builder.toreAuswaerts(toreTeamHeim).gegentoreAuswaerts(toreTeamGast) //
 				: builder.toreHeim(toreTeamHeim).gegentoreHeim(toreTeamGast) //
 		).build();
+	}
+
+	private static int punkte(Ergebnis ergebnis) {
+		return switch (ergebnis) {
+		case SIEG -> 3;
+		case UNENTSCHIEDEN -> 1;
+		case NIEDERLAGE -> 0;
+		};
 	}
 
 	public List<TabellenPlatz> getEntries() {
