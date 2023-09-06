@@ -105,7 +105,7 @@ public class TabellenPlatz {
 	 * @return Liste der letzen n Ergebnisse
 	 */
 	public List<Ergebnis> getLetzte(int count) {
-		List<Ergebnis> lastN = new ArrayList<>(ergebnisse.subList(max(0, ergebnisse.size() - 5), ergebnisse.size()));
+		List<Ergebnis> lastN = new ArrayList<>(getErgebnisse().subList(max(0, ergebnisse.size() - 5), getErgebnisse().size()));
 		reverse(lastN);
 		return lastN;
 	}

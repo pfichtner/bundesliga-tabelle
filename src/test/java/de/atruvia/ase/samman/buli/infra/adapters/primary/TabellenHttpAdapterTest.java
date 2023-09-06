@@ -3,15 +3,17 @@ package de.atruvia.ase.samman.buli.infra.adapters.primary;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
-import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.erzeugeErgebnisse;
+import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.ergebnisse;
+import static java.net.URI.create;
+import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.net.URI;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -39,12 +41,37 @@ class TabellenHttpAdapterTest {
 		String league = "bl1";
 		String season = "2022";
 
-		TabellenPlatz platz1 = erzeugeErgebnisse(TabellenPlatz.builder(), SIEG, UNENTSCHIEDEN, NIEDERLAGE)
-				.wappen(URI.create("proto://wappen-team-10")).team("Team 10").spiele(11).toreHeim(15).toreAuswaerts(16)
-				.gegentoreHeim(17).gegentoreAuswaerts(18).punkte(19).build();
-		TabellenPlatz platz2 = TabellenPlatz.builder().wappen(URI.create("proto://wappen-team-20")).team("Team 20")
-				.spiele(21).ergebnisse(List.of()).toreHeim(25).toreAuswaerts(26).gegentoreHeim(27)
-				.gegentoreAuswaerts(28).punkte(29).build();
+		// it seems weird that we mock a pojo class but we would depend on the symmetry
+		// of setErgebnisse and getErgebnisse because we want the GETTER to return SIEG,
+		// UNENTSCHIEDEN, NIEDERLAGE which we could not guarantee to be true when
+		// setting SIEG, UNENTSCHIEDEN, NIEDERLAGE via the setter
+
+		// TODO we could consider using an Interface instead of using Mockito
+
+		// TODO at the moment "getLetzte" is implemented in TabellenPlatz so we need a
+		// spy instead of a mock
+		TabellenPlatz platz1 = spy(TabellenPlatz.builder().build());
+		when(platz1.getErgebnisse()).thenReturn(ergebnisse(SIEG, UNENTSCHIEDEN, NIEDERLAGE));
+		when(platz1.getTeam()).thenReturn("Team 10");
+		when(platz1.getWappen()).thenReturn(create("proto://wappen-team-10"));
+		when(platz1.getSpiele()).thenReturn(11);
+		when(platz1.getToreHeim()).thenReturn(15);
+		when(platz1.getToreAuswaerts()).thenReturn(16);
+		when(platz1.getGegentoreHeim()).thenReturn(17);
+		when(platz1.getGegentoreAuswaerts()).thenReturn(18);
+		when(platz1.getPunkte()).thenReturn(19);
+
+		TabellenPlatz platz2 = spy(TabellenPlatz.builder().build());
+		when(platz2.getErgebnisse()).thenReturn(emptyList());
+		when(platz2.getTeam()).thenReturn("Team 20");
+		when(platz2.getWappen()).thenReturn(create("proto://wappen-team-20"));
+		when(platz2.getSpiele()).thenReturn(21);
+		when(platz2.getToreHeim()).thenReturn(25);
+		when(platz2.getToreAuswaerts()).thenReturn(26);
+		when(platz2.getGegentoreHeim()).thenReturn(27);
+		when(platz2.getGegentoreAuswaerts()).thenReturn(28);
+		when(platz2.getPunkte()).thenReturn(29);
+
 		when(tabellenService.erstelleTabelle(league, season)).thenReturn(List.of(platz1, platz2));
 
 		this.mockMvc.perform(get("/tabelle/" + league + "/" + season)) //
