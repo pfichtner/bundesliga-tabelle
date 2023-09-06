@@ -18,7 +18,7 @@ import lombok.Value;
 import lombok.With;
 
 @Value
-@Builder
+@Builder(toBuilder = true)
 public class TabellenPlatz {
 
 	static TabellenPlatz NULL = new TabellenPlatz(null, 0, "", 0, emptyList(), 0, 0, 0, 0, 0);
@@ -105,7 +105,7 @@ public class TabellenPlatz {
 	 * @return Liste der letzen n Ergebnisse
 	 */
 	public List<Ergebnis> getLetzte(int count) {
-		List<Ergebnis> lastN = new ArrayList<>(getErgebnisse().subList(max(0, ergebnisse.size() - 5), getErgebnisse().size()));
+		List<Ergebnis> lastN = new ArrayList<>(ergebnisse.subList(max(0, ergebnisse.size() - 5), ergebnisse.size()));
 		reverse(lastN);
 		return lastN;
 	}

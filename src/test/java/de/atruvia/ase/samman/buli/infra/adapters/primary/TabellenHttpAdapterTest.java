@@ -3,11 +3,9 @@ package de.atruvia.ase.samman.buli.infra.adapters.primary;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
-import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.ergebnisse;
+import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.platzWith;
 import static java.net.URI.create;
-import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -24,6 +22,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
+import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 
 @SpringBootTest
@@ -41,39 +40,17 @@ class TabellenHttpAdapterTest {
 		String league = "bl1";
 		String season = "2022";
 
-		// it seems weird that we mock a pojo class but we would depend on the symmetry
-		// of setErgebnisse and getErgebnisse because we want the GETTER to return SIEG,
-		// UNENTSCHIEDEN, NIEDERLAGE which we could not guarantee to be true when
-		// setting SIEG, UNENTSCHIEDEN, NIEDERLAGE via the setter
-
-		// TODO we could consider using an Interface instead of using Mockito
-
-		// TODO at the moment "getLetzte" is implemented in TabellenPlatz so we need a
-		// spy instead of a mock
-		TabellenPlatz platz1 = spy(TabellenPlatz.builder().build());
-		when(platz1.getErgebnisse()).thenReturn(ergebnisse(SIEG, UNENTSCHIEDEN, NIEDERLAGE));
-		when(platz1.getTeam()).thenReturn("Team 10");
-		when(platz1.getWappen()).thenReturn(create("proto://wappen-team-10"));
-		when(platz1.getSpiele()).thenReturn(11);
-		when(platz1.getToreHeim()).thenReturn(15);
-		when(platz1.getToreAuswaerts()).thenReturn(16);
-		when(platz1.getGegentoreHeim()).thenReturn(17);
-		when(platz1.getGegentoreAuswaerts()).thenReturn(18);
-		when(platz1.getPunkte()).thenReturn(19);
-
-		TabellenPlatz platz2 = spy(TabellenPlatz.builder().build());
-		when(platz2.getErgebnisse()).thenReturn(emptyList());
-		when(platz2.getTeam()).thenReturn("Team 20");
-		when(platz2.getWappen()).thenReturn(create("proto://wappen-team-20"));
-		when(platz2.getSpiele()).thenReturn(21);
-		when(platz2.getToreHeim()).thenReturn(25);
-		when(platz2.getToreAuswaerts()).thenReturn(26);
-		when(platz2.getGegentoreHeim()).thenReturn(27);
-		when(platz2.getGegentoreAuswaerts()).thenReturn(28);
-		when(platz2.getPunkte()).thenReturn(29);
-
+		TabellenPlatz platz1 = platzWithBase(10, platzWith(SIEG, UNENTSCHIEDEN, NIEDERLAGE).toBuilder());
+		TabellenPlatz platz2 = platzWithBase(20, platzWith().toBuilder());
 		when(tabellenService.erstelleTabelle(league, season)).thenReturn(List.of(platz1, platz2));
 
+		// TODO Streng genommen testen wir hier auch wieder mehr als wir sollten, denn
+		// wir testen hier auch wieder die TabellenPlatz::merge Funktionalität mit ab
+		// und ob "int getTorDifferenz() { return getTore() - getGegentore(); }" richtig
+		// ist.
+		// Eigentlich sollte für TabellenPlatz ein Test-Double genutzt werden. Es muss
+		// dann jedoch sichergestellt werden, dass die Reihenfolge der "ergebnisse" im
+		// Test-Double bei S,U,N der Reihenfolge von TabellenPlatz ::merge entspricht
 		this.mockMvc.perform(get("/tabelle/" + league + "/" + season)) //
 				.andDo(print()) //
 				.andExpect(status().isOk()) //
@@ -102,6 +79,13 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[1].letzte5", is("-----"))) //
 		;
 
+	}
+
+	private static TabellenPlatz platzWithBase(int base, TabellenPlatzBuilder builder) {
+		int cnt = 0;
+		return builder.wappen(create("proto://wappen-team-" + base)).team("Team " + base).spiele(base + (++cnt))
+				.toreHeim(base + (++cnt)).toreAuswaerts(base + (++cnt)).gegentoreHeim(base + (++cnt))
+				.gegentoreAuswaerts(base + (++cnt)).punkte(base + (++cnt)).build();
 	}
 
 }
