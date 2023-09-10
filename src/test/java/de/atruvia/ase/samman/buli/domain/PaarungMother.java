@@ -2,6 +2,7 @@ package de.atruvia.ase.samman.buli.domain;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
+import static java.util.function.Predicate.not;
 import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
 
@@ -36,7 +37,8 @@ public final class PaarungMother {
 	}
 
 	private static List<String> opponents(String firstTeam, int count) {
-		return rangeClosed(1, count + 1).mapToObj(i -> firstTeam + "-XXX-" + i).toList();
+		return rangeClosed(1, MAX_VALUE).mapToObj(i -> "Opponent-" + i).filter(not(firstTeam::equals)).limit(count)
+				.toList();
 	}
 
 }
