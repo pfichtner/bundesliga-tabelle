@@ -6,6 +6,12 @@ import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 
 public interface TabellenService {
 
-	List<TabellenPlatz> erstelleTabelle(String league, String season);
+	public interface Tabelle {
+		String name();
+
+		List<TabellenPlatz> eintraege();
+	}
+
+	Tabelle erstelleTabelle(String league, String season);
 
 }

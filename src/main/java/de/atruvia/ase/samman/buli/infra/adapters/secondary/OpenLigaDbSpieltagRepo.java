@@ -49,12 +49,14 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 
 	@ToString
 	private class Match {
+		String leagueName;
 		Team team1;
 		Team team2;
 		MatchResult[] matchResults;
 
 		private Paarung toDomain() {
 			PaarungBuilder builder = Paarung.builder() //
+					.saison(leagueName) //
 					.teamHeim(team1.teamName).teamGast(team2.teamName) //
 					.wappenHeim(create(team1.teamIconUrl)).wappenGast(create(team2.teamIconUrl));
 			return setFinalResult(builder, matchResults).build();

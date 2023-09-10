@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
+import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 
 class OpenLigaDbSpieltagRepoTest {
 
@@ -25,7 +26,7 @@ class OpenLigaDbSpieltagRepoTest {
 	@Test
 	void canRetrieveDataOf2022() throws Exception {
 		List<Paarung> paarungen = repo().lade("bl1", "2022");
-		assertThat(paarungen).hasSize(306).element(0).isEqualTo(Paarung.builder().teamHeim(teamFrankfurt)
+		assertThat(paarungen).hasSize(306).element(0).isEqualTo(paarungErsteLiga("2022/2023").teamHeim(teamFrankfurt)
 				.teamGast(teamMuenchen).ergebnis(1, 6).wappenHeim(wappenFrankfurt).wappenGast(wappenMuenchen).build());
 	}
 
@@ -34,8 +35,12 @@ class OpenLigaDbSpieltagRepoTest {
 		// 2022: "endergebnis" was first element of array, 2023 it was last -> filter
 		// "resultTypeID" = 2 for now
 		List<Paarung> paarungen = repo().lade("bl1", "2023");
-		assertThat(paarungen).hasSize(9).element(0).isEqualTo(Paarung.builder().teamHeim(teamBremen)
+		assertThat(paarungen).hasSize(9).element(0).isEqualTo(paarungErsteLiga("2023/2024").teamHeim(teamBremen)
 				.teamGast(teamMuenchen).ergebnis(0, 4).wappenHeim(wappenBremen).wappenGast(wappenMuenchen).build());
+	}
+
+	PaarungBuilder paarungErsteLiga(String saison) {
+		return Paarung.builder().saison("1. Fußball-Bundesliga " + saison);
 	}
 
 	OpenLigaDbSpieltagRepo repo() {

@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @RequiredArgsConstructor
-public class Tabelle {
+public class TabellenRechner {
 
 	@RequiredArgsConstructor
 	@ToString

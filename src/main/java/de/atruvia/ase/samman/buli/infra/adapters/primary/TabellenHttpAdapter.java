@@ -1,15 +1,18 @@
 package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
+import static java.lang.String.format;
 import static java.util.stream.Collectors.joining;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
+import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService.Tabelle;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -19,9 +22,19 @@ import lombok.Value;
 public class TabellenHttpAdapter {
 
 	@Value
+	private static class JsonSeason {
+		String name;
+	}
+
+	@Value
+	private static class JsonResult {
+		JsonSeason saison;
+		List<JsonTabellenPlatz> eintrag;
+	}
+
+	@Value
 	@Builder
 	private static class JsonTabellenPlatz {
-
 		int platz;
 		String wappen;
 		String team;
@@ -44,13 +57,12 @@ public class TabellenHttpAdapter {
 					.siege(domain.getAnzahlSiege()) //
 					.unentschieden(domain.getAnzahlUnentschieden()) //
 					.niederlagen(domain.getAnzahlNiederlagen()) //
-					.letzte5(convert(domain)) //
+					.letzte5(convert(domain.getLetzte(5))) //
 					.build();
 		}
 
-		private static String convert(TabellenPlatz platz) {
-			return String
-					.format("%-5s", platz.getLetzte(5).stream().map(e -> e.name().substring(0, 1)).collect(joining()))
+		private static String convert(List<Ergebnis> ergebnisse) {
+			return format("%-5s", ergebnisse.stream().map(e -> e.name().substring(0, 1)).collect(joining()))
 					.replace(' ', '-');
 		}
 
@@ -59,8 +71,11 @@ public class TabellenHttpAdapter {
 	private final TabellenService tabellenService;
 
 	@GetMapping("/tabelle/{league}/{season}")
-	public Stream<JsonTabellenPlatz> getTabelle(@PathVariable String league, @PathVariable String season) {
-		return tabellenService.erstelleTabelle(league, season).stream().map(JsonTabellenPlatz::fromDomain);
+	public JsonResult getTabelle(@PathVariable String league, @PathVariable String season) {
+		Tabelle tabelle = tabellenService.erstelleTabelle(league, season);
+		JsonSeason saison = new JsonSeason(tabelle.name());
+		List<JsonTabellenPlatz> plaetze = tabelle.eintraege().stream().map(JsonTabellenPlatz::fromDomain).toList();
+		return new JsonResult(saison, plaetze);
 	}
 
 }

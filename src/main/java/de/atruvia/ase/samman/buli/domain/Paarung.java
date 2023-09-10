@@ -17,6 +17,7 @@ public class Paarung {
 		SIEG, UNENTSCHIEDEN, NIEDERLAGE;
 	}
 
+	String saison;
 	boolean gespielt;
 	String teamHeim, teamGast;
 	URI wappenHeim, wappenGast;

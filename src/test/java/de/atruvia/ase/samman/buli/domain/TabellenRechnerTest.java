@@ -23,14 +23,15 @@ import org.junit.jupiter.api.Test;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 
-public class TabelleTest {
+public class TabellenRechnerTest {
 
 	private Paarung[] paarungen;
-	private Tabelle sut = new Tabelle();
+	private TabellenRechner sut = new TabellenRechner();
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {
-		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2"), PaarungBuilder.paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2"),
+				PaarungBuilder.paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
 				"""
@@ -41,7 +42,8 @@ public class TabelleTest {
 
 	@Test
 	void zweiMannschaftenEinSpielKeineTore() {
-		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(0, 0), PaarungBuilder.paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(0, 0),
+				PaarungBuilder.paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
 				"""
@@ -52,7 +54,8 @@ public class TabelleTest {
 
 	@Test
 	void mannschaftMitMehrPunktenIstWeiterOben() {
-		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(0, 1), PaarungBuilder.paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(0, 1),
+				PaarungBuilder.paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
 				"""
@@ -142,7 +145,8 @@ public class TabelleTest {
 
 	@Test
 	void keineSpieleKeineTendenz() {
-		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2"), PaarungBuilder.paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2"),
+				PaarungBuilder.paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		assertThat(sut.getEntries()).satisfiesExactly( //
 				e1 -> assertThat(e1.getErgebnisse()).isEmpty(), //
