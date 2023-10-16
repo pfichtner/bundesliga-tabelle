@@ -50,7 +50,7 @@ class TabellenHttpAdapterTest {
 		// ist.
 		// Eigentlich sollte für TabellenPlatz ein Test-Double genutzt werden. Es muss
 		// dann jedoch sichergestellt werden, dass die Reihenfolge der "ergebnisse" im
-		// Test-Double bei S,U,N der Reihenfolge von TabellenPlatz ::merge entspricht
+		// Test-Double bei S,U,N der Reihenfolge von TabellenPlatz::merge entspricht
 		this.mockMvc.perform(get("/tabelle/" + league + "/" + season)) //
 				.andDo(print()) //
 				.andExpect(status().isOk()) //
