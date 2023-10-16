@@ -10,7 +10,6 @@ import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
-import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 
 class DefaultTabellenServiceTest {
@@ -32,12 +31,8 @@ class DefaultTabellenServiceTest {
 		return Arrays.asList(stringFormat(length, tabellenPlatz.getTeam()), tabellenPlatz.getSpiele(),
 				tabellenPlatz.getAnzahlSiege(), tabellenPlatz.getAnzahlUnentschieden(), tabellenPlatz.getAnzahlNiederlagen(),
 				tabellenPlatz.getTore(), tabellenPlatz.getGegentore(), tabellenPlatz.getTorDifferenz(),
-				tabellenPlatz.getPunkte(), firstCharOf(tabellenPlatz.getLetzte(5)), tabellenPlatz.getWappen()).stream()
+				tabellenPlatz.getPunkte(), tabellenPlatz.getWappen()).stream()
 				.map(this::format).collect(joining(" | "));
-	}
-
-	private String firstCharOf(List<Ergebnis> ergebnisse) {
-		return ergebnisse.stream().map(e -> e.name().substring(0, 1)).collect(joining());
 	}
 
 	private String stringFormat(int length, String team) {

@@ -1,13 +1,18 @@
 package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
+import static java.lang.Math.max;
+import static java.util.Collections.reverse;
 import static java.util.stream.Collectors.joining;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 import lombok.Builder;
@@ -50,8 +55,27 @@ public class TabellenHttpAdapter {
 
 		private static String convert(TabellenPlatz platz) {
 			return String
-					.format("%-5s", platz.getLetzte(5).stream().map(e -> e.name().substring(0, 1)).collect(joining()))
+					.format("%-5s",
+							lastNErgebnisse(platz, 5).stream().map(e -> e.name().substring(0, 1)).collect(joining()))
 					.replace(' ', '-');
+		}
+
+		/**
+		 * Liefert die letzten n Ergebnisse. Sind weniger als n Ergebnisse vorhanden, so
+		 * beinhaltet die Liste nur die vorhandenen Ergebnisse. Das jüngste Ergebnis ist
+		 * vorne, das älteste Ergebnis hinten in der Liste.
+		 * 
+		 * @param platz der TabellenPlatz, von welchem die letzten n Ergebnisse
+		 *              ermittelt werden sollen
+		 * @param count (maximale) Anzahl an Ergebnissen die zurückgegeben werden sollen
+		 * @return Liste der letzen n Ergebnisse
+		 */
+		private static List<Ergebnis> lastNErgebnisse(TabellenPlatz platz, int count) {
+			List<Ergebnis> ergebnisse = platz.getErgebnisse();
+			List<Ergebnis> lastN = new ArrayList<>(
+					ergebnisse.subList(max(0, ergebnisse.size() - count), ergebnisse.size()));
+			reverse(lastN);
+			return lastN;
 		}
 
 	}
