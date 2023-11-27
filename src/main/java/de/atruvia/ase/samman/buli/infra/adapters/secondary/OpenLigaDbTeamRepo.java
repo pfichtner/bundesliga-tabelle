@@ -4,6 +4,7 @@ import static java.lang.String.format;
 import static java.net.URI.create;
 import static java.util.Arrays.stream;
 
+import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
@@ -31,7 +32,11 @@ class OpenLigaDbTeamRepo implements TeamRepo {
 		String teamIconUrl;
 
 		Team toDomain() {
-			return Team.builder().name(teamName).wappen(teamIconUrl == null ? null : create(teamIconUrl)).build();
+			return Team.builder().name(teamName).wappen(toURI(teamIconUrl)).build();
+		}
+
+		private static URI toURI(String wappen) {
+			return wappen == null ? null : URI.create(wappen);
 		}
 
 	}
