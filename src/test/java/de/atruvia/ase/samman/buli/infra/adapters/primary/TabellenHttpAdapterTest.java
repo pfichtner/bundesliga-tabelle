@@ -5,6 +5,7 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.platzWith;
 import static java.net.URI.create;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -20,6 +21,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.util.NestedServletException;
 
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
@@ -79,6 +81,20 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[1].letzte5", is("-----"))) //
 		;
 
+	}
+
+	@Test
+	void failsWith500WhenSpieltagRepoThrowsException() {
+		String league = "bl1";
+		String season = "2022";
+
+		String message = "Some database load error";
+		when(tabellenService.erstelleTabelle(league, season)).thenThrow(new RuntimeException(message));
+
+		assertThatExceptionOfType(NestedServletException.class) //
+				.isThrownBy(() -> this.mockMvc.perform(get("/tabelle/" + league + "/" + season))) //
+				.havingCause().isExactlyInstanceOf(RuntimeException.class).withMessage(message) //
+		;
 	}
 
 	private static TabellenPlatz platzWithBase(int base, TabellenPlatzBuilder builder) {
