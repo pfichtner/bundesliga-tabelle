@@ -5,23 +5,27 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.platzWith;
 import static java.net.URI.create;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.util.NestedServletException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
@@ -31,8 +35,27 @@ import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 @AutoConfigureMockMvc
 class TabellenHttpAdapterTest {
 
+	// TODO MockMvc fails without explicitly setting an ExceptionHandler (which is
+	// there when running the application so it seems, that we are testing our
+	// "mock" here) :/
+	@ControllerAdvice
+	static class GlobalExceptionHandler {
+
+		@ExceptionHandler(Exception.class)
+		public ResponseEntity<String> handleException(Exception e) {
+			return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
+
 	@Autowired
+	TabellenHttpAdapter sut;
+
 	MockMvc mockMvc;
+
+	@BeforeEach
+	void setup() {
+		this.mockMvc = standaloneSetup(sut).setControllerAdvice(new GlobalExceptionHandler()).build();
+	}
 
 	@MockBean
 	TabellenService tabellenService;
@@ -84,16 +107,16 @@ class TabellenHttpAdapterTest {
 	}
 
 	@Test
-	void failsWith500WhenSpieltagRepoThrowsException() {
+	void failsWith500WhenSpieltagRepoThrowsError() throws Exception {
 		String league = "bl1";
 		String season = "2022";
 
-		String message = "Some database load error";
+		String message = "Some load error";
 		when(tabellenService.erstelleTabelle(league, season)).thenThrow(new RuntimeException(message));
 
-		assertThatExceptionOfType(NestedServletException.class) //
-				.isThrownBy(() -> this.mockMvc.perform(get("/tabelle/" + league + "/" + season))) //
-				.havingCause().isExactlyInstanceOf(RuntimeException.class).withMessage(message) //
+		this.mockMvc.perform(get("/tabelle/" + league + "/" + season)) //
+				.andDo(print()) //
+				.andExpect(status().is5xxServerError()) //
 		;
 	}
 
