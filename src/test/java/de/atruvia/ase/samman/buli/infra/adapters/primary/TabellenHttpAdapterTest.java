@@ -32,10 +32,10 @@ import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 class TabellenHttpAdapterTest {
 
 	@Autowired
-	private MockMvc mockMvc;
+	MockMvc mockMvc;
 
 	@MockBean
-	private TabellenService tabellenService;
+	TabellenService tabellenService;
 
 	@Test
 	void shouldReturnDefaultMessage() throws Exception {
@@ -97,7 +97,7 @@ class TabellenHttpAdapterTest {
 		;
 	}
 
-	private static TabellenPlatz platzWithBase(int base, TabellenPlatzBuilder builder) {
+	static TabellenPlatz platzWithBase(int base, TabellenPlatzBuilder builder) {
 		int cnt = 0;
 		return builder.wappen(create("proto://wappen-team-" + base)).team("Team " + base).spiele(base + (++cnt))
 				.toreHeim(base + (++cnt)).toreAuswaerts(base + (++cnt)).gegentoreHeim(base + (++cnt))
