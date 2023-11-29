@@ -1,10 +1,11 @@
 package de.atruvia.ase.samman.buli.domain.ports.primary;
 
 import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.spieltagFsRepo;
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.joining;
 import static org.approvaltests.Approvals.verify;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,23 +24,40 @@ class DefaultTabellenServiceTest {
 		verify(tabelle);
 	}
 
-	private int longestTeamName(List<TabellenPlatz> tabellenPlaetze) {
+	@Test
+	void whenRepoThrowsExceptionThenTheServiceThrowsTheException() {
+		String message = "some data load error";
+		TabellenService sut = new DefaultTabellenService((league, season) -> {
+			throw new RuntimeException(message);
+		});
+		assertThatExceptionOfType(RuntimeException.class).isThrownBy(() -> sut.erstelleTabelle("bl1", "2022"))
+				.withFailMessage(message);
+	}
+
+	int longestTeamName(List<TabellenPlatz> tabellenPlaetze) {
 		return tabellenPlaetze.stream().map(TabellenPlatz::getTeam).mapToInt(String::length).max().orElse(0);
 	}
 
-	private String print(TabellenPlatz tabellenPlatz, int length) {
-		return Arrays.asList(stringFormat(length, tabellenPlatz.getTeam()), tabellenPlatz.getSpiele(),
-				tabellenPlatz.getAnzahlSiege(), tabellenPlatz.getAnzahlUnentschieden(), tabellenPlatz.getAnzahlNiederlagen(),
-				tabellenPlatz.getTore(), tabellenPlatz.getGegentore(), tabellenPlatz.getTorDifferenz(),
-				tabellenPlatz.getPunkte(), tabellenPlatz.getWappen()).stream()
-				.map(this::format).collect(joining(" | "));
+	String print(TabellenPlatz tabellenPlatz, int length) {
+		return asList( //
+				stringFormat(length, tabellenPlatz.getTeam()), //
+				tabellenPlatz.getSpiele(), //
+				tabellenPlatz.getAnzahlSiege(), //
+				tabellenPlatz.getAnzahlUnentschieden(), //
+				tabellenPlatz.getAnzahlNiederlagen(), //
+				tabellenPlatz.getTore(), //
+				tabellenPlatz.getGegentore(), //
+				tabellenPlatz.getTorDifferenz(), //
+				tabellenPlatz.getPunkte(), //
+				tabellenPlatz.getWappen() //
+		).stream().map(this::format).collect(joining(" | "));
 	}
 
-	private String stringFormat(int length, String team) {
+	String stringFormat(int length, String team) {
 		return String.format("%-" + (length + 1) + "s", team);
 	}
 
-	private String format(Object o) {
+	String format(Object o) {
 		return o instanceof Number ? String.format("%3d", o) : Objects.toString(o);
 	}
 
