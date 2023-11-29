@@ -49,15 +49,16 @@ public class TabellenHttpAdapter {
 					.siege(domain.getAnzahlSiege()) //
 					.unentschieden(domain.getAnzahlUnentschieden()) //
 					.niederlagen(domain.getAnzahlNiederlagen()) //
-					.letzte5(convert(domain)) //
+					.letzte5(convertLetzte5(domain)) //
 					.build();
 		}
 
-		private static String convert(TabellenPlatz platz) {
-			return String
-					.format("%-5s",
-							lastNErgebnisse(platz, 5).stream().map(e -> e.name().substring(0, 1)).collect(joining()))
-					.replace(' ', '-');
+		private static String convertLetzte5(TabellenPlatz platz) {
+			return String.format("%-5s", lastNErgebnisse(platz, 5).stream().map(e -> switch (e) {
+			case SIEG -> "S";
+			case UNENTSCHIEDEN -> "U";
+			case NIEDERLAGE -> "N";
+			}).collect(joining())).replace(' ', '-');
 		}
 
 		/**
