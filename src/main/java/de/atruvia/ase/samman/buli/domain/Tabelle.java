@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
@@ -112,12 +113,20 @@ public class Tabelle {
 	public List<TabellenPlatz> getEntries() {
 		// TODO make it side-affect-free, does it work W/O zip!?
 		AtomicInteger platz = new AtomicInteger(1);
-		Map<OrdnungsElement, List<TabellenPlatz>> platzGruppen = eintraege.entrySet().stream().map(this::setTeam)
-				.collect(groupingBy(OrdnungsElement::new));
-		return platzGruppen.entrySet().stream().sorted(comparing(Entry::getKey)).map(Entry::getValue).flatMap(t -> {
-			int no = platz.getAndAdd(t.size());
-			return t.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(no));
-		}).toList();
+		Map<OrdnungsElement, List<TabellenPlatz>> platzGruppen = eintraege.entrySet().stream() //
+				.map(this::setTeam) //
+				.collect(groupingBy(OrdnungsElement::new)) //
+		;
+		return platzGruppen.entrySet().stream() //
+				.sorted(comparing(Entry::getKey)) //
+				.map(Entry::getValue) //
+				.flatMap(t -> makeGroup(platz, t)) //
+				.toList();
+	}
+
+	private static Stream<TabellenPlatz> makeGroup(AtomicInteger platz, List<TabellenPlatz> tabellenPlaetze) {
+		int no = platz.getAndAdd(tabellenPlaetze.size());
+		return tabellenPlaetze.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(no));
 	}
 
 	private TabellenPlatz setTeam(Entry<String, TabellenPlatz> entry) {
