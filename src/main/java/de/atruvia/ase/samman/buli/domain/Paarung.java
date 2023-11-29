@@ -33,9 +33,9 @@ public class Paarung {
 
 	public Paarung swap() {
 		return toBuilder() //
-				.teamHeim(teamGast).teamGast(teamHeim) //
-				.wappenHeim(wappenGast).wappenGast(wappenHeim) //
-				.toreTeamHeim(toreTeamGast).toreTeamGast(toreTeamHeim) //
+				.teamHeim(getTeamGast()).teamGast(getTeamHeim()) //
+				.wappenHeim(getWappenGast()).wappenGast(getWappenHeim()) //
+				.toreTeamHeim(getToreTeamGast()).toreTeamGast(getToreTeamHeim()) //
 				.build();
 	}
 
