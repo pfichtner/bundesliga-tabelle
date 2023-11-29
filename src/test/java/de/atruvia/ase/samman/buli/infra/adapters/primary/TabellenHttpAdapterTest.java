@@ -107,11 +107,11 @@ class TabellenHttpAdapterTest {
 	}
 
 	@Test
-	void failsWith500WhenSpieltagRepoThrowsError() throws Exception {
+	void failsWith500WhenServiceThrowsException() throws Exception {
 		String league = "bl1";
 		String season = "2022";
-
-		String message = "Some load error";
+		
+		String message = "Some service exception";
 		when(tabellenService.erstelleTabelle(league, season)).thenThrow(new RuntimeException(message));
 
 		this.mockMvc.perform(get("/tabelle/" + league + "/" + season)) //
