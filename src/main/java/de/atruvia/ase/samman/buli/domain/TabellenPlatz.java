@@ -3,9 +3,7 @@ package de.atruvia.ase.samman.buli.domain;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
-import static java.lang.Math.max;
 import static java.util.Collections.emptyList;
-import static java.util.Collections.reverse;
 import static java.util.stream.Stream.concat;
 
 import java.net.URI;
