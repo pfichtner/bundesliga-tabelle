@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set your Docker image name
-IMAGE_NAME="buli:0.0.1-SNAPSHOT"
+IMAGE_NAME=$1
 
 # Set the resource path to check (replace with your actual resource path)
 RESOURCE_PATH="/tabelle/bl1/2023"
