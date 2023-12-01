@@ -10,11 +10,14 @@
 	<groupId>de.atuvia.ase.samman</groupId>
 	<artifactId>buli</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
 		<pact.version>4.1.41</pact.version>
+		<docker.image.name>${project.artifactId}:${project.version}</docker.image.name>
 	</properties>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -94,6 +97,11 @@
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>jib-maven-plugin</artifactId>
 				<version>3.4.0</version>
+				<configuration>
+					<to>
+						<image>${docker.image.name}</image>
+					</to>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
