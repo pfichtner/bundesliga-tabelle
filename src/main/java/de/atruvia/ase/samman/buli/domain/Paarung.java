@@ -18,6 +18,7 @@ public class Paarung {
 	}
 
 	boolean gespielt;
+	// TODO introduce private record Entry(String team, URI wappen, int tore)
 	String teamHeim, teamGast;
 	URI wappenHeim, wappenGast;
 	int toreTeamHeim;

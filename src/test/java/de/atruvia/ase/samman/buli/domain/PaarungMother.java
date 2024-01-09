@@ -6,6 +6,7 @@ import static java.util.function.Predicate.not;
 import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
 
+import java.net.URI;
 import java.util.List;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
@@ -34,6 +35,10 @@ public final class PaarungMother {
 		case UNENTSCHIEDEN -> builder.ergebnis(MAX_VALUE, MAX_VALUE);
 		case NIEDERLAGE -> builder.ergebnis(MIN_VALUE, MAX_VALUE);
 		}).build();
+	}
+
+	public static Paarung all() {
+		return new Paarung(true, "Heim", "Gast", URI.create("WappenHeim"), URI.create("WappenGast"), 1, 2);
 	}
 
 	private static List<String> opponents(String firstTeam, int count) {
