@@ -21,7 +21,9 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
+import de.atruvia.ase.samman.buli.domain.Paarung.Entry;
 import de.atruvia.ase.samman.buli.domain.Paarung.Entry.EntryBuilder;
+import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 
 public class TabelleTest {
 
@@ -163,24 +165,24 @@ public class TabelleTest {
 		);
 	}
 
-	private static Paarung.PaarungBuilder paarung(String teamHeim, String teamGast) {
+	private static PaarungBuilder paarung(String teamHeim, String teamGast) {
 		return paarung(team(teamHeim), team(teamGast));
 	}
 
-	private static Paarung.PaarungBuilder paarung(String teamHeim, String teamGast, URI wappenHeim, URI wappenGast) {
+	private static PaarungBuilder paarung(String teamHeim, String teamGast, URI wappenHeim, URI wappenGast) {
 		return paarung(team(teamHeim).wappen(wappenHeim), team(teamGast).wappen(wappenGast));
 	}
 
 	private static EntryBuilder team(String team) {
-		return Paarung.Entry.builder().team(team);
+		return Entry.builder().team(team);
 	}
 
-	private static Paarung.PaarungBuilder paarung(EntryBuilder heim, EntryBuilder gast) {
+	private static PaarungBuilder paarung(EntryBuilder heim, EntryBuilder gast) {
 		return Paarung.builder().heim(heim.build()).gast(gast.build());
 	}
 
-	private void gegebenSeienDiePaarungen(Paarung.PaarungBuilder... paarungen) {
-		this.paarungen = stream(paarungen).map(Paarung.PaarungBuilder::build).toArray(Paarung[]::new);
+	private void gegebenSeienDiePaarungen(PaarungBuilder... paarungen) {
+		this.paarungen = stream(paarungen).map(PaarungBuilder::build).toArray(Paarung[]::new);
 	}
 
 	private void wennDieTabelleBerechnetWird() {
