@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.google.gson.Gson;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
+import de.atruvia.ase.samman.buli.domain.Paarung.Entry;
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
 import lombok.ToString;
@@ -55,8 +56,9 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 
 		private Paarung toDomain() {
 			PaarungBuilder builder = Paarung.builder() //
-					.teamHeim(team1.teamName).teamGast(team2.teamName) //
-					.wappenHeim(create(team1.teamIconUrl)).wappenGast(create(team2.teamIconUrl));
+					.heim(new Entry(team1.teamName, create(team1.teamIconUrl), 0)) //
+					.gast(new Entry(team2.teamName, create(team2.teamIconUrl), 0)) //
+			;
 			return setFinalResult(builder, matchResults).build();
 		}
 

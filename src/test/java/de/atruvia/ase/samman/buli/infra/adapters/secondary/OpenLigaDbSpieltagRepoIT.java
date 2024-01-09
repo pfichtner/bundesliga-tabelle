@@ -24,15 +24,21 @@ class OpenLigaDbSpieltagRepoIT {
 	@Test
 	void canRetrieveDataOf2022() throws Exception {
 		List<Paarung> paarungen = repo().lade("bl1", "2022");
-		assertThat(paarungen).hasSize(18 / 2 * 17 * 2).element(0).isEqualTo(Paarung.builder().teamHeim(teamFrankfurt)
-				.teamGast(teamMuenchen).ergebnis(1, 6).wappenHeim(wappenFrankfurt).wappenGast(wappenMuenchen).build());
+		Paarung expected0 = Paarung.builder() //
+				.heim(new Paarung.Entry(teamFrankfurt, wappenFrankfurt)) //
+				.gast(new Paarung.Entry(teamMuenchen, wappenMuenchen)) //
+				.build().withErgebnis(1, 6);
+		assertThat(paarungen).hasSize(18 / 2 * 17 * 2).element(0).isEqualTo(expected0);
 	}
 
 	@Test
 	void canRetrieveDataOf2023() throws Exception {
 		List<Paarung> paarungen = repo().lade("bl1", "2023");
-		assertThat(paarungen).element(0).isEqualTo(Paarung.builder().teamHeim(teamBremen)
-				.teamGast(teamMuenchen).ergebnis(0, 4).wappenHeim(wappenBremen).wappenGast(wappenMuenchen).build());
+		Paarung expected0 = Paarung.builder() //
+				.heim(new Paarung.Entry(teamBremen, wappenBremen)) //
+				.gast(new Paarung.Entry(teamMuenchen, wappenMuenchen)) //
+				.build().withErgebnis(0, 4);
+		assertThat(paarungen).element(0).isEqualTo(expected0);
 	}
 
 	private OpenLigaDbSpieltagRepo repo() {

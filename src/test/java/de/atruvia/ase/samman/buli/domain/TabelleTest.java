@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
-import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
+import de.atruvia.ase.samman.buli.domain.Paarung.Entry.EntryBuilder;
 
 public class TabelleTest {
 
@@ -30,7 +30,7 @@ public class TabelleTest {
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {
-		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2"), PaarungBuilder.paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
 				"""
@@ -41,7 +41,7 @@ public class TabelleTest {
 
 	@Test
 	void zweiMannschaftenEinSpielKeineTore() {
-		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(0, 0), PaarungBuilder.paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(0, 0), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
 				"""
@@ -52,7 +52,7 @@ public class TabelleTest {
 
 	@Test
 	void mannschaftMitMehrPunktenIstWeiterOben() {
-		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(0, 1), PaarungBuilder.paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(0, 1), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
 				"""
@@ -64,8 +64,8 @@ public class TabelleTest {
 	@Test
 	void zweiMannschaftenZweiSpieleMitToren() {
 		gegebenSeienDiePaarungen( //
-				PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(1, 0), //
-				PaarungBuilder.paarung("Team 2", "Team 1").ergebnis(1, 0) //
+				paarung("Team 1", "Team 2").ergebnis(1, 0), //
+				paarung("Team 2", "Team 1").ergebnis(1, 0) //
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
@@ -78,10 +78,10 @@ public class TabelleTest {
 	@Test
 	void dieFolgendeMannschaftIstPlatzDrei() {
 		gegebenSeienDiePaarungen( //
-				PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(1, 0), //
-				PaarungBuilder.paarung("Team 2", "Team 1").ergebnis(1, 0), //
-				PaarungBuilder.paarung("Team 1", "Team 3").ergebnis(1, 0), //
-				PaarungBuilder.paarung("Team 2", "Team 3").ergebnis(1, 0) //
+				paarung("Team 1", "Team 2").ergebnis(1, 0), //
+				paarung("Team 2", "Team 1").ergebnis(1, 0), //
+				paarung("Team 1", "Team 3").ergebnis(1, 0), //
+				paarung("Team 2", "Team 3").ergebnis(1, 0) //
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
@@ -95,8 +95,8 @@ public class TabelleTest {
 	@Test
 	void punktUndTorGleichAberMehrAuswärtsTore() {
 		gegebenSeienDiePaarungen( //
-				PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(1, 2), //
-				PaarungBuilder.paarung("Team 2", "Team 1").ergebnis(0, 1) //
+				paarung("Team 1", "Team 2").ergebnis(1, 2), //
+				paarung("Team 2", "Team 1").ergebnis(0, 1) //
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
@@ -142,7 +142,7 @@ public class TabelleTest {
 
 	@Test
 	void keineSpieleKeineTendenz() {
-		gegebenSeienDiePaarungen(PaarungBuilder.paarung("Team 1", "Team 2"), PaarungBuilder.paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		assertThat(sut.getEntries()).satisfiesExactly( //
 				e1 -> assertThat(e1.getErgebnisse()).isEmpty(), //
@@ -153,8 +153,8 @@ public class TabelleTest {
 	@Test
 	void zweiSpieleTendenz_dieLetztePaarungIstVorneInDerListe() {
 		gegebenSeienDiePaarungen( //
-				PaarungBuilder.paarung("Team 1", "Team 2").ergebnis(1, 0), //
-				PaarungBuilder.paarung("Team 2", "Team 1").ergebnis(1, 1) //
+				paarung("Team 1", "Team 2").ergebnis(1, 0), //
+				paarung("Team 2", "Team 1").ergebnis(1, 1) //
 		);
 		wennDieTabelleBerechnetWird();
 		assertThat(sut.getEntries()).satisfiesExactly( //
@@ -163,8 +163,20 @@ public class TabelleTest {
 		);
 	}
 
-	private Paarung.PaarungBuilder paarung(String teamHeim, String teamGast, URI wappenHeim, URI wappenGast) {
-		return PaarungBuilder.paarung(teamHeim, teamGast).wappenHeim(wappenHeim).wappenGast(wappenGast);
+	private static Paarung.PaarungBuilder paarung(String teamHeim, String teamGast) {
+		return paarung(team(teamHeim), team(teamGast));
+	}
+
+	private static Paarung.PaarungBuilder paarung(String teamHeim, String teamGast, URI wappenHeim, URI wappenGast) {
+		return paarung(team(teamHeim).wappen(wappenHeim), team(teamGast).wappen(wappenGast));
+	}
+
+	private static EntryBuilder team(String team) {
+		return Paarung.Entry.builder().team(team);
+	}
+
+	private static Paarung.PaarungBuilder paarung(EntryBuilder heim, EntryBuilder gast) {
+		return Paarung.builder().heim(heim.build()).gast(gast.build());
 	}
 
 	private void gegebenSeienDiePaarungen(Paarung.PaarungBuilder... paarungen) {
