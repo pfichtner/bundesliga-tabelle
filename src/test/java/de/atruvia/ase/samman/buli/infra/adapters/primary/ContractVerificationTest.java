@@ -38,9 +38,7 @@ class ContractVerificationTest {
 
 	@BeforeEach
 	void setup(PactVerificationContext context) {
-		if (context != null) {
-			context.setTarget(new HttpTestTarget("localhost", port));
-		}
+		context.setTarget(new HttpTestTarget("localhost", port));
 	}
 
 	@TestTemplate
