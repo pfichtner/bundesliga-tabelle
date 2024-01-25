@@ -18,7 +18,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import au.com.dius.pact.provider.junit5.HttpTestTarget;
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
 import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider;
-import au.com.dius.pact.provider.junitsupport.IgnoreNoPactsToVerify;
 import au.com.dius.pact.provider.junitsupport.Provider;
 import au.com.dius.pact.provider.junitsupport.State;
 import au.com.dius.pact.provider.junitsupport.loader.PactFolder;
@@ -28,7 +27,6 @@ import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
 @Provider("BundesligaBackend")
 @PactFolder("pacts")
 @SpringBootTest(classes = Main.class, webEnvironment = RANDOM_PORT)
-@IgnoreNoPactsToVerify
 @ContractTest
 class ContractVerificationTest {
 
@@ -48,9 +46,7 @@ class ContractVerificationTest {
 	@TestTemplate
 	@ExtendWith(PactVerificationInvocationContextProvider.class)
 	void verifyContracts(PactVerificationContext context) {
-		if (context != null) {
-			context.verifyInteraction();
-		}
+		context.verifyInteraction();
 	}
 
 	@State("matchday #3 team has won on matchday #1, draw on matchday #2 and loss on day #3")
