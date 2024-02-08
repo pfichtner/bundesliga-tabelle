@@ -77,7 +77,7 @@
           },
           "$.body[0].letzte5": {
             "match": "regex",
-            "regex": "NUS|NUS.{2}"
+            "regex": "NUS|^NUS[^NUS]{2}"
           },
           "$.body[0].platz": {
             "match": "type"
