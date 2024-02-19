@@ -41,7 +41,7 @@ class OpenLigaDbSpieltagRepoIT {
 		assertThat(paarungen).element(0).isEqualTo(expected0);
 	}
 
-	private OpenLigaDbSpieltagRepo repo() {
+	OpenLigaDbSpieltagRepo repo() {
 		return new OpenLigaDbSpieltagRepo();
 	}
 

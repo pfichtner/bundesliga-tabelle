@@ -20,7 +20,7 @@ class OpenLigaDbTeamRepoTest {
 				.hasValueSatisfying(t -> assertThat(t.getWappen()).isEqualTo(URI.create(wappenUri)));
 	}
 
-	private OpenLigaDbTeamRepo repo() {
+	OpenLigaDbTeamRepo repo() {
 		return teamFsRepo();
 	}
 
