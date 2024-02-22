@@ -16,17 +16,17 @@
       "response": {
         "body": [
           {
-            "gegentore": 3,
+            "gegentore": 56,
             "letzte5": "NUSxx",
-            "niederlagen": 1,
-            "platz": 1,
-            "punkte": 4,
-            "siege": 1,
-            "spiele": 3,
-            "team": "anyTeamName",
-            "tordifferenz": 0,
-            "tore": 3,
-            "unentschieden": 1
+            "niederlagen": 90,
+            "platz": 12,
+            "punkte": 34,
+            "siege": 78,
+            "spiele": 23,
+            "team": "any team name",
+            "tordifferenz": 67,
+            "tore": 45,
+            "unentschieden": 89
           },
           {
             "gegentore": 13,
@@ -79,13 +79,31 @@
             "match": "regex",
             "regex": "NUS|^NUS[^NUS]{2}"
           },
+          "$.body[0].niederlagen": {
+            "match": "type"
+          },
           "$.body[0].platz": {
+            "match": "type"
+          },
+          "$.body[0].punkte": {
+            "match": "type"
+          },
+          "$.body[0].siege": {
+            "match": "type"
+          },
+          "$.body[0].spiele": {
+            "match": "type"
+          },
+          "$.body[0].team": {
             "match": "type"
           },
           "$.body[0].tordifferenz": {
             "match": "type"
           },
           "$.body[0].tore": {
+            "match": "type"
+          },
+          "$.body[0].unentschieden": {
             "match": "type"
           },
           "$.body[1].gegentore": {
