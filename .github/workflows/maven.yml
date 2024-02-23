@@ -35,7 +35,7 @@ jobs:
       uses: dorny/test-reporter@e9fa2f582c0ebbe2e263fd18fad744d52e0b0203 # v1
       if: (success() || failure()) && github.event_name != 'pull_request' && github.actor != 'dependabot[bot]'  # run this step even if previous step failed
       with:
-        name: Tests Report JDK ${{ matrix.java-version }}
+        name: Tests Report
         path: "target/surefire-reports/*.xml"
         reporter: java-junit
 
