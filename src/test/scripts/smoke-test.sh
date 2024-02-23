@@ -62,6 +62,9 @@ check_resource_non_empty_json_array() {
   local http_status="${response:(-3)}"
   local body="${response::-3}"
 
+  # Format body if jq is available
+  command -v jq &> /dev/null && body=$(echo "$body" | jq)
+
   # Check if the HTTP status is 200 and the response is a non-empty JSON array
   if [ "$http_status" -eq 200 ] && [[ $body == \[*\] && $body != "[]" ]]; then
     echo "Resource is a non-empty JSON array: $body"
