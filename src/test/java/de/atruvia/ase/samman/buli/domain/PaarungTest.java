@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 class PaarungTest {
 
-	Paarung origin = PaarungMother.all();
+	Paarung origin = PaarungMother.paarungWithAllAttributesSet();
 	Paarung swappedOnce = origin.swap();
 
 	@Test

@@ -37,7 +37,7 @@ public final class PaarungMother {
 		}).build();
 	}
 
-	public static Paarung all() {
+	public static Paarung paarungWithAllAttributesSet() {
 		return new Paarung(true, "Heim", "Gast", URI.create("WappenHeim"), URI.create("WappenGast"), 1, 2);
 	}
 
