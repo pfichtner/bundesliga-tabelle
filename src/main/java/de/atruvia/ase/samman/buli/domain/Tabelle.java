@@ -114,7 +114,7 @@ public class Tabelle {
 		// TODO make it side-affect-free, does it work W/O zip!?
 		AtomicInteger platz = new AtomicInteger(1);
 		Map<OrdnungsElement, List<TabellenPlatz>> platzGruppen = eintraege.entrySet().stream() //
-				.map(this::setTeam) //
+				.map(Tabelle::setTeam) //
 				.collect(groupingBy(OrdnungsElement::new)) //
 		;
 		return platzGruppen.entrySet().stream() //
@@ -129,7 +129,7 @@ public class Tabelle {
 		return tabellenPlaetze.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(no));
 	}
 
-	private TabellenPlatz setTeam(Entry<String, TabellenPlatz> entry) {
+	private static TabellenPlatz setTeam(Entry<String, TabellenPlatz> entry) {
 		return entry.getValue().withTeam(entry.getKey());
 	}
 
