@@ -15,5 +15,5 @@ So it highlights the following aspects:
 
 Additionally it does: 
 - [PACT](https://pact.io/) contract verification that this backend behaves as expected by the frontend(s)
-- [Archunit](https://www.archunit.org/) architecture tests that the code base is structured as intended
+- [ArchUnit](https://www.archunit.org/) architecture tests that the code base is structured as intended
 - Smoke test: Starting the freshly built and dockerized application container and verifies if it answers with HTTP status code 200 and a JSON array payload
