@@ -20,12 +20,12 @@ class ArchitectureTest {
 	;
 
 	@ArchTest
-	ArchRule noCoreToAdaptersDependencies = noClasses().that().resideInAPackage("..domain..") //
+	ArchRule noDomainToAdapterDependencies = noClasses().that().resideInAPackage("..domain..") //
 			.should().dependOnClassesThat().resideInAPackage("..adapters..") //
 	;
 
 	@ArchTest
-	ArchRule noPortsToAdaptersDependencies = noClasses().that().resideInAPackage("..ports..") //
+	ArchRule noPortToAdapterDependencies = noClasses().that().resideInAPackage("..ports..") //
 			.should().dependOnClassesThat().resideInAPackage("..adapters..") //
 	;
 
