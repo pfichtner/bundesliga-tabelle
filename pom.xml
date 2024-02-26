@@ -13,11 +13,12 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${project.encondig}</project.reporting.outputEncoding>
 		<java.version>17</java.version>
 		<pact.version>4.1.41</pact.version>
+        <cucumber.version>7.15.0</cucumber.version>
 		<docker.image.name>${project.artifactId}:${project.version}</docker.image.name>
 	</properties>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -68,7 +69,19 @@
 			<version>0.23.1</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
 			<groupId>com.approvaltests</groupId>
 			<artifactId>approvaltests</artifactId>
 			<version>18.5.0</version>
