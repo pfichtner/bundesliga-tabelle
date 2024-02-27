@@ -15,6 +15,7 @@ import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 import de.atruvia.ase.samman.buli.domain.Tabelle;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.de.Dann;
 import io.cucumber.java.de.Gegebensei;
 import io.cucumber.java.de.Wenn;
@@ -39,7 +40,7 @@ public class StepDefs {
 	List<TabellenPlatz> entries;
 
 	@Gegebensei("ein Spielplan")
-	public void ein_spielplan(io.cucumber.datatable.DataTable dataTable) {
+	public void ein_spielplan(DataTable dataTable) {
 		for (Map<String, String> row : dataTable.asMaps()) {
 			String[] ergebnis = row.get("Ergebnis").split(":");
 			paarungen.add(PaarungBuilder.paarung(row.get("Heim"), row.get("Gast"))
@@ -56,7 +57,7 @@ public class StepDefs {
 	}
 
 	@Dann("ist die Tabelle")
-	public void ist_die_tabelle(io.cucumber.datatable.DataTable dataTable) {
+	public void ist_die_tabelle(DataTable dataTable) {
 		Iterator<TabellenPlatz> iterator = entries.iterator();
 
 		assertSoftly(s -> {
