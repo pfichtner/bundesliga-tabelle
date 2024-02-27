@@ -2,13 +2,12 @@ package de.atruvia.ase.samman.buli.cucumber;
 
 import static java.lang.Integer.parseInt;
 import static java.util.Map.entry;
+import static java.util.Objects.requireNonNull;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.function.Function;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
@@ -40,9 +39,10 @@ public class StepDefs {
 	List<TabellenPlatz> entries;
 
 	@Gegebensei("ein Spielplan")
-	public void ein_spielplan(DataTable dataTable) {
-		for (Map<String, String> row : dataTable.asMaps()) {
-			String[] ergebnis = row.get("Ergebnis").split(":");
+	@Gegebensei("der Spielplan")
+	public void der_spielplan(DataTable dataTable) {
+		for (var row : dataTable.asMaps()) {
+			var ergebnis = row.get("Ergebnis").split(":");
 			paarungen.add(PaarungBuilder.paarung(row.get("Heim"), row.get("Gast"))
 					.ergebnis(parseInt(ergebnis[0]), parseInt(ergebnis[1])).build());
 		}
@@ -59,21 +59,25 @@ public class StepDefs {
 	@Dann("ist die Tabelle")
 	public void ist_die_tabelle(DataTable dataTable) {
 		var iterator = entries.iterator();
-
 		assertSoftly(s -> {
 			for (var row : dataTable.asMaps()) {
 				var platz = iterator.next();
 				for (var entry : row.entrySet()) {
-					var attributeName = entry.getKey();
-					var accessor = accessors.get(attributeName);
-					var actual = accessor.apply(platz);
-
-					s.assertThat(actual).describedAs("Attribute '%s' differs in %s", attributeName, row)
+					var name = entry.getKey();
+					var value = attributeValue(platz, name);
+					s.assertThat(value).describedAs("Attribute '%s' differs in row %s", name, row)
 							.hasToString(entry.getValue());
 				}
 			}
 		});
+	}
 
+	private static Object attributeValue(TabellenPlatz platz, String attributeName) {
+		return accessor(attributeName).apply(platz);
+	}
+
+	private static Function<TabellenPlatz, Object> accessor(String attributeName) {
+		return requireNonNull(accessors.get(attributeName), () -> "unknown attribute named '" + attributeName + "'");
 	}
 
 }
