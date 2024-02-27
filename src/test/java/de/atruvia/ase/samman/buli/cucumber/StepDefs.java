@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman.buli.cucumber;
 
+import static de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder.paarung;
 import static java.lang.Integer.parseInt;
 import static java.util.Map.entry;
 import static java.util.Objects.requireNonNull;
@@ -11,7 +12,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
-import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 import de.atruvia.ase.samman.buli.domain.Tabelle;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import io.cucumber.datatable.DataTable;
@@ -42,10 +42,17 @@ public class StepDefs {
 	@Gegebensei("der Spielplan")
 	public void der_spielplan(DataTable dataTable) {
 		for (var row : dataTable.asMaps()) {
-			var ergebnis = row.get("Ergebnis").split(":");
-			paarungen.add(PaarungBuilder.paarung(row.get("Heim"), row.get("Gast"))
-					.ergebnis(parseInt(ergebnis[0]), parseInt(ergebnis[1])).build());
+			einSpielGegenMitErgebnis(row.get("Heim"), row.get("Gast"), row.get("Ergebnis"));
 		}
+	}
+
+	@Gegebensei("^ein Spiel \"([^\"]*)\" gegen \"([^\"]*)\" mit Ergebnis \"([^\"]*)\"$")
+	public void einSpielGegenMitErgebnis(String teamHeim, String teamGast, String ergebnis) {
+		String[] split = ergebnis.split(":");
+		if (split.length != 2) {
+			throw new IllegalArgumentException("Cannot split " + ergebnis + " into two parts");
+		}
+		paarungen.add(paarung(teamHeim, teamGast).ergebnis(parseInt(split[0]), parseInt(split[1])).build());
 	}
 
 	@Wenn("die Tabelle berechnet wird")
