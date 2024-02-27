@@ -125,7 +125,7 @@ public class TabelleTest {
 		);
 		wennDieTabelleBerechnetWird();
 		assertSoftly(s -> {
-			TabellenPlatz platz0 = this.sut.getEntries().get(0);
+			TabellenPlatz platz0 = sut.getEntries().get(0);
 			s.assertThat(platz0.getTeam()).isEqualTo("Team 1");
 			s.assertThat(platz0.getPlatz()).isEqualTo(1);
 			s.assertThat(platz0.getSpiele()).isEqualTo(3);
@@ -137,7 +137,7 @@ public class TabelleTest {
 			s.assertThat(platz0.getGegentore()).isEqualTo(1);
 			s.assertThat(platz0.getTorDifferenz()).isEqualTo(1);
 
-			TabellenPlatz platz1 = this.sut.getEntries().get(1);
+			TabellenPlatz platz1 = sut.getEntries().get(1);
 			s.assertThat(platz1.getTeam()).isEqualTo("Team 2");
 			s.assertThat(platz1.getPlatz()).isEqualTo(1);
 			s.assertThat(platz1.getSpiele()).isEqualTo(3);
@@ -149,7 +149,7 @@ public class TabelleTest {
 			s.assertThat(platz1.getGegentore()).isEqualTo(1);
 			s.assertThat(platz1.getTorDifferenz()).isEqualTo(1);
 
-			TabellenPlatz platz2 = this.sut.getEntries().get(2);
+			TabellenPlatz platz2 = sut.getEntries().get(2);
 			s.assertThat(platz2.getTeam()).isEqualTo("Team 3");
 			s.assertThat(platz2.getPlatz()).isEqualTo(3);
 			s.assertThat(platz2.getSpiele()).isEqualTo(2);
@@ -213,7 +213,7 @@ public class TabelleTest {
 	}
 
 	@Test
-	void keineSpieleKeineTendenz() {
+	void keineSpieleKeineErgebnisse() {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		assertThat(sut.getEntries()).satisfiesExactly( //
@@ -223,7 +223,7 @@ public class TabelleTest {
 	}
 
 	@Test
-	void zweiSpieleTendenz_dieLetztePaarungIstVorneInDerListe() {
+	void zweiSpieleErgebnisse_dieLetztePaarungIstVorneInDerListe() {
 		gegebenSeienDiePaarungen( //
 				paarung("Team 1", "Team 2").ergebnis(1, 0), //
 				paarung("Team 2", "Team 1").ergebnis(1, 1) //
