@@ -69,7 +69,7 @@ public class StepDefs {
 					var actual = accessor.apply(platz);
 
 					s.assertThat(actual).describedAs("Attribute '%s' differs in %s", attributeName, row)
-							.hasToString(String.valueOf(entry.getValue()));
+							.hasToString(entry.getValue());
 				}
 			}
 		});
