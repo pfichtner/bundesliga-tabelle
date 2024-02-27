@@ -68,8 +68,8 @@ public class StepDefs {
 					var accessor = accessors.get(attributeName);
 					var actual = accessor.apply(platz);
 
-					s.assertThat(String.valueOf(actual)).describedAs("Attribute '%s' differs in %s", attributeName, row)
-							.isEqualTo(String.valueOf(entry.getValue()));
+					s.assertThat(actual).describedAs("Attribute '%s' differs in %s", attributeName, row)
+							.hasToString(String.valueOf(entry.getValue()));
 				}
 			}
 		});
