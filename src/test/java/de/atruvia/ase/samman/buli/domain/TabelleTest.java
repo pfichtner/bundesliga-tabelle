@@ -125,41 +125,43 @@ public class TabelleTest {
 		);
 		wennDieTabelleBerechnetWird();
 		assertSoftly(s -> {
-			TabellenPlatz platz0 = sut.getEntries().get(0);
-			s.assertThat(platz0.getTeam()).isEqualTo("Team 1");
-			s.assertThat(platz0.getPlatz()).isEqualTo(1);
-			s.assertThat(platz0.getSpiele()).isEqualTo(3);
-			s.assertThat(platz0.getAnzahlSiege()).isEqualTo(2);
-			s.assertThat(platz0.getAnzahlUnentschieden()).isEqualTo(0);
-			s.assertThat(platz0.getAnzahlNiederlagen()).isEqualTo(1);
-			s.assertThat(platz0.getPunkte()).isEqualTo(6);
-			s.assertThat(platz0.getTore()).isEqualTo(2);
-			s.assertThat(platz0.getGegentore()).isEqualTo(1);
-			s.assertThat(platz0.getTorDifferenz()).isEqualTo(1);
-
-			TabellenPlatz platz1 = sut.getEntries().get(1);
-			s.assertThat(platz1.getTeam()).isEqualTo("Team 2");
-			s.assertThat(platz1.getPlatz()).isEqualTo(1);
-			s.assertThat(platz1.getSpiele()).isEqualTo(3);
-			s.assertThat(platz1.getAnzahlSiege()).isEqualTo(2);
-			s.assertThat(platz1.getAnzahlUnentschieden()).isEqualTo(0);
-			s.assertThat(platz1.getAnzahlNiederlagen()).isEqualTo(1);
-			s.assertThat(platz1.getPunkte()).isEqualTo(6);
-			s.assertThat(platz1.getTore()).isEqualTo(2);
-			s.assertThat(platz1.getGegentore()).isEqualTo(1);
-			s.assertThat(platz1.getTorDifferenz()).isEqualTo(1);
-
-			TabellenPlatz platz2 = sut.getEntries().get(2);
-			s.assertThat(platz2.getTeam()).isEqualTo("Team 3");
-			s.assertThat(platz2.getPlatz()).isEqualTo(3);
-			s.assertThat(platz2.getSpiele()).isEqualTo(2);
-			s.assertThat(platz2.getAnzahlSiege()).isEqualTo(0);
-			s.assertThat(platz2.getAnzahlUnentschieden()).isEqualTo(0);
-			s.assertThat(platz2.getAnzahlNiederlagen()).isEqualTo(2);
-			s.assertThat(platz2.getPunkte()).isEqualTo(0);
-			s.assertThat(platz2.getTore()).isEqualTo(0);
-			s.assertThat(platz2.getGegentore()).isEqualTo(2);
-			s.assertThat(platz2.getTorDifferenz()).isEqualTo(-2);
+			List<TabellenPlatz> entries = sut.getEntries();
+			s.assertThat(entries).element(0).satisfies(p -> {
+				s.assertThat(p.getTeam()).isEqualTo("Team 1");
+				s.assertThat(p.getPlatz()).isEqualTo(1);
+				s.assertThat(p.getSpiele()).isEqualTo(3);
+				s.assertThat(p.getAnzahlSiege()).isEqualTo(2);
+				s.assertThat(p.getAnzahlUnentschieden()).isEqualTo(0);
+				s.assertThat(p.getAnzahlNiederlagen()).isEqualTo(1);
+				s.assertThat(p.getPunkte()).isEqualTo(6);
+				s.assertThat(p.getTore()).isEqualTo(2);
+				s.assertThat(p.getGegentore()).isEqualTo(1);
+				s.assertThat(p.getTorDifferenz()).isEqualTo(1);
+			});
+			s.assertThat(entries).element(1).satisfies(p -> {
+				s.assertThat(p.getTeam()).isEqualTo("Team 2");
+				s.assertThat(p.getPlatz()).isEqualTo(1);
+				s.assertThat(p.getSpiele()).isEqualTo(3);
+				s.assertThat(p.getAnzahlSiege()).isEqualTo(2);
+				s.assertThat(p.getAnzahlUnentschieden()).isEqualTo(0);
+				s.assertThat(p.getAnzahlNiederlagen()).isEqualTo(1);
+				s.assertThat(p.getPunkte()).isEqualTo(6);
+				s.assertThat(p.getTore()).isEqualTo(2);
+				s.assertThat(p.getGegentore()).isEqualTo(1);
+				s.assertThat(p.getTorDifferenz()).isEqualTo(1);
+			});
+			s.assertThat(entries).element(2).satisfies(p -> {
+				s.assertThat(p.getTeam()).isEqualTo("Team 3");
+				s.assertThat(p.getPlatz()).isEqualTo(3);
+				s.assertThat(p.getSpiele()).isEqualTo(2);
+				s.assertThat(p.getAnzahlSiege()).isEqualTo(0);
+				s.assertThat(p.getAnzahlUnentschieden()).isEqualTo(0);
+				s.assertThat(p.getAnzahlNiederlagen()).isEqualTo(2);
+				s.assertThat(p.getPunkte()).isEqualTo(0);
+				s.assertThat(p.getTore()).isEqualTo(0);
+				s.assertThat(p.getGegentore()).isEqualTo(2);
+				s.assertThat(p.getTorDifferenz()).isEqualTo(-2);
+			});
 		});
 
 	}
