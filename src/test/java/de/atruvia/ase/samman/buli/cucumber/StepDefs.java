@@ -1,12 +1,15 @@
 package de.atruvia.ase.samman.buli.cucumber;
 
 import static java.lang.Integer.parseInt;
+import static java.util.Map.entry;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Function;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
@@ -17,6 +20,19 @@ import io.cucumber.java.de.Gegebensei;
 import io.cucumber.java.de.Wenn;
 
 public class StepDefs {
+
+	private static final Map<String, Function<TabellenPlatz, Object>> accessors = Map.ofEntries( //
+			entry("Team", TabellenPlatz::getTeam), //
+			entry("Platz", TabellenPlatz::getPlatz), //
+			entry("Spiele", TabellenPlatz::getSpiele), //
+			entry("Siege", TabellenPlatz::getAnzahlSiege), //
+			entry("Unentschieden", TabellenPlatz::getAnzahlUnentschieden), //
+			entry("Niederlagen", TabellenPlatz::getAnzahlNiederlagen), //
+			entry("Punkte", TabellenPlatz::getPunkte), //
+			entry("Tore", TabellenPlatz::getTore), //
+			entry("Gegentore", TabellenPlatz::getGegentore), //
+			entry("Tordifferenz", TabellenPlatz::getTorDifferenz) //
+	);
 
 	List<Paarung> paarungen = new ArrayList<>();
 	Tabelle tabelle = new Tabelle();
@@ -42,21 +58,21 @@ public class StepDefs {
 	@Dann("ist die Tabelle")
 	public void ist_die_tabelle(io.cucumber.datatable.DataTable dataTable) {
 		Iterator<TabellenPlatz> iterator = entries.iterator();
-		for (Map<String, String> row : dataTable.asMaps()) {
-			TabellenPlatz platz = iterator.next();
-			assertSoftly(s -> {
-				s.assertThat(platz.getTeam()).isEqualTo(row.get("Team"));
-				s.assertThat(platz.getPlatz()).isEqualTo(parseInt(row.get("Platz")));
-				s.assertThat(platz.getSpiele()).isEqualTo(parseInt(row.get("Spiele")));
-				s.assertThat(platz.getAnzahlSiege()).isEqualTo(parseInt(row.get("Siege")));
-				s.assertThat(platz.getAnzahlUnentschieden()).isEqualTo(parseInt(row.get("Unentschieden")));
-				s.assertThat(platz.getAnzahlNiederlagen()).isEqualTo(parseInt(row.get("Niederlagen")));
-				s.assertThat(platz.getPunkte()).isEqualTo(parseInt(row.get("Punkte")));
-				s.assertThat(platz.getTore()).isEqualTo(parseInt(row.get("Tore")));
-				s.assertThat(platz.getGegentore()).isEqualTo(parseInt(row.get("Gegentore")));
-				s.assertThat(platz.getTorDifferenz()).isEqualTo(parseInt(row.get("Tordifferenz")));
-			});
-		}
+
+		assertSoftly(s -> {
+			for (Map<String, String> row : dataTable.asMaps()) {
+				TabellenPlatz platz = iterator.next();
+				for (Entry<String, String> entry : row.entrySet()) {
+					var attributeName = entry.getKey();
+					var accessor = accessors.get(attributeName);
+					var actual = accessor.apply(platz);
+
+					s.assertThat(String.valueOf(actual)).describedAs("Attribute '%s' differs in %s", attributeName, row)
+							.isEqualTo(String.valueOf(entry.getValue()));
+				}
+			}
+		});
+
 	}
 
 }
