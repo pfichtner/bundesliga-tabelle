@@ -58,12 +58,12 @@ public class StepDefs {
 
 	@Dann("ist die Tabelle")
 	public void ist_die_tabelle(DataTable dataTable) {
-		Iterator<TabellenPlatz> iterator = entries.iterator();
+		var iterator = entries.iterator();
 
 		assertSoftly(s -> {
-			for (Map<String, String> row : dataTable.asMaps()) {
-				TabellenPlatz platz = iterator.next();
-				for (Entry<String, String> entry : row.entrySet()) {
+			for (var row : dataTable.asMaps()) {
+				var platz = iterator.next();
+				for (var entry : row.entrySet()) {
 					var attributeName = entry.getKey();
 					var accessor = accessors.get(attributeName);
 					var actual = accessor.apply(platz);
