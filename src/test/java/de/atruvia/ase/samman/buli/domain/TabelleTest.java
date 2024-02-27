@@ -5,11 +5,13 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.beans.Introspector.getBeanInfo;
+import static java.lang.Integer.parseInt;
 import static java.net.URI.create;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
@@ -17,6 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -92,6 +95,73 @@ public class TabelleTest {
 						1    |Team 1|3     |          2|                  0|                1|     6|   2|        1|           1
 						1    |Team 2|3     |          2|                  0|                1|     6|   2|        1|           1
 						3    |Team 3|2     |          0|                  0|                2|     0|   0|        2|          -2""");
+	}
+
+	@Test
+	void dieFolgendeMannschaftIstPlatzDrei___antiPattern1_toFewVerifications() {
+		gegebenSeienDiePaarungen( //
+				paarung("Team 1", "Team 2").ergebnis(1, 0), //
+				paarung("Team 2", "Team 1").ergebnis(1, 0), //
+				paarung("Team 1", "Team 3").ergebnis(1, 0), //
+				paarung("Team 2", "Team 3").ergebnis(1, 0) //
+		);
+		wennDieTabelleBerechnetWird();
+		assertThat(sut.getEntries()).element(2).satisfies(p -> {
+			assertSoftly(s -> {
+				s.assertThat(p.getTeam()).isEqualTo("Team 3");
+				s.assertThat(p.getPlatz()).isEqualTo(3);
+			});
+		});
+
+	}
+
+	@Test
+	void dieFolgendeMannschaftIstPlatzDrei___antiPattern1_assertsOverAsserts() {
+		gegebenSeienDiePaarungen( //
+				paarung("Team 1", "Team 2").ergebnis(1, 0), //
+				paarung("Team 2", "Team 1").ergebnis(1, 0), //
+				paarung("Team 1", "Team 3").ergebnis(1, 0), //
+				paarung("Team 2", "Team 3").ergebnis(1, 0) //
+		);
+		wennDieTabelleBerechnetWird();
+		assertSoftly(s -> {
+			TabellenPlatz platz0 = this.sut.getEntries().get(0);
+			s.assertThat(platz0.getTeam()).isEqualTo("Team 1");
+			s.assertThat(platz0.getPlatz()).isEqualTo(1);
+			s.assertThat(platz0.getSpiele()).isEqualTo(3);
+			s.assertThat(platz0.getAnzahlSiege()).isEqualTo(2);
+			s.assertThat(platz0.getAnzahlUnentschieden()).isEqualTo(0);
+			s.assertThat(platz0.getAnzahlNiederlagen()).isEqualTo(1);
+			s.assertThat(platz0.getPunkte()).isEqualTo(6);
+			s.assertThat(platz0.getTore()).isEqualTo(2);
+			s.assertThat(platz0.getGegentore()).isEqualTo(1);
+			s.assertThat(platz0.getTorDifferenz()).isEqualTo(1);
+
+			TabellenPlatz platz1 = this.sut.getEntries().get(1);
+			s.assertThat(platz1.getTeam()).isEqualTo("Team 2");
+			s.assertThat(platz1.getPlatz()).isEqualTo(1);
+			s.assertThat(platz1.getSpiele()).isEqualTo(3);
+			s.assertThat(platz1.getAnzahlSiege()).isEqualTo(2);
+			s.assertThat(platz1.getAnzahlUnentschieden()).isEqualTo(0);
+			s.assertThat(platz1.getAnzahlNiederlagen()).isEqualTo(1);
+			s.assertThat(platz1.getPunkte()).isEqualTo(6);
+			s.assertThat(platz1.getTore()).isEqualTo(2);
+			s.assertThat(platz1.getGegentore()).isEqualTo(1);
+			s.assertThat(platz1.getTorDifferenz()).isEqualTo(1);
+
+			TabellenPlatz platz2 = this.sut.getEntries().get(2);
+			s.assertThat(platz2.getTeam()).isEqualTo("Team 3");
+			s.assertThat(platz2.getPlatz()).isEqualTo(3);
+			s.assertThat(platz2.getSpiele()).isEqualTo(2);
+			s.assertThat(platz2.getAnzahlSiege()).isEqualTo(0);
+			s.assertThat(platz2.getAnzahlUnentschieden()).isEqualTo(0);
+			s.assertThat(platz2.getAnzahlNiederlagen()).isEqualTo(2);
+			s.assertThat(platz2.getPunkte()).isEqualTo(0);
+			s.assertThat(platz2.getTore()).isEqualTo(0);
+			s.assertThat(platz2.getGegentore()).isEqualTo(2);
+			s.assertThat(platz2.getTorDifferenz()).isEqualTo(-2);
+		});
+
 	}
 
 	@Test
