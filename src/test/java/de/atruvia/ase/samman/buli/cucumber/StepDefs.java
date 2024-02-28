@@ -76,6 +76,7 @@ public class StepDefs {
 							.hasToString(entry.getValue());
 				}
 			}
+			s.assertThat(iterator).toIterable().isEmpty();
 		});
 	}
 
