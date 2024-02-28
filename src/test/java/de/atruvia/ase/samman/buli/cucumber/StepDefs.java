@@ -76,7 +76,7 @@ public class StepDefs {
 							.hasToString(entry.getValue());
 				}
 			}
-			s.assertThat(iterator).toIterable().isEmpty();
+			s.assertThat(iterator).describedAs("Expected more elements than present").toIterable().isEmpty();
 		});
 	}
 
