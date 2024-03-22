@@ -3,10 +3,12 @@ package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.spieltagFsRepo;
 import static java.net.URI.create;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.net.URI;
 import java.util.List;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
@@ -42,6 +44,39 @@ class OpenLigaDbSpieltagRepoTest {
 				.gast(new Paarung.Entry(teamMuenchen, wappenMuenchen)) //
 				.build().withErgebnis(0, 4);
 		assertThat(paarungen).hasSize(9).element(0).isEqualTo(expected0);
+	}
+
+	@Test
+	void throwsExceptionIfThereAreMatchesWithMultipleFinalResults() throws Exception {
+		OpenLigaDbSpieltagRepo repo = new OpenLigaDbSpieltagRepo() {
+			@Override
+			protected String readJson(String league, String season) throws Exception {
+				return """
+						[
+						  {
+							"team1": {
+							  "teamName": "Team 1",
+							  "teamIconUrl": "teamIconUrl1"
+							},
+							"team2": {
+							  "teamName": "Team 2",
+							  "teamIconUrl": "teamIconUrl2"
+							},
+						    "matchResults": [
+						      {
+						        "resultTypeID": 2
+						      },
+						      {
+						        "resultTypeID": 2
+						      }
+						    ]
+						  }
+						 ]
+						""";
+			}
+
+		};
+		assertThatThrownBy(() -> repo.lade("any", "any")).hasMessageContaining("at most one element");
 	}
 
 	OpenLigaDbSpieltagRepo repo() {

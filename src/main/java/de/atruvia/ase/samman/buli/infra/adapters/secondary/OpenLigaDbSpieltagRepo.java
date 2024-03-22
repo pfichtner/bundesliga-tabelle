@@ -9,6 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BinaryOperator;
 
 import org.springframework.stereotype.Repository;
 
@@ -67,7 +68,13 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		}
 
 		private static Optional<MatchResult> endergebnis(MatchResult[] matchResults) {
-			return stream(matchResults).filter(MatchResult::isEndergebnis).findFirst();
+			return stream(matchResults).filter(MatchResult::isEndergebnis).reduce(toOnlyElement());
+		}
+
+		private static <T> BinaryOperator<T> toOnlyElement() {
+			return (f, s) -> {
+				throw new IllegalStateException("Expected at most one element but found at least " + f + " and " + s);
+			};
 		}
 
 	}
