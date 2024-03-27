@@ -18,7 +18,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.encondig}</project.reporting.outputEncoding>
 		<java.version>17</java.version>
-		<pact.version>4.6.7</pact.version>
+		<pact.version>4.6.8</pact.version>
 		<cucumber.version>7.15.0</cucumber.version>
 		<docker.image.name>${project.artifactId}:${project.version}</docker.image.name>
 	</properties>
