@@ -8,7 +8,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.net.URI;
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
@@ -62,6 +61,7 @@ class OpenLigaDbSpieltagRepoTest {
 							  "teamName": "Team 2",
 							  "teamIconUrl": "teamIconUrl2"
 							},
+							"matchIsFinished": true,
 						    "matchResults": [
 						      {
 						        "resultTypeID": 2

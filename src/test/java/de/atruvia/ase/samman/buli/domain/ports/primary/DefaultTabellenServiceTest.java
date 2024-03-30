@@ -18,8 +18,17 @@ class DefaultTabellenServiceTest {
 	@Test
 	void tabelleBl12022Spieltag24() {
 		TabellenService sut = new DefaultTabellenService(spieltagFsRepo());
-		List<TabellenPlatz> erstelleTabelle = sut.erstelleTabelle("bl1", "2022");
-		String tabelle = erstelleTabelle.stream().map(f -> print(f, longestTeamName(erstelleTabelle)))
+		List<TabellenPlatz> erstellteTabelle = sut.erstelleTabelle("bl1", "2022");
+		String tabelle = erstellteTabelle.stream().map(f -> print(f, longestTeamName(erstellteTabelle)))
+				.collect(joining("\n"));
+		verify(tabelle);
+	}
+
+	@Test
+	void tabelleBl12023Spieltag27_gamesRunning() {
+		TabellenService sut = new DefaultTabellenService(spieltagFsRepo());
+		List<TabellenPlatz> erstellteTabelle = sut.erstelleTabelle("bl1", "2023-games-running");
+		String tabelle = erstellteTabelle.stream().map(f -> print(f, longestTeamName(erstellteTabelle)))
 				.collect(joining("\n"));
 		verify(tabelle);
 	}

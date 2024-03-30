@@ -3,10 +3,12 @@ package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 import static java.lang.String.format;
 import static java.net.URI.create;
 import static java.util.Arrays.stream;
+import static java.util.Comparator.comparing;
 
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BinaryOperator;
@@ -50,20 +52,30 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	}
 
 	@ToString
+	private class Goal {
+		static Comparator<Goal> inChronologicalOrder = comparing(g -> g.goalID);
+		int goalID;
+		int scoreTeam1;
+		int scoreTeam2;
+	}
+
+	@ToString
 	private class Match {
 		Team team1;
 		Team team2;
+		boolean matchIsFinished;
 		MatchResult[] matchResults;
+		Goal[] goals;
 
 		private Paarung toDomain() {
 			PaarungBuilder builder = Paarung.builder() //
-					.heim(new Entry(team1.teamName, create(team1.teamIconUrl), 0)) //
-					.gast(new Entry(team2.teamName, create(team2.teamIconUrl), 0)) //
+					.heim(new Entry(team1.teamName, create(team1.teamIconUrl))) //
+					.gast(new Entry(team2.teamName, create(team2.teamIconUrl))) //
 			;
-			return setFinalResult(builder, matchResults).build();
+			return (matchIsFinished ? fromResults(builder, matchResults) : fromGoals(builder, goals)).build();
 		}
 
-		private static PaarungBuilder setFinalResult(PaarungBuilder builder, MatchResult[] matchResults) {
+		private static PaarungBuilder fromResults(PaarungBuilder builder, MatchResult[] matchResults) {
 			return endergebnis(matchResults).map(r -> builder.ergebnis(r.pointsTeam1, r.pointsTeam2)).orElse(builder);
 		}
 
@@ -71,10 +83,23 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 			return stream(matchResults).filter(MatchResult::isEndergebnis).reduce(toOnlyElement());
 		}
 
+		private PaarungBuilder fromGoals(PaarungBuilder builder, Goal[] goals) {
+			// while the game is still running, there's an "Endergebnis" but it's 0:0 so
+			// don't use this! Even worse: There is an "Endergebnis" and "Halbzeitstand"
+			// both 0:0, so if we are interested in the current score we would have to take
+			// a look at "goals" and "goals" is NOT ordered chronicle!
+			return stream(goals).sorted(Goal.inChronologicalOrder).reduce(lastElement())
+					.map(g -> builder.ergebnis(g.scoreTeam1, g.scoreTeam2)).orElse(builder);
+		}
+
 		private static <T> BinaryOperator<T> toOnlyElement() {
 			return (f, s) -> {
 				throw new IllegalStateException("Expected at most one element but found at least " + f + " and " + s);
 			};
+		}
+
+		private static <T> BinaryOperator<T> lastElement() {
+			return (f, s) -> s;
 		}
 
 	}
