@@ -88,7 +88,7 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 			// while the game is still running, there's an "Endergebnis" but it's 0:0 so
 			// don't use this! Even worse: There is an "Endergebnis" and "Halbzeitstand"
 			// both 0:0, so if we are interested in the current score we would have to take
-			// a look at "goals" and "goals" is NOT ordered chronicle!
+			// a look at "goals" while "goals" is NOT in chronological order!
 			return stream(goals).sorted(Goal.inChronologicalOrder).reduce(lastElement())
 					.map(g -> builder.zwischenergebnis(g.scoreTeam1, g.scoreTeam2)).orElse(builder);
 		}

@@ -10,6 +10,7 @@ import static java.util.stream.IntStream.rangeClosed;
 import java.net.URI;
 import java.util.List;
 
+import de.atruvia.ase.samman.buli.domain.Paarung.Entry;
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 
@@ -39,7 +40,8 @@ public final class PaarungMother {
 	}
 
 	public static Paarung paarungWithAllAttributesSet() {
-		return new Paarung(BEENDET, "Heim", "Gast", URI.create("WappenHeim"), URI.create("WappenGast"), 1, 2);
+		return new Paarung(BEENDET, new Entry("Heim", URI.create("WappenHeim"), 1),
+				new Entry("Gast", URI.create("WappenGast"), 2));
 	}
 
 	private static List<String> opponents(String firstTeam, int count) {

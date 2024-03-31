@@ -44,13 +44,6 @@ public class Paarung {
 	ErgebnisTyp ergebnisTyp;
 	Entry heim, gast;
 
-	public Paarung(ErgebnisTyp ergebnisTyp, String teamHeim, String teamGast, URI wappenHeim, URI wappenGast,
-			int toreTeamHeim, int toreTeamGast) {
-		this.ergebnisTyp = ergebnisTyp;
-		this.heim = new Entry(teamHeim, wappenHeim, toreTeamHeim);
-		this.gast = new Entry(teamGast, wappenGast, toreTeamGast);
-	}
-
 	public String getTeamHeim() {
 		return team(heim);
 	}
@@ -91,7 +84,7 @@ public class Paarung {
 		return !ergebnisTypIs(GEPLANT);
 	}
 
-	public boolean ergebnisTypIs(ErgebnisTyp ergebnisTyp) {
+	private boolean ergebnisTypIs(ErgebnisTyp ergebnisTyp) {
 		return this.ergebnisTyp == ergebnisTyp;
 	}
 
