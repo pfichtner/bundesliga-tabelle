@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-class DefaultTabellenService implements TabellenService {
+public class DefaultTabellenService implements TabellenService {
 
 	private final SpieltagRepo spieltagRepo;
 

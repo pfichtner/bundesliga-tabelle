@@ -52,7 +52,7 @@ public class StepDefs {
 		if (split.length != 2) {
 			throw new IllegalArgumentException("Cannot split " + ergebnis + " into two parts");
 		}
-		paarungen.add(paarung(teamHeim, teamGast).ergebnis(parseInt(split[0]), parseInt(split[1])).build());
+		paarungen.add(paarung(teamHeim, teamGast).endergebnis(parseInt(split[0]), parseInt(split[1])).build());
 	}
 
 	@Wenn("die Tabelle berechnet wird")

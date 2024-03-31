@@ -1,10 +1,13 @@
 package de.atruvia.ase.samman.buli.domain;
 
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static java.util.Arrays.asList;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
+import de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp;
 
 public final class TabellenPlatzMother {
 
@@ -40,12 +43,19 @@ public final class TabellenPlatzMother {
 		// wir würden hier "SIEG", "UNENTSCHIEDEN", "NIEDERLAGE" ablegen).
 		// Wir verlassen uns allerdings hier auch darauf, dass die echte Tabelle
 		// TabellenPlatz::merge nutzt.
-		return ergebnisse.stream().map(TabellenPlatzMother::platzWith).reduce(TabellenPlatz::merge)
-				.orElseGet(() -> TabellenPlatz.NULL);
+		return merge(ergebnisse.stream().map(TabellenPlatzMother::platzWith));
+	}
+
+	public static TabellenPlatz merge(Stream<TabellenPlatz> tabellenPlaetze) {
+		return tabellenPlaetze.reduce(TabellenPlatz::merge).orElse(TabellenPlatz.NULL);
 	}
 
 	private static TabellenPlatz platzWith(Ergebnis ergebnis) {
-		return TabellenPlatz.builder().ergebnis(ergebnis).build();
+		return platzWith(ergebnis, BEENDET);
+	}
+
+	public static TabellenPlatz platzWith(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp) {
+		return TabellenPlatz.builder().ergebnis(ergebnis, ergebnisTyp).build();
 	}
 
 }

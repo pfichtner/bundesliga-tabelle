@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static java.lang.Math.max;
 import static java.util.Collections.reverse;
 import static java.util.stream.Collectors.joining;
@@ -72,7 +73,7 @@ public class TabellenHttpAdapter {
 		 * @return Liste der letzen n Ergebnisse
 		 */
 		private static List<Ergebnis> lastNErgebnisse(TabellenPlatz platz, int count) {
-			List<Ergebnis> ergebnisse = platz.getErgebnisse();
+			List<Ergebnis> ergebnisse = platz.getErgebnisse(BEENDET);
 			List<Ergebnis> lastN = new ArrayList<>(
 					ergebnisse.subList(max(0, ergebnisse.size() - count), ergebnisse.size()));
 			reverse(lastN);

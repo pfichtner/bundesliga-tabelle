@@ -44,7 +44,7 @@ public class TabelleTest {
 
 	@Test
 	void zweiMannschaftenEinSpielKeineTore() {
-		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(0, 0), paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").endergebnis(0, 0), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
 				"""
@@ -55,7 +55,7 @@ public class TabelleTest {
 
 	@Test
 	void mannschaftMitMehrPunktenIstWeiterOben() {
-		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").ergebnis(0, 1), paarung("Team 2", "Team 1"));
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").endergebnis(0, 1), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
 				"""
@@ -67,8 +67,8 @@ public class TabelleTest {
 	@Test
 	void zweiMannschaftenZweiSpieleMitToren() {
 		gegebenSeienDiePaarungen( //
-				paarung("Team 1", "Team 2").ergebnis(1, 0), //
-				paarung("Team 2", "Team 1").ergebnis(1, 0) //
+				paarung("Team 1", "Team 2").endergebnis(1, 0), //
+				paarung("Team 2", "Team 1").endergebnis(1, 0) //
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
@@ -84,10 +84,10 @@ public class TabelleTest {
 		// ob die Platznummerierung (1,1,3) stimmt
 		// Diesen Test gibt es auch als Cucumber Test
 		gegebenSeienDiePaarungen( //
-				paarung("Team 1", "Team 2").ergebnis(1, 0), //
-				paarung("Team 2", "Team 1").ergebnis(1, 0), //
-				paarung("Team 1", "Team 3").ergebnis(1, 0), //
-				paarung("Team 2", "Team 3").ergebnis(1, 0) //
+				paarung("Team 1", "Team 2").endergebnis(1, 0), //
+				paarung("Team 2", "Team 1").endergebnis(1, 0), //
+				paarung("Team 1", "Team 3").endergebnis(1, 0), //
+				paarung("Team 2", "Team 3").endergebnis(1, 0) //
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle(
@@ -103,10 +103,10 @@ public class TabelleTest {
 		// Diesen Test gibt es auch als Cucumber Test (und dieser lässt sich besser
 		// lesen)
 		gegebenSeienDiePaarungen( //
-				paarung("Team 1", "Team 2").ergebnis(1, 0), //
-				paarung("Team 2", "Team 1").ergebnis(1, 0), //
-				paarung("Team 1", "Team 3").ergebnis(1, 0), //
-				paarung("Team 2", "Team 3").ergebnis(1, 0) //
+				paarung("Team 1", "Team 2").endergebnis(1, 0), //
+				paarung("Team 2", "Team 1").endergebnis(1, 0), //
+				paarung("Team 1", "Team 3").endergebnis(1, 0), //
+				paarung("Team 2", "Team 3").endergebnis(1, 0) //
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
@@ -129,8 +129,8 @@ public class TabelleTest {
 	@Test
 	void punktUndTorGleichAberMehrAuswärtsTore() {
 		gegebenSeienDiePaarungen( //
-				paarung("Team 1", "Team 2").ergebnis(1, 2), //
-				paarung("Team 2", "Team 1").ergebnis(0, 1) //
+				paarung("Team 1", "Team 2").endergebnis(1, 2), //
+				paarung("Team 2", "Team 1").endergebnis(0, 1) //
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
@@ -189,8 +189,8 @@ public class TabelleTest {
 	@Test
 	void zweiSpieleErgebnisse_dieLetztePaarungIstVorneInDerListe() {
 		gegebenSeienDiePaarungen( //
-				paarung("Team 1", "Team 2").ergebnis(1, 0), //
-				paarung("Team 2", "Team 1").ergebnis(1, 1) //
+				paarung("Team 1", "Team 2").endergebnis(1, 0), //
+				paarung("Team 2", "Team 1").endergebnis(1, 1) //
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //

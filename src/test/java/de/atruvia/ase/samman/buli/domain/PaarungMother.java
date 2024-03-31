@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman.buli.domain;
 
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
 import static java.util.function.Predicate.not;
@@ -31,14 +32,14 @@ public final class PaarungMother {
 	public static Paarung paarung(String heimTeam, String gastTeam, Ergebnis ergebnis) {
 		PaarungBuilder builder = PaarungBuilder.paarung(heimTeam, gastTeam);
 		return (switch (ergebnis) {
-		case SIEG -> builder.ergebnis(MAX_VALUE, MIN_VALUE);
-		case UNENTSCHIEDEN -> builder.ergebnis(MAX_VALUE, MAX_VALUE);
-		case NIEDERLAGE -> builder.ergebnis(MIN_VALUE, MAX_VALUE);
+		case SIEG -> builder.endergebnis(MAX_VALUE, MIN_VALUE);
+		case UNENTSCHIEDEN -> builder.endergebnis(MAX_VALUE, MAX_VALUE);
+		case NIEDERLAGE -> builder.endergebnis(MIN_VALUE, MAX_VALUE);
 		}).build();
 	}
 
 	public static Paarung paarungWithAllAttributesSet() {
-		return new Paarung(true, "Heim", "Gast", URI.create("WappenHeim"), URI.create("WappenGast"), 1, 2);
+		return new Paarung(BEENDET, "Heim", "Gast", URI.create("WappenHeim"), URI.create("WappenGast"), 1, 2);
 	}
 
 	private static List<String> opponents(String firstTeam, int count) {

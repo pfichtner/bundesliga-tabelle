@@ -8,9 +8,11 @@ import static java.util.stream.Stream.concat;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
+import de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;
@@ -18,6 +20,12 @@ import lombok.With;
 @Value
 @Builder(toBuilder = true)
 public class TabellenPlatz {
+
+	@Value
+	private static class ErgebnisEntry {
+		Ergebnis ergebnis;
+		ErgebnisTyp ergebnisTyp;
+	}
 
 	static TabellenPlatz NULL = new TabellenPlatz(null, 0, "", 0, emptyList(), 0, 0, 0, 0, 0);
 
@@ -29,12 +37,22 @@ public class TabellenPlatz {
 	String team;
 	@Builder.Default
 	int spiele = 1;
-	List<Ergebnis> ergebnisse;
+	List<ErgebnisEntry> ergebnisse;
 	int punkte;
 	int toreHeim;
 	int toreAuswaerts;
 	int gegentoreHeim;
 	int gegentoreAuswaerts;
+
+	public List<Ergebnis> getErgebnisse() {
+		return getErgebnisse(ErgebnisTyp.values());
+	}
+
+	public List<Ergebnis> getErgebnisse(ErgebnisTyp... ergebnisTyp) {
+		List<ErgebnisTyp> ergebnisTypList = Arrays.asList(ergebnisTyp);
+		return ergebnisse.stream().filter(e -> ergebnisTypList.contains(e.getErgebnisTyp()))
+				.map(ErgebnisEntry::getErgebnis).toList();
+	}
 
 	public int getTore() {
 		return toreHeim + toreAuswaerts;
@@ -50,8 +68,8 @@ public class TabellenPlatz {
 			ergebnisse = new ArrayList<>();
 		}
 
-		public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis) {
-			ergebnisse.add(ergebnis);
+		public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp) {
+			ergebnisse.add(new ErgebnisEntry(ergebnis, ergebnisTyp));
 			return this;
 		}
 
@@ -74,7 +92,7 @@ public class TabellenPlatz {
 				.build();
 	}
 
-	private List<Ergebnis> merge(List<Ergebnis> ergebnisse1, List<Ergebnis> ergebnisse2) {
+	private static <T> List<T> merge(List<T> ergebnisse1, List<T> ergebnisse2) {
 		return concat(ergebnisse1.stream(), ergebnisse2.stream()).toList();
 	}
 
@@ -91,7 +109,7 @@ public class TabellenPlatz {
 	}
 
 	private int countAnzahl(Ergebnis type) {
-		return (int) ergebnisse.stream().filter(type::equals).count();
+		return (int) ergebnisse.stream().map(ErgebnisEntry::getErgebnis).filter(type::equals).count();
 	}
 
 }

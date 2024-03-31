@@ -1,10 +1,16 @@
 package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
+import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEGONNEN;
+import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.merge;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.platzWith;
+import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.spieltagFsRepo;
 import static java.net.URI.create;
+import static org.approvaltests.Approvals.verify;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
@@ -15,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,8 +34,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
+import de.atruvia.ase.samman.buli.domain.ports.primary.DefaultTabellenService;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 
 @SpringBootTest
@@ -54,7 +66,7 @@ class TabellenHttpAdapterTest {
 
 	@BeforeEach
 	void setup() {
-		this.mockMvc = standaloneSetup(sut).setControllerAdvice(new GlobalExceptionHandler()).build();
+		mockMvc = standaloneSetup(sut).setControllerAdvice(new GlobalExceptionHandler()).build();
 	}
 
 	@MockBean
@@ -76,7 +88,7 @@ class TabellenHttpAdapterTest {
 		// Eigentlich sollte für TabellenPlatz ein Test-Double genutzt werden. Es muss
 		// dann jedoch sichergestellt werden, dass die Reihenfolge der "ergebnisse" im
 		// Test-Double bei S,U,N der Reihenfolge von TabellenPlatz::merge entspricht
-		this.mockMvc.perform(get("/tabelle/" + league + "/" + season)) //
+		mockMvc.perform(get("/tabelle/" + league + "/" + season)) //
 				.andDo(print()) //
 				.andExpect(status().isOk()) //
 				.andExpect(jsonPath("$.[0].wappen", is(platz1.getWappen().toASCIIString()))) //
@@ -107,14 +119,44 @@ class TabellenHttpAdapterTest {
 	}
 
 	@Test
+	void last5DoesNotIncludeNonFinishedGames() throws Exception {
+		String league = "bl1";
+		String season = "2022";
+
+		TabellenPlatz platz1 = merge( //
+				Stream.of(platzWith(SIEG, BEENDET), //
+						platzWith(UNENTSCHIEDEN, BEENDET), //
+						platzWith(NIEDERLAGE, BEGONNEN) //
+				));
+		when(tabellenService.erstelleTabelle(league, season)).thenReturn(List.of(platz1));
+
+		mockMvc.perform(get("/tabelle/" + league + "/" + season)) //
+				.andDo(print()) //
+				.andExpect(status().isOk()) //
+				.andExpect(jsonPath("$.[0].letzte5", is("US---"))) //
+		;
+	}
+
+	@Test
+	void approveWithRunningGames() throws Exception {
+		String league = "bl1";
+		String season = "2023-games-running";
+		sut = new TabellenHttpAdapter(new DefaultTabellenService(spieltagFsRepo()));
+		mockMvc = standaloneSetup(sut).setControllerAdvice(new GlobalExceptionHandler()).build();
+		String content = mockMvc.perform(get("/tabelle/" + league + "/" + season)).andDo(print()).andReturn()
+				.getResponse().getContentAsString();
+		verify(prettyPrint(content));
+	}
+
+	@Test
 	void failsWith500WhenServiceThrowsException() throws Exception {
 		String league = "bl1";
 		String season = "2022";
-		
+
 		String message = "Some service exception";
 		when(tabellenService.erstelleTabelle(league, season)).thenThrow(new RuntimeException(message));
 
-		this.mockMvc.perform(get("/tabelle/" + league + "/" + season)) //
+		mockMvc.perform(get("/tabelle/" + league + "/" + season)) //
 				.andDo(print()) //
 				.andExpect(status().is5xxServerError()) //
 		;
@@ -125,6 +167,13 @@ class TabellenHttpAdapterTest {
 		return builder.wappen(create("proto://wappen-team-" + base)).team("Team " + base).spiele(base + (++cnt))
 				.toreHeim(base + (++cnt)).toreAuswaerts(base + (++cnt)).gegentoreHeim(base + (++cnt))
 				.gegentoreAuswaerts(base + (++cnt)).punkte(base + (++cnt)).build();
+	}
+
+	private static String prettyPrint(String content) throws JsonProcessingException, JsonMappingException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.enable(INDENT_OUTPUT);
+		Object json = objectMapper.readValue(content, Object.class);
+		return objectMapper.writeValueAsString(json);
 	}
 
 }

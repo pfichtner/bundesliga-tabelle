@@ -86,13 +86,13 @@ public class Tabelle {
 	}
 
 	private TabellenPlatz newEntry(Paarung paarung, boolean swapped) {
-		if (!paarung.isGespielt()) {
+		if (!paarung.hatErgebnis()) {
 			return TabellenPlatz.NULL.withWappen(paarung.getWappenHeim());
 		}
 		Ergebnis ergebnis = paarung.ergebnis();
 		TabellenPlatzBuilder builder = TabellenPlatz.builder() //
 				.wappen(paarung.getWappenHeim()) //
-				.ergebnis(ergebnis) //
+				.ergebnis(ergebnis, paarung.getErgebnisTyp()) //
 				.punkte(punkte(ergebnis));
 		int toreTeamHeim = paarung.getToreTeamHeim();
 		int toreTeamGast = paarung.getToreTeamGast();

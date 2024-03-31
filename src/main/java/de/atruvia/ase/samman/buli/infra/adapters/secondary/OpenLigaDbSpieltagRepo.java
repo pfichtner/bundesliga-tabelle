@@ -76,7 +76,8 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		}
 
 		private static PaarungBuilder fromResults(PaarungBuilder builder, MatchResult[] matchResults) {
-			return endergebnis(matchResults).map(r -> builder.ergebnis(r.pointsTeam1, r.pointsTeam2)).orElse(builder);
+			return endergebnis(matchResults).map(r -> builder.endergebnis(r.pointsTeam1, r.pointsTeam2))
+					.orElse(builder);
 		}
 
 		private static Optional<MatchResult> endergebnis(MatchResult[] matchResults) {
@@ -89,7 +90,7 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 			// both 0:0, so if we are interested in the current score we would have to take
 			// a look at "goals" and "goals" is NOT ordered chronicle!
 			return stream(goals).sorted(Goal.inChronologicalOrder).reduce(lastElement())
-					.map(g -> builder.ergebnis(g.scoreTeam1, g.scoreTeam2)).orElse(builder);
+					.map(g -> builder.zwischenergebnis(g.scoreTeam1, g.scoreTeam2)).orElse(builder);
 		}
 
 		private static <T> BinaryOperator<T> toOnlyElement() {
