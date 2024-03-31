@@ -117,6 +117,19 @@
   "letzte5" : "SNUUS"
 }, {
   "platz" : 10,
+  "wappen" : "https://upload.wikimedia.org/wikipedia/commons/d/d4/SV_Elversberg_Logo_2015.svg",
+  "team" : "SV Elversberg 07",
+  "spiele" : 27,
+  "punkte" : 36,
+  "tore" : 39,
+  "gegentore" : 43,
+  "tordifferenz" : -4,
+  "siege" : 10,
+  "unentschieden" : 6,
+  "niederlagen" : 11,
+  "letzte5" : "NSNNS"
+}, {
+  "platz" : 11,
   "wappen" : "https://upload.wikimedia.org/wikipedia/commons/f/fa/1._FC_N%C3%BCrnberg_logo.svg",
   "team" : "1. FC NÃ¼rnberg",
   "spiele" : 26,
@@ -128,19 +141,6 @@
   "unentschieden" : 6,
   "niederlagen" : 10,
   "letzte5" : "NSSNU"
-}, {
-  "platz" : 11,
-  "wappen" : "https://upload.wikimedia.org/wikipedia/commons/d/d4/SV_Elversberg_Logo_2015.svg",
-  "team" : "SV Elversberg 07",
-  "spiele" : 27,
-  "punkte" : 35,
-  "tore" : 39,
-  "gegentore" : 44,
-  "tordifferenz" : -5,
-  "siege" : 10,
-  "unentschieden" : 5,
-  "niederlagen" : 12,
-  "letzte5" : "NSNNS"
 }, {
   "platz" : 12,
   "wappen" : "https://upload.wikimedia.org/wikipedia/commons/d/d3/Logo_1_FC_Kaiserslautern.svg",
@@ -198,12 +198,12 @@
   "wappen" : "https://upload.wikimedia.org/wikipedia/de/4/45/Logo_Eintracht_Braunschweig.svg",
   "team" : "Eintracht Braunschweig",
   "spiele" : 27,
-  "punkte" : 30,
-  "tore" : 26,
+  "punkte" : 28,
+  "tore" : 25,
   "gegentore" : 39,
-  "tordifferenz" : -13,
-  "siege" : 9,
-  "unentschieden" : 3,
+  "tordifferenz" : -14,
+  "siege" : 8,
+  "unentschieden" : 4,
   "niederlagen" : 15,
   "letzte5" : "SNNUN"
 }, {

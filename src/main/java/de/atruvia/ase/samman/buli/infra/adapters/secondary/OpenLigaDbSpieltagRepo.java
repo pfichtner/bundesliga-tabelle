@@ -1,5 +1,8 @@
 package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEGONNEN;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.GEPLANT;
 import static java.lang.String.format;
 import static java.net.URI.create;
 import static java.util.Arrays.stream;
@@ -19,6 +22,7 @@ import com.google.gson.Gson;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Paarung.Entry;
+import de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp;
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
 import lombok.ToString;
@@ -72,25 +76,38 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 					.heim(new Entry(team1.teamName, create(team1.teamIconUrl))) //
 					.gast(new Entry(team2.teamName, create(team2.teamIconUrl))) //
 			;
-			return (matchIsFinished ? fromResults(builder, matchResults) : fromGoals(builder, goals)).build();
+			ErgebnisTyp ergebnisTyp = ergebnisTyp();
+			if (ergebnisTyp == BEENDET) {
+				MatchResult endergebnis = endergebnis()
+						.orElseThrow(() -> new IllegalStateException("No final result found in finished game " + this));
+				builder.ergebnis(ergebnisTyp, endergebnis.pointsTeam1, endergebnis.pointsTeam2);
+			} else if (ergebnisTyp == BEGONNEN) {
+				lastGoal().ifPresentOrElse(g -> builder.ergebnis(ergebnisTyp, g.scoreTeam1, g.scoreTeam2),
+						() -> builder.ergebnis(ergebnisTyp, 0, 0));
+			}
+			return builder.build();
 		}
 
-		private static PaarungBuilder fromResults(PaarungBuilder builder, MatchResult[] matchResults) {
-			return endergebnis(matchResults).map(r -> builder.endergebnis(r.pointsTeam1, r.pointsTeam2))
-					.orElse(builder);
+		private ErgebnisTyp ergebnisTyp() {
+			if (matchIsFinished) {
+				return BEENDET;
+			} else if (matchResults.length > 0) {
+				return BEGONNEN;
+			} else {
+				return GEPLANT;
+			}
 		}
 
-		private static Optional<MatchResult> endergebnis(MatchResult[] matchResults) {
+		private Optional<MatchResult> endergebnis() {
 			return stream(matchResults).filter(MatchResult::isEndergebnis).reduce(toOnlyElement());
 		}
 
-		private PaarungBuilder fromGoals(PaarungBuilder builder, Goal[] goals) {
+		private Optional<Goal> lastGoal() {
 			// while the game is still running, there's an "Endergebnis" but it's 0:0 so
 			// don't use this! Even worse: There is an "Endergebnis" and "Halbzeitstand"
 			// both 0:0, so if we are interested in the current score we would have to take
 			// a look at "goals" while "goals" is NOT in chronological order!
-			return stream(goals).sorted(Goal.inChronologicalOrder).reduce(lastElement())
-					.map(g -> builder.zwischenergebnis(g.scoreTeam1, g.scoreTeam2)).orElse(builder);
+			return stream(goals).sorted(Goal.inChronologicalOrder).reduce(lastElement());
 		}
 
 		private static <T> BinaryOperator<T> toOnlyElement() {

@@ -119,11 +119,15 @@ public class Paarung {
 		}
 
 		public PaarungBuilder endergebnis(int toreTeamHeim, int toreTeamGast) {
-			return withGoals(ergebnisTyp(BEENDET), toreTeamHeim, toreTeamGast);
+			return ergebnis(BEENDET, toreTeamHeim, toreTeamGast);
 		}
 
 		public PaarungBuilder zwischenergebnis(int toreTeamHeim, int toreTeamGast) {
-			return withGoals(ergebnisTyp(BEGONNEN), toreTeamHeim, toreTeamGast);
+			return ergebnis(BEGONNEN, toreTeamHeim, toreTeamGast);
+		}
+
+		public PaarungBuilder ergebnis(ErgebnisTyp ergebnisTyp, int toreTeamHeim, int toreTeamGast) {
+			return withGoals(ergebnisTyp(ergebnisTyp), toreTeamHeim, toreTeamGast);
 		}
 
 		private PaarungBuilder withGoals(PaarungBuilder builder, int toreTeamHeim, int toreTeamGast) {
