@@ -1,6 +1,5 @@
 package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
-import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
@@ -10,7 +9,7 @@ import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.merge;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.platzWith;
 import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.spieltagFsRepo;
 import static java.net.URI.create;
-import static org.approvaltests.Approvals.verify;
+import static org.approvaltests.JsonApprovals.verifyJson;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
@@ -33,10 +32,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
@@ -144,9 +139,9 @@ class TabellenHttpAdapterTest {
 		String season = "2023-games-running";
 		sut = new TabellenHttpAdapter(new DefaultTabellenService(spieltagFsRepo()));
 		mockMvc = standaloneSetup(sut).setControllerAdvice(new GlobalExceptionHandler()).build();
-		String content = mockMvc.perform(get("/tabelle/" + league + "/" + season)).andDo(print()).andReturn()
+		String jsonResponse = mockMvc.perform(get("/tabelle/" + league + "/" + season)).andDo(print()).andReturn()
 				.getResponse().getContentAsString();
-		verify(prettyPrint(content));
+		verifyJson(jsonResponse);
 	}
 
 	@Test
@@ -172,13 +167,6 @@ class TabellenHttpAdapterTest {
 				.auswaertstore(new ToreUndGegentore(base + (++cnt), base + (++cnt))) //
 				.punkte(base + (++cnt)) //
 				.build();
-	}
-
-	private static String prettyPrint(String content) throws JsonProcessingException, JsonMappingException {
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.enable(INDENT_OUTPUT);
-		Object json = objectMapper.readValue(content, Object.class);
-		return objectMapper.writeValueAsString(json);
 	}
 
 }
