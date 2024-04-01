@@ -3,12 +3,12 @@ package de.atruvia.ase.samman.buli.domain;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
+import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Stream.concat;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
@@ -49,8 +49,7 @@ public class TabellenPlatz {
 	}
 
 	public List<Ergebnis> getErgebnisse(ErgebnisTyp... ergebnisTyp) {
-		List<ErgebnisTyp> ergebnisTypList = Arrays.asList(ergebnisTyp);
-		return ergebnisse.stream().filter(e -> ergebnisTypList.contains(e.getErgebnisTyp()))
+		return ergebnisse.stream().filter(e -> asList(ergebnisTyp).contains(e.getErgebnisTyp()))
 				.map(ErgebnisEntry::getErgebnis).toList();
 	}
 
