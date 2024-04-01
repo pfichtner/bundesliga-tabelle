@@ -121,7 +121,7 @@ class TabellenHttpAdapterTest {
 		String league = "bl1";
 		String season = "2022";
 
-		Paarung laufendesSpiel = paarung("heim", "gast").zwischenergebnis(1, 0).build();
+		Paarung laufendesSpiel = paarung("Heim", "Gast").zwischenergebnis(1, 0).build();
 		TabellenPlatz platz1 = merge( //
 				Stream.of(platzWith(SIEG, BEENDET), //
 						platzWith(UNENTSCHIEDEN, BEENDET), //
@@ -133,7 +133,10 @@ class TabellenHttpAdapterTest {
 				.andDo(print()) //
 				.andExpect(status().isOk()) //
 				.andExpect(jsonPath("$.[0].letzte5", is("US---"))) //
-				.andExpect(jsonPath("$.[0].laufendesSpiel", is("1:0"))) //
+				.andExpect(jsonPath("$.[0].laufendesSpiel.tore", is(1))) //
+				.andExpect(jsonPath("$.[0].laufendesSpiel.toreGegner", is(0))) //
+				.andExpect(jsonPath("$.[0].laufendesSpiel.ergebnis", is("S"))) //
+				.andExpect(jsonPath("$.[0].laufendesSpiel.gegner", is("Gast"))) //
 		;
 	}
 

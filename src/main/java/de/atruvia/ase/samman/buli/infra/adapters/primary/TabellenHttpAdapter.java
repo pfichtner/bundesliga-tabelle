@@ -27,6 +27,15 @@ public class TabellenHttpAdapter {
 
 	@Value
 	@Builder
+	private static class JsonLaufendesSpiel {
+		String ergebnis;
+		String gegner;
+		int tore;
+		int toreGegner;
+	}
+
+	@Value
+	@Builder
 	private static class JsonTabellenPlatz {
 
 		int platz;
@@ -37,7 +46,7 @@ public class TabellenHttpAdapter {
 		int tore, gegentore, tordifferenz;
 		int siege, unentschieden, niederlagen;
 		String letzte5;
-		String laufendesSpiel;
+		JsonLaufendesSpiel laufendesSpiel;
 
 		private static JsonTabellenPlatz fromDomain(TabellenPlatz domain) {
 			return builder() //
@@ -58,16 +67,23 @@ public class TabellenHttpAdapter {
 					.build();
 		}
 
-		private static String convertLaufendesSpiel(Paarung laufendesSpiel) {
-			return String.format("%d:%d", laufendesSpiel.getToreTeamHeim(), laufendesSpiel.getToreTeamGast());
+		private static JsonLaufendesSpiel convertLaufendesSpiel(Paarung laufendesSpiel) {
+			return new JsonLaufendesSpiel(convertErgebnis(laufendesSpiel.ergebnis()), laufendesSpiel.getTeamGast(),
+					laufendesSpiel.getToreTeamHeim(), laufendesSpiel.getToreTeamGast());
 		}
 
 		private static String convertLetzte5(TabellenPlatz platz) {
-			return String.format("%-5s", lastNErgebnisse(platz, 5).stream().map(e -> switch (e) {
+			return String.format("%-5s",
+					lastNErgebnisse(platz, 5).stream().map(JsonTabellenPlatz::convertErgebnis).collect(joining()))
+					.replace(' ', '-');
+		}
+
+		private static String convertErgebnis(Ergebnis ergebnis) {
+			return switch (ergebnis) {
 			case SIEG -> "S";
 			case UNENTSCHIEDEN -> "U";
 			case NIEDERLAGE -> "N";
-			}).collect(joining())).replace(' ', '-');
+			};
 		}
 
 		/**

@@ -26,7 +26,12 @@
     "unentschieden": 4,
     "niederlagen": 7,
     "letzte5": "SSUNS",
-    "laufendesSpiel": "1:0"
+    "laufendesSpiel": {
+      "ergebnis": "S",
+      "gegner": "FC Hansa Rostock",
+      "tore": 1,
+      "toreGegner": 0
+    }
   },
   {
     "platz": 3,
@@ -55,7 +60,12 @@
     "unentschieden": 7,
     "niederlagen": 8,
     "letzte5": "SSUSU",
-    "laufendesSpiel": "0:1"
+    "laufendesSpiel": {
+      "ergebnis": "N",
+      "gegner": "1. FC Kaiserslautern",
+      "tore": 0,
+      "toreGegner": 1
+    }
   },
   {
     "platz": 5,
@@ -140,7 +150,12 @@
     "unentschieden": 6,
     "niederlagen": 11,
     "letzte5": "NSNNS",
-    "laufendesSpiel": "0:0"
+    "laufendesSpiel": {
+      "ergebnis": "U",
+      "gegner": "Eintracht Braunschweig",
+      "tore": 0,
+      "toreGegner": 0
+    }
   },
   {
     "platz": 11,
@@ -169,7 +184,12 @@
     "unentschieden": 5,
     "niederlagen": 13,
     "letzte5": "USSNU",
-    "laufendesSpiel": "1:0"
+    "laufendesSpiel": {
+      "ergebnis": "S",
+      "gegner": "Fortuna DÃ¼sseldorf",
+      "tore": 1,
+      "toreGegner": 0
+    }
   },
   {
     "platz": 13,
@@ -226,7 +246,12 @@
     "unentschieden": 4,
     "niederlagen": 15,
     "letzte5": "SNNUN",
-    "laufendesSpiel": "0:0"
+    "laufendesSpiel": {
+      "ergebnis": "U",
+      "gegner": "SV Elversberg 07",
+      "tore": 0,
+      "toreGegner": 0
+    }
   },
   {
     "platz": 17,
@@ -241,7 +266,12 @@
     "unentschieden": 4,
     "niederlagen": 15,
     "letzte5": "SSNNU",
-    "laufendesSpiel": "0:1"
+    "laufendesSpiel": {
+      "ergebnis": "N",
+      "gegner": "Holstein Kiel",
+      "tore": 0,
+      "toreGegner": 1
+    }
   },
   {
     "platz": 18,
