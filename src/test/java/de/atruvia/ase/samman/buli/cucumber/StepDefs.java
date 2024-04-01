@@ -22,16 +22,16 @@ import io.cucumber.java.de.Wenn;
 public class StepDefs {
 
 	private static final Map<String, Function<TabellenPlatz, Object>> accessors = Map.ofEntries( //
-			entry("Team", TabellenPlatz::getTeam), //
-			entry("Platz", TabellenPlatz::getPlatz), //
-			entry("Spiele", TabellenPlatz::getSpiele), //
-			entry("Siege", TabellenPlatz::getAnzahlSiege), //
-			entry("Unentschieden", TabellenPlatz::getAnzahlUnentschieden), //
-			entry("Niederlagen", TabellenPlatz::getAnzahlNiederlagen), //
-			entry("Punkte", TabellenPlatz::getPunkte), //
-			entry("Tore", TabellenPlatz::getTore), //
-			entry("Gegentore", TabellenPlatz::getGegentore), //
-			entry("Tordifferenz", TabellenPlatz::getTorDifferenz) //
+			entry("Team", TabellenPlatz::team), //
+			entry("Platz", TabellenPlatz::platz), //
+			entry("Spiele", TabellenPlatz::spiele), //
+			entry("Siege", TabellenPlatz::siege), //
+			entry("Unentschieden", TabellenPlatz::unentschieden), //
+			entry("Niederlagen", TabellenPlatz::niederlagen), //
+			entry("Punkte", TabellenPlatz::punkte), //
+			entry("Tore", TabellenPlatz::tore), //
+			entry("Gegentore", TabellenPlatz::gegentore), //
+			entry("Tordifferenz", TabellenPlatz::torDifferenz) //
 	);
 
 	List<Paarung> paarungen = new ArrayList<>();

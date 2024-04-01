@@ -87,28 +87,28 @@ class TabellenHttpAdapterTest {
 		mockMvc.perform(get("/tabelle/" + league + "/" + season)) //
 				.andDo(print()) //
 				.andExpect(status().isOk()) //
-				.andExpect(jsonPath("$.[0].wappen", is(platz1.getWappen().toASCIIString()))) //
-				.andExpect(jsonPath("$.[0].team", is(platz1.getTeam()))) //
-				.andExpect(jsonPath("$.[0].spiele", is(platz1.getSpiele()))) //
-				.andExpect(jsonPath("$.[0].siege", is(platz1.getAnzahlSiege()))) //
-				.andExpect(jsonPath("$.[0].unentschieden", is(platz1.getAnzahlUnentschieden()))) //
-				.andExpect(jsonPath("$.[0].niederlagen", is(platz1.getAnzahlNiederlagen()))) //
-				.andExpect(jsonPath("$.[0].tore", is(platz1.getTore()))) //
-				.andExpect(jsonPath("$.[0].gegentore", is(platz1.getGegentore()))) //
-				.andExpect(jsonPath("$.[0].tordifferenz", is(platz1.getTorDifferenz()))) //
-				.andExpect(jsonPath("$.[0].punkte", is(platz1.getPunkte()))) //
+				.andExpect(jsonPath("$.[0].wappen", is(platz1.wappen().toASCIIString()))) //
+				.andExpect(jsonPath("$.[0].team", is(platz1.team()))) //
+				.andExpect(jsonPath("$.[0].spiele", is(platz1.spiele()))) //
+				.andExpect(jsonPath("$.[0].siege", is(platz1.siege()))) //
+				.andExpect(jsonPath("$.[0].unentschieden", is(platz1.unentschieden()))) //
+				.andExpect(jsonPath("$.[0].niederlagen", is(platz1.niederlagen()))) //
+				.andExpect(jsonPath("$.[0].tore", is(platz1.tore()))) //
+				.andExpect(jsonPath("$.[0].gegentore", is(platz1.gegentore()))) //
+				.andExpect(jsonPath("$.[0].tordifferenz", is(platz1.torDifferenz()))) //
+				.andExpect(jsonPath("$.[0].punkte", is(platz1.punkte()))) //
 				.andExpect(jsonPath("$.[0].letzte5", is("NUS--"))) //
 				//
-				.andExpect(jsonPath("$.[1].wappen", is(platz2.getWappen().toASCIIString()))) //
-				.andExpect(jsonPath("$.[1].team", is(platz2.getTeam()))) //
-				.andExpect(jsonPath("$.[1].spiele", is(platz2.getSpiele()))) //
-				.andExpect(jsonPath("$.[1].siege", is(platz2.getAnzahlSiege()))) //
-				.andExpect(jsonPath("$.[1].unentschieden", is(platz2.getAnzahlUnentschieden()))) //
-				.andExpect(jsonPath("$.[1].niederlagen", is(platz2.getAnzahlNiederlagen()))) //
-				.andExpect(jsonPath("$.[1].tore", is(platz2.getTore()))) //
-				.andExpect(jsonPath("$.[1].gegentore", is(platz2.getGegentore()))) //
-				.andExpect(jsonPath("$.[1].tordifferenz", is(platz2.getTorDifferenz()))) //
-				.andExpect(jsonPath("$.[1].punkte", is(platz2.getPunkte()))) //
+				.andExpect(jsonPath("$.[1].wappen", is(platz2.wappen().toASCIIString()))) //
+				.andExpect(jsonPath("$.[1].team", is(platz2.team()))) //
+				.andExpect(jsonPath("$.[1].spiele", is(platz2.spiele()))) //
+				.andExpect(jsonPath("$.[1].siege", is(platz2.siege()))) //
+				.andExpect(jsonPath("$.[1].unentschieden", is(platz2.unentschieden()))) //
+				.andExpect(jsonPath("$.[1].niederlagen", is(platz2.niederlagen()))) //
+				.andExpect(jsonPath("$.[1].tore", is(platz2.tore()))) //
+				.andExpect(jsonPath("$.[1].gegentore", is(platz2.gegentore()))) //
+				.andExpect(jsonPath("$.[1].tordifferenz", is(platz2.torDifferenz()))) //
+				.andExpect(jsonPath("$.[1].punkte", is(platz2.punkte()))) //
 				.andExpect(jsonPath("$.[1].letzte5", is("-----"))) //
 		;
 
@@ -163,8 +163,8 @@ class TabellenHttpAdapterTest {
 		return builder.wappen(create("proto://wappen-team-" + base)) //
 				.team("Team " + base) //
 				.spiele(base + (++cnt)) //
-				.heimtore(new ToreUndGegentore(base + (++cnt), base + (++cnt))) //
-				.auswaertstore(new ToreUndGegentore(base + (++cnt), base + (++cnt))) //
+				.heim(new ToreUndGegentore(base + (++cnt), base + (++cnt))) //
+				.auswaerts(new ToreUndGegentore(base + (++cnt), base + (++cnt))) //
 				.punkte(base + (++cnt)) //
 				.build();
 	}

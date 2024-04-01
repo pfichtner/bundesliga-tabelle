@@ -16,8 +16,10 @@ import de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;
+import lombok.experimental.Accessors;
 
 @Value
+@Accessors(fluent = true)
 @Builder(toBuilder = true)
 public class TabellenPlatz {
 
@@ -42,7 +44,6 @@ public class TabellenPlatz {
 	static TabellenPlatz NULL = new TabellenPlatz(null, 0, "", 0, emptyList(), 0, ToreUndGegentore.NULL,
 			ToreUndGegentore.NULL);
 
-	@With
 	URI wappen;
 	@With
 	int platz;
@@ -53,25 +54,25 @@ public class TabellenPlatz {
 	List<ErgebnisEntry> ergebnisse;
 	int punkte;
 	@Builder.Default
-	ToreUndGegentore heimtore = ToreUndGegentore.NULL;
+	ToreUndGegentore heim = ToreUndGegentore.NULL;
 	@Builder.Default
-	ToreUndGegentore auswaertstore = ToreUndGegentore.NULL;
+	ToreUndGegentore auswaerts = ToreUndGegentore.NULL;
 
 	public List<Ergebnis> getErgebnisse() {
 		return getErgebnisse(ErgebnisTyp.values());
 	}
 
 	public List<Ergebnis> getErgebnisse(ErgebnisTyp... ergebnisTyp) {
-		return ergebnisse.stream().filter(e -> asList(ergebnisTyp).contains(e.getErgebnisTyp()))
-				.map(ErgebnisEntry::getErgebnis).toList();
+		return ergebnisse.stream().filter(e -> asList(ergebnisTyp).contains(e.ergebnisTyp()))
+				.map(ErgebnisEntry::ergebnis).toList();
 	}
 
-	public int getTore() {
-		return heimtore.tore + auswaertstore.tore;
+	public int tore() {
+		return heim.tore + auswaerts.tore;
 	}
 
-	public int getGegentore() {
-		return heimtore.gegentore + auswaertstore.gegentore;
+	public int gegentore() {
+		return heim.gegentore + auswaerts.gegentore;
 	}
 
 	public static class TabellenPlatzBuilder {
@@ -87,8 +88,8 @@ public class TabellenPlatz {
 
 	}
 
-	public int getTorDifferenz() {
-		return getTore() - getGegentore();
+	public int torDifferenz() {
+		return tore() - gegentore();
 	}
 
 	public TabellenPlatz merge(TabellenPlatz other) {
@@ -96,8 +97,8 @@ public class TabellenPlatz {
 				.ergebnisse(merge(this.ergebnisse, other.ergebnisse)) //
 				.spiele(merge(this.spiele, other.spiele)) //
 				.punkte(merge(this.punkte, other.punkte)) //
-				.heimtore(this.heimtore.merge(other.heimtore)) //
-				.auswaertstore(this.auswaertstore.merge(other.auswaertstore)) //
+				.heim(this.heim.merge(other.heim)) //
+				.auswaerts(this.auswaerts.merge(other.auswaerts)) //
 				.wappen(other.wappen == null ? this.wappen : other.wappen) //
 				.build();
 	}
@@ -111,20 +112,20 @@ public class TabellenPlatz {
 		return Stream.of(lists).flatMap(List::stream).toList();
 	}
 
-	public int getAnzahlSiege() {
+	public int siege() {
 		return countAnzahl(SIEG);
 	}
 
-	public int getAnzahlUnentschieden() {
+	public int unentschieden() {
 		return countAnzahl(UNENTSCHIEDEN);
 	}
 
-	public int getAnzahlNiederlagen() {
+	public int niederlagen() {
 		return countAnzahl(NIEDERLAGE);
 	}
 
 	private int countAnzahl(Ergebnis type) {
-		return (int) ergebnisse.stream().map(ErgebnisEntry::getErgebnis).filter(type::equals).count();
+		return (int) ergebnisse.stream().map(ErgebnisEntry::ergebnis).filter(type::equals).count();
 	}
 
 }

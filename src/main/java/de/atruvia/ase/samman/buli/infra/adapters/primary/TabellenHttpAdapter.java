@@ -39,17 +39,17 @@ public class TabellenHttpAdapter {
 
 		private static JsonTabellenPlatz fromDomain(TabellenPlatz domain) {
 			return builder() //
-					.platz(domain.getPlatz()) //
-					.wappen(domain.getWappen() == null ? null : domain.getWappen().toASCIIString()) //
-					.team(domain.getTeam()) //
-					.spiele(domain.getSpiele()) //
-					.punkte(domain.getPunkte()) //
-					.tore(domain.getTore()) //
-					.gegentore(domain.getGegentore()) //
-					.tordifferenz(domain.getTorDifferenz()) //
-					.siege(domain.getAnzahlSiege()) //
-					.unentschieden(domain.getAnzahlUnentschieden()) //
-					.niederlagen(domain.getAnzahlNiederlagen()) //
+					.platz(domain.platz()) //
+					.wappen(domain.wappen() == null ? null : domain.wappen().toASCIIString()) //
+					.team(domain.team()) //
+					.spiele(domain.spiele()) //
+					.punkte(domain.punkte()) //
+					.tore(domain.tore()) //
+					.gegentore(domain.gegentore()) //
+					.tordifferenz(domain.torDifferenz()) //
+					.siege(domain.siege()) //
+					.unentschieden(domain.unentschieden()) //
+					.niederlagen(domain.niederlagen()) //
 					.letzte5(convertLetzte5(domain)) //
 					.build();
 		}

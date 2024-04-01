@@ -21,11 +21,13 @@ import de.atruvia.ase.samman.buli.domain.TabellenPlatz.ToreUndGegentore;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 @RequiredArgsConstructor
 public class Tabelle {
 
 	@RequiredArgsConstructor
+	@Accessors(fluent = true)
 	@ToString
 	private static class OrdnungsElement implements Comparable<OrdnungsElement> {
 
@@ -38,13 +40,13 @@ public class Tabelle {
 //		If two or more teams have the same rank in the Bundesliga and there is no other criteria that can be used to separate them, then the teams will be listed in alphabetical order according to their full club name.
 
 		private static final List<Function<TabellenPlatz, Comparable<?>>> comparators = asList( //
-				e -> e.getPunkte(), //
-				e -> e.getTorDifferenz(), //
-				e -> e.getTore(), //
-				e -> e.getAuswaertstore().getTore() //
+				e -> e.punkte(), //
+				e -> e.torDifferenz(), //
+				e -> e.tore(), //
+				e -> e.auswaerts().tore() //
 		);
 
-		private static final Function<OrdnungsElement, TabellenPlatz> getTabellenPlatz = OrdnungsElement::getTabellenPlatz;
+		private static final Function<OrdnungsElement, TabellenPlatz> getTabellenPlatz = OrdnungsElement::tabellenPlatz;
 		private static final List<Function<OrdnungsElement, Comparable<?>>> extractors = comparators.stream()
 				.map(t -> getTabellenPlatz.andThen(t)).toList();
 
@@ -70,7 +72,7 @@ public class Tabelle {
 
 		@Override
 		public int compareTo(OrdnungsElement other) {
-			return comparator.thenComparing(comparing(e -> e.tabellenPlatz.getTeam())).compare(this, other);
+			return comparator.thenComparing(comparing(e -> e.tabellenPlatz().team())).compare(this, other);
 		}
 
 	}
@@ -83,20 +85,23 @@ public class Tabelle {
 	}
 
 	private void addInternal(Paarung paarung, boolean swapped) {
-		eintraege.merge(paarung.getTeamHeim(), newEntry(paarung, swapped), TabellenPlatz::merge);
+		ToreUndGegentore toreUndGegentore = new ToreUndGegentore(paarung.getToreTeamHeim(), paarung.getToreTeamGast());
+		TabellenPlatzBuilder builder = newEntry(paarung);
+		builder = swapped //
+				? builder.auswaerts(toreUndGegentore) //
+				: builder.heim(toreUndGegentore);
+		eintraege.merge(paarung.getTeamHeim(), builder.build(), TabellenPlatz::merge);
 	}
 
-	private TabellenPlatz newEntry(Paarung paarung, boolean swapped) {
+	private TabellenPlatzBuilder newEntry(Paarung paarung) {
 		if (!paarung.hatErgebnis()) {
-			return TabellenPlatz.NULL.withWappen(paarung.getWappenHeim());
+			return TabellenPlatz.NULL.toBuilder().wappen(paarung.getWappenHeim());
 		}
 		Ergebnis ergebnis = paarung.ergebnis();
-		TabellenPlatzBuilder builder = TabellenPlatz.builder() //
+		return TabellenPlatz.builder() //
 				.wappen(paarung.getWappenHeim()) //
 				.ergebnis(ergebnis, paarung.getErgebnisTyp()) //
 				.punkte(punkte(ergebnis));
-		ToreUndGegentore toreUndGegentore = new ToreUndGegentore(paarung.getToreTeamHeim(), paarung.getToreTeamGast());
-		return (swapped ? builder.auswaertstore(toreUndGegentore) : builder.heimtore(toreUndGegentore)).build();
 	}
 
 	private static int punkte(Ergebnis ergebnis) {

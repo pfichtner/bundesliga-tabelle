@@ -44,21 +44,21 @@ class DefaultTabellenServiceTest {
 	}
 
 	int longestTeamName(List<TabellenPlatz> tabellenPlaetze) {
-		return tabellenPlaetze.stream().map(TabellenPlatz::getTeam).mapToInt(String::length).max().orElse(0);
+		return tabellenPlaetze.stream().map(TabellenPlatz::team).mapToInt(String::length).max().orElse(0);
 	}
 
 	String print(TabellenPlatz tabellenPlatz, int length) {
 		return asList( //
-				stringFormat(length, tabellenPlatz.getTeam()), //
-				tabellenPlatz.getSpiele(), //
-				tabellenPlatz.getAnzahlSiege(), //
-				tabellenPlatz.getAnzahlUnentschieden(), //
-				tabellenPlatz.getAnzahlNiederlagen(), //
-				tabellenPlatz.getTore(), //
-				tabellenPlatz.getGegentore(), //
-				tabellenPlatz.getTorDifferenz(), //
-				tabellenPlatz.getPunkte(), //
-				tabellenPlatz.getWappen() //
+				stringFormat(length, tabellenPlatz.team()), //
+				tabellenPlatz.spiele(), //
+				tabellenPlatz.siege(), //
+				tabellenPlatz.unentschieden(), //
+				tabellenPlatz.niederlagen(), //
+				tabellenPlatz.tore(), //
+				tabellenPlatz.gegentore(), //
+				tabellenPlatz.torDifferenz(), //
+				tabellenPlatz.punkte(), //
+				tabellenPlatz.wappen() //
 		).stream().map(this::format).collect(joining(" | "));
 	}
 

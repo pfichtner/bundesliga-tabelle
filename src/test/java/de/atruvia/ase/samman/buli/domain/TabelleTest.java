@@ -4,15 +4,12 @@ import static com.google.common.collect.Streams.concat;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
-import static java.beans.Introspector.getBeanInfo;
 import static java.net.URI.create;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
@@ -35,33 +32,30 @@ public class TabelleTest {
 	void zweiMannschaftenKeinSpiel() {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle(
-				"""
-						platz|team  |spiele|anzahlSiege|anzahlUnentschieden|anzahlNiederlagen|punkte|tore|gegentore|torDifferenz
-						1    |Team 1|     0|          0|                  0|                0|     0|   0|        0|           0
-						1    |Team 2|     0|          0|                  0|                0|     0|   0|        0|           0""");
+		dannIstDieTabelle("""
+				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|tore|gegentore|torDifferenz
+				1    |Team 1|     0|    0|            0|          0|     0|   0|        0|           0
+				1    |Team 2|     0|    0|            0|          0|     0|   0|        0|           0""");
 	}
 
 	@Test
 	void zweiMannschaftenEinSpielKeineTore() {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").endergebnis(0, 0), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle(
-				"""
-						platz|team  |spiele|anzahlSiege|anzahlUnentschieden|anzahlNiederlagen|punkte|tore|gegentore|torDifferenz
-						1    |Team 1|     1|          0|                  1|                0|     1|   0|        0|           0
-						1    |Team 2|     1|          0|                  1|                0|     1|   0|        0|           0""");
+		dannIstDieTabelle("""
+				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|tore|gegentore|torDifferenz
+				1    |Team 1|     1|    0|            1|          0|     1|   0|        0|           0
+				1    |Team 2|     1|    0|            1|          0|     1|   0|        0|           0""");
 	}
 
 	@Test
 	void mannschaftMitMehrPunktenIstWeiterOben() {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").endergebnis(0, 1), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle(
-				"""
-						platz|team  |spiele|anzahlSiege|anzahlUnentschieden|anzahlNiederlagen|punkte|tore|gegentore|torDifferenz
-						1    |Team 2|     1|          1|                  0|                0|     3|   1|        0|           1
-						2    |Team 1|     1|          0|                  0|                1|     0|   0|        1|          -1""");
+		dannIstDieTabelle("""
+				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|tore|gegentore|torDifferenz
+				1    |Team 2|     1|    1|            0|          0|     3|   1|        0|           1
+				2    |Team 1|     1|    0|            0|          1|     0|   0|        1|          -1""");
 	}
 
 	@Test
@@ -71,11 +65,10 @@ public class TabelleTest {
 				paarung("Team 2", "Team 1").endergebnis(1, 0) //
 		);
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle(
-				"""
-						platz|team  |spiele|anzahlSiege|anzahlUnentschieden|anzahlNiederlagen|punkte|tore|gegentore|torDifferenz
-						1    |Team 1|     2|          1|                  0|                1|     3|   1|        1|           0
-						1    |Team 2|     2|          1|                  0|                1|     3|   1|        1|           0""");
+		dannIstDieTabelle("""
+				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|tore|gegentore|torDifferenz
+				1    |Team 1|     2|    1|            0|          1|     3|   1|        1|           0
+				1    |Team 2|     2|    1|            0|          1|     3|   1|        1|           0""");
 	}
 
 	@Test
@@ -90,12 +83,11 @@ public class TabelleTest {
 				paarung("Team 2", "Team 3").endergebnis(1, 0) //
 		);
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle(
-				"""
-						platz|team  |spiele|anzahlSiege|anzahlUnentschieden|anzahlNiederlagen|punkte|tore|gegentore|torDifferenz
-						1    |Team 1|3     |          2|                  0|                1|     6|   2|        1|           1
-						1    |Team 2|3     |          2|                  0|                1|     6|   2|        1|           1
-						3    |Team 3|2     |          0|                  0|                2|     0|   0|        2|          -2""");
+		dannIstDieTabelle("""
+				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|tore|gegentore|torDifferenz
+				1    |Team 1|3     |    2|            0|          1|     6|   2|        1|           1
+				1    |Team 2|3     |    2|            0|          1|     6|   2|        1|           1
+				3    |Team 3|2     |    0|            0|          2|     0|   0|        2|          -2""");
 	}
 
 	@Test
@@ -111,16 +103,16 @@ public class TabelleTest {
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
 				e1 -> {
-					assertThat(e1.getTeam()).isEqualTo("Team 1");
-					assertThat(e1.getPlatz()).isEqualTo(1);
+					assertThat(e1.team()).isEqualTo("Team 1");
+					assertThat(e1.platz()).isEqualTo(1);
 				}, //
 				e2 -> {
-					assertThat(e2.getTeam()).isEqualTo("Team 2");
-					assertThat(e2.getPlatz()).isEqualTo(1);
+					assertThat(e2.team()).isEqualTo("Team 2");
+					assertThat(e2.platz()).isEqualTo(1);
 				}, //
 				e3 -> {
-					assertThat(e3.getTeam()).isEqualTo("Team 3");
-					assertThat(e3.getPlatz()).isEqualTo(3);
+					assertThat(e3.team()).isEqualTo("Team 3");
+					assertThat(e3.platz()).isEqualTo(3);
 				} //
 
 		);
@@ -134,8 +126,8 @@ public class TabelleTest {
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
-				e1 -> assertThat(e1.getTeam()).isEqualTo("Team 2"), //
-				e2 -> assertThat(e2.getTeam()).isEqualTo("Team 1") //
+				e1 -> assertThat(e1.team()).isEqualTo("Team 2"), //
+				e2 -> assertThat(e2.team()).isEqualTo("Team 1") //
 		);
 	}
 
@@ -146,8 +138,8 @@ public class TabelleTest {
 				paarung("Team 2", "Team 1", create("proto://wappenNeu2"), create("proto://wappenNeu1")));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
-				e1 -> assertThat(e1.getWappen()).isEqualTo(create("proto://wappenNeu1")), //
-				e2 -> assertThat(e2.getWappen()).isEqualTo(create("proto://wappenNeu2")) //
+				e1 -> assertThat(e1.wappen()).isEqualTo(create("proto://wappenNeu1")), //
+				e2 -> assertThat(e2.wappen()).isEqualTo(create("proto://wappenNeu2")) //
 		);
 	}
 
@@ -158,8 +150,8 @@ public class TabelleTest {
 				paarung("Team 2", "Team 1", create("proto://wappenNeu2"), null));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
-				e1 -> assertThat(e1.getWappen()).isEqualTo(create("proto://wappenAlt1")), //
-				e2 -> assertThat(e2.getWappen()).isEqualTo(create("proto://wappenNeu2")) //
+				e1 -> assertThat(e1.wappen()).isEqualTo(create("proto://wappenAlt1")), //
+				e2 -> assertThat(e2.wappen()).isEqualTo(create("proto://wappenNeu2")) //
 		);
 	}
 
@@ -171,8 +163,8 @@ public class TabelleTest {
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
-				e1 -> assertThat(e1.getWappen()).isEqualTo(create("proto://wappen1")), //
-				e2 -> assertThat(e2.getWappen()).isNull() //
+				e1 -> assertThat(e1.wappen()).isEqualTo(create("proto://wappen1")), //
+				e2 -> assertThat(e2.wappen()).isNull() //
 		);
 	}
 
@@ -233,8 +225,8 @@ public class TabelleTest {
 	}
 
 	private static String print(List<TabellenPlatz> plaetze) {
-		List<String> attribs = asList("platz", "team", "spiele", "anzahlSiege", "anzahlUnentschieden",
-				"anzahlNiederlagen", "punkte", "tore", "gegentore", "torDifferenz");
+		List<String> attribs = asList("platz", "team", "spiele", "siege", "unentschieden", "niederlagen", "punkte",
+				"tore", "gegentore", "torDifferenz");
 		Stream<String> header = Stream.of(line(attribs.stream()));
 		Stream<String> values = plaetze.stream().map(t -> print(t, attribs));
 		return concat(header, values).collect(joining("\n"));
@@ -249,17 +241,13 @@ public class TabelleTest {
 	}
 
 	private static List<Object> values(List<String> attribs, TabellenPlatz platz) {
-		try {
-			List<PropertyDescriptor> descriptors = asList(getBeanInfo(platz.getClass()).getPropertyDescriptors());
-			return attribs.stream().map(a -> readValue(platz, descriptors, a)).toList();
-		} catch (IntrospectionException e) {
-			throw new RuntimeException(e);
-		}
+		List<Method> declaredMethods = asList(platz.getClass().getDeclaredMethods());
+		return attribs.stream().map(a -> readValue(platz, declaredMethods, a)).toList();
 	}
 
-	private static Object readValue(Object bean, List<PropertyDescriptor> descriptors, String attribName) {
-		Method readMethod = descriptors.stream().filter(p -> p.getName().equals(attribName)).findFirst()
-				.orElseThrow(() -> new IllegalStateException("no attribute with name " + attribName)).getReadMethod();
+	private static Object readValue(Object bean, List<Method> declaredMethods, String attribName) {
+		Method readMethod = declaredMethods.stream().filter(p -> p.getName().equals(attribName)).findFirst()
+				.orElseThrow(() -> new IllegalStateException("no attribute with name " + attribName));
 		try {
 			return readMethod.invoke(bean);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
