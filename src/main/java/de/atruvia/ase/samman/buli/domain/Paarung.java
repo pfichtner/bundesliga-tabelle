@@ -86,7 +86,7 @@ public class Paarung {
 		return !ergebnisTypIs(GEPLANT);
 	}
 
-	private boolean ergebnisTypIs(ErgebnisTyp ergebnisTyp) {
+	public boolean ergebnisTypIs(ErgebnisTyp ergebnisTyp) {
 		return this.ergebnisTyp == ergebnisTyp;
 	}
 

@@ -25,7 +25,8 @@
     "siege": 16,
     "unentschieden": 4,
     "niederlagen": 7,
-    "letzte5": "SSUNS"
+    "letzte5": "SSUNS",
+    "laufendesSpiel": "1:0"
   },
   {
     "platz": 3,
@@ -53,7 +54,8 @@
     "siege": 12,
     "unentschieden": 7,
     "niederlagen": 8,
-    "letzte5": "SSUSU"
+    "letzte5": "SSUSU",
+    "laufendesSpiel": "0:1"
   },
   {
     "platz": 5,
@@ -137,7 +139,8 @@
     "siege": 10,
     "unentschieden": 6,
     "niederlagen": 11,
-    "letzte5": "NSNNS"
+    "letzte5": "NSNNS",
+    "laufendesSpiel": "0:0"
   },
   {
     "platz": 11,
@@ -165,7 +168,8 @@
     "siege": 9,
     "unentschieden": 5,
     "niederlagen": 13,
-    "letzte5": "USSNU"
+    "letzte5": "USSNU",
+    "laufendesSpiel": "1:0"
   },
   {
     "platz": 13,
@@ -221,7 +225,8 @@
     "siege": 8,
     "unentschieden": 4,
     "niederlagen": 15,
-    "letzte5": "SNNUN"
+    "letzte5": "SNNUN",
+    "laufendesSpiel": "0:0"
   },
   {
     "platz": 17,
@@ -235,7 +240,8 @@
     "siege": 8,
     "unentschieden": 4,
     "niederlagen": 15,
-    "letzte5": "SSNNU"
+    "letzte5": "SSNNU",
+    "laufendesSpiel": "0:1"
   },
   {
     "platz": 18,

@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman.buli.domain;
 
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEGONNEN;
 import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
@@ -101,7 +102,8 @@ public class Tabelle {
 		return TabellenPlatz.builder() //
 				.wappen(paarung.getWappenHeim()) //
 				.ergebnis(ergebnis, paarung.getErgebnisTyp()) //
-				.punkte(punkte(ergebnis));
+				.punkte(punkte(ergebnis)) //
+				.laufendesSpiel(paarung.ergebnisTypIs(BEGONNEN) ? paarung : null);
 	}
 
 	private static int punkte(Ergebnis ergebnis) {

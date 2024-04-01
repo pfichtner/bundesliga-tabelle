@@ -42,7 +42,7 @@ public class TabellenPlatz {
 	}
 
 	static TabellenPlatz NULL = new TabellenPlatz(null, 0, "", 0, emptyList(), 0, ToreUndGegentore.NULL,
-			ToreUndGegentore.NULL);
+			ToreUndGegentore.NULL, null);
 
 	URI wappen;
 	@With
@@ -57,6 +57,7 @@ public class TabellenPlatz {
 	ToreUndGegentore heim = ToreUndGegentore.NULL;
 	@Builder.Default
 	ToreUndGegentore auswaerts = ToreUndGegentore.NULL;
+	Paarung laufendesSpiel;
 
 	public List<Ergebnis> getErgebnisse() {
 		return getErgebnisse(ErgebnisTyp.values());
@@ -100,6 +101,7 @@ public class TabellenPlatz {
 				.heim(this.heim.merge(other.heim)) //
 				.auswaerts(this.auswaerts.merge(other.auswaerts)) //
 				.wappen(other.wappen == null ? this.wappen : other.wappen) //
+				.laufendesSpiel(other.laufendesSpiel == null ? this.laufendesSpiel : other.laufendesSpiel) //
 				.build();
 	}
 

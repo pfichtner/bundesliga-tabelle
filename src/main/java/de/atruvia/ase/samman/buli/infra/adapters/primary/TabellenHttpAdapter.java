@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
@@ -36,6 +37,7 @@ public class TabellenHttpAdapter {
 		int tore, gegentore, tordifferenz;
 		int siege, unentschieden, niederlagen;
 		String letzte5;
+		String laufendesSpiel;
 
 		private static JsonTabellenPlatz fromDomain(TabellenPlatz domain) {
 			return builder() //
@@ -51,7 +53,13 @@ public class TabellenHttpAdapter {
 					.unentschieden(domain.unentschieden()) //
 					.niederlagen(domain.niederlagen()) //
 					.letzte5(convertLetzte5(domain)) //
+					.laufendesSpiel(
+							domain.laufendesSpiel() == null ? null : convertLaufendesSpiel(domain.laufendesSpiel())) //
 					.build();
+		}
+
+		private static String convertLaufendesSpiel(Paarung laufendesSpiel) {
+			return String.format("%d:%d", laufendesSpiel.getToreTeamHeim(), laufendesSpiel.getToreTeamGast());
 		}
 
 		private static String convertLetzte5(TabellenPlatz platz) {

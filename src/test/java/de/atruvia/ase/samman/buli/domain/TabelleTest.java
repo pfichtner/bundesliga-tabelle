@@ -191,6 +191,28 @@ public class TabelleTest {
 		);
 	}
 
+	@Test
+	void laufendeSpieleWerdenAusgewiesen() {
+		gegebenSeienDiePaarungen( //
+				paarung("Team 1", "Team 2").endergebnis(1, 0), //
+				paarung("Team 2", "Team 1").zwischenergebnis(2, 1) //
+		);
+		wennDieTabelleBerechnetWird();
+		dannIstDieTabelle( //
+				e1 -> {
+					assertThat(e1.team()).isEqualTo("Team 1");
+					assertThat(e1.laufendesSpiel().getToreTeamHeim()).isEqualTo(1);
+					assertThat(e1.laufendesSpiel().getToreTeamGast()).isEqualTo(2);
+				}, //
+				e2 -> {
+					assertThat(e2.team()).isEqualTo("Team 2");
+					assertThat(e2.laufendesSpiel().getToreTeamHeim()).isEqualTo(2);
+					assertThat(e2.laufendesSpiel().getToreTeamGast()).isEqualTo(1);
+				} //
+
+		);
+	}
+
 	private static PaarungBuilder paarung(String teamHeim, String teamGast) {
 		return paarung(team(teamHeim), team(teamGast));
 	}
