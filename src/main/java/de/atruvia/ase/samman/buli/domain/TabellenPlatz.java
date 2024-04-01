@@ -27,7 +27,19 @@ public class TabellenPlatz {
 		ErgebnisTyp ergebnisTyp;
 	}
 
-	static TabellenPlatz NULL = new TabellenPlatz(null, 0, "", 0, emptyList(), 0, 0, 0, 0, 0);
+	@Value
+	public static class ToreUndGegentore {
+		private static final ToreUndGegentore NULL = new ToreUndGegentore(0, 0);
+
+		private ToreUndGegentore merge(ToreUndGegentore other) {
+			return new ToreUndGegentore(tore + other.tore, gegentore + other.gegentore);
+		}
+
+		int tore;
+		int gegentore;
+	}
+
+	static TabellenPlatz NULL = new TabellenPlatz(null, 0, "", 0, emptyList(), 0, ToreUndGegentore.NULL, ToreUndGegentore.NULL);
 
 	@With
 	URI wappen;
@@ -39,10 +51,10 @@ public class TabellenPlatz {
 	int spiele = 1;
 	List<ErgebnisEntry> ergebnisse;
 	int punkte;
-	int toreHeim;
-	int toreAuswaerts;
-	int gegentoreHeim;
-	int gegentoreAuswaerts;
+	@Builder.Default
+	ToreUndGegentore heimtore = ToreUndGegentore.NULL;
+	@Builder.Default
+	ToreUndGegentore auswaertstore = ToreUndGegentore.NULL;
 
 	public List<Ergebnis> getErgebnisse() {
 		return getErgebnisse(ErgebnisTyp.values());
@@ -54,11 +66,11 @@ public class TabellenPlatz {
 	}
 
 	public int getTore() {
-		return toreHeim + toreAuswaerts;
+		return heimtore.tore + auswaertstore.tore;
 	}
 
 	public int getGegentore() {
-		return gegentoreHeim + gegentoreAuswaerts;
+		return heimtore.gegentore + auswaertstore.gegentore;
 	}
 
 	public static class TabellenPlatzBuilder {
@@ -83,10 +95,8 @@ public class TabellenPlatz {
 				.ergebnisse(merge(this.ergebnisse, other.ergebnisse)) //
 				.spiele(this.spiele + other.spiele) //
 				.punkte(this.punkte + other.punkte) //
-				.toreHeim(this.toreHeim + other.toreHeim) //
-				.toreAuswaerts(this.toreAuswaerts + other.toreAuswaerts) //
-				.gegentoreHeim(this.gegentoreHeim + other.gegentoreHeim) //
-				.gegentoreAuswaerts(this.gegentoreAuswaerts + other.gegentoreAuswaerts) //
+				.heimtore(this.heimtore.merge(other.heimtore)) //
+				.auswaertstore(this.auswaertstore.merge(other.auswaertstore)) //
 				.wappen(other.wappen == null ? this.wappen : other.wappen) //
 				.build();
 	}

@@ -40,6 +40,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
+import de.atruvia.ase.samman.buli.domain.TabellenPlatz.ToreUndGegentore;
 import de.atruvia.ase.samman.buli.domain.ports.primary.DefaultTabellenService;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 
@@ -164,9 +165,13 @@ class TabellenHttpAdapterTest {
 
 	static TabellenPlatz platzWithBase(int base, TabellenPlatzBuilder builder) {
 		int cnt = 0;
-		return builder.wappen(create("proto://wappen-team-" + base)).team("Team " + base).spiele(base + (++cnt))
-				.toreHeim(base + (++cnt)).toreAuswaerts(base + (++cnt)).gegentoreHeim(base + (++cnt))
-				.gegentoreAuswaerts(base + (++cnt)).punkte(base + (++cnt)).build();
+		return builder.wappen(create("proto://wappen-team-" + base)) //
+				.team("Team " + base) //
+				.spiele(base + (++cnt)) //
+				.heimtore(new ToreUndGegentore(base + (++cnt), base + (++cnt))) //
+				.auswaertstore(new ToreUndGegentore(base + (++cnt), base + (++cnt))) //
+				.punkte(base + (++cnt)) //
+				.build();
 	}
 
 	private static String prettyPrint(String content) throws JsonProcessingException, JsonMappingException {

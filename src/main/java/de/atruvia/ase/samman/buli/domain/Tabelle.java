@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
+import de.atruvia.ase.samman.buli.domain.TabellenPlatz.ToreUndGegentore;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -40,7 +41,7 @@ public class Tabelle {
 				e -> e.getPunkte(), //
 				e -> e.getTorDifferenz(), //
 				e -> e.getTore(), //
-				e -> e.getToreAuswaerts() //
+				e -> e.getAuswaertstore().getTore() //
 		);
 
 		private static final Function<OrdnungsElement, TabellenPlatz> getTabellenPlatz = OrdnungsElement::getTabellenPlatz;
@@ -94,12 +95,8 @@ public class Tabelle {
 				.wappen(paarung.getWappenHeim()) //
 				.ergebnis(ergebnis, paarung.getErgebnisTyp()) //
 				.punkte(punkte(ergebnis));
-		int toreTeamHeim = paarung.getToreTeamHeim();
-		int toreTeamGast = paarung.getToreTeamGast();
-		return (swapped //
-				? builder.toreAuswaerts(toreTeamHeim).gegentoreAuswaerts(toreTeamGast) //
-				: builder.toreHeim(toreTeamHeim).gegentoreHeim(toreTeamGast) //
-		).build();
+		ToreUndGegentore toreUndGegentore = new ToreUndGegentore(paarung.getToreTeamHeim(), paarung.getToreTeamGast());
+		return (swapped ? builder.auswaertstore(toreUndGegentore) : builder.heimtore(toreUndGegentore)).build();
 	}
 
 	private static int punkte(Ergebnis ergebnis) {
