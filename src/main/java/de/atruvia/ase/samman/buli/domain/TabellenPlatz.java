@@ -5,11 +5,11 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
-import static java.util.stream.Stream.concat;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp;
@@ -91,8 +91,9 @@ public class TabellenPlatz {
 				.build();
 	}
 
-	private static <T> List<T> merge(List<T> ergebnisse1, List<T> ergebnisse2) {
-		return concat(ergebnisse1.stream(), ergebnisse2.stream()).toList();
+	@SafeVarargs
+	private static <T> List<T> merge(List<T>... lists) {
+		return Stream.of(lists).flatMap(List::stream).toList();
 	}
 
 	public int getAnzahlSiege() {
