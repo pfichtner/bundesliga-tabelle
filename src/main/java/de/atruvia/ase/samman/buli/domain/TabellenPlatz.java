@@ -39,7 +39,8 @@ public class TabellenPlatz {
 		int gegentore;
 	}
 
-	static TabellenPlatz NULL = new TabellenPlatz(null, 0, "", 0, emptyList(), 0, ToreUndGegentore.NULL, ToreUndGegentore.NULL);
+	static TabellenPlatz NULL = new TabellenPlatz(null, 0, "", 0, emptyList(), 0, ToreUndGegentore.NULL,
+			ToreUndGegentore.NULL);
 
 	@With
 	URI wappen;
@@ -93,12 +94,16 @@ public class TabellenPlatz {
 	public TabellenPlatz merge(TabellenPlatz other) {
 		return builder() //
 				.ergebnisse(merge(this.ergebnisse, other.ergebnisse)) //
-				.spiele(this.spiele + other.spiele) //
-				.punkte(this.punkte + other.punkte) //
+				.spiele(merge(this.spiele, other.spiele)) //
+				.punkte(merge(this.punkte, other.punkte)) //
 				.heimtore(this.heimtore.merge(other.heimtore)) //
 				.auswaertstore(this.auswaertstore.merge(other.auswaertstore)) //
 				.wappen(other.wappen == null ? this.wappen : other.wappen) //
 				.build();
+	}
+
+	private static int merge(int value1, int value2) {
+		return value1 + value2;
 	}
 
 	@SafeVarargs
