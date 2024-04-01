@@ -41,7 +41,9 @@ public class Paarung {
 		}
 	}
 
-	ErgebnisTyp ergebnisTyp;
+	@Builder.Default
+	ErgebnisTyp ergebnisTyp = GEPLANT;
+
 	Entry heim, gast;
 
 	public String getTeamHeim() {
@@ -107,8 +109,6 @@ public class Paarung {
 	}
 
 	public static class PaarungBuilder {
-
-		private ErgebnisTyp ergebnisTyp = GEPLANT;
 
 		public static Paarung.PaarungBuilder paarung(String teamHeim, String teamGast) {
 			return Paarung.builder().heim(entry(teamHeim)).gast(entry(teamGast));
