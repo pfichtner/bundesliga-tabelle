@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static java.lang.Math.max;
 import static java.util.Collections.reverse;
@@ -7,11 +8,12 @@ import static java.util.stream.Collectors.joining;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
@@ -36,8 +38,8 @@ public class TabellenHttpAdapter {
 
 	@Value
 	@Builder
+	@JsonInclude(NON_NULL)
 	private static class JsonTabellenPlatz {
-
 		int platz;
 		String wappen;
 		String team;
@@ -108,9 +110,11 @@ public class TabellenHttpAdapter {
 
 	private final TabellenService tabellenService;
 
+	// Spring supports Stream<JsonTabellenPlatz> but then swagger cannot detect the
+	// returntype so collect it into a List that gets returned
 	@GetMapping("/tabelle/{league}/{season}")
-	public Stream<JsonTabellenPlatz> getTabelle(@PathVariable String league, @PathVariable String season) {
-		return tabellenService.erstelleTabelle(league, season).stream().map(JsonTabellenPlatz::fromDomain);
+	public List<JsonTabellenPlatz> getTabelle(@PathVariable String league, @PathVariable String season) {
+		return tabellenService.erstelleTabelle(league, season).stream().map(JsonTabellenPlatz::fromDomain).toList();
 	}
 
 }
