@@ -12,6 +12,8 @@ import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpie
 import static java.net.URI.create;
 import static org.approvaltests.JsonApprovals.verifyJson;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -100,6 +102,7 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[0].tordifferenz", is(platz1.torDifferenz()))) //
 				.andExpect(jsonPath("$.[0].punkte", is(platz1.punkte()))) //
 				.andExpect(jsonPath("$.[0].letzte5", is("NUS--"))) //
+                .andExpect(jsonPath("$.[0]*", not(hasKey("laufendesSpiel"))))
 				//
 				.andExpect(jsonPath("$.[1].wappen", is(platz2.wappen().toASCIIString()))) //
 				.andExpect(jsonPath("$.[1].team", is(platz2.team()))) //
@@ -112,6 +115,7 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[1].tordifferenz", is(platz2.torDifferenz()))) //
 				.andExpect(jsonPath("$.[1].punkte", is(platz2.punkte()))) //
 				.andExpect(jsonPath("$.[1].letzte5", is("-----"))) //
+                .andExpect(jsonPath("$.[1]*", not(hasKey("laufendesSpiel"))))
 		;
 
 	}
