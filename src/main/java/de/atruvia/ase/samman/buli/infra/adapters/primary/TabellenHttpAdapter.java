@@ -19,6 +19,7 @@ import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -30,9 +31,15 @@ public class TabellenHttpAdapter {
 	@Value
 	@Builder
 	private static class JsonLaufendesSpiel {
+		@Schema(description = "Mögliche Ausprägungen: 'S' (Sieg), 'U' (Unentschieden), 'N' (Niederlage). "
+				+ "Da das Spiel noch nicht beendet ist handelt es sich eigentlich nicht um Sieg bzw. Niederlage sondern um Führung bzw. Rückstand. ", allowableValues = {
+						"S", "U", "N" })
 		String ergebnis;
+		@Schema(description = "Teamname des gegnerischen Teams")
 		String gegner;
+		@Schema(description = "Geschossene Tore des Teams")
 		int tore;
+		@Schema(description = "Geschossene Tore des gegnerischen Teams")
 		int toreGegner;
 	}
 
@@ -40,18 +47,24 @@ public class TabellenHttpAdapter {
 	@Builder
 	@JsonInclude(NON_NULL)
 	private static class JsonTabellenPlatz {
+		private static final String patternLetzte5 = "[SUN-]{5}";
+
 		int platz;
+		@Schema(description = "URI des Vereinswappens/-logos. Im Normallfall gesetzt, kann aber potentiell null sein. ", nullable = true)
 		String wappen;
 		String team;
 		int spiele;
 		int punkte;
 		int tore, gegentore, tordifferenz;
 		int siege, unentschieden, niederlagen;
+		@Schema(description = "Ergebnisse der letzten fünf Spiele. "
+				+ "Enthält 5 Zeichen, jeweils 'S' (Sieg), 'U' (Unentschieden), 'N' (Niederlage) oder '-' (nicht gespielt). Nur beendete (nicht laufende) Spiele werden berücksichtigt. ", pattern = patternLetzte5)
 		String letzte5;
+		@Schema(description = "Information zum Spiel, falls dieses Team derzeit gegen einen andere Mannschaft in dieser Liga spielt, ansonsten nicht gesetzt. ", nullable = true)
 		JsonLaufendesSpiel laufendesSpiel;
 
 		private static JsonTabellenPlatz fromDomain(TabellenPlatz domain) {
-			return builder() //
+			JsonTabellenPlatz jsonTabellenPlatz = builder() //
 					.platz(domain.platz()) //
 					.wappen(domain.wappen() == null ? null : domain.wappen().toASCIIString()) //
 					.team(domain.team()) //
@@ -67,6 +80,9 @@ public class TabellenHttpAdapter {
 					.laufendesSpiel(
 							domain.laufendesSpiel() == null ? null : convertLaufendesSpiel(domain.laufendesSpiel())) //
 					.build();
+			assert jsonTabellenPlatz.letzte5.matches(patternLetzte5)
+					: jsonTabellenPlatz.letzte5 + " entspricht nicht pattern " + patternLetzte5;
+			return jsonTabellenPlatz;
 		}
 
 		private static JsonLaufendesSpiel convertLaufendesSpiel(Paarung laufendesSpiel) {
