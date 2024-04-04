@@ -13,7 +13,6 @@
 	<groupId>de.atruvia.ase.samman</groupId>
 	<artifactId>buli</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.encondig}</project.reporting.outputEncoding>
@@ -127,9 +126,33 @@
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<configuration>
-					<reportsDirectory>
-						${project.build.directory}/failsafe-reports</reportsDirectory>
+					<reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
+					<!-- do not break so cucumber-html gets generated (which breaks build after html generation but at least the jar gets generated anyway) :-/ -->
+					<testFailureIgnore>true</testFailureIgnore>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>net.masterthought</groupId>
+				<artifactId>maven-cucumber-reporting</artifactId>
+				<version>5.8.1</version>
+				<executions>
+					<execution>
+						<id>execution</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<checkBuildResult>true</checkBuildResult>
+							<treatScenariosAsFailed>true</treatScenariosAsFailed>
+							<treatUndefinedAsFailed>true</treatUndefinedAsFailed>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+							<jsonFiles>
+								<param>**/cucumber.json</param>
+							</jsonFiles>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>com.google.cloud.tools</groupId>
@@ -168,5 +191,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

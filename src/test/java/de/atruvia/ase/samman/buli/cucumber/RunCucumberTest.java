@@ -14,6 +14,6 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasspathResource("de/atruvia/ase/samman/buli/domain")
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "de.atruvia.ase.samman.buli.cucumber")
 @ConfigurationParameter(key = PLUGIN_PUBLISH_QUIET_PROPERTY_NAME, value = "true")
-@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty,html:target/cucumber.html,json:target/cucumber.json")
+@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty,json:target/cucumber.json")
 public class RunCucumberTest {
 }
