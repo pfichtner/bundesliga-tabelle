@@ -25,9 +25,18 @@ class DefaultTabellenServiceTest {
 	}
 
 	@Test
-	void tabelleBl12023Spieltag27_gamesRunning() {
+	void tabelleBl12023Spieltag27_gamesRunning_goalsButFinalResultsAre_0_0() {
 		TabellenService sut = new DefaultTabellenService(spieltagFsRepo());
 		List<TabellenPlatz> erstellteTabelle = sut.erstelleTabelle("bl1", "2023-games-running");
+		String tabelle = erstellteTabelle.stream().map(f -> print(f, longestTeamName(erstellteTabelle)))
+				.collect(joining("\n"));
+		verify(tabelle);
+	}
+
+	@Test
+	void tabelleBl12023Spieltag27_gamesRunning_goalsAndFinalResultsAreCorrect() {
+		TabellenService sut = new DefaultTabellenService(spieltagFsRepo());
+		List<TabellenPlatz> erstellteTabelle = sut.erstelleTabelle("bl1", "2023-games-running-correct-final-result");
 		String tabelle = erstellteTabelle.stream().map(f -> print(f, longestTeamName(erstellteTabelle)))
 				.collect(joining("\n"));
 		verify(tabelle);

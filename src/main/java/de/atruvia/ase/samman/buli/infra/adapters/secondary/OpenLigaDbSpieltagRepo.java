@@ -82,8 +82,19 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 						.orElseThrow(() -> new IllegalStateException("No final result found in finished game " + this));
 				builder.ergebnis(ergebnisTyp, endergebnis.pointsTeam1, endergebnis.pointsTeam2);
 			} else if (ergebnisTyp == BEGONNEN) {
-				lastGoal().ifPresentOrElse(g -> builder.ergebnis(ergebnisTyp, g.scoreTeam1, g.scoreTeam2),
-						() -> builder.ergebnis(ergebnisTyp, 0, 0));
+				// a final result is always present on started games, but in some cases it has
+				// been 0:0 while there have already been shoot some goals. Of course we always
+				// could take the "goals" in account (this always is correct) but we should
+				// prefer using the final result if it's present.
+				Optional<MatchResult> endergebnisWithScore = endergebnis()
+						.filter(e -> e.pointsTeam1 > 0 && e.pointsTeam2 > 0);
+				if (endergebnisWithScore.isPresent()) {
+					builder = builder.ergebnis(ergebnisTyp, endergebnisWithScore.get().pointsTeam1,
+							endergebnisWithScore.get().pointsTeam2);
+				} else {
+					Goal lastGoal = lastGoal().orElseGet(() -> new Goal());
+					builder = builder.ergebnis(ergebnisTyp, lastGoal.scoreTeam1, lastGoal.scoreTeam2);
+				}
 			}
 			return builder.build();
 		}
@@ -103,10 +114,6 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		}
 
 		private Optional<Goal> lastGoal() {
-			// while the game is still running, there's an "Endergebnis" but it's 0:0 so
-			// don't use this! Even worse: There is an "Endergebnis" and "Halbzeitstand"
-			// both 0:0, so if we are interested in the current score we would have to take
-			// a look at "goals" while "goals" is NOT in chronological order!
 			return stream(goals).sorted(Goal.inChronologicalOrder).reduce(lastElement());
 		}
 
