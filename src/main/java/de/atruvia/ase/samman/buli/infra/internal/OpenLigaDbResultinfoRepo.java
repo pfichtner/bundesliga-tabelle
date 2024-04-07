@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman.buli.infra.internal;
 
+import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.byGlobalResultId;
 import static java.lang.String.format;
 import static java.net.URI.create;
 import static java.util.Arrays.stream;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +58,8 @@ public class OpenLigaDbResultinfoRepo {
 			return list.get(list.size() - 1);
 		}
 
+		public static Comparator<Resultinfo> byGlobalResultId = comparing(r -> r.globalResultInfo.id);
+
 		int id;
 		String name;
 		int orderId;
@@ -100,8 +104,7 @@ public class OpenLigaDbResultinfoRepo {
 			String body = httpClient.send(HttpRequest
 					.newBuilder(create(format("https://api.openligadb.de/getresultinfos/%s", leagueId))).build(),
 					BodyHandlers.ofString()).body();
-			Resultinfo[] fromJson = gson.fromJson(body, Resultinfo[].class);
-			return stream(fromJson).sorted(comparing(r -> r.globalResultInfo.id)).toList();
+			return stream(gson.fromJson(body, Resultinfo[].class)).sorted(byGlobalResultId).toList();
 		} catch (IOException | InterruptedException e) {
 			throw new RuntimeException(e);
 		}
