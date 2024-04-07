@@ -1,4 +1,4 @@
-package de.atruvia.ase.samman.buli.infra.adapters.secondary;
+package de.atruvia.ase.samman.buli.infra.internal;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
 @SpringBootTest
-class OpenLigaDbResultinfoRepoTest {
+class OpenLigaDbResultinfoRepoCachingTest {
 
 	@SpyBean
 	OpenLigaDbResultinfoRepo repoSpy;

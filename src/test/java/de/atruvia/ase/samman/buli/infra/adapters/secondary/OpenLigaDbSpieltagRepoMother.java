@@ -9,8 +9,9 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.List;
 
-import de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbResultinfoRepo.Resultinfo;
-import de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbResultinfoRepo.Resultinfo.GlobalResultInfo;
+import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo;
+import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo;
+import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.GlobalResultInfo;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = PRIVATE)

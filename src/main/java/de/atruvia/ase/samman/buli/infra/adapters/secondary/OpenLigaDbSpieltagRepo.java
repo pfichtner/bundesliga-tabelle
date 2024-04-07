@@ -3,6 +3,8 @@ package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEGONNEN;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.GEPLANT;
+import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepo.MatchResult.endergebnis;
+import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.getEndergebnisType;
 import static java.lang.String.format;
 import static java.net.URI.create;
 import static java.util.Arrays.stream;
@@ -25,13 +27,14 @@ import de.atruvia.ase.samman.buli.domain.Paarung.Entry;
 import de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp;
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
-import de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbResultinfoRepo.Resultinfo;
+import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo;
+import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Repository
 @RequiredArgsConstructor
-class OpenLigaDbSpieltagRepo implements SpieltagRepo {
+public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 
 	private static final String URI_FORMAT = "https://api.openligadb.de/getmatchdata/%s/%s";
 
@@ -47,10 +50,23 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	}
 
 	@ToString
-	private class MatchResult {
+	public static class MatchResult {
 		int resultTypeID;
 		int pointsTeam1;
 		int pointsTeam2;
+
+		public static Optional<MatchResult> endergebnis(MatchResult[] matchResults, List<Resultinfo> resultinfos) {
+			return stream(matchResults)
+					.filter(t -> t.resultTypeID == getEndergebnisType(resultinfos).globalResultInfo.id)
+					.reduce(toOnlyElement());
+		}
+
+		private static <T> BinaryOperator<T> toOnlyElement() {
+			return (f, s) -> {
+				throw new IllegalStateException("Expected at most one element but found at least " + f + " and " + s);
+			};
+		}
+
 	}
 
 	@ToString
@@ -76,7 +92,7 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 			;
 			ErgebnisTyp ergebnisTyp = ergebnisTyp();
 			if (ergebnisTyp == BEENDET) {
-				MatchResult endergebnis = endergebnis(resultinfos)
+				MatchResult endergebnis = endergebnis(matchResults, resultinfos)
 						.orElseThrow(() -> new IllegalStateException("No final result found in finished game " + this));
 				builder.ergebnis(ergebnisTyp, endergebnis.pointsTeam1, endergebnis.pointsTeam2);
 			} else if (ergebnisTyp == BEGONNEN) {
@@ -84,7 +100,7 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 				// been 0:0 while there have already been shoot some goals. Of course we always
 				// could take the "goals" in account (this always is correct) but we should
 				// prefer using the final result if it's present.
-				Optional<MatchResult> endergebnisWithScore = endergebnis(resultinfos)
+				Optional<MatchResult> endergebnisWithScore = endergebnis(matchResults, resultinfos)
 						.filter(e -> e.pointsTeam1 > 0 && e.pointsTeam2 > 0);
 				if (endergebnisWithScore.isPresent()) {
 					builder = builder.ergebnis(ergebnisTyp, endergebnisWithScore.get().pointsTeam1,
@@ -107,19 +123,8 @@ class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 			}
 		}
 
-		private Optional<MatchResult> endergebnis(List<Resultinfo> resultinfos) {
-			Resultinfo last = resultinfos.get(resultinfos.size() - 1);
-			return stream(matchResults).filter(t -> t.resultTypeID == last.globalResultInfo.id).reduce(toOnlyElement());
-		}
-
 		private Optional<Goal> lastGoal() {
 			return stream(goals).sorted(Goal.inChronologicalOrder).reduce(lastElement());
-		}
-
-		private static <T> BinaryOperator<T> toOnlyElement() {
-			return (f, s) -> {
-				throw new IllegalStateException("Expected at most one element but found at least " + f + " and " + s);
-			};
 		}
 
 	}

@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
+import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo;
 
 class OpenLigaDbSpieltagRepoIT {
 

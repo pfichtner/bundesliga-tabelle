@@ -1,10 +1,11 @@
-package de.atruvia.ase.samman.buli.infra.adapters.secondary;
+package de.atruvia.ase.samman.buli.infra.internal;
 
 import static java.lang.String.format;
 import static java.net.URI.create;
 import static java.util.Arrays.stream;
 import static java.util.Comparator.comparing;
 import static java.util.concurrent.TimeUnit.HOURS;
+import static lombok.AccessLevel.PUBLIC;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
@@ -23,9 +24,10 @@ import org.springframework.stereotype.Repository;
 import com.google.gson.Gson;
 
 import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 @Repository
-class OpenLigaDbResultinfoRepo {
+public class OpenLigaDbResultinfoRepo {
 
 	private static final String CACHE_NAME = "resultinfosCache";
 
@@ -37,13 +39,25 @@ class OpenLigaDbResultinfoRepo {
 	}
 
 	@ToString
-	static class Resultinfo {
+	@FieldDefaults(level = PUBLIC)
+	public static class Resultinfo {
 
 		@ToString
-		static class GlobalResultInfo {
+		@FieldDefaults(level = PUBLIC)
+		public static class GlobalResultInfo {
 			int id;
 		}
 
+		public static Resultinfo getEndergebnisType(List<Resultinfo> resultinfos) {
+			return last(resultinfos);
+		}
+
+		private static <T> T last(List<T> list) {
+			return list.get(list.size() - 1);
+		}
+
+		int id;
+		String name;
 		int orderId;
 		GlobalResultInfo globalResultInfo;
 	}
