@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
+import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.resultinfoProvider;
 import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.spieltagFsRepo;
 import static java.net.URI.create;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,7 +48,7 @@ class OpenLigaDbSpieltagRepoTest {
 
 	@Test
 	void throwsExceptionIfThereAreMatchesWithMultipleFinalResults() throws Exception {
-		OpenLigaDbSpieltagRepo repo = new OpenLigaDbSpieltagRepo() {
+		OpenLigaDbSpieltagRepo repo = new OpenLigaDbSpieltagRepo(resultinfoProvider()) {
 			@Override
 			protected String readJson(String league, String season) throws Exception {
 				return """

@@ -42,7 +42,7 @@ class OpenLigaDbSpieltagRepoIT {
 	}
 
 	OpenLigaDbSpieltagRepo repo() {
-		return new OpenLigaDbSpieltagRepo();
+		return new OpenLigaDbSpieltagRepo(new OpenLigaDbResultinfoRepo());
 	}
 
 }
