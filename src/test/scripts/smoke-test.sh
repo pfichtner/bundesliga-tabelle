@@ -1,18 +1,13 @@
 #!/bin/bash
 
-# Set your Docker image name
 IMAGE_NAME=$1
-
-# Set the resource path to check (replace with your actual resource path)
 RESOURCE_PATH="/tabelle/bl1/2023"
 
-# Function to check if a port is available using netstat
 is_port_available() {
   local port=$1
   netstat -an | grep LISTEN | grep -q ":$port\b"
 }
 
-# Function to find an available port using netstat
 find_available_port() {
   local starting_port=$1
   local max_attempts=10
@@ -29,7 +24,6 @@ find_available_port() {
   return 1
 }
 
-# Function to check if the application is up
 wait_for_application() {
   local port=$1
   local max_attempts=30
@@ -51,12 +45,10 @@ wait_for_application() {
   exit 1
 }
 
-# Function to check if the resource is a non-empty JSON array
 check_resource_non_empty_json_array() {
   local port=$1
   local url="http://localhost:${port}${RESOURCE_PATH}"
 
-  # Make an HTTP request and capture the response
   local response=$(curl -s -w "%{http_code}" $url)
 
   local http_status="${response:(-3)}"
@@ -68,6 +60,12 @@ check_resource_non_empty_json_array() {
   # Check if the HTTP status is 200 and the response is a non-empty JSON array
   if [ "$http_status" -eq 200 ] && [[ $body == \[*\] && $body != "[]" ]]; then
     echo "Resource is a non-empty JSON array: $body"
+
+    command -v jq &> /dev/null && if [[ $(echo "$body" | jq 'length') -ne 18 ]]; then
+        echo "Array does not have 18 entries."
+        exit 1
+    fi
+
     return 0
   else
     echo "Error: Unexpected response received for the resource: $body with HTTP status: $http_status"
@@ -75,7 +73,6 @@ check_resource_non_empty_json_array() {
   fi
 }
 
-# Function to stop and remove the Docker container
 cleanup() {
   local container_id=$(docker ps -q --filter "ancestor=$IMAGE_NAME")
   if [ -n "$container_id" ]; then
@@ -85,7 +82,6 @@ cleanup() {
   fi
 }
 
-# Set up trap to call cleanup function on script exit
 trap cleanup EXIT
 
 # Find an available port
@@ -96,7 +92,6 @@ if [ -z "$AVAILABLE_PORT" ]; then
   exit 1
 fi
 
-# Run the Docker container with the available port
 if docker run -d -p $AVAILABLE_PORT:8080 $IMAGE_NAME; then
   echo "Docker container started successfully."
 else
@@ -104,14 +99,8 @@ else
   exit 1
 fi
 
-# Wait for the application to start
 wait_for_application $AVAILABLE_PORT
-
-# Check if the resource is a non-empty JSON array
 check_resource_non_empty_json_array $AVAILABLE_PORT
 
-# Run additional tests or commands if needed
 echo "Smoke tests passed!"
-
-# Cleanup is handled by the trap on script exit
 
