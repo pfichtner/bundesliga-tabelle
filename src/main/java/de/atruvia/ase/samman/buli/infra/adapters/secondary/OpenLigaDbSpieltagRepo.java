@@ -44,7 +44,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	private final OpenLigaDbResultinfoRepo resultinfoRepo;
 
 	@ToString
-	private class Team {
+	private static class Team {
 		String teamName;
 		String teamIconUrl;
 	}
@@ -70,15 +70,18 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	}
 
 	@ToString
-	private class Goal {
-		static Comparator<Goal> inChronologicalOrder = comparing(g -> g.goalID);
+	private static class Goal {
+
+		static final Comparator<Goal> inChronologicalOrder = comparing(g -> g.goalID);
+		static final Goal NULL = new Goal();
+
 		int goalID;
 		int scoreTeam1;
 		int scoreTeam2;
 	}
 
 	@ToString
-	private class Match {
+	private static class Match {
 		Team team1;
 		Team team2;
 		boolean matchIsFinished;
@@ -100,15 +103,8 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 				// been 0:0 while there have already been shoot some goals. Of course we always
 				// could take the "goals" in account (this always is correct) but we should
 				// prefer using the final result if it's present.
-				Optional<MatchResult> endergebnisWithScore = endergebnis(matchResults, resultinfos)
-						.filter(e -> e.pointsTeam1 > 0 && e.pointsTeam2 > 0);
-				if (endergebnisWithScore.isPresent()) {
-					builder = builder.ergebnis(ergebnisTyp, endergebnisWithScore.get().pointsTeam1,
-							endergebnisWithScore.get().pointsTeam2);
-				} else {
-					Goal lastGoal = lastGoal().orElseGet(() -> new Goal());
-					builder = builder.ergebnis(ergebnisTyp, lastGoal.scoreTeam1, lastGoal.scoreTeam2);
-				}
+				Goal latestGoal = latestGoal().orElse(Goal.NULL);
+				builder = builder.ergebnis(ergebnisTyp, latestGoal.scoreTeam1, latestGoal.scoreTeam2);
 			}
 			return builder.build();
 		}
@@ -123,7 +119,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 			}
 		}
 
-		private Optional<Goal> lastGoal() {
+		private Optional<Goal> latestGoal() {
 			return stream(goals).sorted(Goal.inChronologicalOrder).reduce(lastElement());
 		}
 
