@@ -1,7 +1,6 @@
 package de.atruvia.ase.samman.buli.infra.internal;
 
 import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.byGlobalResultId;
-import static java.lang.String.format;
 import static java.net.URI.create;
 import static java.util.Arrays.stream;
 import static java.util.Comparator.comparing;
@@ -75,7 +74,7 @@ public class OpenLigaDbResultinfoRepo {
 	@Cacheable(value = CACHE_NAME, key = "#league + '_' + #season")
 	public List<Resultinfo> getResultinfos(String league, String season) {
 		AvailableLeague availableLeague = getAvailableLeague(league, season).orElseThrow(
-				() -> new IllegalArgumentException(String.format("League %s, season %s not found", league, season)));
+				() -> new IllegalArgumentException("League %s, season %s not found".formatted(league, season)));
 		return getResultinfos(availableLeague.leagueId);
 	}
 
@@ -102,7 +101,7 @@ public class OpenLigaDbResultinfoRepo {
 	private List<Resultinfo> getResultinfos(int leagueId) {
 		try {
 			String body = httpClient.send(HttpRequest
-					.newBuilder(create(format("https://api.openligadb.de/getresultinfos/%s", leagueId))).build(),
+					.newBuilder(create("https://api.openligadb.de/getresultinfos/%s".formatted(leagueId))).build(),
 					BodyHandlers.ofString()).body();
 			return stream(gson.fromJson(body, Resultinfo[].class)).sorted(byGlobalResultId).toList();
 		} catch (IOException | InterruptedException e) {

@@ -1,6 +1,5 @@
 package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
-import static java.lang.String.format;
 import static java.net.URI.create;
 import static java.util.Arrays.stream;
 
@@ -51,7 +50,7 @@ class OpenLigaDbTeamRepo implements TeamRepo {
 	}
 
 	private HttpRequest request(String league, String season) {
-		return HttpRequest.newBuilder(create(format(URI_FORMAT, league, season))).build();
+		return HttpRequest.newBuilder(create(URI_FORMAT.formatted(league, season))).build();
 	}
 
 }

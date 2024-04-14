@@ -91,7 +91,7 @@ public class TabellenHttpAdapter {
 		}
 
 		private static String convertLetzte5(TabellenPlatz platz) {
-			return String.format("%-5s",
+			return "%-5s".formatted(
 					lastNErgebnisse(platz, 5).stream().map(JsonTabellenPlatz::convertErgebnis).collect(joining()))
 					.replace(' ', '-');
 		}

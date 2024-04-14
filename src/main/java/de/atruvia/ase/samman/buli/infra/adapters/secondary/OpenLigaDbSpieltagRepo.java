@@ -5,7 +5,6 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEGONNEN;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.GEPLANT;
 import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepo.MatchResult.endergebnis;
 import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.getEndergebnisType;
-import static java.lang.String.format;
 import static java.net.URI.create;
 import static java.util.Arrays.stream;
 import static java.util.Comparator.comparing;
@@ -141,7 +140,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	}
 
 	private static HttpRequest request(String league, String season) {
-		return HttpRequest.newBuilder(create(format(URI_FORMAT, league, season))).build();
+		return HttpRequest.newBuilder(create(URI_FORMAT.formatted(league, season))).build();
 	}
 
 }
