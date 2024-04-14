@@ -26,7 +26,7 @@ class OpenLigaDbTeamRepo implements TeamRepo {
 	private final HttpClient httpClient = HttpClient.newHttpClient();
 
 	@ToString
-	private class JsonTeam {
+	private static class JsonTeam {
 		String teamName;
 		String teamIconUrl;
 

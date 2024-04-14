@@ -8,8 +8,6 @@ import lombok.Value;
 @Value
 @Builder
 public class Team {
-
 	String name;
 	URI wappen;
-
 }
