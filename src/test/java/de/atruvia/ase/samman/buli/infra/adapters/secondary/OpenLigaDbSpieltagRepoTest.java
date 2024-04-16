@@ -12,6 +12,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
+import de.atruvia.ase.samman.buli.springframework.RestTemplateMock;
 
 class OpenLigaDbSpieltagRepoTest {
 
@@ -48,35 +49,30 @@ class OpenLigaDbSpieltagRepoTest {
 
 	@Test
 	void throwsExceptionIfThereAreMatchesWithMultipleFinalResults() throws Exception {
-		OpenLigaDbSpieltagRepo repo = new OpenLigaDbSpieltagRepo(resultinfoProvider()) {
-			@Override
-			protected String readJson(String league, String season) throws Exception {
-				return """
-						[
-						  {
-							"team1": {
-							  "teamName": "Team 1",
-							  "teamIconUrl": "teamIconUrl1"
-							},
-							"team2": {
-							  "teamName": "Team 2",
-							  "teamIconUrl": "teamIconUrl2"
-							},
-							"matchIsFinished": true,
-						    "matchResults": [
-						      {
-						        "resultTypeID": 2
-						      },
-						      {
-						        "resultTypeID": 2
-						      }
-						    ]
-						  }
-						 ]
-						""";
-			}
-
-		};
+		RestTemplateMock restTemplate = new RestTemplateMock(__ -> """
+				[
+				  {
+					"team1": {
+					  "teamName": "Team 1",
+					  "teamIconUrl": "teamIconUrl1"
+					},
+					"team2": {
+					  "teamName": "Team 2",
+					  "teamIconUrl": "teamIconUrl2"
+					},
+					"matchIsFinished": true,
+				    "matchResults": [
+				      {
+				        "resultTypeID": 2
+				      },
+				      {
+				        "resultTypeID": 2
+				      }
+				    ]
+				  }
+				 ]
+				""");
+		OpenLigaDbSpieltagRepo repo = new OpenLigaDbSpieltagRepo(restTemplate, resultinfoProvider());
 		assertThatThrownBy(() -> repo.lade("any", "any")).hasMessageContaining("at most one element");
 	}
 

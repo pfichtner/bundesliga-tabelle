@@ -1,18 +1,14 @@
 package de.atruvia.ase.samman.buli.infra.internal;
 
 import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.byGlobalResultId;
-import static java.net.URI.create;
 import static java.util.Arrays.stream;
 import static java.util.Comparator.comparing;
 import static java.util.concurrent.TimeUnit.HOURS;
 import static lombok.AccessLevel.PUBLIC;
 
-import java.io.IOException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +17,22 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.client.RestTemplate;
 
-import com.google.gson.Gson;
-
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 @Repository
+@RequiredArgsConstructor
 public class OpenLigaDbResultinfoRepo {
+
+	private static final String LEAGUE_ID = "leagueId";
 
 	private static final String CACHE_NAME = "resultinfosCache";
 
 	@ToString
+	@FieldDefaults(level = PUBLIC)
 	private static class AvailableLeague {
 		int leagueId;
 		String leagueShortcut;
@@ -65,8 +65,7 @@ public class OpenLigaDbResultinfoRepo {
 		GlobalResultInfo globalResultInfo;
 	}
 
-	private final Gson gson = new Gson();
-	private final HttpClient httpClient = HttpClient.newHttpClient();
+	private final RestTemplate restTemplate;
 
 	@Autowired
 	private CacheManager cacheManager;
@@ -84,29 +83,16 @@ public class OpenLigaDbResultinfoRepo {
 	}
 
 	private Optional<AvailableLeague> getAvailableLeague(String leagueShortcut, String leagueSeason) {
-		try {
-			String body = httpClient
-					.send(HttpRequest.newBuilder(create("https://api.openligadb.de/getavailableleagues")).build(),
-							BodyHandlers.ofString())
-					.body();
-			return stream(gson.fromJson(body, AvailableLeague[].class)) //
-					.filter(l -> leagueShortcut.equals(l.leagueShortcut)) //
-					.filter(l -> leagueSeason.equals(l.leagueSeason)) //
-					.findFirst();
-		} catch (IOException | InterruptedException e) {
-			throw new RuntimeException(e);
-		}
+		return stream(
+				restTemplate.getForObject("https://api.openligadb.de/getavailableleagues", AvailableLeague[].class)) //
+				.filter(l -> leagueShortcut.equals(l.leagueShortcut)) //
+				.filter(l -> leagueSeason.equals(l.leagueSeason)) //
+				.findFirst();
 	}
 
 	private List<Resultinfo> getResultinfos(int leagueId) {
-		try {
-			String body = httpClient.send(HttpRequest
-					.newBuilder(create("https://api.openligadb.de/getresultinfos/%s".formatted(leagueId))).build(),
-					BodyHandlers.ofString()).body();
-			return stream(gson.fromJson(body, Resultinfo[].class)).sorted(byGlobalResultId).toList();
-		} catch (IOException | InterruptedException e) {
-			throw new RuntimeException(e);
-		}
+		return stream(restTemplate.getForObject("https://api.openligadb.de/getresultinfos/{" + LEAGUE_ID + "}",
+				Resultinfo[].class, Map.of(LEAGUE_ID, leagueId))).sorted(byGlobalResultId).toList();
 	}
 
 }

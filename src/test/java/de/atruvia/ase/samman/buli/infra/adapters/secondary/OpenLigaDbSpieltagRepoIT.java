@@ -7,6 +7,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.web.client.RestTemplate;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo;
@@ -43,7 +44,8 @@ class OpenLigaDbSpieltagRepoIT {
 	}
 
 	OpenLigaDbSpieltagRepo repo() {
-		return new OpenLigaDbSpieltagRepo(new OpenLigaDbResultinfoRepo());
+		RestTemplate restTemplate = new RestTemplate();
+		return new OpenLigaDbSpieltagRepo(restTemplate, new OpenLigaDbResultinfoRepo(restTemplate));
 	}
 
 }
