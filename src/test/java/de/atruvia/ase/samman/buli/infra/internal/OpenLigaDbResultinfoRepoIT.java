@@ -7,10 +7,11 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.web.client.RestTemplate;
 
 class OpenLigaDbResultinfoRepoIT {
 
-	OpenLigaDbResultinfoRepo sut = new OpenLigaDbResultinfoRepo();
+	OpenLigaDbResultinfoRepo sut = new OpenLigaDbResultinfoRepo(new RestTemplate());
 
 	@ParameterizedTest
 	@MethodSource("provideLeagueSeasonCombinations")

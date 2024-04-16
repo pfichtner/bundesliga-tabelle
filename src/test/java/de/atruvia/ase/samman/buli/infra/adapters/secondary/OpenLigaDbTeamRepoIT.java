@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.web.client.RestTemplate;
 
 import de.atruvia.ase.samman.buli.domain.Team;
 
@@ -48,7 +49,7 @@ class OpenLigaDbTeamRepoIT {
 	}
 
 	OpenLigaDbTeamRepo repo() {
-		return new OpenLigaDbTeamRepo();
+		return new OpenLigaDbTeamRepo(new RestTemplate());
 	}
 
 }

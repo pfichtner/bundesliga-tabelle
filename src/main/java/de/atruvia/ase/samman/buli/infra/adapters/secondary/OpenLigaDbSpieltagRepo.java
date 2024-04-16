@@ -8,18 +8,16 @@ import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo
 import static java.net.URI.create;
 import static java.util.Arrays.stream;
 import static java.util.Comparator.comparing;
+import static lombok.AccessLevel.PUBLIC;
 
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.BinaryOperator;
 
 import org.springframework.stereotype.Repository;
-
-import com.google.gson.Gson;
+import org.springframework.web.client.RestTemplate;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Paarung.Entry;
@@ -30,25 +28,30 @@ import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo;
 import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 @Repository
 @RequiredArgsConstructor
 public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 
-	private static final String URI_FORMAT = "https://api.openligadb.de/getmatchdata/%s/%s";
+	private static final String LEAGUE = "league";
+	private static final String SEASON = "season";
 
-	private final Gson gson = new Gson();
-	private final HttpClient httpClient = HttpClient.newHttpClient();
+	private static final String SERVICE_URI = "https://api.openligadb.de/getmatchdata/{" + LEAGUE + "}/{" + SEASON
+			+ "}";
 
+	private final RestTemplate restTemplate;
 	private final OpenLigaDbResultinfoRepo resultinfoRepo;
 
 	@ToString
+	@FieldDefaults(level = PUBLIC)
 	private static class Team {
 		String teamName;
 		String teamIconUrl;
 	}
 
 	@ToString
+	@FieldDefaults(level = PUBLIC)
 	public static class MatchResult {
 		int resultTypeID;
 		int pointsTeam1;
@@ -69,6 +72,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	}
 
 	@ToString
+	@FieldDefaults(level = PUBLIC)
 	private static class Goal {
 
 		static final Comparator<Goal> inChronologicalOrder = comparing(g -> g.goalID);
@@ -80,6 +84,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	}
 
 	@ToString
+	@FieldDefaults(level = PUBLIC)
 	private static class Match {
 		Team team1;
 		Team team2;
@@ -131,16 +136,8 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	@Override
 	public List<Paarung> lade(String league, String season) throws Exception {
 		List<Resultinfo> resultinfos = resultinfoRepo.getResultinfos(league, season);
-		return stream(gson.fromJson(readJson(league, season), Match[].class)).map(t -> t.toDomain(resultinfos))
-				.toList();
-	}
-
-	protected String readJson(String league, String season) throws Exception {
-		return httpClient.send(request(league, season), BodyHandlers.ofString()).body();
-	}
-
-	private static HttpRequest request(String league, String season) {
-		return HttpRequest.newBuilder(create(URI_FORMAT.formatted(league, season))).build();
+		return stream(restTemplate.getForObject(SERVICE_URI, Match[].class, Map.of(LEAGUE, league, SEASON, season)))
+				.map(t -> t.toDomain(resultinfos)).toList();
 	}
 
 }
