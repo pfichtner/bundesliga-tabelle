@@ -2,6 +2,7 @@ package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
 import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.resultinfoProvider;
 import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.spieltagFsRepo;
+import static de.atruvia.ase.samman.buli.springframework.RestTemplateMock.configureMock;
 import static java.net.URI.create;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -10,9 +11,9 @@ import java.net.URI;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.web.client.RestTemplate;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
-import de.atruvia.ase.samman.buli.springframework.RestTemplateMock;
 
 class OpenLigaDbSpieltagRepoTest {
 
@@ -49,26 +50,13 @@ class OpenLigaDbSpieltagRepoTest {
 
 	@Test
 	void throwsExceptionIfThereAreMatchesWithMultipleFinalResults() throws Exception {
-		RestTemplateMock restTemplate = new RestTemplateMock(__ -> """
+		RestTemplate restTemplate = configureMock(new RestTemplate(), __ -> """
 				[
 				  {
-					"team1": {
-					  "teamName": "Team 1",
-					  "teamIconUrl": "teamIconUrl1"
-					},
-					"team2": {
-					  "teamName": "Team 2",
-					  "teamIconUrl": "teamIconUrl2"
-					},
+					"team1": { "teamName": "Team 1", "teamIconUrl": "teamIconUrl1" },
+					"team2": { "teamName": "Team 2", "teamIconUrl": "teamIconUrl2" },
 					"matchIsFinished": true,
-				    "matchResults": [
-				      {
-				        "resultTypeID": 2
-				      },
-				      {
-				        "resultTypeID": 2
-				      }
-				    ]
+				    "matchResults": [ { "resultTypeID": 2 }, { "resultTypeID": 2 } ]
 				  }
 				 ]
 				""");

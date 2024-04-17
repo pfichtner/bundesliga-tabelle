@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
+import static de.atruvia.ase.samman.buli.springframework.RestTemplateMock.configureMock;
 import static java.nio.file.Files.readString;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -10,17 +11,18 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.List;
 
+import org.springframework.web.client.RestTemplate;
+
 import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo;
 import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo;
 import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.GlobalResultInfo;
-import de.atruvia.ase.samman.buli.springframework.RestTemplateMock;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = PRIVATE)
 public final class OpenLigaDbSpieltagRepoMother {
 
 	public static OpenLigaDbSpieltagRepo spieltagFsRepo() {
-		return new OpenLigaDbSpieltagRepo(new RestTemplateMock(r -> {
+		return new OpenLigaDbSpieltagRepo(configureMock(new RestTemplate(), r -> {
 			String[] parts = r.getURI().toASCIIString().split("/");
 			try {
 				return readString(path("getmatchdata", parts[parts.length - 2], parts[parts.length - 1]));
@@ -49,7 +51,7 @@ public final class OpenLigaDbSpieltagRepoMother {
 	}
 
 	public static OpenLigaDbTeamRepo teamFsRepo() {
-		return new OpenLigaDbTeamRepo(new RestTemplateMock(r -> {
+		return new OpenLigaDbTeamRepo(configureMock(new RestTemplate(), r -> {
 			String[] parts = r.getURI().toASCIIString().split("/");
 			try {
 				return readString(path("getavailableteams", parts[parts.length - 2], parts[parts.length - 1]));

@@ -3,7 +3,6 @@ package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEGONNEN;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.GEPLANT;
-import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepo.MatchResult.endergebnis;
 import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.getEndergebnisType;
 import static java.net.URI.create;
 import static java.util.Arrays.stream;
@@ -52,7 +51,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 
 	@ToString
 	@FieldDefaults(level = PUBLIC)
-	public static class MatchResult {
+	private static class MatchResult {
 		int resultTypeID;
 		int pointsTeam1;
 		int pointsTeam2;
@@ -99,7 +98,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 			;
 			ErgebnisTyp ergebnisTyp = ergebnisTyp();
 			if (ergebnisTyp == BEENDET) {
-				MatchResult endergebnis = endergebnis(matchResults, resultinfos)
+				MatchResult endergebnis = MatchResult.endergebnis(matchResults, resultinfos)
 						.orElseThrow(() -> new IllegalStateException("No final result found in finished game " + this));
 				builder.ergebnis(ergebnisTyp, endergebnis.pointsTeam1, endergebnis.pointsTeam2);
 			} else if (ergebnisTyp == BEGONNEN) {
