@@ -5,7 +5,6 @@ import static lombok.AccessLevel.PUBLIC;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
@@ -20,11 +19,7 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 class OpenLigaDbTeamRepo implements TeamRepo {
 
-	private static final String LEAGUE = "league";
-	private static final String SEASON = "season";
-
-	private static final String SERVICE_URI = "https://api.openligadb.de/getavailableteams/{" + LEAGUE + "}/{" + SEASON
-			+ "}";
+	private static final String SERVICE_URI = "https://api.openligadb.de/getavailableteams/{league}/{season}";
 
 	private final RestTemplate restTemplate;
 
@@ -46,8 +41,8 @@ class OpenLigaDbTeamRepo implements TeamRepo {
 
 	@Override
 	public List<Team> getTeams(String league, String season) throws Exception {
-		return stream(restTemplate.getForObject(SERVICE_URI, JsonTeam[].class, Map.of(LEAGUE, league, SEASON, season)))
-				.map(JsonTeam::toDomain).toList();
+		return stream(restTemplate.getForObject(SERVICE_URI, JsonTeam[].class, league, season)).map(JsonTeam::toDomain)
+				.toList();
 	}
 
 }

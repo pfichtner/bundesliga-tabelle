@@ -11,7 +11,6 @@ import static lombok.AccessLevel.PUBLIC;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.BinaryOperator;
 
@@ -33,11 +32,7 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 
-	private static final String LEAGUE = "league";
-	private static final String SEASON = "season";
-
-	private static final String SERVICE_URI = "https://api.openligadb.de/getmatchdata/{" + LEAGUE + "}/{" + SEASON
-			+ "}";
+	private static final String SERVICE_URI = "https://api.openligadb.de/getmatchdata/{league}/{season}";
 
 	private final RestTemplate restTemplate;
 	private final OpenLigaDbResultinfoRepo resultinfoRepo;
@@ -135,7 +130,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	@Override
 	public List<Paarung> lade(String league, String season) throws Exception {
 		List<Resultinfo> resultinfos = resultinfoRepo.getResultinfos(league, season);
-		return stream(restTemplate.getForObject(SERVICE_URI, Match[].class, Map.of(LEAGUE, league, SEASON, season)))
+		return stream(restTemplate.getForObject(SERVICE_URI, Match[].class, league, season))
 				.map(t -> t.toDomain(resultinfos)).toList();
 	}
 

@@ -8,7 +8,6 @@ import static lombok.AccessLevel.PUBLIC;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,6 @@ import lombok.experimental.FieldDefaults;
 @Repository
 @RequiredArgsConstructor
 public class OpenLigaDbResultinfoRepo {
-
-	private static final String LEAGUE_ID = "leagueId";
 
 	private static final String CACHE_NAME = "resultinfosCache";
 
@@ -91,8 +88,8 @@ public class OpenLigaDbResultinfoRepo {
 	}
 
 	private List<Resultinfo> getResultinfos(int leagueId) {
-		return stream(restTemplate.getForObject("https://api.openligadb.de/getresultinfos/{" + LEAGUE_ID + "}",
-				Resultinfo[].class, Map.of(LEAGUE_ID, leagueId))).sorted(byGlobalResultId).toList();
+		return stream(restTemplate.getForObject("https://api.openligadb.de/getresultinfos/{leagueId}",
+				Resultinfo[].class, leagueId)).sorted(byGlobalResultId).toList();
 	}
 
 }
