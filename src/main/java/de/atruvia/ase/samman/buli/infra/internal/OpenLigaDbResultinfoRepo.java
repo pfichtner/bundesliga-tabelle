@@ -67,7 +67,7 @@ public class OpenLigaDbResultinfoRepo {
 	@Autowired
 	private CacheManager cacheManager;
 
-	@Cacheable(value = CACHE_NAME, key = "#league + '_' + #season")
+	@Cacheable(CACHE_NAME)
 	public List<Resultinfo> getResultinfos(String league, String season) {
 		AvailableLeague availableLeague = getAvailableLeague(league, season).orElseThrow(
 				() -> new IllegalArgumentException("League %s, season %s not found".formatted(league, season)));
