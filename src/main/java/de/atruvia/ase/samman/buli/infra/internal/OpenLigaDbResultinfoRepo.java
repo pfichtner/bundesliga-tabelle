@@ -3,7 +3,6 @@ package de.atruvia.ase.samman.buli.infra.internal;
 import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.byGlobalResultId;
 import static java.util.Arrays.stream;
 import static java.util.Comparator.comparing;
-import static java.util.concurrent.TimeUnit.HOURS;
 import static lombok.AccessLevel.PUBLIC;
 
 import java.util.Comparator;
@@ -25,6 +24,10 @@ import lombok.experimental.FieldDefaults;
 @Repository
 @RequiredArgsConstructor
 public class OpenLigaDbResultinfoRepo {
+
+	public static final String CACHECLEAR = "cacheclear";
+
+	private static final int ONE_HOUR = 60 * 60 * 1000;
 
 	private static final String CACHE_NAME = "resultinfosCache";
 
@@ -74,7 +77,7 @@ public class OpenLigaDbResultinfoRepo {
 		return getResultinfos(availableLeague.leagueId);
 	}
 
-	@Scheduled(fixedDelay = 1, timeUnit = HOURS)
+	@Scheduled(fixedRateString = "${" + CACHECLEAR + ":" + ONE_HOUR + "}")
 	public void evictCacheEntries() {
 		Optional.ofNullable(cacheManager.getCache(CACHE_NAME)).ifPresent(Cache::clear);
 	}
