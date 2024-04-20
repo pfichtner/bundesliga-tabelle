@@ -1,6 +1,5 @@
 package de.atruvia.ase.samman.buli.infra.internal;
 
-import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.byGlobalResultId;
 import static java.util.Arrays.stream;
 import static lombok.AccessLevel.PUBLIC;
 
@@ -44,7 +43,7 @@ public class DefaultOpenLigaDbResultinfoRepo implements OpenLigaDbResultinfoRepo
 
 	private List<Resultinfo> getResultinfos(int leagueId) {
 		return stream(restTemplate.getForObject("https://api.openligadb.de/getresultinfos/{leagueId}",
-				Resultinfo[].class, leagueId)).sorted(byGlobalResultId).toList();
+				Resultinfo[].class, leagueId)).toList();
 	}
 
 }
