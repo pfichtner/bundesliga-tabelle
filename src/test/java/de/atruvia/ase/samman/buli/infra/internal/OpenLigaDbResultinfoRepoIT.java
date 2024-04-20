@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 class OpenLigaDbResultinfoRepoIT {
 
-	OpenLigaDbResultinfoRepo sut = new OpenLigaDbResultinfoRepo(new RestTemplate());
+	OpenLigaDbResultinfoRepo sut = new DefaultOpenLigaDbResultinfoRepo(new RestTemplate());
 
 	@ParameterizedTest
 	@MethodSource("provideLeagueSeasonCombinations")

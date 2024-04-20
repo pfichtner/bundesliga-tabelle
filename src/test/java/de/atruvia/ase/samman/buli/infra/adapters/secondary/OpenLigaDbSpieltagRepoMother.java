@@ -33,12 +33,7 @@ public final class OpenLigaDbSpieltagRepoMother {
 	}
 
 	public static OpenLigaDbResultinfoRepo resultinfoProvider() {
-		return new OpenLigaDbResultinfoRepo(null) {
-			@Override
-			public List<Resultinfo> getResultinfos(String league, String season) {
-				return List.of(resultinfo());
-			}
-		};
+		return (league, season) -> List.of(resultinfo());
 	}
 
 	private static Resultinfo resultinfo() {
