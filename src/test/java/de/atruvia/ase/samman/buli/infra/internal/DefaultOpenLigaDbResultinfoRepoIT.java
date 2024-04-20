@@ -2,14 +2,16 @@ package de.atruvia.ase.samman.buli.infra.internal;
 
 import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.getEndergebnisType;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.web.client.RestTemplate;
 
-class OpenLigaDbResultinfoRepoIT {
+class DefaultOpenLigaDbResultinfoRepoIT {
 
 	OpenLigaDbResultinfoRepo sut = new DefaultOpenLigaDbResultinfoRepo(new RestTemplate());
 
@@ -19,12 +21,12 @@ class OpenLigaDbResultinfoRepoIT {
 		assertThat(getEndergebnisType(sut.getResultinfos(league, season)).name).isEqualTo("Endergebnis");
 	}
 
-	static Stream<String[]> provideLeagueSeasonCombinations() {
-		return Stream.of( //
-				new String[] { "bl1", "2022" }, //
-				new String[] { "bl1", "2023" }, //
-				new String[] { "bl2", "2022" }, //
-				new String[] { "bl2", "2023" } //
+	static List<Arguments> provideLeagueSeasonCombinations() {
+		return List.of( //
+				arguments("bl1", "2022"), //
+				arguments("bl1", "2023"), //
+				arguments("bl2", "2022"), //
+				arguments("bl2", "2023") //
 		);
 	}
 
