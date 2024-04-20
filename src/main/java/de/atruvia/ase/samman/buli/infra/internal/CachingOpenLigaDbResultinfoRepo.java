@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CachingOpenLigaDbResultinfoRepo implements OpenLigaDbResultinfoRepo {
 
-	public static final String CACHECLEAR = "cacheclear";
+	public static final String CACHECLEAR = "resultinfosCacheTTL";
 
 	private static final String CACHE_NAME = "resultinfosCache";
 	private static final int ONE_HOUR = 60 * 60 * 1000;
