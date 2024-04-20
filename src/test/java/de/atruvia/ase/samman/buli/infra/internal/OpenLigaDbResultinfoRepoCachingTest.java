@@ -91,22 +91,24 @@ class OpenLigaDbResultinfoRepoCachingTest {
 		@Autowired
 		OpenLigaDbResultinfoRepo cachingRepo;
 
+		String league = "bl1";
+		String season = "2023";
+
 		@Test
 		void cacheGetsEvictedAfterOneSecond() throws InterruptedException {
-			String league = "bl1";
-			String season = "2023";
-
 			var first = List.of(resultinfo("A1"));
 			var second = List.of(resultinfo("B1"), resultinfo("B2"));
 			var answers = List.of(first, second).iterator();
 			when(delegateMock.getResultinfos(league, season)).thenAnswer(__ -> answers.next());
 
-			for (int i = 0; i < 3; i++) {
-				assertThat(cachingRepo.getResultinfos(league, season)).isSameAs(first);
-			}
+			whenCachingRepoIsQueriedTheResultIs(first);
 			TimeUnit.MILLISECONDS.sleep(EVICT_MS + 500);
+			whenCachingRepoIsQueriedTheResultIs(second);
+		}
+
+		private void whenCachingRepoIsQueriedTheResultIs(List<Resultinfo> resultinfos) {
 			for (int i = 0; i < 3; i++) {
-				assertThat(cachingRepo.getResultinfos(league, season)).isSameAs(second);
+				assertThat(cachingRepo.getResultinfos(league, season)).isSameAs(resultinfos);
 			}
 		}
 
