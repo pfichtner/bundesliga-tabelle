@@ -67,7 +67,7 @@ public class OpenLigaDbResultinfoRepo {
 
 	private final RestTemplate restTemplate;
 
-	@Autowired
+	@Autowired(required = false)
 	private CacheManager cacheManager;
 
 	@Cacheable(CACHE_NAME)
