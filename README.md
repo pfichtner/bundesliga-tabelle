@@ -1,4 +1,5 @@
 [![Java CI with Maven](https://github.com/pfichtner/bundesliga-tabelle/actions/workflows/maven.yml/badge.svg)](https://github.com/pfichtner/bundesliga-tabelle/actions/workflows/maven.yml)
+[![codecov](https://codecov.io/gh/pfichtner/bundesliga-tabelle/graph/badge.svg?token=M28D715AGT)](https://codecov.io/gh/pfichtner/bundesliga-tabelle)
 
 # bundesliga-tabelle
 
