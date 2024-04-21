@@ -5,6 +5,7 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEGONNEN;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.GEPLANT;
 import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.getEndergebnisType;
 import static java.net.URI.create;
+import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.Comparator.comparing;
 import static lombok.AccessLevel.PUBLIC;
@@ -51,10 +52,9 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		int pointsTeam1;
 		int pointsTeam2;
 
-		public static Optional<MatchResult> endergebnis(MatchResult[] matchResults, List<Resultinfo> resultinfos) {
-			return stream(matchResults)
-					.filter(t -> t.resultTypeID == getEndergebnisType(resultinfos).globalResultInfo.id)
-					.reduce(toOnlyElement());
+		private static Optional<MatchResult> endergebnis(List<MatchResult> matchResults, List<Resultinfo> resultinfos) {
+			int endergebnisResultTypeId = getEndergebnisType(resultinfos).globalResultInfo.id;
+			return matchResults.stream().filter(t -> t.resultTypeID == endergebnisResultTypeId).reduce(toOnlyElement());
 		}
 
 		private static <T> BinaryOperator<T> toOnlyElement() {
@@ -69,12 +69,17 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	@FieldDefaults(level = PUBLIC)
 	private static class Goal {
 
-		static final Comparator<Goal> inChronologicalOrder = comparing(g -> g.goalID);
-		static final Goal NULL = new Goal();
+		private static final Comparator<Goal> inChronologicalOrder = comparing(g -> g.goalID);
+		private static final Goal NULL = new Goal();
+
+		private static Goal lastGoal(Goal[] goals) {
+			return stream(goals).max(inChronologicalOrder).orElse(NULL);
+		}
 
 		int goalID;
 		int scoreTeam1;
 		int scoreTeam2;
+
 	}
 
 	@ToString
@@ -93,7 +98,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 			;
 			ErgebnisTyp ergebnisTyp = ergebnisTyp();
 			if (ergebnisTyp == BEENDET) {
-				MatchResult endergebnis = MatchResult.endergebnis(matchResults, resultinfos)
+				MatchResult endergebnis = MatchResult.endergebnis(asList(matchResults), resultinfos)
 						.orElseThrow(() -> new IllegalStateException("No final result found in finished game " + this));
 				builder.ergebnis(ergebnisTyp, endergebnis.pointsTeam1, endergebnis.pointsTeam2);
 			} else if (ergebnisTyp == BEGONNEN) {
@@ -101,8 +106,11 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 				// been 0:0 while there have already been shoot some goals. Of course we always
 				// could take the "goals" in account (this always is correct) but we should
 				// prefer using the final result if it's present.
-				Goal latestGoal = latestGoal().orElse(Goal.NULL);
-				builder = builder.ergebnis(ergebnisTyp, latestGoal.scoreTeam1, latestGoal.scoreTeam2);
+				// In the meanwhile we have seen everything at running games! A half time score
+				// of 3:2 with a final score of 0:0 and goals where goals where missing (1:0,
+				// 3:0)
+				Goal lastGoal = Goal.lastGoal(goals);
+				builder = builder.ergebnis(ergebnisTyp, lastGoal.scoreTeam1, lastGoal.scoreTeam2);
 			}
 			return builder.build();
 		}
@@ -117,14 +125,6 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 			}
 		}
 
-		private Optional<Goal> latestGoal() {
-			return stream(goals).sorted(Goal.inChronologicalOrder).reduce(lastElement());
-		}
-
-	}
-
-	private static <T> BinaryOperator<T> lastElement() {
-		return (f, s) -> s;
 	}
 
 	@Override
