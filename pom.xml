@@ -124,8 +124,11 @@
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
-					<!-- do not break so cucumber-html gets generated (which breaks build after html generation but at least the jar gets generated anyway) :-/ -->
+					<reportsDirectory>
+						${project.build.directory}/failsafe-reports</reportsDirectory>
+					<!-- do not break so cucumber-html gets generated (which
+					breaks build after html generation but at least the jar gets
+					generated anyway) :-/ -->
 					<testFailureIgnore>${doBreakBuildOnCucmberFailures}</testFailureIgnore>
 				</configuration>
 			</plugin>
@@ -145,8 +148,10 @@
 						</goals>
 						<configuration>
 							<checkBuildResult>${doBreakBuildOnCucmberFailures}</checkBuildResult>
-							<treatScenariosAsFailed>${doBreakBuildOnCucmberFailures}</treatScenariosAsFailed>
-							<treatUndefinedAsFailed>${doBreakBuildOnCucmberFailures}</treatUndefinedAsFailed>
+							<treatScenariosAsFailed>
+								${doBreakBuildOnCucmberFailures}</treatScenariosAsFailed>
+							<treatUndefinedAsFailed>
+								${doBreakBuildOnCucmberFailures}</treatUndefinedAsFailed>
 							<outputDirectory>${project.build.directory}</outputDirectory>
 							<jsonFiles>
 								<param>**/cucumber.json</param>
@@ -190,6 +195,29 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.12</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
+
 </project>
