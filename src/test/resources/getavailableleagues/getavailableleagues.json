@@ -1,0 +1,16 @@
+[
+  {
+    "leagueId": 4562,
+    "leagueName": "1. Fußball-Bundesliga 2022/2023",
+    "leagueShortcut": "bl1",
+    "leagueSeason": "2022",
+    "sport": null
+  },
+  {
+    "leagueId": 4608,
+    "leagueName": "1. Fußball-Bundesliga 2023/2024",
+    "leagueShortcut": "bl1",
+    "leagueSeason": "2023",
+    "sport": null
+  }
+]

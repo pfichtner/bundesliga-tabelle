@@ -1,0 +1,22 @@
+[
+  {
+    "id": 5337,
+    "name": "Endergebnis",
+    "description": "Ergebnis nach Ende der offiziellen Spielzeit",
+    "orderId": 1,
+    "globalResultInfo": {
+      "id": 2,
+      "name": "nach 90 Minuten"
+    }
+  },
+  {
+    "id": 5338,
+    "name": "Halbzeit",
+    "description": "Zwischenstand zur Halbzeit",
+    "orderId": 2,
+    "globalResultInfo": {
+      "id": 1,
+      "name": "Halbzeit"
+    }
+  }
+]

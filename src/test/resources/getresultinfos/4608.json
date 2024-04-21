@@ -1,0 +1,22 @@
+[
+  {
+    "id": 5413,
+    "name": "Endergebnis",
+    "description": "Ergebnis nach Ende der offiziellen Spielzeit",
+    "orderId": 2,
+    "globalResultInfo": {
+      "id": 2,
+      "name": "nach 90 Minuten"
+    }
+  },
+  {
+    "id": 5456,
+    "name": "Halbzeitergebnis",
+    "description": null,
+    "orderId": 1,
+    "globalResultInfo": {
+      "id": 1,
+      "name": "Halbzeit"
+    }
+  }
+]
