@@ -22,7 +22,7 @@ import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Result
 
 @SpringBootTest
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
-class OpenLigaDbResultinfoRepoCachingTest {
+class CachingOpenLigaDbResultinfoRepoTest {
 
 	@Autowired
 	OpenLigaDbResultinfoRepo openLigaDbResultinfoRepo;
