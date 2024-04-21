@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PRIVATE)
 public final class RestTemplateMock {
 
-	public static RestTemplate configureMock(RestTemplate restTemplate, Function<HttpRequest, String> responseSupplier) {
+	public static RestTemplate configureMock(RestTemplate restTemplate,
+			Function<HttpRequest, String> responseSupplier) {
 		restTemplate.getInterceptors().add((req, body, execution) -> {
 			MockClientHttpResponse response = new MockClientHttpResponse(responseSupplier.apply(req).getBytes(), OK);
 			response.getHeaders().add(CONTENT_TYPE, APPLICATION_JSON_VALUE);

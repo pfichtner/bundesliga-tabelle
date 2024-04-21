@@ -1,8 +1,8 @@
 package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
-import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEGONNEN;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.GEPLANT;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
 import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.getEndergebnisType;
 import static java.net.URI.create;
 import static java.util.Arrays.asList;
@@ -72,7 +72,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		private static final Comparator<Goal> inChronologicalOrder = comparing(g -> g.goalID);
 		private static final Goal NULL = new Goal();
 
-		private static Goal lastGoal(Goal[] goals) {
+		private static Goal lastGoalOf(Goal[] goals) {
 			return stream(goals).max(inChronologicalOrder).orElse(NULL);
 		}
 
@@ -101,25 +101,29 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 				MatchResult endergebnis = MatchResult.endergebnis(asList(matchResults), resultinfos)
 						.orElseThrow(() -> new IllegalStateException("No final result found in finished game " + this));
 				builder.ergebnis(ergebnisTyp, endergebnis.pointsTeam1, endergebnis.pointsTeam2);
-			} else if (ergebnisTyp == BEGONNEN) {
+			} else if (ergebnisTyp == LAUFEND) {
 				// a final result is always present on started games, but in some cases it has
 				// been 0:0 while there have already been shoot some goals. Of course we always
 				// could take the "goals" in account (this always is correct) but we should
 				// prefer using the final result if it's present.
-				// In the meanwhile we have seen everything at running games! A half time score
-				// of 3:2 with a final score of 0:0 and goals where goals where missing (1:0,
-				// 3:0)
-				Goal lastGoal = Goal.lastGoal(goals);
+				// In the meanwhile we have seen everything at started games! e.g. a half time
+				// score of 3:2 with a final score of 0:0 and goals where goals where missing
+				// (0:1, 0:3)
+				Goal lastGoal = lastGoal();
 				builder = builder.ergebnis(ergebnisTyp, lastGoal.scoreTeam1, lastGoal.scoreTeam2);
 			}
 			return builder.build();
+		}
+
+		private Goal lastGoal() {
+			return Goal.lastGoalOf(goals);
 		}
 
 		private ErgebnisTyp ergebnisTyp() {
 			if (matchIsFinished) {
 				return BEENDET;
 			} else if (matchResults.length > 0) {
-				return BEGONNEN;
+				return LAUFEND;
 			} else {
 				return GEPLANT;
 			}

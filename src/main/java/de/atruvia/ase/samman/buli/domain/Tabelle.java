@@ -1,6 +1,6 @@
 package de.atruvia.ase.samman.buli.domain;
 
-import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEGONNEN;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
 import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
@@ -86,24 +86,24 @@ public class Tabelle {
 	}
 
 	private void addInternal(Paarung paarung, boolean swapped) {
-		ToreUndGegentore toreUndGegentore = new ToreUndGegentore(paarung.getToreTeamHeim(), paarung.getToreTeamGast());
+		ToreUndGegentore toreUndGegentore = new ToreUndGegentore(paarung.toreHeim(), paarung.toreGast());
 		TabellenPlatzBuilder builder = newEntry(paarung);
 		builder = swapped //
 				? builder.auswaerts(toreUndGegentore) //
 				: builder.heim(toreUndGegentore);
-		eintraege.merge(paarung.getTeamHeim(), builder.build(), TabellenPlatz::merge);
+		eintraege.merge(paarung.teamHeim(), builder.build(), TabellenPlatz::merge);
 	}
 
 	private TabellenPlatzBuilder newEntry(Paarung paarung) {
 		if (!paarung.hatErgebnis()) {
-			return TabellenPlatz.NULL.toBuilder().wappen(paarung.getWappenHeim());
+			return TabellenPlatz.NULL.toBuilder().wappen(paarung.wappenHeim());
 		}
 		Ergebnis ergebnis = paarung.ergebnis();
 		return TabellenPlatz.builder() //
-				.wappen(paarung.getWappenHeim()) //
-				.ergebnis(ergebnis, paarung.getErgebnisTyp()) //
+				.wappen(paarung.wappenHeim()) //
+				.ergebnis(ergebnis, paarung.ergebnisTyp()) //
 				.punkte(punkte(ergebnis)) //
-				.laufendesSpiel(paarung.ergebnisTypIs(BEGONNEN) ? paarung : null);
+				.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null);
 	}
 
 	private static int punkte(Ergebnis ergebnis) {

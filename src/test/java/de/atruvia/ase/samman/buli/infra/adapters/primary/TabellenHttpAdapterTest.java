@@ -4,7 +4,7 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
-import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEGONNEN;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
 import static de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder.paarung;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.merge;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.platzWith;
@@ -102,7 +102,7 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[0].tordifferenz", is(platz1.torDifferenz()))) //
 				.andExpect(jsonPath("$.[0].punkte", is(platz1.punkte()))) //
 				.andExpect(jsonPath("$.[0].letzte5", is("NUS--"))) //
-                .andExpect(jsonPath("$.[0]*", not(hasKey("laufendesSpiel"))))
+				.andExpect(jsonPath("$.[0]*", not(hasKey("laufendesSpiel"))))
 				//
 				.andExpect(jsonPath("$.[1].wappen", is(platz2.wappen().toASCIIString()))) //
 				.andExpect(jsonPath("$.[1].team", is(platz2.team()))) //
@@ -115,7 +115,7 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[1].tordifferenz", is(platz2.torDifferenz()))) //
 				.andExpect(jsonPath("$.[1].punkte", is(platz2.punkte()))) //
 				.andExpect(jsonPath("$.[1].letzte5", is("-----"))) //
-                .andExpect(jsonPath("$.[1]*", not(hasKey("laufendesSpiel"))))
+				.andExpect(jsonPath("$.[1]*", not(hasKey("laufendesSpiel")))) //
 		;
 
 	}
@@ -129,7 +129,7 @@ class TabellenHttpAdapterTest {
 		TabellenPlatz platz1 = merge( //
 				Stream.of(platzWith(SIEG, BEENDET), //
 						platzWith(UNENTSCHIEDEN, BEENDET), //
-						platzWith(NIEDERLAGE, BEGONNEN).toBuilder().laufendesSpiel(laufendesSpiel).build() //
+						platzWith(NIEDERLAGE, LAUFEND).toBuilder().laufendesSpiel(laufendesSpiel).build() //
 				));
 		when(tabellenService.erstelleTabelle(league, season)).thenReturn(List.of(platz1));
 

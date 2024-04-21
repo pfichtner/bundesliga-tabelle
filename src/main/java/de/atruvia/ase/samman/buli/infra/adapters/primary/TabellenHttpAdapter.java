@@ -86,8 +86,8 @@ public class TabellenHttpAdapter {
 		}
 
 		private static JsonLaufendesSpiel convertLaufendesSpiel(Paarung laufendesSpiel) {
-			return new JsonLaufendesSpiel(convertErgebnis(laufendesSpiel.ergebnis()), laufendesSpiel.getTeamGast(),
-					laufendesSpiel.getToreTeamHeim(), laufendesSpiel.getToreTeamGast());
+			return new JsonLaufendesSpiel(convertErgebnis(laufendesSpiel.ergebnis()), laufendesSpiel.teamGast(),
+					laufendesSpiel.toreHeim(), laufendesSpiel.toreGast());
 		}
 
 		private static String convertLetzte5(TabellenPlatz platz) {

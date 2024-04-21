@@ -201,13 +201,13 @@ public class TabelleTest {
 		dannIstDieTabelle( //
 				e1 -> {
 					assertThat(e1.team()).isEqualTo("Team 1");
-					assertThat(e1.laufendesSpiel().getToreTeamHeim()).isEqualTo(1);
-					assertThat(e1.laufendesSpiel().getToreTeamGast()).isEqualTo(2);
+					assertThat(e1.laufendesSpiel().toreHeim()).isEqualTo(1);
+					assertThat(e1.laufendesSpiel().toreGast()).isEqualTo(2);
 				}, //
 				e2 -> {
 					assertThat(e2.team()).isEqualTo("Team 2");
-					assertThat(e2.laufendesSpiel().getToreTeamHeim()).isEqualTo(2);
-					assertThat(e2.laufendesSpiel().getToreTeamGast()).isEqualTo(1);
+					assertThat(e2.laufendesSpiel().toreHeim()).isEqualTo(2);
+					assertThat(e2.laufendesSpiel().toreGast()).isEqualTo(1);
 				} //
 
 		);
