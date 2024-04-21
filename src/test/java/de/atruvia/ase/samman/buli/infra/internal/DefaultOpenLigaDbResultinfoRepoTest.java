@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpRequest;
 import org.springframework.web.client.RestTemplate;
 
-import de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother;
 import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo;
 
 class DefaultOpenLigaDbResultinfoRepoTest {
@@ -23,7 +22,7 @@ class DefaultOpenLigaDbResultinfoRepoTest {
 
 	OpenLigaDbResultinfoRepo sut = new DefaultOpenLigaDbResultinfoRepo(configureMock(new RestTemplate(), r -> {
 		try {
-			URL resource = requireNonNull(OpenLigaDbSpieltagRepoMother.class.getClassLoader()
+			URL resource = requireNonNull(DefaultOpenLigaDbResultinfoRepoTest.class.getClassLoader()
 					.getResource(openLigaDbResultinfoRepoResource(r)), () -> "No response captured for " + r);
 			return readString(new File(resource.toURI()).toPath());
 		} catch (IOException | URISyntaxException e) {
