@@ -3,7 +3,7 @@ package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.GEPLANT;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
-import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.getEndergebnisType;
+import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.endergebnisType;
 import static java.net.URI.create;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
@@ -53,7 +53,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		int pointsTeam2;
 
 		private static Optional<MatchResult> endergebnis(List<MatchResult> matchResults, List<Resultinfo> resultinfos) {
-			int endergebnisResultTypeId = getEndergebnisType(resultinfos).globalResultInfo.id;
+			int endergebnisResultTypeId = endergebnisType(resultinfos).globalResultInfo.id;
 			return matchResults.stream().filter(t -> t.resultTypeID == endergebnisResultTypeId).reduce(toOnlyElement());
 		}
 

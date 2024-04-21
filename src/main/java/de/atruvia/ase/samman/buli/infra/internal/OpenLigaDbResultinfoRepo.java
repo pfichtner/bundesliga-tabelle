@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PUBLIC;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
@@ -29,9 +30,13 @@ public interface OpenLigaDbResultinfoRepo {
 		int orderId;
 		GlobalResultInfo globalResultInfo;
 
-		public static Resultinfo getEndergebnisType(Collection<Resultinfo> resultinfos) {
-			return resultinfos.stream().max(byGlobalResultId)
+		public static Resultinfo endergebnisType(Collection<Resultinfo> resultinfos) {
+			return tryEndergebnisType(resultinfos)
 					.orElseThrow(() -> new IllegalArgumentException("resultinfos is empty"));
+		}
+
+		private static Optional<Resultinfo> tryEndergebnisType(Collection<Resultinfo> resultinfos) {
+			return resultinfos.stream().max(byGlobalResultId);
 		}
 
 	}

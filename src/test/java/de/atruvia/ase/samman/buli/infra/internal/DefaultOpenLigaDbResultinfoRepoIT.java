@@ -1,6 +1,6 @@
 package de.atruvia.ase.samman.buli.infra.internal;
 
-import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.getEndergebnisType;
+import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.endergebnisType;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -18,7 +18,7 @@ class DefaultOpenLigaDbResultinfoRepoIT {
 	@ParameterizedTest
 	@MethodSource("provideLeagueSeasonCombinations")
 	void endergebnisHasHighestGlobalId(String league, String season) {
-		assertThat(getEndergebnisType(sut.getResultinfos(league, season)).name).isEqualTo("Endergebnis");
+		assertThat(endergebnisType(sut.getResultinfos(league, season)).name).isEqualTo("Endergebnis");
 	}
 
 	static List<Arguments> provideLeagueSeasonCombinations() {

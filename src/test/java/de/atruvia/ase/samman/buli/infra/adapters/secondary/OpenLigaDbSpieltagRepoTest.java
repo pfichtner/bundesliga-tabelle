@@ -60,7 +60,7 @@ class OpenLigaDbSpieltagRepoTest {
 				  }
 				 ]
 				""");
-		OpenLigaDbSpieltagRepo repo = new OpenLigaDbSpieltagRepo(restTemplate, resultinfoProvider());
+		OpenLigaDbSpieltagRepo repo = new OpenLigaDbSpieltagRepo(restTemplate, resultinfoProvider(2));
 		assertThatThrownBy(() -> repo.lade("any", "any")).hasMessageContaining("at most one element");
 	}
 

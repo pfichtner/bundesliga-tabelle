@@ -1,14 +1,9 @@
 package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
+import static de.atruvia.ase.samman.buli.springframework.ResponseFromResourcesSupplier.responseFromResources;
 import static de.atruvia.ase.samman.buli.springframework.RestTemplateMock.configureMock;
-import static java.nio.file.Files.readString;
 import static lombok.AccessLevel.PRIVATE;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
 import java.util.List;
 
 import org.springframework.web.client.RestTemplate;
@@ -22,47 +17,38 @@ import lombok.NoArgsConstructor;
 public final class OpenLigaDbSpieltagRepoMother {
 
 	public static OpenLigaDbSpieltagRepo spieltagFsRepo() {
-		return new OpenLigaDbSpieltagRepo(configureMock(new RestTemplate(), r -> {
-			String[] parts = r.getURI().toASCIIString().split("/");
-			try {
-				return readString(path("getmatchdata", parts[parts.length - 2], parts[parts.length - 1]));
-			} catch (IOException | URISyntaxException e) {
-				throw new RuntimeException(e);
-			}
-		}), resultinfoProvider());
-	}
-
-	public static OpenLigaDbResultinfoRepo resultinfoProvider() {
-		return (__league, __season) -> List.of(resultinfo());
-	}
-
-	private static Resultinfo resultinfo() {
-		Resultinfo resultinfo = new Resultinfo();
-		resultinfo.orderId = 42;
-		GlobalResultInfo globalResultInfo = new GlobalResultInfo();
-		globalResultInfo.id = 2;
-		resultinfo.globalResultInfo = globalResultInfo;
-		return resultinfo;
+		return new OpenLigaDbSpieltagRepo(configureMock(new RestTemplate(),
+				responseFromResources(OpenLigaDbSpieltagRepoMother::resolveMatchdata)), resultinfoProvider(2));
 	}
 
 	public static OpenLigaDbTeamRepo teamFsRepo() {
-		return new OpenLigaDbTeamRepo(configureMock(new RestTemplate(), r -> {
-			String[] parts = r.getURI().toASCIIString().split("/");
-			try {
-				return readString(path("getavailableteams", parts[parts.length - 2], parts[parts.length - 1]));
-			} catch (IOException | URISyntaxException e) {
-				throw new RuntimeException(e);
-			}
-		}));
+		return new OpenLigaDbTeamRepo(configureMock(new RestTemplate(),
+				responseFromResources(OpenLigaDbSpieltagRepoMother::resolveAvailableteams)));
 	}
 
-	private static Path path(String base, String league, String season) throws URISyntaxException {
-		return new File(url(base, league, season).toURI()).toPath();
+	public static OpenLigaDbResultinfoRepo resultinfoProvider(int globalResultInfoId) {
+		return (__league, __season) -> List.of(resultinfo(globalResultInfoId));
 	}
 
-	private static URL url(String base, String league, String season) {
-		return OpenLigaDbSpieltagRepoMother.class.getClassLoader()
-				.getResource(base + "/%s/%s.json".formatted(league, season));
+	private static Resultinfo resultinfo(int globalResultInfoId) {
+		Resultinfo resultinfo = new Resultinfo();
+		resultinfo.orderId = 42;
+		resultinfo.globalResultInfo = globalResultInfo(globalResultInfoId);
+		return resultinfo;
+	}
+
+	private static GlobalResultInfo globalResultInfo(int globalResultInfoId) {
+		GlobalResultInfo globalResultInfo = new GlobalResultInfo();
+		globalResultInfo.id = globalResultInfoId;
+		return globalResultInfo;
+	}
+
+	private static String resolveMatchdata(String[] parts) {
+		return "getmatchdata/%s/%s.json".formatted(parts[parts.length - 2], parts[parts.length - 1]);
+	}
+
+	private static String resolveAvailableteams(String[] parts) {
+		return "getavailableteams/%s/%s.json".formatted(parts[parts.length - 2], parts[parts.length - 1]);
 	}
 
 }
