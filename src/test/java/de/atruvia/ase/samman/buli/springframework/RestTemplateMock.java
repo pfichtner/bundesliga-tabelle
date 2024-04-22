@@ -16,6 +16,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PRIVATE)
 public final class RestTemplateMock {
 
+	public static RestTemplate restTemplateMock(Function<HttpRequest, String> responseSupplier) {
+		return configureMock(new RestTemplate(), responseSupplier);
+	}
+
 	public static RestTemplate configureMock(RestTemplate restTemplate,
 			Function<HttpRequest, String> responseSupplier) {
 		restTemplate.getInterceptors().add((req, body, execution) -> {

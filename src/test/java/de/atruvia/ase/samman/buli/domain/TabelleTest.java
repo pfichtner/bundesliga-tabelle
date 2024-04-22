@@ -23,10 +23,10 @@ import de.atruvia.ase.samman.buli.domain.Paarung.Entry;
 import de.atruvia.ase.samman.buli.domain.Paarung.Entry.EntryBuilder;
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 
-public class TabelleTest {
+class TabelleTest {
 
-	private Paarung[] paarungen;
-	private Tabelle sut = new Tabelle();
+	Paarung[] paarungen;
+	Tabelle sut = new Tabelle();
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {

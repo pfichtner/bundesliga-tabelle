@@ -1,12 +1,10 @@
 package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
 import static de.atruvia.ase.samman.buli.springframework.ResponseFromResourcesSupplier.responseFromResources;
-import static de.atruvia.ase.samman.buli.springframework.RestTemplateMock.configureMock;
+import static de.atruvia.ase.samman.buli.springframework.RestTemplateMock.restTemplateMock;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
-
-import org.springframework.web.client.RestTemplate;
 
 import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo;
 import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo;
@@ -17,13 +15,14 @@ import lombok.NoArgsConstructor;
 public final class OpenLigaDbSpieltagRepoMother {
 
 	public static OpenLigaDbSpieltagRepo spieltagFsRepo() {
-		return new OpenLigaDbSpieltagRepo(configureMock(new RestTemplate(),
-				responseFromResources(OpenLigaDbSpieltagRepoMother::resolveMatchdata)), resultinfoProvider(2));
+		return new OpenLigaDbSpieltagRepo(
+				restTemplateMock(responseFromResources(OpenLigaDbSpieltagRepoMother::resolveMatchdata)),
+				resultinfoProvider(2));
 	}
 
 	public static OpenLigaDbTeamRepo teamFsRepo() {
-		return new OpenLigaDbTeamRepo(configureMock(new RestTemplate(),
-				responseFromResources(OpenLigaDbSpieltagRepoMother::resolveAvailableteams)));
+		return new OpenLigaDbTeamRepo(
+				restTemplateMock(responseFromResources(OpenLigaDbSpieltagRepoMother::resolveAvailableteams)));
 	}
 
 	public static OpenLigaDbResultinfoRepo resultinfoProvider(int globalResultInfoId) {

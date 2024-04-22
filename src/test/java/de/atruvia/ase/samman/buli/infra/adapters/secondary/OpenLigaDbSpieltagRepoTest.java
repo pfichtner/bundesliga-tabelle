@@ -2,7 +2,7 @@ package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
 import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.resultinfoProvider;
 import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.spieltagFsRepo;
-import static de.atruvia.ase.samman.buli.springframework.RestTemplateMock.configureMock;
+import static de.atruvia.ase.samman.buli.springframework.RestTemplateMock.restTemplateMock;
 import static java.net.URI.create;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -50,7 +50,7 @@ class OpenLigaDbSpieltagRepoTest {
 
 	@Test
 	void throwsExceptionIfThereAreMatchesWithMultipleFinalResults() throws Exception {
-		RestTemplate restTemplate = configureMock(new RestTemplate(), __ -> """
+		RestTemplate restTemplate = restTemplateMock(__ -> """
 				[
 				  {
 					"team1": { "teamName": "Team 1", "teamIconUrl": "teamIconUrl1" },

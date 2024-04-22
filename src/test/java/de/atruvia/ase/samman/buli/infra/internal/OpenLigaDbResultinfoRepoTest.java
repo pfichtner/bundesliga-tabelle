@@ -13,11 +13,11 @@ import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Result
 class OpenLigaDbResultinfoRepoTest {
 
 	@Test
-		void testEndergebnisTypeIsHighestGlobalResultInfo() {
-			Resultinfo r1 = resultinfo(1);
-			Resultinfo r2 = resultinfo(2);
-			assertThat(endergebnisType(List.of(r2, r1))).isSameAs(r2);
-		}
+	void testEndergebnisTypeIsHighestGlobalResultInfo() {
+		Resultinfo r1 = resultinfo(1);
+		Resultinfo r2 = resultinfo(2);
+		assertThat(endergebnisType(List.of(r2, r1))).isSameAs(r2);
+	}
 
 	static Resultinfo resultinfo(int globalResultInfoId) {
 		Resultinfo resultinfo = new Resultinfo();
