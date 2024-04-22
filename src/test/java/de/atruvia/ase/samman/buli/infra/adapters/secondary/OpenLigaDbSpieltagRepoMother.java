@@ -16,13 +16,14 @@ public final class OpenLigaDbSpieltagRepoMother {
 
 	public static OpenLigaDbSpieltagRepo spieltagFsRepo() {
 		return new OpenLigaDbSpieltagRepo(
-				restTemplateMock(responseFromResources(OpenLigaDbSpieltagRepoMother::resolveMatchdata)),
+				restTemplateMock(responseFromResources(
+						p -> "getmatchdata/%s/%s.json".formatted(p[p.length - 2], p[p.length - 1]))),
 				resultinfoProvider(2));
 	}
 
 	public static OpenLigaDbTeamRepo teamFsRepo() {
-		return new OpenLigaDbTeamRepo(
-				restTemplateMock(responseFromResources(OpenLigaDbSpieltagRepoMother::resolveAvailableteams)));
+		return new OpenLigaDbTeamRepo(restTemplateMock(responseFromResources(
+				p -> "getavailableteams/%s/%s.json".formatted(p[p.length - 2], p[p.length - 1]))));
 	}
 
 	public static OpenLigaDbResultinfoRepo resultinfoProvider(int globalResultInfoId) {
@@ -40,14 +41,6 @@ public final class OpenLigaDbSpieltagRepoMother {
 		GlobalResultInfo globalResultInfo = new GlobalResultInfo();
 		globalResultInfo.id = globalResultInfoId;
 		return globalResultInfo;
-	}
-
-	private static String resolveMatchdata(String[] parts) {
-		return "getmatchdata/%s/%s.json".formatted(parts[parts.length - 2], parts[parts.length - 1]);
-	}
-
-	private static String resolveAvailableteams(String[] parts) {
-		return "getavailableteams/%s/%s.json".formatted(parts[parts.length - 2], parts[parts.length - 1]);
 	}
 
 }

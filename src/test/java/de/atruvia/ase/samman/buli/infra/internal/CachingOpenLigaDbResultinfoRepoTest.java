@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman.buli.infra.internal;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -8,7 +9,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -102,7 +102,8 @@ class CachingOpenLigaDbResultinfoRepoTest {
 			when(delegateMock.getResultinfos(league, season)).thenAnswer(__ -> answers.next());
 
 			whenCachingRepoIsQueriedTheResultIs(first);
-			TimeUnit.MILLISECONDS.sleep(EVICT_MS + 500);
+			MILLISECONDS.sleep(EVICT_MS);
+			MILLISECONDS.sleep(100);
 			whenCachingRepoIsQueriedTheResultIs(second);
 		}
 
@@ -112,7 +113,7 @@ class CachingOpenLigaDbResultinfoRepoTest {
 			}
 		}
 
-		private Resultinfo resultinfo(String name) {
+		private static Resultinfo resultinfo(String name) {
 			Resultinfo resultinfo = new Resultinfo();
 			resultinfo.name = name;
 			return resultinfo;

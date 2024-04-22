@@ -4,6 +4,7 @@ import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo
 import static de.atruvia.ase.samman.buli.springframework.ResponseFromResourcesSupplier.responseFromResources;
 import static de.atruvia.ase.samman.buli.springframework.RestTemplateMock.restTemplateMock;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import java.util.List;
@@ -17,15 +18,12 @@ class DefaultOpenLigaDbResultinfoRepoTest {
 	static final String ENDERGEBNIS = "Endergebnis";
 
 	OpenLigaDbResultinfoRepo sut = new DefaultOpenLigaDbResultinfoRepo(
-			restTemplateMock(responseFromResources(DefaultOpenLigaDbResultinfoRepoTest::resolve)));
+			restTemplateMock(responseFromResources(p -> "getresultinfos/%s.json".formatted(p[p.length - 1]))),
+			availableLeagueRepo());
 
-	static String resolve(String[] parts) {
-		if ("getavailableleagues".equals(parts[parts.length - 1])) {
-			return "getavailableleagues/getavailableleagues.json";
-		} else if ("getresultinfos".equals(parts[parts.length - 2])) {
-			return "getresultinfos/%s.json".formatted(parts[parts.length - 1]);
-		}
-		return null;
+	AvailableLeagueRepo availableLeagueRepo() {
+		return new AvailableLeagueRepo(
+				restTemplateMock(responseFromResources(__ -> "getavailableleagues/getavailableleagues.json")));
 	}
 
 	@Test
@@ -59,6 +57,16 @@ class DefaultOpenLigaDbResultinfoRepoTest {
 					});
 		});
 
+	}
+
+	@Test
+	void runtimeExceptionOnUnknownLeague() {
+		assertThatThrownBy(() -> sut.getResultinfos("XXX", "2023")).hasMessageContainingAll("XXX", "2023", "not found");
+	}
+
+	@Test
+	void runtimeExceptionOnUnknownSeason() {
+		assertThatThrownBy(() -> sut.getResultinfos("bl1", "0000")).hasMessageContainingAll("bl1", "0000", "not found");
 	}
 
 }
