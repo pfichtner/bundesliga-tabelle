@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman.buli.infra.internal;
 
+import static de.atruvia.ase.samman.buli.util.Streams.toOnlyElement;
 import static java.util.Arrays.stream;
 import static lombok.AccessLevel.PUBLIC;
 
@@ -31,6 +32,6 @@ public class AvailableLeagueRepo {
 				restTemplate.getForObject("https://api.openligadb.de/getavailableleagues", AvailableLeague[].class)) //
 				.filter(l -> leagueShortcut.equals(l.leagueShortcut)) //
 				.filter(l -> leagueSeason.equals(l.leagueSeason)) //
-				.findFirst();
+				.reduce(toOnlyElement());
 	}
 }

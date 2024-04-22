@@ -4,6 +4,7 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.GEPLANT;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
 import static de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo.endergebnisType;
+import static de.atruvia.ase.samman.buli.util.Streams.toOnlyElement;
 import static java.net.URI.create;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
@@ -13,7 +14,6 @@ import static lombok.AccessLevel.PUBLIC;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.BinaryOperator;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
@@ -55,12 +55,6 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		private static Optional<MatchResult> endergebnis(List<MatchResult> matchResults, List<Resultinfo> resultinfos) {
 			int endergebnisResultTypeId = endergebnisType(resultinfos).globalResultInfo.id;
 			return matchResults.stream().filter(t -> t.resultTypeID == endergebnisResultTypeId).reduce(toOnlyElement());
-		}
-
-		private static <T> BinaryOperator<T> toOnlyElement() {
-			return (f, s) -> {
-				throw new IllegalStateException("Expected at most one element but found at least " + f + " and " + s);
-			};
 		}
 
 	}
