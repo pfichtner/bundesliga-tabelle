@@ -18,10 +18,10 @@ class OpenLigaDbTeamRepoTest {
 		assertTeamHasWappen("FC Bayern München", "https://i.imgur.com/jJEsJrj.png");
 	}
 
-	void assertTeamHasWappen(String teamName, String wappenUri) throws Exception {
+	void assertTeamHasWappen(String teamName, String wappenUri) throws Exception  {
 		List<Team> teams = repo().getTeams("bl1", "2022");
-		assertThat(teams.stream().filter(t -> teamName.equals(t.getName())).findFirst())
-				.hasValueSatisfying(t -> assertThat(t.getWappen()).isEqualTo(URI.create(wappenUri)));
+		assertThat(teams.stream().filter(t -> teamName.equals(t.name())).findFirst())
+				.hasValueSatisfying(t -> assertThat(t.wappen()).isEqualTo(URI.create(wappenUri)));
 	}
 
 	OpenLigaDbTeamRepo repo() {

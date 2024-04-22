@@ -25,9 +25,9 @@ class OpenLigaDbTeamRepoIT {
 		String league = "bl1";
 		String season = "2022";
 		assertThat(team(teamFrankfurt, league, season))
-				.hasValueSatisfying(t -> assertThat(t.getWappen()).isEqualTo(wappenFrankfurt));
+				.hasValueSatisfying(t -> assertThat(t.wappen()).isEqualTo(wappenFrankfurt));
 		assertThat(team(teamMuenchen, league, season))
-				.hasValueSatisfying(t -> assertThat(t.getWappen()).isEqualTo(wappenMuenchen));
+				.hasValueSatisfying(t -> assertThat(t.wappen()).isEqualTo(wappenMuenchen));
 	}
 
 	@Test
@@ -35,13 +35,13 @@ class OpenLigaDbTeamRepoIT {
 		String league = "bl1";
 		String season = "2023";
 		assertThat(team(teamFrankfurt, league, season))
-				.hasValueSatisfying(t -> assertThat(t.getWappen()).isEqualTo(wappenFrankfurt));
+				.hasValueSatisfying(t -> assertThat(t.wappen()).isEqualTo(wappenFrankfurt));
 		assertThat(team(teamMuenchen, league, season))
-				.hasValueSatisfying(t -> assertThat(t.getWappen()).isEqualTo(wappenMuenchen));
+				.hasValueSatisfying(t -> assertThat(t.wappen()).isEqualTo(wappenMuenchen));
 	}
 
 	Optional<Team> team(String teamName, String league, String season) throws Exception {
-		return teams(league, season).filter(t -> t.getName().equals(teamName)).findFirst();
+		return teams(league, season).filter(t -> t.name().equals(teamName)).findFirst();
 	}
 
 	Stream<Team> teams(String league, String season) throws Exception {
