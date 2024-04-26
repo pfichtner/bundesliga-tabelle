@@ -94,7 +94,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 			if (ergebnisTyp == BEENDET) {
 				MatchResult endergebnis = MatchResult.endergebnis(asList(matchResults), resultinfos)
 						.orElseThrow(() -> new IllegalStateException("No final result found in finished game " + this));
-				builder.ergebnis(ergebnisTyp, endergebnis.pointsTeam1, endergebnis.pointsTeam2);
+				builder = builder.ergebnis(ergebnisTyp, endergebnis.pointsTeam1, endergebnis.pointsTeam2);
 			} else if (ergebnisTyp == LAUFEND) {
 				// a final result is always present on started games, but in some cases it has
 				// been 0:0 while there have already been shoot some goals. Of course we always
