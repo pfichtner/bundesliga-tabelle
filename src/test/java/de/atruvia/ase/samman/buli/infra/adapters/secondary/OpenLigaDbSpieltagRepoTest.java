@@ -19,6 +19,10 @@ import de.atruvia.ase.samman.buli.domain.Paarung.Entry;
 
 class OpenLigaDbSpieltagRepoTest {
 
+	int idFrankfurt = 91;
+	int idMuenchen = 40;
+	int idBremen = 134;
+
 	String teamFrankfurt = "Eintracht Frankfurt";
 	String teamMuenchen = "FC Bayern München";
 	String teamBremen = "Werder Bremen";
@@ -33,8 +37,8 @@ class OpenLigaDbSpieltagRepoTest {
 		List<Paarung> paarungen = repo().lade("bl1", "2022");
 		Paarung expected0 = Paarung.builder() //
 				.ergebnisTyp(BEENDET) //
-				.heim(new Entry(91, teamFrankfurt, wappenFrankfurt, 1)) //
-				.gast(new Entry(40, teamMuenchen, wappenMuenchen, 6)) //
+				.heim(new Entry(idFrankfurt, teamFrankfurt, wappenFrankfurt, 1)) //
+				.gast(new Entry(idMuenchen, teamMuenchen, wappenMuenchen, 6)) //
 				.build();
 		assertThat(paarungen).hasSize(306).element(0).isEqualTo(expected0);
 	}
@@ -46,8 +50,8 @@ class OpenLigaDbSpieltagRepoTest {
 		List<Paarung> paarungen = repo().lade("bl1", "2023");
 		Paarung expected0 = Paarung.builder() //
 				.ergebnisTyp(BEENDET) //
-				.heim(new Entry(134, teamBremen, wappenBremen, 0)) //
-				.gast(new Entry(40, teamMuenchen, wappenMuenchen, 4)) //
+				.heim(new Entry(idBremen, teamBremen, wappenBremen, 0)) //
+				.gast(new Entry(idMuenchen, teamMuenchen, wappenMuenchen, 4)) //
 				.build();
 		assertThat(paarungen).hasSize(9).element(0).isEqualTo(expected0);
 	}
