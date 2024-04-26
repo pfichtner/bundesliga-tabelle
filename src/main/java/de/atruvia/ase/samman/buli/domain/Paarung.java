@@ -38,12 +38,8 @@ public class Paarung {
 		@With
 		int tore;
 
-		public Entry(String team, URI wappen) {
-			this(team, wappen, 0);
-		}
-
 		public Entry(String team, URI wappen, int tore) {
-			this(team, team, wappen, tore);
+			this(null, team, wappen, tore);
 		}
 
 		public Entry(Object identifier, String team, URI wappen, int tore) {
