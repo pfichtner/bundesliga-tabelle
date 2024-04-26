@@ -21,7 +21,6 @@ import org.springframework.web.client.RestTemplate;
 import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Paarung.Entry;
 import de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp;
-import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
 import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo;
 import de.atruvia.ase.samman.buli.infra.internal.OpenLigaDbResultinfoRepo.Resultinfo;
@@ -86,15 +85,15 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		Goal[] goals;
 
 		private Paarung toDomain(List<Resultinfo> resultinfos) {
-			PaarungBuilder builder = Paarung.builder() //
-					.heim(new Entry(team1.teamName, create(team1.teamIconUrl))) //
-					.gast(new Entry(team2.teamName, create(team2.teamIconUrl))) //
+			Paarung paarung = new Paarung(GEPLANT, //
+					new Entry(team1.teamName, create(team1.teamIconUrl)), //
+					new Entry(team2.teamName, create(team2.teamIconUrl))) //
 			;
 			ErgebnisTyp ergebnisTyp = ergebnisTyp();
 			if (ergebnisTyp == BEENDET) {
 				MatchResult endergebnis = MatchResult.endergebnis(asList(matchResults), resultinfos)
 						.orElseThrow(() -> new IllegalStateException("No final result found in finished game " + this));
-				builder.ergebnis(ergebnisTyp, endergebnis.pointsTeam1, endergebnis.pointsTeam2);
+				paarung = paarung.ergebnis(ergebnisTyp, endergebnis.pointsTeam1, endergebnis.pointsTeam2);
 			} else if (ergebnisTyp == LAUFEND) {
 				// a final result is always present on started games, but in some cases it has
 				// been 0:0 while there have already been shoot some goals. Of course we always
@@ -104,9 +103,9 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 				// score of 3:2 with a final score of 0:0 and goals where goals where missing
 				// (0:1, 0:3)
 				Goal lastGoal = lastGoal();
-				builder = builder.ergebnis(ergebnisTyp, lastGoal.scoreTeam1, lastGoal.scoreTeam2);
+				paarung = paarung.ergebnis(ergebnisTyp, lastGoal.scoreTeam1, lastGoal.scoreTeam2);
 			}
-			return builder.build();
+			return paarung;
 		}
 
 		private Goal lastGoal() {

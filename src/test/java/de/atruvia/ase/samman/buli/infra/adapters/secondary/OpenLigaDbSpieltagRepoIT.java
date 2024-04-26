@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static java.net.URI.create;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,20 +28,20 @@ class OpenLigaDbSpieltagRepoIT {
 	@Test
 	void canRetrieveDataOf2022() throws Exception {
 		List<Paarung> paarungen = repo().lade("bl1", "2022");
-		Paarung expected0 = Paarung.builder() //
-				.heim(new Paarung.Entry(teamFrankfurt, wappenFrankfurt)) //
-				.gast(new Paarung.Entry(teamMuenchen, wappenMuenchen)) //
-				.build().withErgebnis(1, 6);
+		Paarung expected0 = new Paarung(BEENDET, //
+				new Paarung.Entry(teamFrankfurt, wappenFrankfurt, 1), //
+				new Paarung.Entry(teamMuenchen, wappenMuenchen, 6)) //
+		;
 		assertThat(paarungen).hasSize(18 / 2 * 17 * 2).element(0).isEqualTo(expected0);
 	}
 
 	@Test
 	void canRetrieveDataOf2023() throws Exception {
 		List<Paarung> paarungen = repo().lade("bl1", "2023");
-		Paarung expected0 = Paarung.builder() //
-				.heim(new Paarung.Entry(teamBremen, wappenBremen)) //
-				.gast(new Paarung.Entry(teamMuenchen, wappenMuenchen)) //
-				.build().withErgebnis(0, 4);
+		Paarung expected0 = new Paarung(BEENDET, //
+				new Paarung.Entry(teamBremen, wappenBremen, 0), //
+				new Paarung.Entry(teamMuenchen, wappenMuenchen, 4)) //
+		;
 		assertThat(paarungen).element(0).isEqualTo(expected0);
 	}
 

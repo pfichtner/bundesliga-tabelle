@@ -10,13 +10,11 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
 import java.net.URI;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 @Data
 @AllArgsConstructor
-@Builder(toBuilder = true)
 @Accessors(fluent = true)
 public class Paarung {
 
@@ -30,7 +28,6 @@ public class Paarung {
 
 	@Data
 	@AllArgsConstructor
-	@Builder(toBuilder = true)
 	@Accessors(fluent = true)
 	public static class Entry {
 		String team;
@@ -42,7 +39,6 @@ public class Paarung {
 		}
 	}
 
-	@Builder.Default
 	ErgebnisTyp ergebnisTyp = GEPLANT;
 
 	Entry heim, gast;
@@ -91,8 +87,19 @@ public class Paarung {
 		return this.ergebnisTyp == ergebnisTyp;
 	}
 
-	public Paarung withErgebnis(int toreHeim, int toreGast) {
-		return toBuilder().endergebnis(toreHeim, toreGast).build();
+	public Paarung endergebnis(int toreHeim, int toreGast) {
+		return ergebnis(BEENDET, toreHeim, toreGast);
+	}
+
+	public Paarung zwischenergebnis(int toreHeim, int toreGast) {
+		return ergebnis(LAUFEND, toreHeim, toreGast);
+	}
+
+	public Paarung ergebnis(ErgebnisTyp ergebnisTyp, int toreHeim, int toreGast) {
+		return new Paarung(ergebnisTyp, //
+				new Entry(heim.team, heim.wappen, toreHeim), //
+				new Entry(gast.team, gast.wappen, toreGast) //
+		);
 	}
 
 	public Ergebnis ergebnis() {
@@ -106,38 +113,7 @@ public class Paarung {
 	}
 
 	public Paarung swap() {
-		return toBuilder().heim(gast).gast(heim).build();
-	}
-
-	public static class PaarungBuilder {
-
-		public static Paarung.PaarungBuilder paarung(String teamHeim, String teamGast) {
-			return Paarung.builder().heim(entry(teamHeim)).gast(entry(teamGast));
-		}
-
-		private static Entry entry(String team) {
-			return Entry.builder().team(team).build();
-		}
-
-		public PaarungBuilder endergebnis(int toreTeamHeim, int toreTeamGast) {
-			return ergebnis(BEENDET, toreTeamHeim, toreTeamGast);
-		}
-
-		public PaarungBuilder zwischenergebnis(int toreTeamHeim, int toreTeamGast) {
-			return ergebnis(LAUFEND, toreTeamHeim, toreTeamGast);
-		}
-
-		public PaarungBuilder ergebnis(ErgebnisTyp ergebnisTyp, int toreTeamHeim, int toreTeamGast) {
-			return withGoals(ergebnisTyp(ergebnisTyp), toreTeamHeim, toreTeamGast);
-		}
-
-		private PaarungBuilder withGoals(PaarungBuilder builder, int toreTeamHeim, int toreTeamGast) {
-			return builder //
-					.heim(heim.tore(toreTeamHeim)) //
-					.gast(gast.tore(toreTeamGast)) //
-			;
-		}
-
+		return new Paarung(ergebnisTyp, gast, heim);
 	}
 
 }

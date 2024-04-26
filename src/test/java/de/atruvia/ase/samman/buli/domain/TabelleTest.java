@@ -3,6 +3,7 @@ package de.atruvia.ase.samman.buli.domain;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.GEPLANT;
 import static java.net.URI.create;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,8 +12,6 @@ import java.net.URI;
 import org.junit.jupiter.api.Test;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Entry;
-import de.atruvia.ase.samman.buli.domain.Paarung.Entry.EntryBuilder;
-import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 
 class TabelleTest {
 
@@ -20,8 +19,8 @@ class TabelleTest {
 
 	@Test
 	void zweiMannschaftenKeinSpiel() {
-		sut.add(paarung("Team 1", "Team 2").build());
-		sut.add(paarung("Team 2", "Team 1").build());
+		sut.add(paarung("Team 1", "Team 2"));
+		sut.add(paarung("Team 2", "Team 1"));
 
 		assertThat(sut.getEntries()).hasSize(2);
 
@@ -38,8 +37,8 @@ class TabelleTest {
 
 	@Test
 	void zweiMannschaftenEinSpielKeineTore() {
-		sut.add(paarung("Team 1", "Team 2").endergebnis(0, 0).build());
-		sut.add(paarung("Team 2", "Team 1").build());
+		sut.add(paarung("Team 1", "Team 2").endergebnis(0, 0));
+		sut.add(paarung("Team 2", "Team 1"));
 
 		TabellenPlatz element0 = sut.getEntries().get(0);
 		assertThat(element0.platz()).isEqualTo(1);
@@ -58,8 +57,8 @@ class TabelleTest {
 
 	@Test
 	void mannschaftMitMehrPunktenIstWeiterOben() {
-		sut.add(paarung("Team 1", "Team 2").endergebnis(0, 1).build());
-		sut.add(paarung("Team 2", "Team 1").build());
+		sut.add(paarung("Team 1", "Team 2").endergebnis(0, 1));
+		sut.add(paarung("Team 2", "Team 1"));
 
 		TabellenPlatz element0 = sut.getEntries().get(0);
 		assertThat(element0.platz()).isEqualTo(1);
@@ -76,8 +75,8 @@ class TabelleTest {
 
 	@Test
 	void zweiMannschaftenZweiSpieleMitToren() {
-		sut.add(paarung("Team 1", "Team 2").endergebnis(1, 0).build());
-		sut.add(paarung("Team 2", "Team 1").endergebnis(1, 0).build());
+		sut.add(paarung("Team 1", "Team 2").endergebnis(1, 0));
+		sut.add(paarung("Team 2", "Team 1").endergebnis(1, 0));
 
 		TabellenPlatz element0 = sut.getEntries().get(0);
 		assertThat(element0.platz()).isEqualTo(1);
@@ -92,10 +91,10 @@ class TabelleTest {
 
 	@Test
 	void dieFolgendeMannschaftIstPlatzDrei() {
-		sut.add(paarung("Team 1", "Team 2").endergebnis(1, 0).build());
-		sut.add(paarung("Team 2", "Team 1").endergebnis(1, 0).build());
-		sut.add(paarung("Team 1", "Team 3").endergebnis(1, 0).build());
-		sut.add(paarung("Team 2", "Team 3").endergebnis(1, 0).build());
+		sut.add(paarung("Team 1", "Team 2").endergebnis(1, 0));
+		sut.add(paarung("Team 2", "Team 1").endergebnis(1, 0));
+		sut.add(paarung("Team 1", "Team 3").endergebnis(1, 0));
+		sut.add(paarung("Team 2", "Team 3").endergebnis(1, 0));
 
 		assertThat(sut.getEntries()).hasSize(3);
 
@@ -106,8 +105,8 @@ class TabelleTest {
 
 	@Test
 	void punktUndTorGleichAberMehrAuswärtsTore() {
-		sut.add(paarung("Team 1", "Team 2").endergebnis(1, 2).build());
-		sut.add(paarung("Team 2", "Team 1").endergebnis(0, 1).build());
+		sut.add(paarung("Team 1", "Team 2").endergebnis(1, 2));
+		sut.add(paarung("Team 2", "Team 1").endergebnis(0, 1));
 
 		assertThat(sut.getEntries().get(0).team()).isEqualTo("Team 2");
 		assertThat(sut.getEntries().get(1).team()).isEqualTo("Team 1");
@@ -115,8 +114,8 @@ class TabelleTest {
 
 	@Test
 	void wappenIstImmerDasDerLetztenPaarung() {
-		sut.add(paarung("Team 1", "Team 2", create("proto://wappenAlt1"), create("proto://wappenAlt2")).build());
-		sut.add(paarung("Team 2", "Team 1", create("proto://wappenNeu2"), create("proto://wappenNeu1")).build());
+		sut.add(paarung("Team 1", "Team 2", create("proto://wappenAlt1"), create("proto://wappenAlt2")));
+		sut.add(paarung("Team 2", "Team 1", create("proto://wappenNeu2"), create("proto://wappenNeu1")));
 
 		assertThat(sut.getEntries().get(0).wappen()).isEqualTo(create("proto://wappenNeu1"));
 		assertThat(sut.getEntries().get(1).wappen()).isEqualTo(create("proto://wappenNeu2"));
@@ -124,8 +123,8 @@ class TabelleTest {
 
 	@Test
 	void nullWappenWerdenNichtUebernommen() {
-		sut.add(paarung("Team 1", "Team 2", create("proto://wappenAlt1"), create("proto://wappenAlt2")).build());
-		sut.add(paarung("Team 2", "Team 1", create("proto://wappenNeu2"), null).build());
+		sut.add(paarung("Team 1", "Team 2", create("proto://wappenAlt1"), create("proto://wappenAlt2")));
+		sut.add(paarung("Team 2", "Team 1", create("proto://wappenNeu2"), null));
 
 		assertThat(sut.getEntries().get(0).wappen()).isEqualTo(create("proto://wappenAlt1"));
 		assertThat(sut.getEntries().get(1).wappen()).isEqualTo(create("proto://wappenNeu2"));
@@ -133,8 +132,8 @@ class TabelleTest {
 
 	@Test
 	void wennEinWappenInAllenPaarungenNullIstIstEsNull() {
-		sut.add(paarung("Team ohne Wappen", "Team mit Wappen", null, create("proto://wappen")).build());
-		sut.add(paarung("Team mit Wappen", "Team ohne Wappen", create("proto://wappen"), null).build());
+		sut.add(paarung("Team ohne Wappen", "Team mit Wappen", null, create("proto://wappen")));
+		sut.add(paarung("Team mit Wappen", "Team ohne Wappen", create("proto://wappen"), null));
 
 		TabellenPlatz element0 = sut.getEntries().get(0);
 		assertThat(element0.team()).isEqualTo("Team mit Wappen");
@@ -147,8 +146,8 @@ class TabelleTest {
 
 	@Test
 	void keineSpieleKeineErgebnisse() {
-		sut.add(paarung("Team 1", "Team 2").build());
-		sut.add(paarung("Team 2", "Team 1").build());
+		sut.add(paarung("Team 1", "Team 2"));
+		sut.add(paarung("Team 2", "Team 1"));
 
 		assertThat(sut.getEntries().get(0).ergebnisse()).isEmpty();
 		assertThat(sut.getEntries().get(1).ergebnisse()).isEmpty();
@@ -156,8 +155,8 @@ class TabelleTest {
 
 	@Test
 	void zweiSpieleErgebnisse_dieLetztePaarungIstVorneInDerListe() {
-		sut.add(paarung("Team 1", "Team 2").endergebnis(1, 0).build());
-		sut.add(paarung("Team 1", "Team 2").endergebnis(1, 1).build());
+		sut.add(paarung("Team 1", "Team 2").endergebnis(1, 0));
+		sut.add(paarung("Team 1", "Team 2").endergebnis(1, 1));
 
 		assertThat(sut.getEntries().get(0).getErgebnisse()).containsExactly(SIEG, UNENTSCHIEDEN);
 		assertThat(sut.getEntries().get(1).getErgebnisse()).containsExactly(NIEDERLAGE, UNENTSCHIEDEN);
@@ -165,8 +164,8 @@ class TabelleTest {
 
 	@Test
 	void laufendeSpieleWerdenAusgewiesen() {
-		sut.add(paarung("Team 1", "Team 2").endergebnis(1, 0).build());
-		sut.add(paarung("Team 2", "Team 1").zwischenergebnis(2, 1).build());
+		sut.add(paarung("Team 1", "Team 2").endergebnis(1, 0));
+		sut.add(paarung("Team 2", "Team 1").zwischenergebnis(2, 1));
 
 		TabellenPlatz element0 = sut.getEntries().get(0);
 		assertThat(element0.team()).isEqualTo("Team 1");
@@ -181,8 +180,8 @@ class TabelleTest {
 
 	@Test
 	void alleAttribute() {
-		sut.add(paarung("Team 1", "Team 2").endergebnis(0, 1).build());
-		sut.add(paarung("Team 2", "Team 1").endergebnis(42, 42).build());
+		sut.add(paarung("Team 1", "Team 2").endergebnis(0, 1));
+		sut.add(paarung("Team 2", "Team 1").endergebnis(42, 42));
 
 		TabellenPlatz element0 = sut.getEntries().get(0);
 		assertThat(element0.platz()).isEqualTo(1);
@@ -220,20 +219,12 @@ class TabelleTest {
 		assertThat(element1.torDifferenz()).isEqualTo(-1);
 	}
 
-	private static PaarungBuilder paarung(String teamHeim, String teamGast) {
-		return paarung(team(teamHeim), team(teamGast));
+	private static Paarung paarung(String teamHeim, String teamGast) {
+		return new Paarung(GEPLANT, new Entry(teamHeim, null), new Entry(teamGast, null));
 	}
 
-	private static PaarungBuilder paarung(String teamHeim, String teamGast, URI wappenHeim, URI wappenGast) {
-		return paarung(team(teamHeim).wappen(wappenHeim), team(teamGast).wappen(wappenGast));
-	}
-
-	private static EntryBuilder team(String team) {
-		return Entry.builder().team(team);
-	}
-
-	private static PaarungBuilder paarung(EntryBuilder heim, EntryBuilder gast) {
-		return Paarung.builder().heim(heim.build()).gast(gast.build());
+	private static Paarung paarung(String teamHeim, String teamGast, URI wappenHeim, URI wappenGast) {
+		return new Paarung(GEPLANT, new Entry(teamHeim, wappenHeim), new Entry(teamGast, wappenGast));
 	}
 
 }

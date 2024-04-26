@@ -12,7 +12,6 @@ import java.util.List;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Entry;
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
-import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 
 public final class PaarungMother {
 
@@ -31,12 +30,12 @@ public final class PaarungMother {
 	}
 
 	public static Paarung paarung(String heimTeam, String gastTeam, Ergebnis ergebnis) {
-		PaarungBuilder builder = PaarungBuilder.paarung(heimTeam, gastTeam);
+		Paarung paarung = new Paarung(null, new Entry(heimTeam, null), new Entry(gastTeam, null));
 		return (switch (ergebnis) {
-		case SIEG -> builder.endergebnis(MAX_VALUE, MIN_VALUE);
-		case UNENTSCHIEDEN -> builder.endergebnis(MAX_VALUE, MAX_VALUE);
-		case NIEDERLAGE -> builder.endergebnis(MIN_VALUE, MAX_VALUE);
-		}).build();
+		case SIEG -> paarung.endergebnis(MAX_VALUE, MIN_VALUE);
+		case UNENTSCHIEDEN -> paarung.endergebnis(MAX_VALUE, MAX_VALUE);
+		case NIEDERLAGE -> paarung.endergebnis(MIN_VALUE, MAX_VALUE);
+		});
 	}
 
 	public static Paarung paarungWithAllAttributesSet() {

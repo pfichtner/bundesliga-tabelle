@@ -5,7 +5,6 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
-import static de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder.paarung;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.merge;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.platzWith;
 import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.spieltagFsRepo;
@@ -37,6 +36,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
+import de.atruvia.ase.samman.buli.domain.Paarung.Entry;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.ToreUndGegentore;
 import de.atruvia.ase.samman.buli.domain.ports.primary.DefaultTabellenService;
@@ -124,7 +124,7 @@ class TabellenHttpAdapterTest {
 		String league = "bl1";
 		String season = "2022";
 
-		Paarung laufendesSpiel = paarung("Heim", "Gast").zwischenergebnis(1, 0).build();
+		Paarung laufendesSpiel = new Paarung(LAUFEND, new Entry("Heim", null, 1), new Entry("Gast", null, 0));
 		TabellenPlatz platz1 = merge( //
 				Stream.of(platzWith(SIEG, BEENDET), //
 						platzWith(UNENTSCHIEDEN, BEENDET), //
