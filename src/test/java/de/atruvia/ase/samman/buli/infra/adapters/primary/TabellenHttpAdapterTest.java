@@ -38,7 +38,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
-import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.ToreUndGegentore;
 import de.atruvia.ase.samman.buli.domain.ports.primary.DefaultTabellenService;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
@@ -77,8 +76,8 @@ class TabellenHttpAdapterTest {
 		String league = "bl1";
 		String season = "2022";
 
-		TabellenPlatz platz1 = platzWithBase(10, platzWith(SIEG, UNENTSCHIEDEN, NIEDERLAGE).toBuilder());
-		TabellenPlatz platz2 = platzWithBase(20, platzWith().toBuilder());
+		TabellenPlatz platz1 = platzWithBase(10, platzWith(SIEG, UNENTSCHIEDEN, NIEDERLAGE));
+		TabellenPlatz platz2 = platzWithBase(20, platzWith());
 		when(tabellenService.erstelleTabelle(league, season)).thenReturn(List.of(platz1, platz2));
 
 		// TODO Streng genommen testen wir hier auch wieder mehr als wir sollten, denn
@@ -129,7 +128,7 @@ class TabellenHttpAdapterTest {
 		TabellenPlatz platz1 = merge( //
 				Stream.of(platzWith(SIEG, BEENDET), //
 						platzWith(UNENTSCHIEDEN, BEENDET), //
-						platzWith(NIEDERLAGE, LAUFEND).toBuilder().laufendesSpiel(laufendesSpiel).build() //
+						platzWith(NIEDERLAGE, LAUFEND).laufendesSpiel(laufendesSpiel) //
 				));
 		when(tabellenService.erstelleTabelle(league, season)).thenReturn(List.of(platz1));
 
@@ -169,15 +168,15 @@ class TabellenHttpAdapterTest {
 		;
 	}
 
-	static TabellenPlatz platzWithBase(int base, TabellenPlatzBuilder builder) {
+	static TabellenPlatz platzWithBase(int base, TabellenPlatz tabellenPlatz) {
 		int cnt = 0;
-		return builder.wappen(create("proto://wappen-team-" + base)) //
+		return tabellenPlatz.wappen(create("proto://wappen-team-" + base)) //
 				.team("Team " + base) //
 				.spiele(base + (++cnt)) //
 				.heim(new ToreUndGegentore(base + (++cnt), base + (++cnt))) //
 				.auswaerts(new ToreUndGegentore(base + (++cnt), base + (++cnt))) //
 				.punkte(base + (++cnt)) //
-				.build();
+		;
 	}
 
 }

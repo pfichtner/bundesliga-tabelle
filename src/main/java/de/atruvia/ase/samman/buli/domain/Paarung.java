@@ -11,11 +11,10 @@ import java.net.URI;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
-import lombok.With;
+import lombok.Data;
 import lombok.experimental.Accessors;
 
-@Value
+@Data
 @AllArgsConstructor
 @Builder(toBuilder = true)
 @Accessors(fluent = true)
@@ -29,13 +28,13 @@ public class Paarung {
 		GEPLANT, LAUFEND, BEENDET;
 	}
 
-	@Value
+	@Data
 	@AllArgsConstructor
 	@Builder(toBuilder = true)
+	@Accessors(fluent = true)
 	public static class Entry {
 		String team;
 		URI wappen;
-		@With
 		int tore;
 
 		public Entry(String team, URI wappen) {
@@ -134,8 +133,8 @@ public class Paarung {
 
 		private PaarungBuilder withGoals(PaarungBuilder builder, int toreTeamHeim, int toreTeamGast) {
 			return builder //
-					.heim(heim.withTore(toreTeamHeim)) //
-					.gast(gast.withTore(toreTeamGast)) //
+					.heim(heim.tore(toreTeamHeim)) //
+					.gast(gast.tore(toreTeamGast)) //
 			;
 		}
 

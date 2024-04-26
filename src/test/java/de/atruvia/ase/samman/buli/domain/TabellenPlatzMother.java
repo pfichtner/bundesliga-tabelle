@@ -55,7 +55,7 @@ public final class TabellenPlatzMother {
 	}
 
 	public static TabellenPlatz platzWith(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp) {
-		return TabellenPlatz.builder().ergebnis(ergebnis, ergebnisTyp).build();
+		return new TabellenPlatz().ergebnis(ergebnis, ergebnisTyp);
 	}
 
 }

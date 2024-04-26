@@ -13,25 +13,28 @@ import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp;
-import lombok.Builder;
-import lombok.Value;
-import lombok.With;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Accessors(fluent = true)
-@Builder(toBuilder = true)
 public class TabellenPlatz {
 
-	@Value
+	@Data
+	@AllArgsConstructor
 	private static class ErgebnisEntry {
 		Ergebnis ergebnis;
 		ErgebnisTyp ergebnisTyp;
 	}
 
-	@Value
+	@Data
+	@AllArgsConstructor
 	public static class ToreUndGegentore {
-		private static final ToreUndGegentore NULL = new ToreUndGegentore(0, 0);
+		static final ToreUndGegentore NULL = new ToreUndGegentore(0, 0);
 
 		private ToreUndGegentore merge(ToreUndGegentore other) {
 			return new ToreUndGegentore(tore + other.tore, gegentore + other.gegentore);
@@ -45,17 +48,12 @@ public class TabellenPlatz {
 			ToreUndGegentore.NULL, null);
 
 	URI wappen;
-	@With
 	int platz;
-	@With
 	String team;
-	@Builder.Default
-	int spiele = 1;
-	List<ErgebnisEntry> ergebnisse;
+	int spiele;
+	List<ErgebnisEntry> ergebnisse = new ArrayList<>();
 	int punkte;
-	@Builder.Default
 	ToreUndGegentore heim = ToreUndGegentore.NULL;
-	@Builder.Default
 	ToreUndGegentore auswaerts = ToreUndGegentore.NULL;
 	Paarung laufendesSpiel;
 
@@ -66,6 +64,11 @@ public class TabellenPlatz {
 	public List<Ergebnis> getErgebnisse(ErgebnisTyp... ergebnisTyp) {
 		return ergebnisse.stream().filter(e -> entryErgebnisIsTypeOf(e, ergebnisTyp)).map(ErgebnisEntry::ergebnis)
 				.toList();
+	}
+
+	public TabellenPlatz ergebnis(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp) {
+		ergebnisse.add(new ErgebnisEntry(ergebnis, ergebnisTyp));
+		return this;
 	}
 
 	private static boolean entryErgebnisIsTypeOf(ErgebnisEntry e, ErgebnisTyp... ergebnisTyp) {
@@ -80,25 +83,12 @@ public class TabellenPlatz {
 		return heim.gegentore + auswaerts.gegentore;
 	}
 
-	public static class TabellenPlatzBuilder {
-
-		public TabellenPlatzBuilder() {
-			ergebnisse = new ArrayList<>();
-		}
-
-		public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp) {
-			ergebnisse.add(new ErgebnisEntry(ergebnis, ergebnisTyp));
-			return this;
-		}
-
-	}
-
 	public int torDifferenz() {
 		return tore() - gegentore();
 	}
 
 	public TabellenPlatz merge(TabellenPlatz other) {
-		return builder() //
+		return new TabellenPlatz() //
 				.ergebnisse(merge(this.ergebnisse, other.ergebnisse)) //
 				.spiele(merge(this.spiele, other.spiele)) //
 				.punkte(merge(this.punkte, other.punkte)) //
@@ -106,7 +96,7 @@ public class TabellenPlatz {
 				.auswaerts(this.auswaerts.merge(other.auswaerts)) //
 				.wappen(other.wappen == null ? this.wappen : other.wappen) //
 				.laufendesSpiel(other.laufendesSpiel == null ? this.laufendesSpiel : other.laufendesSpiel) //
-				.build();
+		;
 	}
 
 	private static int merge(int value1, int value2) {

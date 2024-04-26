@@ -17,7 +17,6 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
-import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.ToreUndGegentore;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -87,23 +86,25 @@ public class Tabelle {
 
 	private void addInternal(Paarung paarung, boolean swapped) {
 		ToreUndGegentore toreUndGegentore = new ToreUndGegentore(paarung.toreHeim(), paarung.toreGast());
-		TabellenPlatzBuilder builder = newEntry(paarung);
+		TabellenPlatz builder = newEntry(paarung);
 		builder = swapped //
 				? builder.auswaerts(toreUndGegentore) //
 				: builder.heim(toreUndGegentore);
-		eintraege.merge(paarung.teamHeim(), builder.build(), TabellenPlatz::merge);
+		eintraege.merge(paarung.teamHeim(), builder, TabellenPlatz::merge);
 	}
 
-	private TabellenPlatzBuilder newEntry(Paarung paarung) {
-		if (!paarung.hatErgebnis()) {
-			return TabellenPlatz.NULL.toBuilder().wappen(paarung.wappenHeim());
+	private TabellenPlatz newEntry(Paarung paarung) {
+		TabellenPlatz tabellenPlatz = new TabellenPlatz().wappen(paarung.wappenHeim());
+		if (paarung.hatErgebnis()) {
+			Ergebnis ergebnis = paarung.ergebnis();
+			tabellenPlatz //
+					.spiele(1) //
+					.ergebnis(ergebnis, paarung.ergebnisTyp()) //
+					.punkte(punkte(ergebnis)) //
+					.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null) //
+			;
 		}
-		Ergebnis ergebnis = paarung.ergebnis();
-		return TabellenPlatz.builder() //
-				.wappen(paarung.wappenHeim()) //
-				.ergebnis(ergebnis, paarung.ergebnisTyp()) //
-				.punkte(punkte(ergebnis)) //
-				.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null);
+		return tabellenPlatz;
 	}
 
 	private static int punkte(Ergebnis ergebnis) {
@@ -130,11 +131,11 @@ public class Tabelle {
 
 	private static Stream<TabellenPlatz> makeGroup(AtomicInteger platz, List<TabellenPlatz> tabellenPlaetze) {
 		int no = platz.getAndAdd(tabellenPlaetze.size());
-		return tabellenPlaetze.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(no));
+		return tabellenPlaetze.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp.platz(no));
 	}
 
 	private static TabellenPlatz setTeam(Entry<String, TabellenPlatz> entry) {
-		return entry.getValue().withTeam(entry.getKey());
+		return entry.getValue().team(entry.getKey());
 	}
 
 }
