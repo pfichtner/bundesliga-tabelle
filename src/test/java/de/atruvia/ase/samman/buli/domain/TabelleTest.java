@@ -9,6 +9,7 @@ import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -165,6 +166,39 @@ class TabelleTest {
 		dannIstDieTabelle( //
 				e1 -> assertThat(e1.wappen()).isEqualTo(create("proto://wappen1")), //
 				e2 -> assertThat(e2.wappen()).isNull() //
+		);
+	}
+
+	@Test
+	void beiAenderndemMannschaftsnamenWirdDerLetzteUebernommen() {
+		String team1 = "Team 1";
+		String team2 = "Team 2";
+		var heimAlt = team(team1).identifier(team1);
+		var gastAlt = team(team2 + "-A").identifier(team2);
+
+		var heimNeu = team(team1).identifier(team1);
+		var gastNeu = team(team2 + "-B").identifier(team2);
+		gegebenSeienDiePaarungen(paarung(heimAlt, gastAlt), paarung(heimNeu, gastNeu));
+		wennDieTabelleBerechnetWird();
+		dannIstDieTabelle( //
+				e1 -> assertThat(e1.team()).isEqualTo(team1), //
+				e2 -> assertThat(e2.team()).isEqualTo(team2 + "-B") //
+		);
+	}
+
+	@Test
+	void beiAenderndemMannschaftsnamenNullWirdNichtUebernommen() {
+		var heimAlt = team("Team 1").identifier("Team1");
+		var gastAlt = team("Team 2").identifier("Team2");
+
+		var heimNeu = team("Team 1").identifier("Team1");
+		var gastNeu = team(null).identifier("Team2");
+		gegebenSeienDiePaarungen( //
+				paarung(heimAlt, gastAlt), paarung(heimNeu, gastNeu));
+		wennDieTabelleBerechnetWird();
+		dannIstDieTabelle( //
+				e1 -> assertThat(e1.team()).isEqualTo("Team 1"), //
+				e2 -> assertThat(e2.team()).isEqualTo("Team 2") //
 		);
 	}
 

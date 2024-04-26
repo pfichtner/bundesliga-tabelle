@@ -47,7 +47,7 @@ public final class TabellenPlatzMother {
 	}
 
 	public static TabellenPlatz merge(Stream<TabellenPlatz> tabellenPlaetze) {
-		return tabellenPlaetze.reduce(TabellenPlatz::merge).orElse(TabellenPlatz.NULL);
+		return tabellenPlaetze.reduce(TabellenPlatz::merge).get();
 	}
 
 	private static TabellenPlatz platzWith(Ergebnis ergebnis) {
