@@ -64,8 +64,12 @@ public class TabellenPlatz {
 	}
 
 	public List<Ergebnis> getErgebnisse(ErgebnisTyp... ergebnisTyp) {
-		return ergebnisse.stream().filter(e -> asList(ergebnisTyp).contains(e.ergebnisTyp()))
-				.map(ErgebnisEntry::ergebnis).toList();
+		return ergebnisse.stream().filter(e -> entryErgebnisIsTypeOf(e, ergebnisTyp)).map(ErgebnisEntry::ergebnis)
+				.toList();
+	}
+
+	private static boolean entryErgebnisIsTypeOf(ErgebnisEntry e, ErgebnisTyp... ergebnisTyp) {
+		return asList(ergebnisTyp).contains(e.ergebnisTyp());
 	}
 
 	public int tore() {
