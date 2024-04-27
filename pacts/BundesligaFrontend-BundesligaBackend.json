@@ -208,6 +208,82 @@
         },
         "status": 200
       }
+    },
+    {
+      "description": "a request to get the bundesliga standings with runnng game",
+      "providerState": "team #1 is currently playing",
+      "request": {
+        "headers": {
+          "Accept": "application/json"
+        },
+        "method": "GET",
+        "path": "/tabelle/bl1/2023"
+      },
+      "response": {
+        "body": [
+          {
+            "laufendesSpiel": {
+              "ergebnis": "S",
+              "tore": 102,
+              "toreGegner": 113
+            },
+            "letzte5": "iloveorange",
+            "team": "any team name #1"
+          },
+          {
+            "letzte5": "iloveorange",
+            "team": "iloveorange"
+          },
+          {
+            "letzte5": "iloveorange",
+            "team": "iloveorange"
+          },
+          {
+            "letzte5": "iloveorange",
+            "team": "iloveorange"
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "$.body[0].laufendesSpiel.ergebnis": {
+            "match": "regex",
+            "regex": "[NUS]"
+          },
+          "$.body[0].laufendesSpiel.tore": {
+            "match": "type"
+          },
+          "$.body[0].laufendesSpiel.toreGegner": {
+            "match": "type"
+          },
+          "$.body[0].letzte5": {
+            "match": "type"
+          },
+          "$.body[0].team": {
+            "match": "type"
+          },
+          "$.body[1].letzte5": {
+            "match": "type"
+          },
+          "$.body[1].team": {
+            "match": "type"
+          },
+          "$.body[2].letzte5": {
+            "match": "type"
+          },
+          "$.body[2].team": {
+            "match": "type"
+          },
+          "$.body[3].letzte5": {
+            "match": "type"
+          },
+          "$.body[3].team": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
     }
   ],
   "metadata": {
