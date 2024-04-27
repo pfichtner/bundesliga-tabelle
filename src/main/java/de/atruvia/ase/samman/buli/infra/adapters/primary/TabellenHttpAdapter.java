@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
-import de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 import io.swagger.v3.oas.annotations.media.Schema;
