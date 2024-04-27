@@ -103,10 +103,11 @@ public class TabellenHttpAdapter {
 		 */
 		private static String concatToSingleString(List<Ergebnis> ergebnisse, int length, char filler) {
 			char[] chars = new char[length];
-			fill(chars, filler);
-			for (int idx = 0; idx < min(ergebnisse.size(), chars.length); idx++) {
+			int idx = 0;
+			for (; idx < min(ergebnisse.size(), chars.length); idx++) {
 				chars[idx] = convertErgebnis(ergebnisse.get(ergebnisse.size() - 1 - idx));
 			}
+			fill(chars, idx, chars.length, filler);
 			return new String(chars);
 		}
 
