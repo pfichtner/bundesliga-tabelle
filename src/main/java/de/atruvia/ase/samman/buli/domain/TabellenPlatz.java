@@ -3,10 +3,8 @@ package de.atruvia.ase.samman.buli.domain;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
-import static de.atruvia.ase.samman.buli.util.Merger.lastIfNotNull;
-import static de.atruvia.ase.samman.buli.util.Merger.mergeInts;
-import static de.atruvia.ase.samman.buli.util.Merger.mergeLists;
-import static de.atruvia.ase.samman.buli.util.Merger.mergeMergeables;
+import static de.atruvia.ase.samman.buli.util.Merger.merge;
+import static de.atruvia.ase.samman.buli.util.Merger.lastNonNull;
 import static java.util.Arrays.asList;
 
 import java.net.URI;
@@ -110,15 +108,15 @@ public class TabellenPlatz {
 		return tore() - gegentore();
 	}
 
-	public TabellenPlatz merge(TabellenPlatz other) {
+	public TabellenPlatz mergeWith(TabellenPlatz other) {
 		return builder() //
-				.ergebnisse(mergeLists(ergebnisse, other.ergebnisse)) //
-				.spiele(mergeInts(spiele, other.spiele)) //
-				.punkte(mergeInts(punkte, other.punkte)) //
-				.heim(mergeMergeables(heim, other.heim)) //
-				.auswaerts(mergeMergeables(auswaerts, other.auswaerts)) //
-				.wappen(lastIfNotNull(wappen, other.wappen)) //
-				.laufendesSpiel(lastIfNotNull(laufendesSpiel, other.laufendesSpiel)) //
+				.ergebnisse(merge(ergebnisse, other.ergebnisse)) //
+				.spiele(merge(spiele, other.spiele)) //
+				.punkte(merge(punkte, other.punkte)) //
+				.heim(merge(heim, other.heim)) //
+				.auswaerts(merge(auswaerts, other.auswaerts)) //
+				.wappen(lastNonNull(wappen, other.wappen)) //
+				.laufendesSpiel(lastNonNull(laufendesSpiel, other.laufendesSpiel)) //
 				.build();
 	}
 

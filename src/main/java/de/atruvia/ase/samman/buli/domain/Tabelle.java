@@ -85,7 +85,7 @@ public class Tabelle {
 	}
 
 	private void addInternal(Paarung paarung) {
-		eintraege.merge(paarung.teamHeim(), newEntry(paarung).build(), TabellenPlatz::merge);
+		eintraege.merge(paarung.teamHeim(), newEntry(paarung).build(), TabellenPlatz::mergeWith);
 	}
 
 	private TabellenPlatzBuilder newEntry(Paarung paarung) {
