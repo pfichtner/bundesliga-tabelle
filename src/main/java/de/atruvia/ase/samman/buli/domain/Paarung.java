@@ -12,16 +12,34 @@ import java.net.URI;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.Value;
 import lombok.With;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 
-@Value
+@Data
 @AllArgsConstructor
 @Builder(toBuilder = true)
-@Accessors(fluent = true)
+@FieldDefaults(level = PRIVATE, makeFinal = true)
+@Accessors(makeFinal = true, fluent = true)
 public class Paarung {
+
+	private final class SwappedPaarung extends Paarung {
+
+		public SwappedPaarung(Paarung paarung) {
+			super(ergebnisTyp, gast, heim);
+		}
+
+		public boolean isSwapped() {
+			return true;
+		}
+
+		public Paarung swap() {
+			return Paarung.this;
+		}
+
+	}
 
 	public enum Ergebnis {
 		SIEG, UNENTSCHIEDEN, NIEDERLAGE;
@@ -49,9 +67,6 @@ public class Paarung {
 	ErgebnisTyp ergebnisTyp = GEPLANT;
 
 	Entry heim, gast;
-
-	@Getter(value = PRIVATE)
-	Paarung swappedFrom;
 
 	public String teamHeim() {
 		return team(heim);
@@ -111,14 +126,12 @@ public class Paarung {
 						: NIEDERLAGE;
 	}
 
-	public Paarung swap() {
-		return isSwapped() //
-				? swappedFrom //
-				: toBuilder().heim(gast).gast(heim).swappedFrom(this).build();
+	public boolean isSwapped() {
+		return false;
 	}
 
-	public boolean isSwapped() {
-		return swappedFrom != null;
+	public Paarung swap() {
+		return new SwappedPaarung(this);
 	}
 
 	public static class PaarungBuilder {

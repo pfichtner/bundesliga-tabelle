@@ -93,12 +93,11 @@ public class Tabelle {
 			return TabellenPlatz.NULL.toBuilder().wappen(paarung.wappenHeim());
 		}
 		Ergebnis ergebnis = paarung.ergebnis();
-		boolean isHeim = !paarung.isSwapped();
 		return TabellenPlatz.builder() //
 				.wappen(paarung.wappenHeim()) //
 				.ergebnis(ergebnis, paarung.ergebnisTyp()) //
 				.punkte(punkte(ergebnis)) //
-				.tore(isHeim, paarung.toreHeim(), paarung.toreGast()) //
+				.tore(paarung.isSwapped(), paarung.toreHeim(), paarung.toreGast()) //
 				.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null) //
 		;
 	}

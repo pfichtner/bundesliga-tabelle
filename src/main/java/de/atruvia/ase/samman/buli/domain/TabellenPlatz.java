@@ -98,9 +98,9 @@ public class TabellenPlatz {
 			return this;
 		}
 
-		public TabellenPlatzBuilder tore(boolean isHeim, int toreHeim, int toreGast) {
+		public TabellenPlatzBuilder tore(boolean isSwapped, int toreHeim, int toreGast) {
 			ToreUndGegentore toreUndGegentore = new ToreUndGegentore(toreHeim, toreGast);
-			return isHeim ? heim(toreUndGegentore) : auswaerts(toreUndGegentore);
+			return isSwapped ? auswaerts(toreUndGegentore) : heim(toreUndGegentore);
 		}
 
 	}
