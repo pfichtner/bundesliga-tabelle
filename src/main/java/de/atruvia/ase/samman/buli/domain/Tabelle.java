@@ -89,17 +89,17 @@ public class Tabelle {
 	}
 
 	private TabellenPlatzBuilder newEntry(Paarung paarung) {
-		if (!paarung.hatErgebnis()) {
-			return TabellenPlatz.NULL.toBuilder().wappen(paarung.wappenHeim());
+		TabellenPlatzBuilder builder = TabellenPlatz.builder().wappen(paarung.wappenHeim());
+		if (paarung.hatErgebnis()) {
+			Ergebnis ergebnis = paarung.ergebnis();
+			builder = builder //
+					.spiele(1) //
+					.ergebnis(ergebnis, paarung.ergebnisTyp()) //
+					.punkte(punkte(ergebnis)) //
+					.tore(paarung.isSwapped(), paarung.toreHeim(), paarung.toreGast()) //
+					.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null);
 		}
-		Ergebnis ergebnis = paarung.ergebnis();
-		return TabellenPlatz.builder() //
-				.wappen(paarung.wappenHeim()) //
-				.ergebnis(ergebnis, paarung.ergebnisTyp()) //
-				.punkte(punkte(ergebnis)) //
-				.tore(paarung.isSwapped(), paarung.toreHeim(), paarung.toreGast()) //
-				.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null) //
-		;
+		return builder;
 	}
 
 	private static int punkte(Ergebnis ergebnis) {

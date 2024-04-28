@@ -4,7 +4,6 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -41,16 +40,12 @@ public class TabellenPlatz {
 		int gegentore;
 	}
 
-	static TabellenPlatz NULL = new TabellenPlatz(null, 0, "", 0, emptyList(), 0, ToreUndGegentore.NULL,
-			ToreUndGegentore.NULL, null);
-
 	URI wappen;
 	@With
 	int platz;
 	@With
 	String team;
-	@Builder.Default
-	int spiele = 1;
+	int spiele;
 	List<ErgebnisEntry> ergebnisse;
 	int punkte;
 	@Builder.Default
