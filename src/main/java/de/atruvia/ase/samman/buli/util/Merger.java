@@ -1,11 +1,10 @@
 package de.atruvia.ase.samman.buli.util;
 
-import static de.atruvia.ase.samman.buli.util.Streams.lastElement;
+import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.IntStream;
 
 import lombok.NoArgsConstructor;
@@ -32,7 +31,16 @@ public final class Merger {
 
 	@SafeVarargs
 	public static <T> T lastNonNull(T... objects) {
-		return stream(objects).filter(Objects::nonNull).reduce(lastElement()).orElse(null);
+		// could be done with streams as well but then we would consume much more
+		// elements then we have to
+		// stream(objects).filter(Objects::nonNull).reduce(lastElement()).orElse(null);
+		for (var it = asList(objects).listIterator(objects.length); it.hasPrevious();) {
+			T prev;
+			if ((prev = it.previous()) != null) {
+				return prev;
+			}
+		}
+		return null;
 	}
 
 }

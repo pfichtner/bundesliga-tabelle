@@ -15,8 +15,4 @@ public final class Streams {
 		};
 	}
 
-	public static <T> BinaryOperator<T> lastElement() {
-		return (f, s) -> s;
-	}
-
 }
