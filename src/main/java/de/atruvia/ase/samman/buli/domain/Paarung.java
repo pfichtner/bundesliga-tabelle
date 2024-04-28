@@ -6,11 +6,13 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.GEPLANT;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
+import static lombok.AccessLevel.PRIVATE;
 
 import java.net.URI;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Value;
 import lombok.With;
 import lombok.experimental.Accessors;
@@ -47,6 +49,9 @@ public class Paarung {
 	ErgebnisTyp ergebnisTyp = GEPLANT;
 
 	Entry heim, gast;
+
+	@Getter(value = PRIVATE)
+	Paarung swappedFrom;
 
 	public String teamHeim() {
 		return team(heim);
@@ -107,7 +112,13 @@ public class Paarung {
 	}
 
 	public Paarung swap() {
-		return toBuilder().heim(gast).gast(heim).build();
+		return isSwapped() //
+				? swappedFrom //
+				: toBuilder().heim(gast).gast(heim).swappedFrom(this).build();
+	}
+
+	public boolean isSwapped() {
+		return swappedFrom != null;
 	}
 
 	public static class PaarungBuilder {

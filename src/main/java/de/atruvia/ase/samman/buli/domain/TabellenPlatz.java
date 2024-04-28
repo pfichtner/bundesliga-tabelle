@@ -91,6 +91,12 @@ public class TabellenPlatz {
 			return this;
 		}
 
+		public TabellenPlatzBuilder tore(ToreUndGegentore toreUndGegentore, boolean swapped) {
+			return swapped //
+					? auswaerts(toreUndGegentore) //
+					: heim(toreUndGegentore);
+		}
+
 	}
 
 	public int torDifferenz() {

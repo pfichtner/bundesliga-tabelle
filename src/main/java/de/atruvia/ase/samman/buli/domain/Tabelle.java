@@ -81,17 +81,12 @@ public class Tabelle {
 	private final Map<String, TabellenPlatz> eintraege = new HashMap<>();
 
 	public void add(Paarung paarung) {
-		addInternal(paarung, false);
-		addInternal(paarung.swap(), true);
+		addInternal(paarung);
+		addInternal(paarung.swap());
 	}
 
-	private void addInternal(Paarung paarung, boolean swapped) {
-		ToreUndGegentore toreUndGegentore = new ToreUndGegentore(paarung.toreHeim(), paarung.toreGast());
-		TabellenPlatzBuilder builder = newEntry(paarung);
-		builder = swapped //
-				? builder.auswaerts(toreUndGegentore) //
-				: builder.heim(toreUndGegentore);
-		eintraege.merge(paarung.teamHeim(), builder.build(), TabellenPlatz::merge);
+	private void addInternal(Paarung paarung) {
+		eintraege.merge(paarung.teamHeim(), newEntry(paarung).build(), TabellenPlatz::merge);
 	}
 
 	private TabellenPlatzBuilder newEntry(Paarung paarung) {
@@ -103,6 +98,7 @@ public class Tabelle {
 				.wappen(paarung.wappenHeim()) //
 				.ergebnis(ergebnis, paarung.ergebnisTyp()) //
 				.punkte(punkte(ergebnis)) //
+				.tore(new ToreUndGegentore(paarung.toreHeim(), paarung.toreGast()), paarung.isSwapped()) //
 				.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null);
 	}
 
