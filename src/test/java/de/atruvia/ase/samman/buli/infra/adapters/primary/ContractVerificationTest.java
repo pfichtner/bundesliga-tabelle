@@ -55,13 +55,13 @@ class ContractVerificationTest {
 	}
 
 	@State("matchday #3 team has won on matchday #1, draw on matchday #2 and loss on day #3")
-	void matchdayThreeWinDrawLoss() throws Exception {
+	void matchdayThreeWinDrawLoss() {
 		when(spieltagRepoMock.lade(anyString(), anyString()))
 				.thenReturn(paarungen("anyTeamName", SIEG, UNENTSCHIEDEN, NIEDERLAGE));
 	}
 
 	@State("team #1 is currently playing")
-	void runningGame() throws Exception {
+	void runningGame() {
 		var paarung1 = paarung("Team 1", "Team 3").zwischenergebnis(0, MAX_VALUE);
 		var paarung2 = paarung("Team 2", "Team 4").endergebnis(0, 0);
 		when(spieltagRepoMock.lade(anyString(), anyString())).thenReturn(build(paarung1, paarung2));
