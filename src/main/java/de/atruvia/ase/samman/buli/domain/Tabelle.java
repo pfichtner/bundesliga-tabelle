@@ -18,7 +18,6 @@ import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
-import de.atruvia.ase.samman.buli.domain.TabellenPlatz.ToreUndGegentore;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -94,12 +93,14 @@ public class Tabelle {
 			return TabellenPlatz.NULL.toBuilder().wappen(paarung.wappenHeim());
 		}
 		Ergebnis ergebnis = paarung.ergebnis();
+		boolean isHeim = !paarung.isSwapped();
 		return TabellenPlatz.builder() //
 				.wappen(paarung.wappenHeim()) //
 				.ergebnis(ergebnis, paarung.ergebnisTyp()) //
 				.punkte(punkte(ergebnis)) //
-				.tore(new ToreUndGegentore(paarung.toreHeim(), paarung.toreGast()), paarung.isSwapped()) //
-				.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null);
+				.tore(isHeim, paarung.toreHeim(), paarung.toreGast()) //
+				.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null) //
+		;
 	}
 
 	private static int punkte(Ergebnis ergebnis) {
