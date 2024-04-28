@@ -2,18 +2,17 @@ package de.atruvia.ase.samman.buli.domain;
 
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static java.util.Arrays.asList;
+import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = PRIVATE)
 public final class TabellenPlatzMother {
-
-	private TabellenPlatzMother() {
-		super();
-	}
 
 	/**
 	 * Erzeugt die Liste der Ergebnisse, wie sie {@link Tabelle} auch erzeugt. (TODO
