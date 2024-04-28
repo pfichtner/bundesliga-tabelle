@@ -16,8 +16,8 @@ public final class TabellenPlatzMother {
 	}
 
 	/**
-	 * Erzeugt die Liste der Ergebnisse, wie sie {@link TabellenRechner} auch
-	 * erzeugt. (TODO sollten wir das mit einem Spy sicherstellen?)
+	 * Erzeugt die Liste der Ergebnisse, wie sie {@link Tabelle} auch erzeugt. (TODO
+	 * sollten wir das mit einem Spy sicherstellen?)
 	 * 
 	 * @param ergebnisse Ergebnistypen die über die merge Funktion zu einer Liste
 	 *                   zusammengefasst werden sollen
@@ -28,8 +28,8 @@ public final class TabellenPlatzMother {
 	}
 
 	/**
-	 * Erzeugt die Liste der Ergebnisse, wie sie {@link TabellenRechner} auch
-	 * erzeugt. (TODO sollten wir das mit einem Spy sicherstellen?)
+	 * Erzeugt die Liste der Ergebnisse, wie sie {@link Tabelle} auch erzeugt. (TODO
+	 * sollten wir das mit einem Spy sicherstellen?)
 	 * 
 	 * @param ergebnisse Ergebnistypen die über die merge Funktion zu einer Liste
 	 *                   zusammengefasst werden sollen

@@ -42,12 +42,12 @@ public class Paarung {
 	}
 
 	public enum Ergebnis {
-		SIEG, UNENTSCHIEDEN, NIEDERLAGE;
-	}
+		SIEG, UNENTSCHIEDEN, NIEDERLAGE
+    }
 
 	public enum ErgebnisTyp {
-		GEPLANT, LAUFEND, BEENDET;
-	}
+		GEPLANT, LAUFEND, BEENDET
+    }
 
 	@Value
 	@AllArgsConstructor

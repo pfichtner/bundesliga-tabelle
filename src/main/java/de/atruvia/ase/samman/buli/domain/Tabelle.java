@@ -40,15 +40,15 @@ public class Tabelle {
 //		If two or more teams have the same rank in the Bundesliga and there is no other criteria that can be used to separate them, then the teams will be listed in alphabetical order according to their full club name.
 
 		private static final List<Function<TabellenPlatz, Comparable<?>>> comparators = asList( //
-				e -> e.punkte(), //
-				e -> e.torDifferenz(), //
-				e -> e.tore(), //
+				TabellenPlatz::punkte, //
+				TabellenPlatz::torDifferenz, //
+				TabellenPlatz::tore, //
 				e -> e.auswaerts().tore() //
 		);
 
 		private static final Function<OrdnungsElement, TabellenPlatz> getTabellenPlatz = OrdnungsElement::tabellenPlatz;
 		private static final List<Function<OrdnungsElement, Comparable<?>>> extractors = comparators.stream()
-				.map(t -> getTabellenPlatz.andThen(t)).toList();
+				.map(getTabellenPlatz::andThen).toList();
 
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		private static final Comparator<OrdnungsElement> comparator = extractors.stream() //
@@ -119,7 +119,7 @@ public class Tabelle {
 				.collect(groupingBy(OrdnungsElement::new)) //
 		;
 		return platzGruppen.entrySet().stream() //
-				.sorted(comparing(Entry::getKey)) //
+				.sorted(Entry.comparingByKey()) //
 				.map(Entry::getValue) //
 				.flatMap(t -> makeGroup(platz, t)) //
 				.toList();

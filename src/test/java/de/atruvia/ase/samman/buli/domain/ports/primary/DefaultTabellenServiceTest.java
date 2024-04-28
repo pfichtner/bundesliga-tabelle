@@ -1,13 +1,13 @@
 package de.atruvia.ase.samman.buli.domain.ports.primary;
 
 import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.spieltagFsRepo;
-import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.joining;
 import static org.approvaltests.Approvals.verify;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
@@ -57,7 +57,7 @@ class DefaultTabellenServiceTest {
 	}
 
 	String print(TabellenPlatz tabellenPlatz, int length) {
-		return asList( //
+		return Stream.of( //
 				stringFormat(length, tabellenPlatz.team()), //
 				tabellenPlatz.spiele(), //
 				tabellenPlatz.siege(), //
@@ -68,7 +68,7 @@ class DefaultTabellenServiceTest {
 				tabellenPlatz.torDifferenz(), //
 				tabellenPlatz.punkte(), //
 				tabellenPlatz.wappen() //
-		).stream().map(this::format).collect(joining(" | "));
+		).map(this::format).collect(joining(" | "));
 	}
 
 	String stringFormat(int length, String team) {
@@ -76,7 +76,7 @@ class DefaultTabellenServiceTest {
 	}
 
 	String format(Object o) {
-		return o instanceof Number ? "%3d".formatted(o) : Objects.toString(o);
+		return o instanceof Number ? "%3d".formatted((Number) o) : Objects.toString(o);
 	}
 
 }

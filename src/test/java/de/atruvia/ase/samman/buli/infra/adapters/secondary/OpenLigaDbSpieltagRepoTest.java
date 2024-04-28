@@ -49,7 +49,7 @@ class OpenLigaDbSpieltagRepoTest {
 	}
 
 	@Test
-	void throwsExceptionIfThereAreMatchesWithMultipleFinalResults() throws Exception {
+	void throwsExceptionIfThereAreMatchesWithMultipleFinalResults() {
 		RestTemplate restTemplate = restTemplateMock(__ -> """
 				[
 				  {

@@ -238,7 +238,7 @@ class TabelleTest {
 	}
 
 	private void dannIstDieTabelle(String expected) {
-		assertThat(print(sut.getEntries())).isEqualTo(line(asList(expected.split("\\|")).stream().map(String::trim)));
+		assertThat(print(sut.getEntries())).isEqualTo(line(stream(expected.split("\\|")).map(String::trim)));
 	}
 
 	@SafeVarargs

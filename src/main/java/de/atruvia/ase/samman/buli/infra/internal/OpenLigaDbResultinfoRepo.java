@@ -15,7 +15,7 @@ public interface OpenLigaDbResultinfoRepo {
 
 	@ToString
 	@FieldDefaults(level = PUBLIC)
-	public static class Resultinfo {
+	class Resultinfo {
 
 		@ToString
 		@FieldDefaults(level = PUBLIC)
@@ -23,7 +23,7 @@ public interface OpenLigaDbResultinfoRepo {
 			int id;
 		}
 
-		private static Comparator<Resultinfo> byGlobalResultId = comparing(r -> r.globalResultInfo.id);
+		private static final Comparator<Resultinfo> byGlobalResultId = comparing(r -> r.globalResultInfo.id);
 
 		int id;
 		String name;
