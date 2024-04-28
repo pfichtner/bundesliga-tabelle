@@ -60,12 +60,19 @@ public class TabellenPlatz {
 	Paarung laufendesSpiel;
 
 	public List<Ergebnis> ergebnisse() {
-		return ergebnisse(ErgebnisTyp.values());
+		return collectToList(ergebnisseStream());
 	}
 
 	public List<Ergebnis> ergebnisse(ErgebnisTyp... ergebnisTyp) {
-		return ergebnisse.stream().filter(e -> entryErgebnisIsTypeOf(e, ergebnisTyp)).map(ErgebnisEntry::ergebnis)
-				.toList();
+		return collectToList(ergebnisseStream().filter(e -> entryErgebnisIsTypeOf(e, ergebnisTyp)));
+	}
+
+	private Stream<ErgebnisEntry> ergebnisseStream() {
+		return ergebnisse.stream();
+	}
+
+	private static List<Ergebnis> collectToList(Stream<ErgebnisEntry> filter) {
+		return filter.map(ErgebnisEntry::ergebnis).toList();
 	}
 
 	private static boolean entryErgebnisIsTypeOf(ErgebnisEntry e, ErgebnisTyp... ergebnisTyp) {
@@ -137,7 +144,7 @@ public class TabellenPlatz {
 	}
 
 	private int countAnzahl(Ergebnis type) {
-		return (int) ergebnisse.stream().map(ErgebnisEntry::ergebnis).filter(type::equals).count();
+		return (int) ergebnisseStream().map(ErgebnisEntry::ergebnis).filter(type::equals).count();
 	}
 
 }
