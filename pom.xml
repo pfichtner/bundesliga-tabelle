@@ -20,7 +20,7 @@
 		<pact.version>4.6.9</pact.version>
 		<cucumber.version>7.15.0</cucumber.version>
 		<docker.image.name>${project.artifactId}:${project.version}</docker.image.name>
-		<doBreakBuildOnCucmberFailures>false</doBreakBuildOnCucmberFailures>
+		<ignoreSurefireErrors>false</ignoreSurefireErrors>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -124,12 +124,11 @@
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<reportsDirectory>
-						${project.build.directory}/failsafe-reports</reportsDirectory>
+					<reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
 					<!-- do not break so cucumber-html gets generated (which
 					breaks build after html generation but at least the jar gets
 					generated anyway) :-/ -->
-					<testFailureIgnore>${doBreakBuildOnCucmberFailures}</testFailureIgnore>
+					<testFailureIgnore>${ignoreSurefireErrors}</testFailureIgnore>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -147,11 +146,9 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<checkBuildResult>${doBreakBuildOnCucmberFailures}</checkBuildResult>
-							<treatScenariosAsFailed>
-								${doBreakBuildOnCucmberFailures}</treatScenariosAsFailed>
-							<treatUndefinedAsFailed>
-								${doBreakBuildOnCucmberFailures}</treatUndefinedAsFailed>
+							<checkBuildResult>${ignoreSurefireErrors}</checkBuildResult>
+							<treatScenariosAsFailed>${ignoreSurefireErrors}</treatScenariosAsFailed>
+							<treatUndefinedAsFailed>${ignoreSurefireErrors}</treatUndefinedAsFailed>
 							<outputDirectory>${project.build.directory}</outputDirectory>
 							<jsonFiles>
 								<param>**/cucumber.json</param>
