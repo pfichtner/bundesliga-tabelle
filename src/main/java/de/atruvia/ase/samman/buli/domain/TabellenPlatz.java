@@ -59,11 +59,11 @@ public class TabellenPlatz {
 	ToreUndGegentore auswaerts = ToreUndGegentore.NULL;
 	Paarung laufendesSpiel;
 
-	public List<Ergebnis> getErgebnisse() {
-		return getErgebnisse(ErgebnisTyp.values());
+	public List<Ergebnis> ergebnisse() {
+		return ergebnisse(ErgebnisTyp.values());
 	}
 
-	public List<Ergebnis> getErgebnisse(ErgebnisTyp... ergebnisTyp) {
+	public List<Ergebnis> ergebnisse(ErgebnisTyp... ergebnisTyp) {
 		return ergebnisse.stream().filter(e -> entryErgebnisIsTypeOf(e, ergebnisTyp)).map(ErgebnisEntry::ergebnis)
 				.toList();
 	}

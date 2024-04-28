@@ -173,8 +173,8 @@ class TabelleTest {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
-				e1 -> assertThat(e1.getErgebnisse()).isEmpty(), //
-				e2 -> assertThat(e2.getErgebnisse()).isEmpty() //
+				e1 -> assertThat(e1.ergebnisse()).isEmpty(), //
+				e2 -> assertThat(e2.ergebnisse()).isEmpty() //
 		);
 	}
 
@@ -186,8 +186,8 @@ class TabelleTest {
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
-				e1 -> assertThat(e1.getErgebnisse()).containsExactly(SIEG, UNENTSCHIEDEN), //
-				e2 -> assertThat(e2.getErgebnisse()).containsExactly(NIEDERLAGE, UNENTSCHIEDEN) //
+				e1 -> assertThat(e1.ergebnisse()).containsExactly(SIEG, UNENTSCHIEDEN), //
+				e2 -> assertThat(e2.ergebnisse()).containsExactly(NIEDERLAGE, UNENTSCHIEDEN) //
 		);
 	}
 

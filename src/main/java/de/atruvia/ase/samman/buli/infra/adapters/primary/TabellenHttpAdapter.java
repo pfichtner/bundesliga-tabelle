@@ -74,7 +74,7 @@ public class TabellenHttpAdapter {
 					.siege(domain.siege()) //
 					.unentschieden(domain.unentschieden()) //
 					.niederlagen(domain.niederlagen()) //
-					.letzte5(concatToSingleString(domain.getErgebnisse(BEENDET), 5, '-')) //
+					.letzte5(concatToSingleString(domain.ergebnisse(BEENDET), 5, '-')) //
 					.laufendesSpiel(
 							domain.laufendesSpiel() == null ? null : convertLaufendesSpiel(domain.laufendesSpiel())) //
 					.build();
