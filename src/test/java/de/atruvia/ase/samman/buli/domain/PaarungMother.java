@@ -20,7 +20,7 @@ public final class PaarungMother {
 		super();
 	}
 
-	public static List<Paarung> paarungen(String firstTeam, Ergebnis... ergebnisse) {
+	public static List<Paarung> createPaarungen(String firstTeam, Ergebnis... ergebnisse) {
 		List<String> opponents = opponents(firstTeam, ergebnisse.length);
 		return range(0, ergebnisse.length)
 				.mapToObj(i -> swapIfOdd(i, paarung(firstTeam, opponents.get(i), ergebnisse[i]))).toList();
