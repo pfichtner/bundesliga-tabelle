@@ -90,16 +90,17 @@ public class Tabelle {
 
 	private TabellenPlatzBuilder newEntry(Paarung paarung) {
 		TabellenPlatzBuilder builder = TabellenPlatz.builder().wappen(paarung.wappenHeim());
-		if (paarung.hatErgebnis()) {
-			Ergebnis ergebnis = paarung.ergebnis();
-			builder = builder //
-					.spiele(1) //
-					.ergebnis(ergebnis, paarung.ergebnisTyp()) //
-					.punkte(punkte(ergebnis)) //
-					.tore(paarung.isSwapped(), paarung.toreHeim(), paarung.toreGast()) //
-					.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null);
-		}
-		return builder;
+		return paarung.hatErgebnis() ? withErgebnis(builder, paarung) : builder;
+	}
+
+	private static TabellenPlatzBuilder withErgebnis(TabellenPlatzBuilder builder, Paarung paarung) {
+		Ergebnis ergebnis = paarung.ergebnis();
+		return builder //
+				.spiele(1) //
+				.ergebnis(ergebnis, paarung.ergebnisTyp()) //
+				.punkte(punkte(ergebnis)) //
+				.tore(paarung.isSwapped(), paarung.toreHeim(), paarung.toreGast()) //
+				.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null);
 	}
 
 	private static int punkte(Ergebnis ergebnis) {
