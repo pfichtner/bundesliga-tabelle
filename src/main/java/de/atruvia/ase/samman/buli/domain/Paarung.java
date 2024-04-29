@@ -22,7 +22,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-@Accessors(makeFinal = true, fluent = true)
+@Accessors(fluent = true)
 public class Paarung {
 
 	private final class SwappedPaarung extends Paarung {
@@ -31,10 +31,12 @@ public class Paarung {
 			super(ergebnisTyp, gast, heim);
 		}
 
+		@Override
 		public boolean isSwapped() {
 			return true;
 		}
 
+		@Override
 		public Paarung withSwappedTeams() {
 			return Paarung.this;
 		}
@@ -127,11 +129,10 @@ public class Paarung {
 	public Ergebnis ergebnis() {
 		int toreHeim = toreHeim();
 		int toreGast = toreGast();
-		return toreHeim == toreGast //
-				? UNENTSCHIEDEN //
-				: toreHeim > toreGast //
-						? SIEG //
-						: NIEDERLAGE;
+		if (toreHeim == toreGast) {
+			return UNENTSCHIEDEN;
+		}
+		return toreHeim > toreGast ? SIEG : NIEDERLAGE;
 	}
 
 	public boolean isSwapped() {
