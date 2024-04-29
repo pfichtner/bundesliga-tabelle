@@ -145,7 +145,7 @@ public class Paarung {
 
 	public static class PaarungBuilder {
 
-		public static Paarung.PaarungBuilder paarung(String teamHeim, String teamGast) {
+		public static PaarungBuilder paarung(String teamHeim, String teamGast) {
 			return Paarung.builder().heim(entry(teamHeim)).gast(entry(teamGast));
 		}
 
