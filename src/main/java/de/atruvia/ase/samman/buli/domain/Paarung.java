@@ -50,17 +50,25 @@ public class Paarung {
     }
 
 	@Value
-	@AllArgsConstructor
 	@Builder(toBuilder = true)
 	public static class Entry {
+		Object identifier;
 		String team;
 		URI wappen;
 		@With
 		int tore;
 
-		public Entry(String team, URI wappen) {
-			this(team, wappen, 0);
+		public Entry(String team, URI wappen, int tore) {
+			this(null, team, wappen, tore);
 		}
+
+		public Entry(Object identifier, String team, URI wappen, int tore) {
+			this.identifier = identifier == null ? team : identifier;
+			this.team = team;
+			this.wappen = wappen;
+			this.tore = tore;
+		}
+
 	}
 
 	@Builder.Default

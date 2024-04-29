@@ -1,5 +1,6 @@
 package de.atruvia.ase.samman.buli.infra.adapters.secondary;
 
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.resultinfoProvider;
 import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.spieltagFsRepo;
 import static de.atruvia.ase.samman.buli.springframework.RestTemplateMock.restTemplateMock;
@@ -14,8 +15,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
+import de.atruvia.ase.samman.buli.domain.Paarung.Entry;
 
 class OpenLigaDbSpieltagRepoTest {
+
+	int idFrankfurt = 91;
+	int idMuenchen = 40;
+	int idBremen = 134;
 
 	String teamFrankfurt = "Eintracht Frankfurt";
 	String teamMuenchen = "FC Bayern München";
@@ -30,9 +36,10 @@ class OpenLigaDbSpieltagRepoTest {
 	void canRetrieveDataOf2022() {
 		List<Paarung> paarungen = repo().lade("bl1", "2022");
 		Paarung expected0 = Paarung.builder() //
-				.heim(new Paarung.Entry(teamFrankfurt, wappenFrankfurt)) //
-				.gast(new Paarung.Entry(teamMuenchen, wappenMuenchen)) //
-				.build().withErgebnis(1, 6);
+				.ergebnisTyp(BEENDET) //
+				.heim(new Entry(idFrankfurt, teamFrankfurt, wappenFrankfurt, 1)) //
+				.gast(new Entry(idMuenchen, teamMuenchen, wappenMuenchen, 6)) //
+				.build();
 		assertThat(paarungen).hasSize(306).element(0).isEqualTo(expected0);
 	}
 
@@ -42,9 +49,10 @@ class OpenLigaDbSpieltagRepoTest {
 		// "resultTypeID" = 2 for now
 		List<Paarung> paarungen = repo().lade("bl1", "2023");
 		Paarung expected0 = Paarung.builder() //
-				.heim(new Paarung.Entry(teamBremen, wappenBremen)) //
-				.gast(new Paarung.Entry(teamMuenchen, wappenMuenchen)) //
-				.build().withErgebnis(0, 4);
+				.ergebnisTyp(BEENDET) //
+				.heim(new Entry(idBremen, teamBremen, wappenBremen, 0)) //
+				.gast(new Entry(idMuenchen, teamMuenchen, wappenMuenchen, 4)) //
+				.build();
 		assertThat(paarungen).hasSize(9).element(0).isEqualTo(expected0);
 	}
 

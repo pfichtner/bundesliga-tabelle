@@ -77,7 +77,7 @@ public class Tabelle {
 
 	}
 
-	private final Map<String, TabellenPlatz> eintraege = new HashMap<>();
+	private final Map<Object, TabellenPlatz> eintraege = new HashMap<>();
 
 	public void add(Paarung paarung) {
 		addInternal(paarung);
@@ -85,11 +85,11 @@ public class Tabelle {
 	}
 
 	private void addInternal(Paarung paarung) {
-		eintraege.merge(paarung.teamHeim(), newEntry(paarung).build(), TabellenPlatz::mergeWith);
+		eintraege.merge(paarung.heim().identifier(), newEntry(paarung).build(), TabellenPlatz::mergeWith);
 	}
 
 	private TabellenPlatzBuilder newEntry(Paarung paarung) {
-		TabellenPlatzBuilder builder = TabellenPlatz.builder().wappen(paarung.wappenHeim());
+		TabellenPlatzBuilder builder = TabellenPlatz.builder().team(paarung.teamHeim()).wappen(paarung.wappenHeim());
 		return paarung.hatErgebnis() ? withErgebnis(builder, paarung) : builder;
 	}
 
@@ -114,10 +114,8 @@ public class Tabelle {
 	public List<TabellenPlatz> getEntries() {
 		// TODO make it side-affect-free, does it work W/O zip!?
 		AtomicInteger platz = new AtomicInteger(1);
-		Map<OrdnungsElement, List<TabellenPlatz>> platzGruppen = eintraege.entrySet().stream() //
-				.map(Tabelle::setTeam) //
-				.collect(groupingBy(OrdnungsElement::new)) //
-		;
+		Map<OrdnungsElement, List<TabellenPlatz>> platzGruppen = eintraege.values().stream()
+				.collect(groupingBy(OrdnungsElement::new));
 		return platzGruppen.entrySet().stream() //
 				.sorted(Entry.comparingByKey()) //
 				.map(Entry::getValue) //
@@ -128,10 +126,6 @@ public class Tabelle {
 	private static Stream<TabellenPlatz> makeGroup(AtomicInteger platz, List<TabellenPlatz> tabellenPlaetze) {
 		int no = platz.getAndAdd(tabellenPlaetze.size());
 		return tabellenPlaetze.stream().sorted(comparing(OrdnungsElement::new)).map(tp -> tp.withPlatz(no));
-	}
-
-	private static TabellenPlatz setTeam(Entry<String, TabellenPlatz> entry) {
-		return entry.getValue().withTeam(entry.getKey());
 	}
 
 }

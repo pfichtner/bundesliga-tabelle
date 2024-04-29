@@ -41,8 +41,13 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	@ToString
 	@FieldDefaults(level = PUBLIC)
 	private static class Team {
+		Object teamId;
 		String teamName;
 		String teamIconUrl;
+
+		private Entry toDomain() {
+			return new Entry(teamId, teamName, create(teamIconUrl), 0);
+		}
 	}
 
 	@ToString
@@ -86,10 +91,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		Goal[] goals;
 
 		private Paarung toDomain(List<Resultinfo> resultinfos) {
-			PaarungBuilder builder = Paarung.builder() //
-					.heim(new Entry(team1.teamName, create(team1.teamIconUrl))) //
-					.gast(new Entry(team2.teamName, create(team2.teamIconUrl))) //
-			;
+			PaarungBuilder builder = Paarung.builder().heim(team1.toDomain()).gast(team2.toDomain());
 			ErgebnisTyp ergebnisTyp = ergebnisTyp();
 			if (ergebnisTyp == BEENDET) {
 				MatchResult endergebnis = MatchResult.endergebnis(asList(matchResults), resultinfos)
