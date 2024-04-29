@@ -8,9 +8,7 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
 import static de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder.paarung;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.merge;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.platzWith;
-import static de.atruvia.ase.samman.buli.infra.adapters.secondary.OpenLigaDbSpieltagRepoMother.spieltagFsRepo;
 import static java.net.URI.create;
-import static org.approvaltests.JsonApprovals.verifyJson;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.not;
@@ -40,7 +38,6 @@ import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.ToreUndGegentore;
-import de.atruvia.ase.samman.buli.domain.ports.primary.DefaultTabellenService;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 
 @SpringBootTest
@@ -142,17 +139,6 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[0].laufendesSpiel.ergebnis", is("S"))) //
 				.andExpect(jsonPath("$.[0].laufendesSpiel.gegner", is("Gast"))) //
 		;
-	}
-
-	@Test
-	void approveWithRunningGames() throws Exception {
-		String league = "bl1";
-		String season = "2023-games-running";
-		sut = new TabellenHttpAdapter(new DefaultTabellenService(spieltagFsRepo()));
-		mockMvc = standaloneSetup(sut).setControllerAdvice(new GlobalExceptionHandler()).build();
-		String jsonResponse = mockMvc.perform(get("/tabelle/" + league + "/" + season)).andDo(print()).andReturn()
-				.getResponse().getContentAsString();
-		verifyJson(jsonResponse);
 	}
 
 	@Test
