@@ -14,7 +14,7 @@ So it highlights the following aspects:
   - Test this in isolation using a mocked http service
   - Test this integrative if the real http service responds as expected. We can't do contract tests here, since we don't have organisational control over the provider (third-party system), see https://docs.pact.io/getting_started/what_is_pact_good_for#what-is-pact-good-for
 
-Additionally it does: 
+Additionally, it does: 
 - [PACT](https://pact.io/) contract verification that this backend behaves as expected by the frontend(s)
 - BDD showcase via [Cucumber](https://cucumber.io/) and generate reports out of it
 - [ArchUnit](https://www.archunit.org/) architecture tests that the code base is structured as intended

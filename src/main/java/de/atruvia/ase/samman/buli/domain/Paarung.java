@@ -6,28 +6,48 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.GEPLANT;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
+import static lombok.AccessLevel.PRIVATE;
 
 import java.net.URI;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Value;
 import lombok.With;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 
-@Value
+@Data
 @AllArgsConstructor
 @Builder(toBuilder = true)
-@Accessors(fluent = true)
+@FieldDefaults(level = PRIVATE, makeFinal = true)
+@Accessors(makeFinal = true, fluent = true)
 public class Paarung {
 
-	public enum Ergebnis {
-		SIEG, UNENTSCHIEDEN, NIEDERLAGE;
+	private final class SwappedPaarung extends Paarung {
+
+		public SwappedPaarung(Paarung paarung) {
+			super(ergebnisTyp, gast, heim);
+		}
+
+		public boolean isSwapped() {
+			return true;
+		}
+
+		public Paarung swap() {
+			return Paarung.this;
+		}
+
 	}
 
+	public enum Ergebnis {
+		SIEG, UNENTSCHIEDEN, NIEDERLAGE
+    }
+
 	public enum ErgebnisTyp {
-		GEPLANT, LAUFEND, BEENDET;
-	}
+		GEPLANT, LAUFEND, BEENDET
+    }
 
 	@Value
 	@Builder(toBuilder = true)
@@ -114,8 +134,12 @@ public class Paarung {
 						: NIEDERLAGE;
 	}
 
+	public boolean isSwapped() {
+		return false;
+	}
+
 	public Paarung swap() {
-		return toBuilder().heim(gast).gast(heim).build();
+		return new SwappedPaarung(this);
 	}
 
 	public static class PaarungBuilder {

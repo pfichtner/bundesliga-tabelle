@@ -6,6 +6,6 @@ import de.atruvia.ase.samman.buli.domain.Paarung;
 
 public interface SpieltagRepo {
 
-	List<Paarung> lade(String league, String season) throws Exception;
+	List<Paarung> lade(String league, String season);
 
 }

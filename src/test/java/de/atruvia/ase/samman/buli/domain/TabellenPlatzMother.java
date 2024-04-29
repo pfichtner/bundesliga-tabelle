@@ -2,22 +2,21 @@ package de.atruvia.ase.samman.buli.domain;
 
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static java.util.Arrays.asList;
+import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = PRIVATE)
 public final class TabellenPlatzMother {
 
-	private TabellenPlatzMother() {
-		super();
-	}
-
 	/**
-	 * Erzeugt die Liste der Ergebnisse, wie sie {@link TabellenRechner} auch
-	 * erzeugt. (TODO sollten wir das mit einem Spy sicherstellen?)
+	 * Erzeugt die Liste der Ergebnisse, wie sie {@link Tabelle} auch erzeugt. (TODO
+	 * sollten wir das mit einem Spy sicherstellen?)
 	 * 
 	 * @param ergebnisse Ergebnistypen die über die merge Funktion zu einer Liste
 	 *                   zusammengefasst werden sollen
@@ -28,8 +27,8 @@ public final class TabellenPlatzMother {
 	}
 
 	/**
-	 * Erzeugt die Liste der Ergebnisse, wie sie {@link TabellenRechner} auch
-	 * erzeugt. (TODO sollten wir das mit einem Spy sicherstellen?)
+	 * Erzeugt die Liste der Ergebnisse, wie sie {@link Tabelle} auch erzeugt. (TODO
+	 * sollten wir das mit einem Spy sicherstellen?)
 	 * 
 	 * @param ergebnisse Ergebnistypen die über die merge Funktion zu einer Liste
 	 *                   zusammengefasst werden sollen
@@ -47,7 +46,7 @@ public final class TabellenPlatzMother {
 	}
 
 	public static TabellenPlatz merge(Stream<TabellenPlatz> tabellenPlaetze) {
-		return tabellenPlaetze.reduce(TabellenPlatz::merge).orElseGet(() -> TabellenPlatz.builder().build());
+		return tabellenPlaetze.reduce(TabellenPlatz::mergeWith).orElseGet(() -> TabellenPlatz.builder().build());
 	}
 
 	private static TabellenPlatz platzWith(Ergebnis ergebnis) {

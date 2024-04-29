@@ -18,7 +18,6 @@ import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
-import de.atruvia.ase.samman.buli.domain.TabellenPlatz.ToreUndGegentore;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -41,15 +40,15 @@ public class Tabelle {
 //		If two or more teams have the same rank in the Bundesliga and there is no other criteria that can be used to separate them, then the teams will be listed in alphabetical order according to their full club name.
 
 		private static final List<Function<TabellenPlatz, Comparable<?>>> comparators = asList( //
-				e -> e.punkte(), //
-				e -> e.torDifferenz(), //
-				e -> e.tore(), //
+				TabellenPlatz::punkte, //
+				TabellenPlatz::torDifferenz, //
+				TabellenPlatz::tore, //
 				e -> e.auswaerts().tore() //
 		);
 
 		private static final Function<OrdnungsElement, TabellenPlatz> getTabellenPlatz = OrdnungsElement::tabellenPlatz;
 		private static final List<Function<OrdnungsElement, Comparable<?>>> extractors = comparators.stream()
-				.map(t -> getTabellenPlatz.andThen(t)).toList();
+				.map(getTabellenPlatz::andThen).toList();
 
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		private static final Comparator<OrdnungsElement> comparator = extractors.stream() //
@@ -81,30 +80,27 @@ public class Tabelle {
 	private final Map<Object, TabellenPlatz> eintraege = new HashMap<>();
 
 	public void add(Paarung paarung) {
-		addInternal(paarung, false);
-		addInternal(paarung.swap(), true);
+		addInternal(paarung);
+		addInternal(paarung.swap());
 	}
 
-	private void addInternal(Paarung paarung, boolean swapped) {
-		ToreUndGegentore toreUndGegentore = new ToreUndGegentore(paarung.toreHeim(), paarung.toreGast());
-		TabellenPlatzBuilder builder = newEntry(paarung);
-		builder = swapped //
-				? builder.auswaerts(toreUndGegentore) //
-				: builder.heim(toreUndGegentore);
-		eintraege.merge(paarung.heim().identifier(), builder.build(), TabellenPlatz::merge);
+	private void addInternal(Paarung paarung) {
+		eintraege.merge(paarung.teamHeim(), newEntry(paarung).build(), TabellenPlatz::mergeWith);
 	}
 
 	private TabellenPlatzBuilder newEntry(Paarung paarung) {
-		var builder = TabellenPlatz.builder().team(paarung.teamHeim()).wappen(paarung.wappenHeim());
-		if (paarung.hatErgebnis()) {
-			Ergebnis ergebnis = paarung.ergebnis();
-			builder = builder //
-					.spiele(1) //
-					.ergebnis(ergebnis, paarung.ergebnisTyp()) //
-					.punkte(punkte(ergebnis)) //
-					.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null);
-		}
-		return builder;
+		TabellenPlatzBuilder builder = TabellenPlatz.builder().wappen(paarung.wappenHeim());
+		return paarung.hatErgebnis() ? withErgebnis(builder, paarung) : builder;
+	}
+
+	private static TabellenPlatzBuilder withErgebnis(TabellenPlatzBuilder builder, Paarung paarung) {
+		Ergebnis ergebnis = paarung.ergebnis();
+		return builder //
+				.spiele(1) //
+				.ergebnis(ergebnis, paarung.ergebnisTyp()) //
+				.punkte(punkte(ergebnis)) //
+				.tore(paarung.isSwapped(), paarung.toreHeim(), paarung.toreGast()) //
+				.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null);
 	}
 
 	private static int punkte(Ergebnis ergebnis) {
@@ -121,7 +117,7 @@ public class Tabelle {
 		Map<OrdnungsElement, List<TabellenPlatz>> platzGruppen = eintraege.values().stream()
 				.collect(groupingBy(OrdnungsElement::new));
 		return platzGruppen.entrySet().stream() //
-				.sorted(comparing(Entry::getKey)) //
+				.sorted(Entry.comparingByKey()) //
 				.map(Entry::getValue) //
 				.flatMap(t -> makeGroup(platz, t)) //
 				.toList();

@@ -5,6 +5,7 @@ build
 .classpath
 .settings
 .project
+.idea
 *.iws
 *.ipr
 /target/

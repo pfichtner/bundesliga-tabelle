@@ -24,11 +24,7 @@ public class DefaultTabellenService implements TabellenService {
 	}
 
 	private List<Paarung> lade(String league, String season) {
-		try {
-			return spieltagRepo.lade(league, season);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		return spieltagRepo.lade(league, season);
 	}
 
 }

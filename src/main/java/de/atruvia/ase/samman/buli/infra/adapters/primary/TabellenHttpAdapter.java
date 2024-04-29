@@ -2,11 +2,9 @@ package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
-import static java.lang.Math.max;
-import static java.util.Collections.reverse;
-import static java.util.stream.Collectors.joining;
+import static java.lang.Math.min;
+import static java.util.Arrays.fill;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +32,7 @@ public class TabellenHttpAdapter {
 		@Schema(description = "Mögliche Ausprägungen: 'S' (Sieg), 'U' (Unentschieden), 'N' (Niederlage). "
 				+ "Da das Spiel noch nicht beendet ist handelt es sich eigentlich nicht um Sieg bzw. Niederlage sondern um Führung bzw. Rückstand. ", allowableValues = {
 						"S", "U", "N" })
-		String ergebnis;
+		char ergebnis;
 		@Schema(description = "Teamname des gegnerischen Teams")
 		String gegner;
 		@Schema(description = "Geschossene Tore des Teams")
@@ -76,7 +74,7 @@ public class TabellenHttpAdapter {
 					.siege(domain.siege()) //
 					.unentschieden(domain.unentschieden()) //
 					.niederlagen(domain.niederlagen()) //
-					.letzte5(convertLetzte5(domain)) //
+					.letzte5(concatToSingleString(domain.ergebnisse(BEENDET), 5, '-')) //
 					.laufendesSpiel(
 							domain.laufendesSpiel() == null ? null : convertLaufendesSpiel(domain.laufendesSpiel())) //
 					.build();
@@ -90,36 +88,35 @@ public class TabellenHttpAdapter {
 					laufendesSpiel.toreHeim(), laufendesSpiel.toreGast());
 		}
 
-		private static String convertLetzte5(TabellenPlatz platz) {
-			return "%-5s".formatted(
-					lastNErgebnisse(platz, 5).stream().map(JsonTabellenPlatz::convertErgebnis).collect(joining()))
-					.replace(' ', '-');
-		}
-
-		private static String convertErgebnis(Ergebnis ergebnis) {
-			return switch (ergebnis) {
-			case SIEG -> "S";
-			case UNENTSCHIEDEN -> "U";
-			case NIEDERLAGE -> "N";
-			};
-		}
-
 		/**
-		 * Liefert die letzten n Ergebnisse. Sind weniger als n Ergebnisse vorhanden, so
-		 * beinhaltet die Liste nur die vorhandenen Ergebnisse. Das jüngste Ergebnis ist
-		 * vorne, das älteste Ergebnis hinten in der Liste.
+		 * Liefert die letzten <code>length</code> Ergebnisse. Das jüngste Ergebnis ist
+		 * vorne, das älteste Ergebnis hinten im String.
 		 * 
-		 * @param platz der TabellenPlatz, von welchem die letzten n Ergebnisse
-		 *              ermittelt werden sollen
-		 * @param count (maximale) Anzahl an Ergebnissen die zurückgegeben werden sollen
-		 * @return Liste der letzen n Ergebnisse
+		 * @param ergebnisse zu übersetzende Ergebnisse
+		 * @param length     Länge des zu erzeugenden Strings. Sind weniger Ergebnisse
+		 *                   vorhanden als der String lang sein soll wird dieser mit
+		 *                   <code>filler</code> aufgefüllt
+		 * @param filler     Zeichen mit dem der String aufgefüllt werden soll, falls
+		 *                   nicht ausreichend Ergebnisse vorhanden sind
+		 * @return String der letzen <code>length</code> Ergebnisse bestehend aus 'S',
+		 *         'U', 'N'
 		 */
-		private static List<Ergebnis> lastNErgebnisse(TabellenPlatz platz, int count) {
-			List<Ergebnis> ergebnisse = platz.getErgebnisse(BEENDET);
-			List<Ergebnis> lastN = new ArrayList<>(
-					ergebnisse.subList(max(0, ergebnisse.size() - count), ergebnisse.size()));
-			reverse(lastN);
-			return lastN;
+		private static String concatToSingleString(List<Ergebnis> ergebnisse, int length, char filler) {
+			char[] chars = new char[length];
+			int idx = 0;
+			for (; idx < min(ergebnisse.size(), chars.length); idx++) {
+				chars[idx] = convertErgebnis(ergebnisse.get(ergebnisse.size() - 1 - idx));
+			}
+			fill(chars, idx, chars.length, filler);
+			return new String(chars);
+		}
+
+		private static char convertErgebnis(Ergebnis ergebnis) {
+			return switch (ergebnis) {
+			case SIEG -> 'S';
+			case UNENTSCHIEDEN -> 'U';
+			case NIEDERLAGE -> 'N';
+			};
 		}
 
 	}

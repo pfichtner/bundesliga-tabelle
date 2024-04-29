@@ -3,6 +3,8 @@ package de.atruvia.ase.samman.buli.domain;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
+import static de.atruvia.ase.samman.buli.util.Merger.merge;
+import static de.atruvia.ase.samman.buli.util.Merger.lastNonNull;
 import static java.util.Arrays.asList;
 
 import java.net.URI;
@@ -12,6 +14,7 @@ import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp;
+import de.atruvia.ase.samman.buli.util.Merger.Mergeable;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;
@@ -29,10 +32,11 @@ public class TabellenPlatz {
 	}
 
 	@Value
-	public static class ToreUndGegentore {
+	public static class ToreUndGegentore implements Mergeable<ToreUndGegentore> {
 		private static final ToreUndGegentore NULL = new ToreUndGegentore(0, 0);
 
-		private ToreUndGegentore merge(ToreUndGegentore other) {
+		@Override
+		public ToreUndGegentore merge(ToreUndGegentore other) {
 			return new ToreUndGegentore(tore + other.tore, gegentore + other.gegentore);
 		}
 
@@ -54,13 +58,20 @@ public class TabellenPlatz {
 	ToreUndGegentore auswaerts = ToreUndGegentore.NULL;
 	Paarung laufendesSpiel;
 
-	public List<Ergebnis> getErgebnisse() {
-		return getErgebnisse(ErgebnisTyp.values());
+	public List<Ergebnis> ergebnisse() {
+		return collectToList(ergebnisseStream());
 	}
 
-	public List<Ergebnis> getErgebnisse(ErgebnisTyp... ergebnisTyp) {
-		return ergebnisse.stream().filter(e -> entryErgebnisIsTypeOf(e, ergebnisTyp)).map(ErgebnisEntry::ergebnis)
-				.toList();
+	public List<Ergebnis> ergebnisse(ErgebnisTyp... ergebnisTyp) {
+		return collectToList(ergebnisseStream().filter(e -> entryErgebnisIsTypeOf(e, ergebnisTyp)));
+	}
+
+	private Stream<ErgebnisEntry> ergebnisseStream() {
+		return ergebnisse.stream();
+	}
+
+	private static List<Ergebnis> collectToList(Stream<ErgebnisEntry> filter) {
+		return filter.map(ErgebnisEntry::ergebnis).toList();
 	}
 
 	private static boolean entryErgebnisIsTypeOf(ErgebnisEntry e, ErgebnisTyp... ergebnisTyp) {
@@ -86,32 +97,28 @@ public class TabellenPlatz {
 			return this;
 		}
 
+		public TabellenPlatzBuilder tore(boolean isSwapped, int toreHeim, int toreGast) {
+			ToreUndGegentore toreUndGegentore = new ToreUndGegentore(toreHeim, toreGast);
+			return isSwapped ? auswaerts(toreUndGegentore) : heim(toreUndGegentore);
+		}
+
 	}
 
 	public int torDifferenz() {
 		return tore() - gegentore();
 	}
 
-	public TabellenPlatz merge(TabellenPlatz other) {
+	public TabellenPlatz mergeWith(TabellenPlatz other) {
 		return builder() //
-				.team(other.team == null ? this.team : other.team) //
-				.ergebnisse(merge(this.ergebnisse, other.ergebnisse)) //
-				.spiele(merge(this.spiele, other.spiele)) //
-				.punkte(merge(this.punkte, other.punkte)) //
-				.heim(this.heim.merge(other.heim)) //
-				.auswaerts(this.auswaerts.merge(other.auswaerts)) //
-				.wappen(other.wappen == null ? this.wappen : other.wappen) //
-				.laufendesSpiel(other.laufendesSpiel == null ? this.laufendesSpiel : other.laufendesSpiel) //
+				.team(lastNonNull(team, other.team)) //
+        .ergebnisse(merge(ergebnisse, other.ergebnisse)) //
+				.spiele(merge(spiele, other.spiele)) //
+				.punkte(merge(punkte, other.punkte)) //
+				.heim(merge(heim, other.heim)) //
+				.auswaerts(merge(auswaerts, other.auswaerts)) //
+				.wappen(lastNonNull(wappen, other.wappen)) //
+				.laufendesSpiel(lastNonNull(laufendesSpiel, other.laufendesSpiel)) //
 				.build();
-	}
-
-	private static int merge(int value1, int value2) {
-		return value1 + value2;
-	}
-
-	@SafeVarargs
-	private static <T> List<T> merge(List<T>... lists) {
-		return Stream.of(lists).flatMap(List::stream).toList();
 	}
 
 	public int siege() {
@@ -127,7 +134,7 @@ public class TabellenPlatz {
 	}
 
 	private int countAnzahl(Ergebnis type) {
-		return (int) ergebnisse.stream().map(ErgebnisEntry::ergebnis).filter(type::equals).count();
+		return (int) ergebnisseStream().map(ErgebnisEntry::ergebnis).filter(type::equals).count();
 	}
 
 }

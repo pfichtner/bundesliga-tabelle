@@ -128,7 +128,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 	}
 
 	@Override
-	public List<Paarung> lade(String league, String season) throws Exception {
+	public List<Paarung> lade(String league, String season) {
 		List<Resultinfo> resultinfos = resultinfoRepo.getResultinfos(league, season);
 		return stream(restTemplate.getForObject(SERVICE_URI, Match[].class, league, season))
 				.map(t -> t.toDomain(resultinfos)).toList();

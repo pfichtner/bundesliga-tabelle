@@ -27,7 +27,7 @@ class OpenLigaDbSpieltagRepoIT {
 			+ "SV-Werder-Bremen-Logo.svg/681px-SV-Werder-Bremen-Logo.svg.png");
 
 	@Test
-	void canRetrieveDataOf2022() throws Exception {
+	void canRetrieveDataOf2022() {
 		List<Paarung> paarungen = repo().lade("bl1", "2022");
 		Paarung expected0 = Paarung.builder() //
 				.ergebnisTyp(BEENDET) //
@@ -38,7 +38,7 @@ class OpenLigaDbSpieltagRepoIT {
 	}
 
 	@Test
-	void canRetrieveDataOf2023() throws Exception {
+	void canRetrieveDataOf2023() {
 		List<Paarung> paarungen = repo().lade("bl1", "2023");
 		Paarung expected0 = Paarung.builder() //
 				.ergebnisTyp(BEENDET) //

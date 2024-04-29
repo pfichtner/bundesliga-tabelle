@@ -21,7 +21,7 @@ class OpenLigaDbTeamRepoIT {
 	URI wappenMuenchen = create("https://i.imgur.com/jJEsJrj.png");
 
 	@Test
-	void canRetrieveDataOf2022() throws Exception {
+	void canRetrieveDataOf2022() {
 		String league = "bl1";
 		String season = "2022";
 		assertThat(team(teamFrankfurt, league, season))
@@ -31,7 +31,7 @@ class OpenLigaDbTeamRepoIT {
 	}
 
 	@Test
-	void canRetrieveDataOf2023() throws Exception {
+	void canRetrieveDataOf2023() {
 		String league = "bl1";
 		String season = "2023";
 		assertThat(team(teamFrankfurt, league, season))
@@ -40,11 +40,11 @@ class OpenLigaDbTeamRepoIT {
 				.hasValueSatisfying(t -> assertThat(t.wappen()).isEqualTo(wappenMuenchen));
 	}
 
-	Optional<Team> team(String teamName, String league, String season) throws Exception {
+	Optional<Team> team(String teamName, String league, String season) {
 		return teams(league, season).filter(t -> t.name().equals(teamName)).findFirst();
 	}
 
-	Stream<Team> teams(String league, String season) throws Exception {
+	Stream<Team> teams(String league, String season) {
 		return repo().getTeams(league, season).stream();
 	}
 

@@ -29,33 +29,29 @@ class DefaultOpenLigaDbResultinfoRepoTest {
 	@Test
 	void endergebnisType2022() {
 		List<Resultinfo> resultinfos = sut.getResultinfos("bl1", "2022");
-		assertSoftly(s -> {
-			assertThat(resultinfos).satisfiesExactly( //
-					r -> {
-						s.assertThat(r).isSameAs(endergebnisType(resultinfos));
-						s.assertThat(r.id).isEqualTo(5337);
-						s.assertThat(r.name).isEqualTo(ENDERGEBNIS);
-					}, r -> {
-						s.assertThat(r.id).isEqualTo(5338);
-						s.assertThat(r.name).isEqualTo("Halbzeit");
-					});
-		});
+		assertSoftly(s -> assertThat(resultinfos).satisfiesExactly( //
+				r -> {
+					s.assertThat(r).isSameAs(endergebnisType(resultinfos));
+					s.assertThat(r.id).isEqualTo(5337);
+					s.assertThat(r.name).isEqualTo(ENDERGEBNIS);
+				}, r -> {
+					s.assertThat(r.id).isEqualTo(5338);
+					s.assertThat(r.name).isEqualTo("Halbzeit");
+				}));
 	}
 
 	@Test
 	void endergebnisType2023() {
 		List<Resultinfo> resultinfos = sut.getResultinfos("bl1", "2023");
-		assertSoftly(s -> {
-			assertThat(resultinfos).satisfiesExactly( //
-					r -> {
-						s.assertThat(r).isSameAs(endergebnisType(resultinfos));
-						s.assertThat(r.id).isEqualTo(5413);
-						s.assertThat(r.name).isEqualTo(ENDERGEBNIS);
-					}, r -> {
-						s.assertThat(r.id).isEqualTo(5456);
-						s.assertThat(r.name).isEqualTo("Halbzeitergebnis");
-					});
-		});
+		assertSoftly(s -> assertThat(resultinfos).satisfiesExactly( //
+				r -> {
+					s.assertThat(r).isSameAs(endergebnisType(resultinfos));
+					s.assertThat(r.id).isEqualTo(5413);
+					s.assertThat(r.name).isEqualTo(ENDERGEBNIS);
+				}, r -> {
+					s.assertThat(r.id).isEqualTo(5456);
+					s.assertThat(r.name).isEqualTo("Halbzeitergebnis");
+				}));
 
 	}
 
