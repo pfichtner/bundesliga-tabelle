@@ -81,7 +81,7 @@ public class Tabelle {
 
 	public void add(Paarung paarung) {
 		addInternal(paarung);
-		addInternal(paarung.swapTeams());
+		addInternal(paarung.withSwappedTeams());
 	}
 
 	private void addInternal(Paarung paarung) {

@@ -35,7 +35,7 @@ public class Paarung {
 			return true;
 		}
 
-		public Paarung swapTeams() {
+		public Paarung withSwappedTeams() {
 			return Paarung.this;
 		}
 
@@ -138,7 +138,7 @@ public class Paarung {
 		return false;
 	}
 
-	public Paarung swapTeams() {
+	public Paarung withSwappedTeams() {
 		return new SwappedPaarung(this);
 	}
 

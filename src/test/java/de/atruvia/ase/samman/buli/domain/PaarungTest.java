@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class PaarungTest {
 
 	Paarung origin = PaarungMother.paarungWithAllAttributesSet();
-	Paarung swappedOnce = origin.swapTeams();
+	Paarung swappedOnce = origin.withSwappedTeams();
 
 	@Test
 	void swapOneTimeIsNotEqualToOrigin() {
@@ -16,7 +16,7 @@ class PaarungTest {
 
 	@Test
 	void swapTwoTimesIsEqualToOrigin() {
-		Paarung swappedTwoTimes = swappedOnce.swapTeams();
+		Paarung swappedTwoTimes = swappedOnce.withSwappedTeams();
 		assertThat(swappedTwoTimes).isEqualTo(origin);
 	}
 
