@@ -85,11 +85,11 @@ public class Tabelle {
 	}
 
 	private void addInternal(Paarung paarung) {
-		eintraege.merge(paarung.teamHeim(), newEntry(paarung).build(), TabellenPlatz::mergeWith);
+		eintraege.merge(paarung.heim().identifier(), newEntry(paarung).build(), TabellenPlatz::mergeWith);
 	}
 
 	private TabellenPlatzBuilder newEntry(Paarung paarung) {
-		TabellenPlatzBuilder builder = TabellenPlatz.builder().wappen(paarung.wappenHeim());
+		TabellenPlatzBuilder builder = TabellenPlatz.builder().team(paarung.teamHeim()).wappen(paarung.wappenHeim());
 		return paarung.hatErgebnis() ? withErgebnis(builder, paarung) : builder;
 	}
 

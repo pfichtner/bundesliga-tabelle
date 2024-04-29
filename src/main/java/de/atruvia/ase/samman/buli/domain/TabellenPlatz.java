@@ -111,7 +111,7 @@ public class TabellenPlatz {
 	public TabellenPlatz mergeWith(TabellenPlatz other) {
 		return builder() //
 				.team(lastNonNull(team, other.team)) //
-        .ergebnisse(merge(ergebnisse, other.ergebnisse)) //
+				.ergebnisse(merge(ergebnisse, other.ergebnisse)) //
 				.spiele(merge(spiele, other.spiele)) //
 				.punkte(merge(punkte, other.punkte)) //
 				.heim(merge(heim, other.heim)) //
