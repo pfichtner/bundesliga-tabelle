@@ -162,10 +162,10 @@ public class Paarung {
 		}
 
 		public PaarungBuilder ergebnis(ErgebnisTyp ergebnisTyp, int toreTeamHeim, int toreTeamGast) {
-			return ergebnisTyp(ergebnisTyp).withGoals(toreTeamHeim, toreTeamGast);
+			return ergebnisTyp(ergebnisTyp).goals(toreTeamHeim, toreTeamGast);
 		}
 
-		private PaarungBuilder withGoals(int toreTeamHeim, int toreTeamGast) {
+		private PaarungBuilder goals(int toreTeamHeim, int toreTeamGast) {
 			return heim(heim.withTore(toreTeamHeim)).gast(gast.withTore(toreTeamGast));
 		}
 
