@@ -161,11 +161,11 @@ public class Paarung {
 			return ergebnis(LAUFEND, toreTeamHeim, toreTeamGast);
 		}
 
-		public PaarungBuilder ergebnis(ErgebnisTyp ergebnisTyp, int toreTeamHeim, int toreTeamGast) {
+		private PaarungBuilder ergebnis(ErgebnisTyp ergebnisTyp, int toreTeamHeim, int toreTeamGast) {
 			return ergebnisTyp(ergebnisTyp).goals(toreTeamHeim, toreTeamGast);
 		}
 
-		private PaarungBuilder goals(int toreTeamHeim, int toreTeamGast) {
+		public PaarungBuilder goals(int toreTeamHeim, int toreTeamGast) {
 			return heim(heim.withTore(toreTeamHeim)).gast(gast.withTore(toreTeamGast));
 		}
 

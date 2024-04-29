@@ -91,12 +91,13 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		Goal[] goals;
 
 		private Paarung toDomain(List<Resultinfo> resultinfos) {
-			PaarungBuilder builder = Paarung.builder().heim(team1.toDomain()).gast(team2.toDomain());
 			ErgebnisTyp ergebnisTyp = ergebnisTyp();
+			PaarungBuilder builder = Paarung.builder().ergebnisTyp(ergebnisTyp) //
+					.heim(team1.toDomain()).gast(team2.toDomain());
 			if (ergebnisTyp == BEENDET) {
 				MatchResult endergebnis = MatchResult.endergebnis(asList(matchResults), resultinfos)
 						.orElseThrow(() -> new IllegalStateException("No final result found in finished game " + this));
-				builder = builder.ergebnis(ergebnisTyp, endergebnis.pointsTeam1, endergebnis.pointsTeam2);
+				builder = builder.goals(endergebnis.pointsTeam1, endergebnis.pointsTeam2);
 			} else if (ergebnisTyp == LAUFEND) {
 				// a final result is always present on started games, but in some cases it has
 				// been 0:0 while there have already been shoot some goals. Of course we always
@@ -106,7 +107,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 				// score of 3:2 with a final score of 0:0 and goals where goals where missing
 				// (0:1, 0:3)
 				Goal lastGoal = lastGoal();
-				builder = builder.ergebnis(ergebnisTyp, lastGoal.scoreTeam1, lastGoal.scoreTeam2);
+				builder = builder.goals(lastGoal.scoreTeam1, lastGoal.scoreTeam2);
 			}
 			return builder.build();
 		}
