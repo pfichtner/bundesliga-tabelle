@@ -43,11 +43,11 @@ public class Paarung {
 
 	public enum Ergebnis {
 		SIEG, UNENTSCHIEDEN, NIEDERLAGE
-    }
+	}
 
 	public enum ErgebnisTyp {
 		GEPLANT, LAUFEND, BEENDET
-    }
+	}
 
 	@Value
 	@Builder(toBuilder = true)
@@ -161,14 +161,11 @@ public class Paarung {
 		}
 
 		public PaarungBuilder ergebnis(ErgebnisTyp ergebnisTyp, int toreTeamHeim, int toreTeamGast) {
-			return withGoals(ergebnisTyp(ergebnisTyp), toreTeamHeim, toreTeamGast);
+			return ergebnisTyp(ergebnisTyp).withGoals(toreTeamHeim, toreTeamGast);
 		}
 
-		private PaarungBuilder withGoals(PaarungBuilder builder, int toreTeamHeim, int toreTeamGast) {
-			return builder //
-					.heim(heim.withTore(toreTeamHeim)) //
-					.gast(gast.withTore(toreTeamGast)) //
-			;
+		private PaarungBuilder withGoals(int toreTeamHeim, int toreTeamGast) {
+			return heim(heim.withTore(toreTeamHeim)).gast(gast.withTore(toreTeamGast));
 		}
 
 	}
