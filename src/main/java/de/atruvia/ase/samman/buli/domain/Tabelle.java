@@ -17,7 +17,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -101,18 +100,10 @@ public class Tabelle {
 		return builder //
 				.spiele(1) //
 				.ergebnis(ergebnis, paarung.ergebnisTyp()) //
-				.punkte(punkte(ergebnis)) //
+				.punkte(ergebnis.punkte()) //
 				.toreUndGegentore(paarung.viewDirection(), toreUndGegentore) //
 				.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null) //
 		;
-	}
-
-	private static int punkte(Ergebnis ergebnis) {
-		return switch (ergebnis) {
-		case SIEG -> 3;
-		case UNENTSCHIEDEN -> 1;
-		case NIEDERLAGE -> 0;
-		};
 	}
 
 	public List<TabellenPlatz> getEntries() {

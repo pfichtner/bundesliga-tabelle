@@ -49,7 +49,15 @@ public class Paarung {
 	}
 
 	public enum Ergebnis {
-		SIEG, UNENTSCHIEDEN, NIEDERLAGE
+		SIEG, UNENTSCHIEDEN, NIEDERLAGE;
+
+		public int punkte() {
+			return switch (this) {
+			case SIEG -> 3;
+			case UNENTSCHIEDEN -> 1;
+			case NIEDERLAGE -> 0;
+			};
+		}
 	}
 
 	public enum ErgebnisTyp {
