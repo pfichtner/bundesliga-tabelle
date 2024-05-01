@@ -27,7 +27,10 @@ public final class PaarungMother {
 	}
 
 	private static Paarung swapIfOdd(int index, Paarung paarung) {
-		return index % 2 == 0 ? paarung : paarung.withSwappedTeams();
+		if (index % 2 == 0) {
+			return paarung;
+		}
+		return paarung.toBuilder().heim(paarung.gast()).gast(paarung.heim()).build();
 	}
 
 	public static Paarung paarung(String heimTeam, String gastTeam, Ergebnis ergebnis) {

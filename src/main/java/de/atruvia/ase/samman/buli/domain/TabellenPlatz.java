@@ -19,6 +19,7 @@ import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp;
+import de.atruvia.ase.samman.buli.domain.Paarung.PaarungView;
 import de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection;
 import de.atruvia.ase.samman.buli.util.Merger.Mergeable;
 import lombok.AllArgsConstructor;
@@ -66,7 +67,7 @@ public class TabellenPlatz {
 	List<ErgebnisEntry> ergebnisse;
 	int punkte;
 	Map<ViewDirection, ToreUndGegentore> tore;
-	Paarung laufendesSpiel;
+	PaarungView laufendesSpiel;
 
 	public List<Ergebnis> ergebnisse() {
 		return collectToList(ergebnisseStream());

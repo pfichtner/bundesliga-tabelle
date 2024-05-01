@@ -37,8 +37,8 @@ class OpenLigaDbSpieltagRepoTest {
 		List<Paarung> paarungen = repo().lade("bl1", "2022");
 		Paarung expected0 = Paarung.builder() //
 				.ergebnisTyp(BEENDET) //
-				.team1(new Entry(idFrankfurt, teamFrankfurt, wappenFrankfurt, 1)) //
-				.team2(new Entry(idMuenchen, teamMuenchen, wappenMuenchen, 6)) //
+				.heim(new Entry(idFrankfurt, teamFrankfurt, wappenFrankfurt, 1)) //
+				.gast(new Entry(idMuenchen, teamMuenchen, wappenMuenchen, 6)) //
 				.build();
 		assertThat(paarungen).hasSize(306).element(0).isEqualTo(expected0);
 	}
@@ -50,8 +50,8 @@ class OpenLigaDbSpieltagRepoTest {
 		List<Paarung> paarungen = repo().lade("bl1", "2023");
 		Paarung expected0 = Paarung.builder() //
 				.ergebnisTyp(BEENDET) //
-				.team1(new Entry(idBremen, teamBremen, wappenBremen, 0)) //
-				.team2(new Entry(idMuenchen, teamMuenchen, wappenMuenchen, 4)) //
+				.heim(new Entry(idBremen, teamBremen, wappenBremen, 0)) //
+				.gast(new Entry(idMuenchen, teamMuenchen, wappenMuenchen, 4)) //
 				.build();
 		assertThat(paarungen).hasSize(9).element(0).isEqualTo(expected0);
 	}

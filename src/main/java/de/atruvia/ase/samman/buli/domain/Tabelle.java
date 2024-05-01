@@ -17,6 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import de.atruvia.ase.samman.buli.domain.Paarung.PaarungView;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -80,30 +81,28 @@ public class Tabelle {
 	private final Map<Object, TabellenPlatz> eintraege = new HashMap<>();
 
 	public void add(Paarung paarung) {
-		addInternal(paarung);
-		addInternal(paarung.withSwappedTeams());
+		addInternal(paarung.heimView());
+		addInternal(paarung.auswaertsView());
 	}
 
-	private void addInternal(Paarung paarung) {
-		eintraege.merge(paarung.team1().identifier(), newEntry(paarung), TabellenPlatz::mergeWith);
+	private void addInternal(PaarungView paarung) {
+		eintraege.merge(paarung.team().identifier(), newEntry(paarung), TabellenPlatz::mergeWith);
 	}
 
-	private TabellenPlatz newEntry(Paarung paarung) {
-		TabellenPlatzBuilder builder = TabellenPlatz.builder().team(paarung.team1().team())
-				.wappen(paarung.team1().wappen());
-		return (paarung.hatErgebnis() ? withErgebnis(builder, paarung) : builder).build();
-	}
-
-	private static TabellenPlatzBuilder withErgebnis(TabellenPlatzBuilder builder, Paarung paarung) {
-		var ergebnis = paarung.ergebnis();
-		var toreUndGegentore = toreUndGegentore(paarung.team1().tore(), paarung.team2().tore());
-		return builder //
-				.spiele(1) //
-				.ergebnis(ergebnis, paarung.ergebnisTyp()) //
-				.punkte(ergebnis.punkte()) //
-				.toreUndGegentore(paarung.viewDirection(), toreUndGegentore) //
-				.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null) //
-		;
+	private TabellenPlatz newEntry(PaarungView paarung) {
+		TabellenPlatzBuilder builder = TabellenPlatz.builder().team(paarung.team().team())
+				.wappen(paarung.team().wappen());
+		if (paarung.hatErgebnis()) {
+			var ergebnis = paarung.ergebnis();
+			var toreUndGegentore = toreUndGegentore(paarung.tore(), paarung.gegenTore());
+			builder = builder.spiele(1) //
+					.ergebnis(ergebnis, paarung.ergebnisTyp()) //
+					.punkte(ergebnis.punkte()) //
+					.toreUndGegentore(paarung.direction(), toreUndGegentore) //
+					.laufendesSpiel(paarung.ergebnisTypIs(LAUFEND) ? paarung : null) //
+			;
+		}
+		return builder.build();
 	}
 
 	public List<TabellenPlatz> getEntries() {

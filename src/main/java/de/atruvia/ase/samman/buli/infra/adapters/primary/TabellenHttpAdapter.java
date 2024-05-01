@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
+import de.atruvia.ase.samman.buli.domain.Paarung.PaarungView;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -83,9 +83,9 @@ public class TabellenHttpAdapter {
 			return jsonTabellenPlatz;
 		}
 
-		private static JsonLaufendesSpiel convertLaufendesSpiel(Paarung laufendesSpiel) {
-			return new JsonLaufendesSpiel(convertErgebnis(laufendesSpiel.ergebnis()), laufendesSpiel.team2().team(),
-					laufendesSpiel.team1().tore(), laufendesSpiel.team2().tore());
+		private static JsonLaufendesSpiel convertLaufendesSpiel(PaarungView view) {
+			return new JsonLaufendesSpiel(convertErgebnis(view.ergebnis()), view.gegner().team(), view.tore(),
+					view.gegenTore());
 		}
 
 		/**

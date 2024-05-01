@@ -126,7 +126,7 @@ class TabellenHttpAdapterTest {
 		TabellenPlatz platz1 = merge( //
 				Stream.of(platzWith(SIEG, BEENDET), //
 						platzWith(UNENTSCHIEDEN, BEENDET), //
-						platzWith(NIEDERLAGE, LAUFEND).toBuilder().laufendesSpiel(laufendesSpiel).build() //
+						platzWith(NIEDERLAGE, LAUFEND).toBuilder().laufendesSpiel(laufendesSpiel.heimView()).build() //
 				));
 		when(tabellenService.erstelleTabelle(league, season)).thenReturn(List.of(platz1));
 

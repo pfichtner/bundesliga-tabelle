@@ -27,25 +27,72 @@ import lombok.experimental.FieldDefaults;
 @Accessors(fluent = true)
 public class Paarung {
 
-	public enum ViewDirection {
-		HEIM, AUSWAERTS
-	}
+	public static interface PaarungView {
 
-	private final class SwappedPaarung extends Paarung {
+		Entry team();
 
-		public SwappedPaarung(Paarung paarung) {
-			super(ergebnisTyp, team2, team1);
+		Entry gegner();
+
+		int tore();
+
+		int gegenTore();
+
+		ViewDirection direction();
+
+		default Ergebnis ergebnis() {
+			int toreHeim = tore();
+			int toreGast = gegenTore();
+			if (toreHeim == toreGast) {
+				return UNENTSCHIEDEN;
+			}
+			return toreHeim > toreGast ? SIEG : NIEDERLAGE;
 		}
 
-		public ViewDirection viewDirection() {
-			return AUSWAERTS;
+		boolean hatErgebnis();
+
+		ErgebnisTyp ergebnisTyp();
+
+		boolean ergebnisTypIs(ErgebnisTyp ergebnisTyp);
+
+	}
+
+	@Value
+	private class DefaultPaarungView implements PaarungView {
+
+		Paarung delegate;
+		ViewDirection direction;
+		Entry team;
+		Entry gegner;
+
+		@Override
+		public int tore() {
+			return team().tore();
 		}
 
 		@Override
-		public Paarung withSwappedTeams() {
-			return Paarung.this;
+		public int gegenTore() {
+			return gegner().tore();
 		}
 
+		@Override
+		public boolean hatErgebnis() {
+			return delegate.hatErgebnis();
+		}
+
+		@Override
+		public ErgebnisTyp ergebnisTyp() {
+			return delegate.ergebnisTyp;
+		}
+
+		@Override
+		public boolean ergebnisTypIs(ErgebnisTyp ergebnisTyp) {
+			return delegate.ergebnisTypIs(ergebnisTyp);
+		}
+
+	}
+
+	public enum ViewDirection {
+		HEIM, AUSWAERTS
 	}
 
 	public enum Ergebnis {
@@ -89,7 +136,7 @@ public class Paarung {
 	@Builder.Default
 	ErgebnisTyp ergebnisTyp = GEPLANT;
 
-	Entry team1, team2;
+	Entry heim, gast;
 
 	public boolean hatErgebnis() {
 		return !ergebnisTypIs(GEPLANT);
@@ -103,49 +150,44 @@ public class Paarung {
 		return toBuilder().endergebnis(toreHeim, toreGast).build();
 	}
 
-	public Ergebnis ergebnis() {
-		int toreHeim = team1.tore();
-		int toreGast = team2.tore();
-		if (toreHeim == toreGast) {
-			return UNENTSCHIEDEN;
-		}
-		return toreHeim > toreGast ? SIEG : NIEDERLAGE;
-	}
-
 	public ViewDirection viewDirection() {
 		return HEIM;
 	}
 
-	public Paarung withSwappedTeams() {
-		return new SwappedPaarung(this);
-	}
-
 	public static class PaarungBuilder {
 
-		public static PaarungBuilder paarung(String team1, String team2) {
-			return Paarung.builder().team1(entry(team1)).team2(entry(team2));
+		public static PaarungBuilder paarung(String heim, String gast) {
+			return Paarung.builder().heim(entry(heim)).gast(entry(gast));
 		}
 
 		private static Entry entry(String team) {
 			return Entry.builder().team(team).build();
 		}
 
-		public PaarungBuilder endergebnis(int toreTeam1, int toreTeam2) {
-			return ergebnis(BEENDET, toreTeam1, toreTeam2);
+		public PaarungBuilder endergebnis(int toreHeim, int toreGast) {
+			return ergebnis(BEENDET, toreHeim, toreGast);
 		}
 
-		public PaarungBuilder zwischenergebnis(int toreTeam1, int toreTeam2) {
-			return ergebnis(LAUFEND, toreTeam1, toreTeam2);
+		public PaarungBuilder zwischenergebnis(int toreHeim, int toreGast) {
+			return ergebnis(LAUFEND, toreHeim, toreGast);
 		}
 
-		private PaarungBuilder ergebnis(ErgebnisTyp ergebnisTyp, int toreTeam1, int toreTeam2) {
-			return ergebnisTyp(ergebnisTyp).goals(toreTeam1, toreTeam2);
+		private PaarungBuilder ergebnis(ErgebnisTyp ergebnisTyp, int toreHeim, int toreGast) {
+			return ergebnisTyp(ergebnisTyp).goals(toreHeim, toreGast);
 		}
 
-		public PaarungBuilder goals(int toreTeam1, int toreTeam2) {
-			return team1(team1.withTore(toreTeam1)).team2(team2.withTore(toreTeam2));
+		public PaarungBuilder goals(int toreHeim, int toreGast) {
+			return heim(heim.withTore(toreHeim)).gast(gast.withTore(toreGast));
 		}
 
+	}
+
+	public PaarungView heimView() {
+		return new DefaultPaarungView(this, HEIM, heim, gast);
+	}
+
+	public PaarungView auswaertsView() {
+		return new DefaultPaarungView(this, AUSWAERTS, gast, heim);
 	}
 
 }
