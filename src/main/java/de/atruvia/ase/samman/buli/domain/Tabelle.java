@@ -96,7 +96,7 @@ public class Tabelle {
 	}
 
 	private static TabellenPlatzBuilder withErgebnis(TabellenPlatzBuilder builder, Paarung paarung) {
-		Ergebnis ergebnis = paarung.ergebnis();
+		var ergebnis = paarung.ergebnis();
 		var toreUndGegentore = toreUndGegentore(paarung.team1().tore(), paarung.team2().tore());
 		return builder //
 				.spiele(1) //
