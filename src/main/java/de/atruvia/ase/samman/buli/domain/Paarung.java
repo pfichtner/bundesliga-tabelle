@@ -6,6 +6,8 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.GEPLANT;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.AUSWAERTS;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.net.URI;
@@ -25,15 +27,18 @@ import lombok.experimental.FieldDefaults;
 @Accessors(fluent = true)
 public class Paarung {
 
+	public enum ViewDirection {
+		HEIM, AUSWAERTS
+	}
+
 	private final class SwappedPaarung extends Paarung {
 
 		public SwappedPaarung(Paarung paarung) {
-			super(ergebnisTyp, gast, heim);
+			super(ergebnisTyp, team2, team1);
 		}
 
-		@Override
-		public boolean isSwapped() {
-			return true;
+		public ViewDirection viewDirection() {
+			return AUSWAERTS;
 		}
 
 		@Override
@@ -76,43 +81,7 @@ public class Paarung {
 	@Builder.Default
 	ErgebnisTyp ergebnisTyp = GEPLANT;
 
-	Entry heim, gast;
-
-	public String teamHeim() {
-		return team(heim);
-	}
-
-	public String teamGast() {
-		return team(gast);
-	}
-
-	private static String team(Entry entry) {
-		return entry.team;
-	}
-
-	public URI wappenHeim() {
-		return wappen(heim);
-	}
-
-	public URI wappenGast() {
-		return wappen(gast);
-	}
-
-	private static URI wappen(Entry entry) {
-		return entry.wappen;
-	}
-
-	public int toreHeim() {
-		return tore(heim);
-	}
-
-	public int toreGast() {
-		return tore(gast);
-	}
-
-	private static int tore(Entry entry) {
-		return entry.tore;
-	}
+	Entry team1, team2;
 
 	public boolean hatErgebnis() {
 		return !ergebnisTypIs(GEPLANT);
@@ -127,16 +96,16 @@ public class Paarung {
 	}
 
 	public Ergebnis ergebnis() {
-		int toreHeim = toreHeim();
-		int toreGast = toreGast();
+		int toreHeim = team1.tore();
+		int toreGast = team2.tore();
 		if (toreHeim == toreGast) {
 			return UNENTSCHIEDEN;
 		}
 		return toreHeim > toreGast ? SIEG : NIEDERLAGE;
 	}
 
-	public boolean isSwapped() {
-		return false;
+	public ViewDirection viewDirection() {
+		return HEIM;
 	}
 
 	public Paarung withSwappedTeams() {
@@ -145,28 +114,28 @@ public class Paarung {
 
 	public static class PaarungBuilder {
 
-		public static PaarungBuilder paarung(String teamHeim, String teamGast) {
-			return Paarung.builder().heim(entry(teamHeim)).gast(entry(teamGast));
+		public static PaarungBuilder paarung(String team1, String team2) {
+			return Paarung.builder().team1(entry(team1)).team2(entry(team2));
 		}
 
 		private static Entry entry(String team) {
 			return Entry.builder().team(team).build();
 		}
 
-		public PaarungBuilder endergebnis(int toreTeamHeim, int toreTeamGast) {
-			return ergebnis(BEENDET, toreTeamHeim, toreTeamGast);
+		public PaarungBuilder endergebnis(int toreTeam1, int toreTeam2) {
+			return ergebnis(BEENDET, toreTeam1, toreTeam2);
 		}
 
-		public PaarungBuilder zwischenergebnis(int toreTeamHeim, int toreTeamGast) {
-			return ergebnis(LAUFEND, toreTeamHeim, toreTeamGast);
+		public PaarungBuilder zwischenergebnis(int toreTeam1, int toreTeam2) {
+			return ergebnis(LAUFEND, toreTeam1, toreTeam2);
 		}
 
-		private PaarungBuilder ergebnis(ErgebnisTyp ergebnisTyp, int toreTeamHeim, int toreTeamGast) {
-			return ergebnisTyp(ergebnisTyp).goals(toreTeamHeim, toreTeamGast);
+		private PaarungBuilder ergebnis(ErgebnisTyp ergebnisTyp, int toreTeam1, int toreTeam2) {
+			return ergebnisTyp(ergebnisTyp).goals(toreTeam1, toreTeam2);
 		}
 
-		public PaarungBuilder goals(int toreTeamHeim, int toreTeamGast) {
-			return heim(heim.withTore(toreTeamHeim)).gast(gast.withTore(toreTeamGast));
+		public PaarungBuilder goals(int toreTeam1, int toreTeam2) {
+			return team1(team1.withTore(toreTeam1)).team2(team2.withTore(toreTeam2));
 		}
 
 	}

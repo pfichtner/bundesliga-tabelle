@@ -234,13 +234,13 @@ class TabelleTest {
 		dannIstDieTabelle( //
 				e1 -> {
 					assertThat(e1.team()).isEqualTo("Team 1");
-					assertThat(e1.laufendesSpiel().toreHeim()).isEqualTo(1);
-					assertThat(e1.laufendesSpiel().toreGast()).isEqualTo(2);
+					assertThat(e1.laufendesSpiel().team1().tore()).isEqualTo(1);
+					assertThat(e1.laufendesSpiel().team2().tore()).isEqualTo(2);
 				}, //
 				e2 -> {
 					assertThat(e2.team()).isEqualTo("Team 2");
-					assertThat(e2.laufendesSpiel().toreHeim()).isEqualTo(2);
-					assertThat(e2.laufendesSpiel().toreGast()).isEqualTo(1);
+					assertThat(e2.laufendesSpiel().team1().tore()).isEqualTo(2);
+					assertThat(e2.laufendesSpiel().team2().tore()).isEqualTo(1);
 				} //
 
 		);
@@ -258,8 +258,8 @@ class TabelleTest {
 		return Entry.builder().team(team);
 	}
 
-	private static PaarungBuilder paarung(EntryBuilder heim, EntryBuilder gast) {
-		return Paarung.builder().heim(heim.build()).gast(gast.build());
+	private static PaarungBuilder paarung(EntryBuilder team1, EntryBuilder team2) {
+		return Paarung.builder().team1(team1.build()).team2(team2.build());
 	}
 
 	private void gegebenSeienDiePaarungen(PaarungBuilder... paarungen) {

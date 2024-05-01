@@ -84,8 +84,8 @@ public class TabellenHttpAdapter {
 		}
 
 		private static JsonLaufendesSpiel convertLaufendesSpiel(Paarung laufendesSpiel) {
-			return new JsonLaufendesSpiel(convertErgebnis(laufendesSpiel.ergebnis()), laufendesSpiel.teamGast(),
-					laufendesSpiel.toreHeim(), laufendesSpiel.toreGast());
+			return new JsonLaufendesSpiel(convertErgebnis(laufendesSpiel.ergebnis()), laufendesSpiel.team2().team(),
+					laufendesSpiel.team1().tore(), laufendesSpiel.team2().tore());
 		}
 
 		/**

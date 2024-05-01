@@ -93,7 +93,7 @@ public class OpenLigaDbSpieltagRepo implements SpieltagRepo {
 		private Paarung toDomain(List<Resultinfo> resultinfos) {
 			ErgebnisTyp ergebnisTyp = ergebnisTyp();
 			PaarungBuilder builder = Paarung.builder().ergebnisTyp(ergebnisTyp) //
-					.heim(team1.toDomain()).gast(team2.toDomain());
+					.team1(team1.toDomain()).team2(team2.toDomain());
 			if (ergebnisTyp == BEENDET) {
 				MatchResult endergebnis = MatchResult.endergebnis(asList(matchResults), resultinfos)
 						.orElseThrow(() -> new IllegalStateException("No final result found in finished game " + this));

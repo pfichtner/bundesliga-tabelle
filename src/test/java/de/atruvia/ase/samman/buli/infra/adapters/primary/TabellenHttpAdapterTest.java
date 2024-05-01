@@ -6,6 +6,7 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
 import static de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder.paarung;
+import static de.atruvia.ase.samman.buli.domain.TabellenPlatz.ToreUndGegentore.toreUndGegentore;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.merge;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.platzWith;
 import static java.net.URI.create;
@@ -37,7 +38,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
-import de.atruvia.ase.samman.buli.domain.TabellenPlatz.ToreUndGegentore;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 
 @SpringBootTest
@@ -160,8 +160,8 @@ class TabellenHttpAdapterTest {
 		return builder.wappen(create("proto://wappen-team-" + base)) //
 				.team("Team " + base) //
 				.spiele(base + (++cnt)) //
-				.heim(new ToreUndGegentore(base + (++cnt), base + (++cnt))) //
-				.auswaerts(new ToreUndGegentore(base + (++cnt), base + (++cnt))) //
+				.heim(toreUndGegentore(base + (++cnt), base + (++cnt))) //
+				.auswaerts(toreUndGegentore(base + (++cnt), base + (++cnt))) //
 				.punkte(base + (++cnt)) //
 				.build();
 	}

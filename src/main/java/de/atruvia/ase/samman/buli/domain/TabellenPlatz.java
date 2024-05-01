@@ -3,18 +3,25 @@ package de.atruvia.ase.samman.buli.domain;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
-import static de.atruvia.ase.samman.buli.util.Merger.merge;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.AUSWAERTS;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
 import static de.atruvia.ase.samman.buli.util.Merger.lastNonNull;
+import static de.atruvia.ase.samman.buli.util.Merger.merge;
 import static java.util.Arrays.asList;
+import static lombok.AccessLevel.PRIVATE;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp;
+import de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection;
 import de.atruvia.ase.samman.buli.util.Merger.Mergeable;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;
@@ -32,8 +39,14 @@ public class TabellenPlatz {
 	}
 
 	@Value
+	@AllArgsConstructor(access = PRIVATE)
 	public static class ToreUndGegentore implements Mergeable<ToreUndGegentore> {
+
 		private static final ToreUndGegentore NULL = new ToreUndGegentore(0, 0);
+
+		public static ToreUndGegentore toreUndGegentore(int tore, int gegentore) {
+			return new ToreUndGegentore(tore, gegentore);
+		}
 
 		@Override
 		public ToreUndGegentore merge(ToreUndGegentore other) {
@@ -52,10 +65,7 @@ public class TabellenPlatz {
 	int spiele;
 	List<ErgebnisEntry> ergebnisse;
 	int punkte;
-	@Builder.Default
-	ToreUndGegentore heim = ToreUndGegentore.NULL;
-	@Builder.Default
-	ToreUndGegentore auswaerts = ToreUndGegentore.NULL;
+	Map<ViewDirection, ToreUndGegentore> tore;
 	Paarung laufendesSpiel;
 
 	public List<Ergebnis> ergebnisse() {
@@ -78,18 +88,27 @@ public class TabellenPlatz {
 		return asList(ergebnisTyp).contains(e.ergebnisTyp());
 	}
 
+	ToreUndGegentore heim() {
+		return tore.getOrDefault(HEIM, ToreUndGegentore.NULL);
+	}
+
+	ToreUndGegentore auswaerts() {
+		return tore.getOrDefault(AUSWAERTS, ToreUndGegentore.NULL);
+	}
+
 	public int tore() {
-		return heim.tore + auswaerts.tore;
+		return heim().tore + auswaerts().tore;
 	}
 
 	public int gegentore() {
-		return heim.gegentore + auswaerts.gegentore;
+		return heim().gegentore + auswaerts().gegentore;
 	}
 
 	public static class TabellenPlatzBuilder {
 
 		public TabellenPlatzBuilder() {
 			ergebnisse = new ArrayList<>();
+			tore = new HashMap<>();
 		}
 
 		public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp) {
@@ -97,9 +116,17 @@ public class TabellenPlatz {
 			return this;
 		}
 
-		public TabellenPlatzBuilder tore(boolean isSwapped, int toreHeim, int toreGast) {
-			ToreUndGegentore toreUndGegentore = new ToreUndGegentore(toreHeim, toreGast);
-			return isSwapped ? auswaerts(toreUndGegentore) : heim(toreUndGegentore);
+		public TabellenPlatzBuilder heim(ToreUndGegentore toreUndGegentore) {
+			return toreUndGegentore(HEIM, toreUndGegentore);
+		}
+
+		public TabellenPlatzBuilder auswaerts(ToreUndGegentore toreUndGegentore) {
+			return toreUndGegentore(AUSWAERTS, toreUndGegentore);
+		}
+
+		public TabellenPlatzBuilder toreUndGegentore(ViewDirection viewDirection, ToreUndGegentore toreUndGegentore) {
+			tore.put(viewDirection, toreUndGegentore);
+			return this;
 		}
 
 	}
@@ -114,8 +141,8 @@ public class TabellenPlatz {
 				.ergebnisse(merge(ergebnisse, other.ergebnisse)) //
 				.spiele(merge(spiele, other.spiele)) //
 				.punkte(merge(punkte, other.punkte)) //
-				.heim(merge(heim, other.heim)) //
-				.auswaerts(merge(auswaerts, other.auswaerts)) //
+				.heim(merge(heim(), other.heim())) //
+				.auswaerts(merge(auswaerts(), other.auswaerts())) //
 				.wappen(lastNonNull(wappen, other.wappen)) //
 				.laufendesSpiel(lastNonNull(laufendesSpiel, other.laufendesSpiel)) //
 				.build();
