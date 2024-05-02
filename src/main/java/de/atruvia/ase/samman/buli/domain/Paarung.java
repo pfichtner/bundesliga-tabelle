@@ -12,19 +12,14 @@ import static lombok.AccessLevel.PRIVATE;
 
 import java.net.URI;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Value;
 import lombok.With;
 import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
 
-@Data
-@AllArgsConstructor
+@Value
 @Builder(toBuilder = true)
-@FieldDefaults(level = PRIVATE, makeFinal = true)
 @Accessors(fluent = true)
 public class Paarung {
 
