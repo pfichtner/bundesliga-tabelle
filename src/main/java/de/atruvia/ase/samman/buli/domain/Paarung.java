@@ -45,12 +45,12 @@ public class Paarung {
 		}
 
 		public Ergebnis ergebnis() {
-			var toreHeim = tore();
-			var toreGast = gegenTore();
-			if (toreHeim == toreGast) {
+			var tore = tore();
+			var gegentore = gegenTore();
+			if (tore == gegentore) {
 				return UNENTSCHIEDEN;
 			}
-			return toreHeim > toreGast ? SIEG : NIEDERLAGE;
+			return tore > gegentore ? SIEG : NIEDERLAGE;
 		}
 
 		public ErgebnisTyp ergebnisTyp() {
