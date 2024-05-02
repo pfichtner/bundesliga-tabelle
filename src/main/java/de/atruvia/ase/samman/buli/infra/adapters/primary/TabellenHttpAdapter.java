@@ -68,8 +68,8 @@ public class TabellenHttpAdapter {
 					.team(domain.team()) //
 					.spiele(domain.spiele()) //
 					.punkte(domain.punkte()) //
-					.tore(domain.tore()) //
-					.gegentore(domain.gegentore()) //
+					.tore(domain.gesamtTore()) //
+					.gegentore(domain.gesamtGegentore()) //
 					.tordifferenz(domain.torDifferenz()) //
 					.siege(domain.siege()) //
 					.unentschieden(domain.unentschieden()) //

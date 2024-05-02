@@ -89,20 +89,36 @@ public class TabellenPlatz {
 		return asList(ergebnisTyp).contains(e.ergebnisTyp());
 	}
 
-	ToreUndGegentore heim() {
+	private ToreUndGegentore heimToreUndGegentore() {
 		return toreGegentore.getOrDefault(HEIM, ToreUndGegentore.NULL);
 	}
 
-	ToreUndGegentore auswaerts() {
+	private ToreUndGegentore auswaertsToreUndGegentore() {
 		return toreGegentore.getOrDefault(AUSWAERTS, ToreUndGegentore.NULL);
 	}
 
-	public int tore() {
-		return heim().tore + auswaerts().tore;
+	public int gesamtTore() {
+		return heimtore() + auswaertsTore();
 	}
 
-	public int gegentore() {
-		return heim().gegentore + auswaerts().gegentore;
+	public int gesamtGegentore() {
+		return heimGegentore() + auswaertsGegentore();
+	}
+
+	public int heimtore() {
+		return heimToreUndGegentore().tore;
+	}
+
+	public int auswaertsTore() {
+		return auswaertsToreUndGegentore().tore;
+	}
+
+	public int heimGegentore() {
+		return heimToreUndGegentore().gegentore;
+	}
+
+	public int auswaertsGegentore() {
+		return auswaertsToreUndGegentore().gegentore;
 	}
 
 	public TabellenPlatzBuilder toBuilder() {
@@ -146,7 +162,7 @@ public class TabellenPlatz {
 	}
 
 	public int torDifferenz() {
-		return tore() - gegentore();
+		return gesamtTore() - gesamtGegentore();
 	}
 
 	public TabellenPlatz mergeWith(TabellenPlatz other) {

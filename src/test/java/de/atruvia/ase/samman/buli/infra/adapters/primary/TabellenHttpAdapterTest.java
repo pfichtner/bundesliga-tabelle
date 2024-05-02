@@ -94,8 +94,8 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[0].siege", is(platz1.siege()))) //
 				.andExpect(jsonPath("$.[0].unentschieden", is(platz1.unentschieden()))) //
 				.andExpect(jsonPath("$.[0].niederlagen", is(platz1.niederlagen()))) //
-				.andExpect(jsonPath("$.[0].tore", is(platz1.tore()))) //
-				.andExpect(jsonPath("$.[0].gegentore", is(platz1.gegentore()))) //
+				.andExpect(jsonPath("$.[0].tore", is(platz1.gesamtTore()))) //
+				.andExpect(jsonPath("$.[0].gegentore", is(platz1.gesamtGegentore()))) //
 				.andExpect(jsonPath("$.[0].tordifferenz", is(platz1.torDifferenz()))) //
 				.andExpect(jsonPath("$.[0].punkte", is(platz1.punkte()))) //
 				.andExpect(jsonPath("$.[0].letzte5", is("NUS--"))) //
@@ -107,8 +107,8 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[1].siege", is(platz2.siege()))) //
 				.andExpect(jsonPath("$.[1].unentschieden", is(platz2.unentschieden()))) //
 				.andExpect(jsonPath("$.[1].niederlagen", is(platz2.niederlagen()))) //
-				.andExpect(jsonPath("$.[1].tore", is(platz2.tore()))) //
-				.andExpect(jsonPath("$.[1].gegentore", is(platz2.gegentore()))) //
+				.andExpect(jsonPath("$.[1].tore", is(platz2.gesamtTore()))) //
+				.andExpect(jsonPath("$.[1].gegentore", is(platz2.gesamtGegentore()))) //
 				.andExpect(jsonPath("$.[1].tordifferenz", is(platz2.torDifferenz()))) //
 				.andExpect(jsonPath("$.[1].punkte", is(platz2.punkte()))) //
 				.andExpect(jsonPath("$.[1].letzte5", is("-----"))) //

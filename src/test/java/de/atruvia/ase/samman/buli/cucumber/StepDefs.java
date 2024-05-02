@@ -29,8 +29,8 @@ public class StepDefs {
 			entry("Unentschieden", TabellenPlatz::unentschieden), //
 			entry("Niederlagen", TabellenPlatz::niederlagen), //
 			entry("Punkte", TabellenPlatz::punkte), //
-			entry("Tore", TabellenPlatz::tore), //
-			entry("Gegentore", TabellenPlatz::gegentore), //
+			entry("Tore", TabellenPlatz::gesamtTore), //
+			entry("Gegentore", TabellenPlatz::gesamtGegentore), //
 			entry("Tordifferenz", TabellenPlatz::torDifferenz) //
 	);
 

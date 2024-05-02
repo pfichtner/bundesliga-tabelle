@@ -43,8 +43,8 @@ public class Tabelle {
 		private static final List<Function<TabellenPlatz, Comparable<?>>> comparators = asList( //
 				TabellenPlatz::punkte, //
 				TabellenPlatz::torDifferenz, //
-				TabellenPlatz::tore, //
-				e -> e.auswaerts().tore() //
+				TabellenPlatz::gesamtTore, //
+				TabellenPlatz::auswaertsTore //
 		);
 
 		private static final Function<OrdnungsElement, TabellenPlatz> getTabellenPlatz = OrdnungsElement::tabellenPlatz;

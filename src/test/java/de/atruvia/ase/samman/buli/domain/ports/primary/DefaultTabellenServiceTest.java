@@ -63,8 +63,8 @@ class DefaultTabellenServiceTest {
 				tabellenPlatz.siege(), //
 				tabellenPlatz.unentschieden(), //
 				tabellenPlatz.niederlagen(), //
-				tabellenPlatz.tore(), //
-				tabellenPlatz.gegentore(), //
+				tabellenPlatz.gesamtTore(), //
+				tabellenPlatz.gesamtGegentore(), //
 				tabellenPlatz.torDifferenz(), //
 				tabellenPlatz.punkte(), //
 				tabellenPlatz.wappen() //
