@@ -66,7 +66,7 @@ public class TabellenPlatz {
 	int spiele;
 	List<ErgebnisEntry> ergebnisse;
 	int punkte;
-	Map<ViewDirection, ToreUndGegentore> tore;
+	Map<ViewDirection, ToreUndGegentore> toreGegentore;
 	PaarungView laufendesSpiel;
 
 	public List<Ergebnis> ergebnisse() {
@@ -90,11 +90,11 @@ public class TabellenPlatz {
 	}
 
 	ToreUndGegentore heim() {
-		return tore.getOrDefault(HEIM, ToreUndGegentore.NULL);
+		return toreGegentore.getOrDefault(HEIM, ToreUndGegentore.NULL);
 	}
 
 	ToreUndGegentore auswaerts() {
-		return tore.getOrDefault(AUSWAERTS, ToreUndGegentore.NULL);
+		return toreGegentore.getOrDefault(AUSWAERTS, ToreUndGegentore.NULL);
 	}
 
 	public int tore() {
@@ -109,7 +109,7 @@ public class TabellenPlatz {
 
 		public TabellenPlatzBuilder() {
 			ergebnisse = new ArrayList<>();
-			tore = new HashMap<>();
+			toreGegentore = new HashMap<>();
 		}
 
 		public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp) {
@@ -126,7 +126,7 @@ public class TabellenPlatz {
 		}
 
 		public TabellenPlatzBuilder toreUndGegentore(ViewDirection viewDirection, ToreUndGegentore toreUndGegentore) {
-			tore.put(viewDirection, toreUndGegentore);
+			toreGegentore.put(viewDirection, toreUndGegentore);
 			return this;
 		}
 
@@ -142,8 +142,7 @@ public class TabellenPlatz {
 				.ergebnisse(merge(ergebnisse, other.ergebnisse)) //
 				.spiele(merge(spiele, other.spiele)) //
 				.punkte(merge(punkte, other.punkte)) //
-				.heim(merge(heim(), other.heim())) //
-				.auswaerts(merge(auswaerts(), other.auswaerts())) //
+				.toreGegentore(merge(toreGegentore, other.toreGegentore))
 				.wappen(lastNonNull(wappen, other.wappen)) //
 				.laufendesSpiel(lastNonNull(laufendesSpiel, other.laufendesSpiel)) //
 				.build();
