@@ -30,7 +30,7 @@ import lombok.experimental.Accessors;
 
 @Value
 @Accessors(fluent = true)
-@Builder(toBuilder = true)
+@Builder
 public class TabellenPlatz {
 
 	@Value
@@ -105,6 +105,19 @@ public class TabellenPlatz {
 		return heim().gegentore + auswaerts().gegentore;
 	}
 
+	public TabellenPlatzBuilder toBuilder() {
+		TabellenPlatzBuilder builder = new TabellenPlatzBuilder();
+		builder.wappen = wappen;
+		builder.platz = platz;
+		builder.team = team;
+		builder.spiele = spiele;
+		builder.ergebnisse = new ArrayList<>(ergebnisse);
+		builder.punkte = punkte;
+		builder.toreGegentore = new HashMap<>(toreGegentore);
+		builder.laufendesSpiel = laufendesSpiel;
+		return builder;
+	}
+
 	public static class TabellenPlatzBuilder {
 
 		public TabellenPlatzBuilder() {
@@ -142,7 +155,7 @@ public class TabellenPlatz {
 				.ergebnisse(merge(ergebnisse, other.ergebnisse)) //
 				.spiele(merge(spiele, other.spiele)) //
 				.punkte(merge(punkte, other.punkte)) //
-				.toreGegentore(merge(toreGegentore, other.toreGegentore))
+				.toreGegentore(merge(toreGegentore, other.toreGegentore)) //
 				.wappen(lastNonNull(wappen, other.wappen)) //
 				.laufendesSpiel(lastNonNull(laufendesSpiel, other.laufendesSpiel)) //
 				.build();
