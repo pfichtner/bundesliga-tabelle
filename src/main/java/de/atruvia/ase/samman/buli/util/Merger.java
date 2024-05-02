@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import lombok.NoArgsConstructor;
 
@@ -36,7 +35,7 @@ public final class Merger {
 
 	@SafeVarargs
 	public static <K, V extends Mergeable<V>> Map<K, V> merge(Map<K, V>... maps) {
-		return Stream.of(maps).map(Map::entrySet).flatMap(Set::stream)
+		return stream(maps).map(Map::entrySet).flatMap(Set::stream)
 				.collect(toMap(Map.Entry::getKey, Map.Entry::getValue, V::merge, HashMap::new));
 	}
 
