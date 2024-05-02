@@ -17,11 +17,11 @@ import lombok.NoArgsConstructor;
 public final class Merger {
 
 	public static interface Mergeable<T> {
-		T merge(T other);
+		T mergeWith(T other);
 	}
 
 	public static <T extends Mergeable<T>> T merge(T first, T second) {
-		return first.merge(second);
+		return first.mergeWith(second);
 	}
 
 	public static int merge(int... values) {
@@ -36,7 +36,7 @@ public final class Merger {
 	@SafeVarargs
 	public static <K, V extends Mergeable<V>> Map<K, V> merge(Map<K, V>... maps) {
 		return stream(maps).map(Map::entrySet).flatMap(Set::stream)
-				.collect(toMap(Map.Entry::getKey, Map.Entry::getValue, V::merge, HashMap::new));
+				.collect(toMap(Map.Entry::getKey, Map.Entry::getValue, V::mergeWith, HashMap::new));
 	}
 
 	@SafeVarargs

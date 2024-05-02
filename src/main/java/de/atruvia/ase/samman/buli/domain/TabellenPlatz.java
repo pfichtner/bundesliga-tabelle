@@ -31,7 +31,7 @@ import lombok.experimental.Accessors;
 @Value
 @Accessors(fluent = true)
 @Builder
-public class TabellenPlatz {
+public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 
 	@Value
 	private static class ErgebnisEntry {
@@ -50,8 +50,8 @@ public class TabellenPlatz {
 		}
 
 		@Override
-		public ToreUndGegentore merge(ToreUndGegentore other) {
-			return new ToreUndGegentore(tore + other.tore, gegentore + other.gegentore);
+		public ToreUndGegentore mergeWith(ToreUndGegentore other) {
+			return toreUndGegentore(merge(tore, other.tore), merge(gegentore, other.gegentore));
 		}
 
 		int tore;
@@ -165,6 +165,7 @@ public class TabellenPlatz {
 		return gesamtTore() - gesamtGegentore();
 	}
 
+	@Override
 	public TabellenPlatz mergeWith(TabellenPlatz other) {
 		return builder() //
 				.team(lastNonNull(team, other.team)) //
