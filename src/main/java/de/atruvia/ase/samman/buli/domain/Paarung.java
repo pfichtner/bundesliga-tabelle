@@ -15,6 +15,7 @@ import java.net.URI;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.Value;
 import lombok.With;
 import lombok.experimental.Accessors;
@@ -27,64 +28,40 @@ import lombok.experimental.FieldDefaults;
 @Accessors(fluent = true)
 public class Paarung {
 
-	public static interface PaarungView {
+	@Value
+	public class PaarungView {
 
-		Entry team();
+		@Getter(value = PRIVATE)
+		Paarung delegate;
+		ViewDirection direction;
+		Entry team;
+		Entry gegner;
 
-		Entry gegner();
+		public int tore() {
+			return team().tore();
+		}
 
-		int tore();
+		public int gegenTore() {
+			return gegner().tore();
+		}
 
-		int gegenTore();
+		public boolean hatErgebnis() {
+			return delegate.hatErgebnis();
+		}
 
-		ViewDirection direction();
-
-		default Ergebnis ergebnis() {
-			int toreHeim = tore();
-			int toreGast = gegenTore();
+		public Ergebnis ergebnis() {
+			var toreHeim = tore();
+			var toreGast = gegenTore();
 			if (toreHeim == toreGast) {
 				return UNENTSCHIEDEN;
 			}
 			return toreHeim > toreGast ? SIEG : NIEDERLAGE;
 		}
 
-		boolean hatErgebnis();
-
-		ErgebnisTyp ergebnisTyp();
-
-		boolean ergebnisTypIs(ErgebnisTyp ergebnisTyp);
-
-	}
-
-	@Value
-	private class DefaultPaarungView implements PaarungView {
-
-		Paarung delegate;
-		ViewDirection direction;
-		Entry team;
-		Entry gegner;
-
-		@Override
-		public int tore() {
-			return team().tore();
-		}
-
-		@Override
-		public int gegenTore() {
-			return gegner().tore();
-		}
-
-		@Override
-		public boolean hatErgebnis() {
-			return delegate.hatErgebnis();
-		}
-
-		@Override
 		public ErgebnisTyp ergebnisTyp() {
 			return delegate.ergebnisTyp;
 		}
 
-		@Override
 		public boolean ergebnisTypIs(ErgebnisTyp ergebnisTyp) {
 			return delegate.ergebnisTypIs(ergebnisTyp);
 		}
@@ -183,11 +160,11 @@ public class Paarung {
 	}
 
 	public PaarungView heimView() {
-		return new DefaultPaarungView(this, HEIM, heim, gast);
+		return new PaarungView(this, HEIM, heim, gast);
 	}
 
 	public PaarungView auswaertsView() {
-		return new DefaultPaarungView(this, AUSWAERTS, gast, heim);
+		return new PaarungView(this, AUSWAERTS, gast, heim);
 	}
 
 }
