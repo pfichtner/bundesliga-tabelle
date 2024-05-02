@@ -33,9 +33,9 @@ class TabelleTest {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
-				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|tore|gegentore|torDifferenz
-				1    |Team 1|     0|    0|            0|          0|     0|   0|        0|           0
-				1    |Team 2|     0|    0|            0|          0|     0|   0|        0|           0""");
+				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
+				1    |Team 1|     0|    0|            0|          0|     0|         0|              0|           0
+				1    |Team 2|     0|    0|            0|          0|     0|         0|              0|           0""");
 	}
 
 	@Test
@@ -43,9 +43,9 @@ class TabelleTest {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").endergebnis(0, 0), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
-				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|tore|gegentore|torDifferenz
-				1    |Team 1|     1|    0|            1|          0|     1|   0|        0|           0
-				1    |Team 2|     1|    0|            1|          0|     1|   0|        0|           0""");
+				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
+				1    |Team 1|     1|    0|            1|          0|     1|         0|              0|           0
+				1    |Team 2|     1|    0|            1|          0|     1|         0|              0|           0""");
 	}
 
 	@Test
@@ -53,9 +53,9 @@ class TabelleTest {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").endergebnis(0, 1), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
-				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|tore|gegentore|torDifferenz
-				1    |Team 2|     1|    1|            0|          0|     3|   1|        0|           1
-				2    |Team 1|     1|    0|            0|          1|     0|   0|        1|          -1""");
+				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
+				1    |Team 2|     1|    1|            0|          0|     3|         1|              0|           1
+				2    |Team 1|     1|    0|            0|          1|     0|         0|              1|          -1""");
 	}
 
 	@Test
@@ -66,9 +66,9 @@ class TabelleTest {
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
-				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|tore|gegentore|torDifferenz
-				1    |Team 1|     2|    1|            0|          1|     3|   1|        1|           0
-				1    |Team 2|     2|    1|            0|          1|     3|   1|        1|           0""");
+				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
+				1    |Team 1|     2|    1|            0|          1|     3|         1|              1|           0
+				1    |Team 2|     2|    1|            0|          1|     3|         1|              1|           0""");
 	}
 
 	@Test
@@ -84,10 +84,10 @@ class TabelleTest {
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
-				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|tore|gegentore|torDifferenz
-				1    |Team 1|3     |    2|            0|          1|     6|   2|        1|           1
-				1    |Team 2|3     |    2|            0|          1|     6|   2|        1|           1
-				3    |Team 3|2     |    0|            0|          2|     0|   0|        2|          -2""");
+				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
+				1    |Team 1|3     |    2|            0|          1|     6|         2|              1|           1
+				1    |Team 2|3     |    2|            0|          1|     6|         2|              1|           1
+				3    |Team 3|2     |    0|            0|          2|     0|         0|              2|          -2""");
 	}
 
 	@Test
@@ -281,7 +281,7 @@ class TabelleTest {
 
 	private static String print(List<TabellenPlatz> plaetze) {
 		List<String> attribs = asList("platz", "team", "spiele", "siege", "unentschieden", "niederlagen", "punkte",
-				"tore", "gegentore", "torDifferenz");
+				"gesamtTore", "gesamtGegentore", "torDifferenz");
 		Stream<String> header = Stream.of(line(attribs.stream()));
 		Stream<String> values = plaetze.stream().map(t -> print(t, attribs));
 		return concat(header, values).collect(joining("\n"));
