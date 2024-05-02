@@ -8,7 +8,6 @@ import static lombok.AccessLevel.PRIVATE;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -37,8 +36,8 @@ public final class Merger {
 
 	@SafeVarargs
 	public static <K, V extends Mergeable<V>> Map<K, V> merge(Map<K, V>... maps) {
-		return Stream.of(maps).map(Map<K, V>::entrySet).flatMap(Set<Entry<K, V>>::stream)
-				.collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (v1, v2) -> v1.merge(v2), HashMap::new));
+		return Stream.of(maps).map(Map::entrySet).flatMap(Set::stream)
+				.collect(toMap(Map.Entry::getKey, Map.Entry::getValue, V::merge, HashMap::new));
 	}
 
 	@SafeVarargs
