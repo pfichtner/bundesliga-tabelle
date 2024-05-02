@@ -76,7 +76,7 @@ class DefaultTabellenServiceTest {
 	}
 
 	String format(Object o) {
-		return o instanceof Number ? "%3d".formatted((Number) o) : Objects.toString(o);
+		return o instanceof Number n ? "%3d".formatted(n) : Objects.toString(o);
 	}
 
 }
