@@ -22,10 +22,10 @@ class PaarungTest {
 		var heimView = paarung.heimView();
 		var auswView = paarung.auswaertsView();
 
-		assertSwapped(heimView, auswView, PaarungView::team, PaarungView::gegner);
-		assertSwapped(heimView, auswView, PaarungView::tore, PaarungView::gegenTore);
+		assertEqualsViceVersa(heimView, auswView, PaarungView::team, PaarungView::gegner);
+		assertEqualsViceVersa(heimView, auswView, PaarungView::tore, PaarungView::gegenTore);
 
-		assertEquals(heimView.ergebnisTyp(), auswView.ergebnisTyp());
+		assertThat(heimView.ergebnisTyp()).isEqualTo(auswView.ergebnisTyp());
 
 		assertThat(heimView.direction()).isEqualTo(HEIM);
 		assertThat(heimView.ergebnis()).isEqualTo(NIEDERLAGE);
@@ -34,7 +34,7 @@ class PaarungTest {
 		assertThat(auswView.ergebnis()).isEqualTo(SIEG);
 	}
 
-	private static void assertSwapped(PaarungView view1, PaarungView view2, Function<PaarungView, Object> f1,
+	private static void assertEqualsViceVersa(PaarungView view1, PaarungView view2, Function<PaarungView, Object> f1,
 			Function<PaarungView, Object> f2) {
 		assertEquals(f1.apply(view1), f2.apply(view2));
 		assertEquals(f1.apply(view2), f2.apply(view1));
