@@ -8,12 +8,11 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.GEPLANT;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.AUSWAERTS;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
-import static lombok.AccessLevel.PRIVATE;
 
 import java.net.URI;
+import java.util.function.Function;
 
 import lombok.Builder;
-import lombok.Getter;
 import lombok.Value;
 import lombok.With;
 import lombok.experimental.Accessors;
@@ -26,11 +25,17 @@ public class Paarung {
 	@Value
 	public class PaarungView {
 
-		@Getter(value = PRIVATE)
-		Paarung delegate;
 		ViewDirection direction;
-		Entry team;
-		Entry gegner;
+		Function<Paarung, Entry> team;
+		Function<Paarung, Entry> gegner;
+
+		public Entry team() {
+			return team.apply(paarung());
+		}
+
+		public Entry gegner() {
+			return gegner.apply(paarung());
+		}
 
 		public int tore() {
 			return team().tore();
@@ -41,7 +46,7 @@ public class Paarung {
 		}
 
 		public boolean hatErgebnis() {
-			return delegate.hatErgebnis();
+			return paarung().hatErgebnis();
 		}
 
 		public Ergebnis ergebnis() {
@@ -54,11 +59,15 @@ public class Paarung {
 		}
 
 		public ErgebnisTyp ergebnisTyp() {
-			return delegate.ergebnisTyp;
+			return paarung().ergebnisTyp;
 		}
 
 		public boolean ergebnisTypIs(ErgebnisTyp ergebnisTyp) {
-			return delegate.ergebnisTypIs(ergebnisTyp);
+			return paarung().ergebnisTypIs(ergebnisTyp);
+		}
+
+		private Paarung paarung() {
+			return Paarung.this;
 		}
 
 	}
@@ -155,11 +164,11 @@ public class Paarung {
 	}
 
 	public PaarungView heimView() {
-		return new PaarungView(this, HEIM, heim, gast);
+		return new PaarungView(HEIM, Paarung::heim, Paarung::gast);
 	}
 
 	public PaarungView auswaertsView() {
-		return new PaarungView(this, AUSWAERTS, gast, heim);
+		return new PaarungView(AUSWAERTS, Paarung::gast, Paarung::heim);
 	}
 
 }
