@@ -1,6 +1,8 @@
 package de.atruvia.ase.samman.buli.domain;
 
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.AUSWAERTS;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
 import static de.atruvia.ase.samman.buli.domain.ToreUndGegentore.toreUndGegentore;
 import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
@@ -80,8 +82,8 @@ public class Tabelle {
 	private final Map<Object, TabellenPlatz> eintraege = new HashMap<>();
 
 	public void add(Paarung paarung) {
-		addInternal(paarung.heimView());
-		addInternal(paarung.auswaertsView());
+		addInternal(paarung.viewForTeam(HEIM));
+		addInternal(paarung.viewForTeam(AUSWAERTS));
 	}
 
 	private void addInternal(PaarungView paarung) {

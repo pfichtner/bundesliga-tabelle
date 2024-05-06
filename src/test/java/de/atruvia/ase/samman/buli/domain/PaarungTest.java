@@ -19,19 +19,19 @@ class PaarungTest {
 	@Test
 	void heimUndAuswaertsView() {
 		var paarung = paarungWithAllAttributesSet();
-		var heimView = paarung.heimView();
-		var auswView = paarung.auswaertsView();
+		var heim = paarung.viewForTeam(HEIM);
+		var ausw = paarung.viewForTeam(AUSWAERTS);
 
-		assertEqualsViceVersa(heimView, auswView, PaarungView::team, PaarungView::gegner);
-		assertEqualsViceVersa(heimView, auswView, PaarungView::tore, PaarungView::gegenTore);
+		assertEqualsViceVersa(heim, ausw, PaarungView::team, PaarungView::gegner);
+		assertEqualsViceVersa(heim, ausw, PaarungView::tore, PaarungView::gegenTore);
 
-		assertThat(heimView.ergebnisTyp()).isEqualTo(auswView.ergebnisTyp());
+		assertThat(heim.ergebnisTyp()).isEqualTo(ausw.ergebnisTyp());
 
-		assertThat(heimView.direction()).isEqualTo(HEIM);
-		assertThat(heimView.ergebnis()).isEqualTo(NIEDERLAGE);
+		assertThat(heim.direction()).isEqualTo(HEIM);
+		assertThat(heim.ergebnis()).isEqualTo(NIEDERLAGE);
 
-		assertThat(auswView.direction()).isEqualTo(AUSWAERTS);
-		assertThat(auswView.ergebnis()).isEqualTo(SIEG);
+		assertThat(ausw.direction()).isEqualTo(AUSWAERTS);
+		assertThat(ausw.ergebnis()).isEqualTo(SIEG);
 	}
 
 	private static void assertEqualsViceVersa(PaarungView view1, PaarungView view2, Function<PaarungView, Object> f1,

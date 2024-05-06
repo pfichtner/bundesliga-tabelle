@@ -163,12 +163,11 @@ public class Paarung {
 
 	}
 
-	public PaarungView heimView() {
-		return new PaarungView(HEIM, Paarung::heim, Paarung::gast);
-	}
-
-	public PaarungView auswaertsView() {
-		return new PaarungView(AUSWAERTS, Paarung::gast, Paarung::heim);
+	public PaarungView viewForTeam(ViewDirection viewDirection) {
+		return switch (viewDirection) {
+		case AUSWAERTS -> new PaarungView(AUSWAERTS, Paarung::gast, Paarung::heim);
+		case HEIM -> new PaarungView(HEIM, Paarung::heim, Paarung::gast);
+		};
 	}
 
 }
