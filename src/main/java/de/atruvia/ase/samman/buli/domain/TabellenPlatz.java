@@ -8,7 +8,6 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
 import static de.atruvia.ase.samman.buli.util.Merger.lastNonNull;
 import static de.atruvia.ase.samman.buli.util.Merger.merge;
 import static java.util.Arrays.asList;
-import static lombok.AccessLevel.PRIVATE;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ import de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp;
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungView;
 import de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection;
 import de.atruvia.ase.samman.buli.util.Merger.Mergeable;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;
@@ -37,25 +35,6 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 	private static class ErgebnisEntry {
 		Ergebnis ergebnis;
 		ErgebnisTyp ergebnisTyp;
-	}
-
-	@Value
-	@AllArgsConstructor(access = PRIVATE)
-	public static class ToreUndGegentore implements Mergeable<ToreUndGegentore> {
-
-		private static final ToreUndGegentore NULL = new ToreUndGegentore(0, 0);
-
-		public static ToreUndGegentore toreUndGegentore(int tore, int gegentore) {
-			return new ToreUndGegentore(tore, gegentore);
-		}
-
-		@Override
-		public ToreUndGegentore mergeWith(ToreUndGegentore other) {
-			return toreUndGegentore(merge(tore, other.tore), merge(gegentore, other.gegentore));
-		}
-
-		int tore;
-		int gegentore;
 	}
 
 	URI wappen;
@@ -106,19 +85,19 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 	}
 
 	public int heimtore() {
-		return heimToreUndGegentore().tore;
+		return heimToreUndGegentore().tore();
 	}
 
 	public int auswaertsTore() {
-		return auswaertsToreUndGegentore().tore;
+		return auswaertsToreUndGegentore().tore();
 	}
 
 	public int heimGegentore() {
-		return heimToreUndGegentore().gegentore;
+		return heimToreUndGegentore().gegentore();
 	}
 
 	public int auswaertsGegentore() {
-		return auswaertsToreUndGegentore().gegentore;
+		return auswaertsToreUndGegentore().gegentore();
 	}
 
 	public TabellenPlatzBuilder toBuilder() {

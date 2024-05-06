@@ -1,6 +1,6 @@
 package de.atruvia.ase.samman.buli.domain;
 
-import static de.atruvia.ase.samman.buli.domain.TabellenPlatz.ToreUndGegentore.toreUndGegentore;
+import static de.atruvia.ase.samman.buli.domain.ToreUndGegentore.toreUndGegentore;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.URI;

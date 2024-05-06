@@ -1,7 +1,7 @@
 package de.atruvia.ase.samman.buli.domain;
 
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
-import static de.atruvia.ase.samman.buli.domain.TabellenPlatz.ToreUndGegentore.toreUndGegentore;
+import static de.atruvia.ase.samman.buli.domain.ToreUndGegentore.toreUndGegentore;
 import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
@@ -21,15 +21,14 @@ import de.atruvia.ase.samman.buli.domain.Paarung.PaarungView;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.Value;
 import lombok.experimental.Accessors;
 
 @RequiredArgsConstructor
 public class Tabelle {
 
-	@RequiredArgsConstructor
+	@Value
 	@Accessors(fluent = true)
-	@ToString
 	private static class OrdnungsElement implements Comparable<OrdnungsElement> {
 
 //	    MIS: Head-to-head goal difference: The goal difference in the matches played between the tied teams.
@@ -57,7 +56,7 @@ public class Tabelle {
 				.reduce(Comparator::thenComparing).orElseThrow().reversed();
 
 		@Getter(value = PRIVATE)
-		private final TabellenPlatz tabellenPlatz;
+		TabellenPlatz tabellenPlatz;
 
 		@Override
 		public int hashCode() {
