@@ -101,10 +101,6 @@ public class Paarung {
 		@With
 		int tore;
 
-		public Entry(String team, URI wappen, int tore) {
-			this(null, team, wappen, tore);
-		}
-
 		public Entry(Object identifier, String team, URI wappen, int tore) {
 			this.identifier = identifier == null ? team : identifier;
 			this.team = team;
@@ -165,8 +161,8 @@ public class Paarung {
 
 	public PaarungView viewForTeam(ViewDirection viewDirection) {
 		return switch (viewDirection) {
-		case AUSWAERTS -> new PaarungView(AUSWAERTS, Paarung::gast, Paarung::heim);
 		case HEIM -> new PaarungView(HEIM, Paarung::heim, Paarung::gast);
+		case AUSWAERTS -> new PaarungView(AUSWAERTS, Paarung::gast, Paarung::heim);
 		};
 	}
 

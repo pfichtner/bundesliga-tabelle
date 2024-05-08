@@ -43,8 +43,10 @@ public final class PaarungMother {
 	}
 
 	public static Paarung paarungWithAllAttributesSet() {
-		return new Paarung(BEENDET, new Entry("Heim", URI.create("WappenHeim"), 1),
-				new Entry("Gast", URI.create("WappenGast"), 2));
+		return new Paarung(BEENDET, //
+				new Entry("IdentifierHeim", "Heim", URI.create("WappenHeim"), 1), //
+				new Entry("IdentifierGast", "Gast", URI.create("WappenGast"), 2) //
+		);
 	}
 
 	private static List<String> opponents(String firstTeam, int count) {
