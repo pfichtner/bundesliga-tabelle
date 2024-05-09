@@ -1,5 +1,7 @@
 package de.atruvia.ase.samman.buli.domain;
 
+import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.AUSWAERTS;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
 import static de.atruvia.ase.samman.buli.domain.ToreUndGegentore.toreUndGegentore;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,12 +20,16 @@ class TabellenPlatzTest {
 	 */
 	@Test
 	void testMergeWith() {
-		TabellenPlatz entry1 = anyPlatz.toBuilder().spiele(1).punkte(24).auswaerts(toreUndGegentore(3, 4))
-				.heim(toreUndGegentore(5, 6)).build();
-		TabellenPlatz entry2 = anyPlatz.toBuilder().spiele(2).punkte(1).auswaerts(toreUndGegentore(7, 8)).build();
+		TabellenPlatz entry1 = anyPlatz.toBuilder().spiele(1).punkte(24) //
+				.toreUndGegentore(AUSWAERTS, toreUndGegentore(3, 4)) //
+				.toreUndGegentore(HEIM, toreUndGegentore(5, 6)).build();
+		TabellenPlatz entry2 = anyPlatz.toBuilder().spiele(2).punkte(1)
+				.toreUndGegentore(AUSWAERTS, toreUndGegentore(7, 8)).build();
 		TabellenPlatz mergedEntry = entry1.mergeWith(entry2);
-		assertThat(mergedEntry).isEqualTo(anyPlatz.toBuilder().spiele(1 + 2).punkte(24 + 1).heim(toreUndGegentore(5, 6))
-				.auswaerts(toreUndGegentore(3 + 7, 4 + 8)).build());
+		assertThat(mergedEntry).isEqualTo(anyPlatz.toBuilder().spiele(1 + 2).punkte(24 + 1) //
+				.toreUndGegentore(HEIM, toreUndGegentore(5, 6)) //
+				.toreUndGegentore(AUSWAERTS, toreUndGegentore(3 + 7, 4 + 8)) //
+				.build());
 	}
 
 }

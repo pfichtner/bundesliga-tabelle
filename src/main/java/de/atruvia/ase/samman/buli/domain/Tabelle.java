@@ -92,14 +92,12 @@ public class Tabelle {
 	private TabellenPlatz newEntry(PaarungView paarung) {
 		TabellenPlatzBuilder builder = TabellenPlatz.builder().team(paarung.team().team())
 				.wappen(paarung.team().wappen());
-
 		if (!paarung.isGeplant()) {
 			var ergebnis = paarung.ergebnis();
-			var toreUndGegentore = toreUndGegentore(paarung.tore(), paarung.gegentore());
 			builder = builder.spiele(1) //
 					.ergebnis(ergebnis, paarung.ergebnisTyp()) //
 					.punkte(ergebnis.punkte()) //
-					.toreUndGegentore(paarung.direction(), toreUndGegentore) //
+					.toreUndGegentore(paarung.direction(), toreUndGegentore(paarung.tore(), paarung.gegentore())) //
 					.laufendesSpiel(paarung.isLaufend() ? paarung : null) //
 			;
 		}

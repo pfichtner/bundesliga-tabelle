@@ -13,6 +13,7 @@ import java.net.URI;
 import java.util.function.Function;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Value;
 import lombok.With;
 import lombok.experimental.Accessors;
@@ -28,6 +29,8 @@ public class Paarung {
 		ViewDirection direction;
 		Function<Paarung, Entry> team;
 		Function<Paarung, Entry> gegner;
+		@Getter(lazy = true)
+		Ergebnis ergebnis = calcErgebnis();
 
 		public Entry team() {
 			return team.apply(paarung());
@@ -53,7 +56,7 @@ public class Paarung {
 			return paarung().isLaufend();
 		}
 
-		public Ergebnis ergebnis() {
+		private Ergebnis calcErgebnis() {
 			var tore = tore();
 			var gegentore = gegentore();
 			if (tore == gegentore) {

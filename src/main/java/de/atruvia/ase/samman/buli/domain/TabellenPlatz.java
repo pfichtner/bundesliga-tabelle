@@ -125,14 +125,6 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 			return this;
 		}
 
-		public TabellenPlatzBuilder heim(ToreUndGegentore toreUndGegentore) {
-			return toreUndGegentore(HEIM, toreUndGegentore);
-		}
-
-		public TabellenPlatzBuilder auswaerts(ToreUndGegentore toreUndGegentore) {
-			return toreUndGegentore(AUSWAERTS, toreUndGegentore);
-		}
-
 		public TabellenPlatzBuilder toreUndGegentore(ViewDirection viewDirection, ToreUndGegentore toreUndGegentore) {
 			toreGegentore.put(viewDirection, toreUndGegentore);
 			return this;

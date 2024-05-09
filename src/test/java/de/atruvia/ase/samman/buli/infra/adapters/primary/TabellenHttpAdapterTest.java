@@ -6,6 +6,7 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
 import static de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder.paarung;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.AUSWAERTS;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
 import static de.atruvia.ase.samman.buli.domain.ToreUndGegentore.toreUndGegentore;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.merge;
@@ -127,7 +128,8 @@ class TabellenHttpAdapterTest {
 		TabellenPlatz platz1 = merge( //
 				Stream.of(platzWith(SIEG, BEENDET), //
 						platzWith(UNENTSCHIEDEN, BEENDET), //
-						platzWith(NIEDERLAGE, LAUFEND).toBuilder().laufendesSpiel(laufendesSpiel.viewForTeam(HEIM)).build() //
+						platzWith(NIEDERLAGE, LAUFEND).toBuilder().laufendesSpiel(laufendesSpiel.viewForTeam(HEIM))
+								.build() //
 				));
 		when(tabellenService.erstelleTabelle(league, season)).thenReturn(List.of(platz1));
 
@@ -161,8 +163,8 @@ class TabellenHttpAdapterTest {
 		return builder.wappen(create("proto://wappen-team-" + base)) //
 				.team("Team " + base) //
 				.spiele(base + (++cnt)) //
-				.heim(toreUndGegentore(base + (++cnt), base + (++cnt))) //
-				.auswaerts(toreUndGegentore(base + (++cnt), base + (++cnt))) //
+				.toreUndGegentore(HEIM, toreUndGegentore(base + (++cnt), base + (++cnt)))
+				.toreUndGegentore(AUSWAERTS, toreUndGegentore(base + (++cnt), base + (++cnt))) //
 				.punkte(base + (++cnt)) //
 				.build();
 	}
