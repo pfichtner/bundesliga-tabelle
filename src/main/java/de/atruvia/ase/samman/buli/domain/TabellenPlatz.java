@@ -123,21 +123,17 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 		}
 
 		public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp) {
-			this.ergebnisse.add(new ErgebnisEntry(ergebnis, ergebnisTyp));
+			ergebnisse.add(new ErgebnisEntry(ergebnis, ergebnisTyp));
 			return this;
 		}
 
-		public TabellenPlatzBuilder toreUndGegentore(ViewDirection direction, int tore, int gegentore) {
-			return withTore(direction, tore).withGegentore(direction, gegentore);
-		}
-
-		public TabellenPlatzBuilder withGegentore(ViewDirection direction, int gegentore) {
-			this.gegentore.put(direction, gegentore);
+		public TabellenPlatzBuilder withGegentore(ViewDirection direction, int anzahl) {
+			gegentore.put(direction, anzahl);
 			return this;
 		}
 
-		public TabellenPlatzBuilder withTore(ViewDirection viewDirection, int tore) {
-			this.tore.put(viewDirection, tore);
+		public TabellenPlatzBuilder withTore(ViewDirection viewDirection, int anzahl) {
+			tore.put(viewDirection, anzahl);
 			return this;
 		}
 
@@ -145,7 +141,6 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 
 	@Override
 	public TabellenPlatz mergeWith(TabellenPlatz other) {
-
 		return builder() //
 				.team(lastNonNull(team, other.team)) //
 				.ergebnisse(merge(ergebnisse, other.ergebnisse)) //
