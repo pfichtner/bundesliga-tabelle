@@ -26,11 +26,11 @@ class TabellenPlatzTest {
 		TabellenPlatz entry2 = anyPlatz.toBuilder().spiele(2).punkte(1) //
 				.withTore(AUSWAERTS, 7).withGegentore(AUSWAERTS, 8) //
 				.build();
-		TabellenPlatz mergedEntry = entry1.mergeWith(entry2);
-		assertThat(mergedEntry).isEqualTo(anyPlatz.toBuilder().spiele(1 + 2).punkte(24 + 1) //
-				.withTore(HEIM, 5).withGegentore(HEIM, 6) //
+		TabellenPlatz expected = anyPlatz.toBuilder().spiele(1 + 2).punkte(24 + 1) //
 				.withTore(AUSWAERTS, 3 + 7).withGegentore(AUSWAERTS, 4 + 8) //
-				.build());
+				.withTore(HEIM, 5).withGegentore(HEIM, 6) //
+				.build();
+		assertThat(entry1.mergeWith(entry2)).isEqualTo(expected);
 	}
 
 }
