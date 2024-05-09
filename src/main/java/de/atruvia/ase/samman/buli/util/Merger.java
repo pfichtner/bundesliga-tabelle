@@ -35,11 +35,6 @@ public final class Merger {
 	}
 
 	@SafeVarargs
-	public static <K, V extends Mergeable<V>> Map<K, V> merge(Map<K, V>... maps) {
-		return merge(V::mergeWith, maps);
-	}
-
-	@SafeVarargs
 	public static <K, V> Map<K, V> merge(BinaryOperator<V> mergeFunction, Map<K, V>... maps) {
 		return stream(maps).map(Map::entrySet).flatMap(Set::stream)
 				.collect(toMap(Map.Entry::getKey, Map.Entry::getValue, mergeFunction, HashMap::new));
