@@ -85,7 +85,7 @@ public class TabellenHttpAdapter {
 
 		private static JsonLaufendesSpiel convertLaufendesSpiel(PaarungView view) {
 			return new JsonLaufendesSpiel(convertErgebnis(view.ergebnis()), view.gegner().team(), view.tore(),
-					view.gegenTore());
+					view.gegentore());
 		}
 
 		/**

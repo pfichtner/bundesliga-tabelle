@@ -41,29 +41,32 @@ public class Paarung {
 			return team().tore();
 		}
 
-		public int gegenTore() {
+		public int gegentore() {
 			return gegner().tore();
 		}
 
-		public boolean hatErgebnis() {
-			return paarung().hatErgebnis();
+		public boolean isGeplant() {
+			return paarung().isGeplant();
+		}
+
+		public boolean isLaufend() {
+			return paarung().isLaufend();
 		}
 
 		public Ergebnis ergebnis() {
 			var tore = tore();
-			var gegentore = gegenTore();
+			var gegentore = gegentore();
 			if (tore == gegentore) {
 				return UNENTSCHIEDEN;
+			} else if (tore > gegentore) {
+				return SIEG;
+			} else {
+				return NIEDERLAGE;
 			}
-			return tore > gegentore ? SIEG : NIEDERLAGE;
 		}
 
 		public ErgebnisTyp ergebnisTyp() {
 			return paarung().ergebnisTyp;
-		}
-
-		public boolean ergebnisTypIs(ErgebnisTyp ergebnisTyp) {
-			return paarung().ergebnisTypIs(ergebnisTyp);
 		}
 
 		private Paarung paarung() {
@@ -115,11 +118,15 @@ public class Paarung {
 
 	Entry heim, gast;
 
-	public boolean hatErgebnis() {
-		return !ergebnisTypIs(GEPLANT);
+	public boolean isGeplant() {
+		return ergebnisTypIs(GEPLANT);
 	}
 
-	public boolean ergebnisTypIs(ErgebnisTyp ergebnisTyp) {
+	public boolean isLaufend() {
+		return ergebnisTypIs(LAUFEND);
+	}
+
+	private boolean ergebnisTypIs(ErgebnisTyp ergebnisTyp) {
 		return this.ergebnisTyp == ergebnisTyp;
 	}
 

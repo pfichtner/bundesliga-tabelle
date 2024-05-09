@@ -235,12 +235,12 @@ class TabelleTest {
 				e1 -> {
 					assertThat(e1.team()).isEqualTo("Team 1");
 					assertThat(e1.laufendesSpiel().tore()).isEqualTo(1);
-					assertThat(e1.laufendesSpiel().gegenTore()).isEqualTo(2);
+					assertThat(e1.laufendesSpiel().gegentore()).isEqualTo(2);
 				}, //
 				e2 -> {
 					assertThat(e2.team()).isEqualTo("Team 2");
 					assertThat(e2.laufendesSpiel().tore()).isEqualTo(2);
-					assertThat(e2.laufendesSpiel().gegenTore()).isEqualTo(1);
+					assertThat(e2.laufendesSpiel().gegentore()).isEqualTo(1);
 				} //
 
 		);
