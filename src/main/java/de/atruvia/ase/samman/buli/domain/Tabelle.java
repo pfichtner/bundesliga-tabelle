@@ -92,11 +92,11 @@ public class Tabelle {
 		TabellenPlatzBuilder builder = TabellenPlatz.builder().team(paarung.team().team())
 				.wappen(paarung.team().wappen());
 		if (!paarung.isGeplant()) {
-			var ergebnis = paarung.ergebnis();
 			builder = builder.spiele(1) //
-					.ergebnis(ergebnis, paarung.ergebnisTyp()) //
-					.punkte(ergebnis.punkte()) //
-					.toreUndGegentore(paarung.direction(), paarung.tore(), paarung.gegentore()) //
+					.ergebnis(paarung.ergebnis(), paarung.ergebnisTyp()) //
+					.punkte(paarung.ergebnis().punkte()) //
+					.withTore(paarung.direction(), paarung.tore()) //
+					.withGegentore(paarung.direction(), paarung.gegentore()) //
 					.laufendesSpiel(paarung.isLaufend() ? paarung : null) //
 			;
 		}

@@ -162,8 +162,10 @@ class TabellenHttpAdapterTest {
 		return builder.wappen(create("proto://wappen-team-" + base)) //
 				.team("Team " + base) //
 				.spiele(base + (++cnt)) //
-				.toreUndGegentore(HEIM, base + (++cnt), base + (++cnt))
-				.toreUndGegentore(AUSWAERTS, base + (++cnt), base + (++cnt)) //
+				.withTore(HEIM, base + (++cnt)) //
+				.withGegentore(HEIM, base + (++cnt)) //
+				.withTore(AUSWAERTS, base + (++cnt)) //
+				.withGegentore(AUSWAERTS, base + (++cnt)) //
 				.punkte(base + (++cnt)) //
 				.build();
 	}

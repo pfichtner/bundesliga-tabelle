@@ -20,16 +20,16 @@ class TabellenPlatzTest {
 	@Test
 	void testMergeWith() {
 		TabellenPlatz entry1 = anyPlatz.toBuilder().spiele(1).punkte(24) //
-				.toreUndGegentore(AUSWAERTS, 3, 4) //
-				.toreUndGegentore(HEIM, 5, 6) //
+				.withTore(AUSWAERTS, 3).withGegentore(AUSWAERTS, 4) //
+				.withTore(HEIM, 5).withGegentore(HEIM, 6) //
 				.build();
 		TabellenPlatz entry2 = anyPlatz.toBuilder().spiele(2).punkte(1) //
-				.toreUndGegentore(AUSWAERTS, 7, 8) //
+				.withTore(AUSWAERTS, 7).withGegentore(AUSWAERTS, 8) //
 				.build();
 		TabellenPlatz mergedEntry = entry1.mergeWith(entry2);
 		assertThat(mergedEntry).isEqualTo(anyPlatz.toBuilder().spiele(1 + 2).punkte(24 + 1) //
-				.toreUndGegentore(HEIM, 5, 6) //
-				.toreUndGegentore(AUSWAERTS, 3 + 7, 4 + 8) //
+				.withTore(HEIM, 5).withGegentore(HEIM, 6) //
+				.withTore(AUSWAERTS, 3 + 7).withGegentore(AUSWAERTS, 4 + 8) //
 				.build());
 	}
 
