@@ -8,7 +8,6 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
 import static de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder.paarung;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.AUSWAERTS;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
-import static de.atruvia.ase.samman.buli.domain.ToreUndGegentore.toreUndGegentore;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.merge;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.platzWith;
 import static java.net.URI.create;
@@ -163,8 +162,8 @@ class TabellenHttpAdapterTest {
 		return builder.wappen(create("proto://wappen-team-" + base)) //
 				.team("Team " + base) //
 				.spiele(base + (++cnt)) //
-				.toreUndGegentore(HEIM, toreUndGegentore(base + (++cnt), base + (++cnt)))
-				.toreUndGegentore(AUSWAERTS, toreUndGegentore(base + (++cnt), base + (++cnt))) //
+				.toreUndGegentore(HEIM, base + (++cnt), base + (++cnt))
+				.toreUndGegentore(AUSWAERTS, base + (++cnt), base + (++cnt)) //
 				.punkte(base + (++cnt)) //
 				.build();
 	}

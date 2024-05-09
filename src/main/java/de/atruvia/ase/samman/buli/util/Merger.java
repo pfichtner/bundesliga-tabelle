@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BinaryOperator;
 import java.util.stream.IntStream;
 
 import lombok.NoArgsConstructor;
@@ -35,8 +36,13 @@ public final class Merger {
 
 	@SafeVarargs
 	public static <K, V extends Mergeable<V>> Map<K, V> merge(Map<K, V>... maps) {
+		return merge(V::mergeWith, maps);
+	}
+
+	@SafeVarargs
+	public static <K, V> Map<K, V> merge(BinaryOperator<V> mergeFunction, Map<K, V>... maps) {
 		return stream(maps).map(Map::entrySet).flatMap(Set::stream)
-				.collect(toMap(Map.Entry::getKey, Map.Entry::getValue, V::mergeWith, HashMap::new));
+				.collect(toMap(Map.Entry::getKey, Map.Entry::getValue, mergeFunction, HashMap::new));
 	}
 
 	@SafeVarargs

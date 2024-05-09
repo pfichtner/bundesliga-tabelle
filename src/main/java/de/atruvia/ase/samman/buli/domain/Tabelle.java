@@ -2,7 +2,6 @@ package de.atruvia.ase.samman.buli.domain;
 
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.AUSWAERTS;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
-import static de.atruvia.ase.samman.buli.domain.ToreUndGegentore.toreUndGegentore;
 import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
@@ -97,7 +96,7 @@ public class Tabelle {
 			builder = builder.spiele(1) //
 					.ergebnis(ergebnis, paarung.ergebnisTyp()) //
 					.punkte(ergebnis.punkte()) //
-					.toreUndGegentore(paarung.direction(), toreUndGegentore(paarung.tore(), paarung.gegentore())) //
+					.toreUndGegentore(paarung.direction(), paarung.tore(), paarung.gegentore()) //
 					.laufendesSpiel(paarung.isLaufend() ? paarung : null) //
 			;
 		}

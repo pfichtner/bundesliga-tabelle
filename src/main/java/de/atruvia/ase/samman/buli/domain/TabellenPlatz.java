@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BinaryOperator;
 import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
@@ -37,6 +38,8 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 		ErgebnisTyp ergebnisTyp;
 	}
 
+	private static final BinaryOperator<Integer> adder = (i1, i2) -> i1 + i2;
+
 	URI wappen;
 	@With
 	int platz;
@@ -45,7 +48,8 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 	int spiele;
 	List<ErgebnisEntry> ergebnisse;
 	int punkte;
-	Map<ViewDirection, ToreUndGegentore> toreGegentore;
+	Map<ViewDirection, Integer> tore;
+	Map<ViewDirection, Integer> gegentore;
 	PaarungView laufendesSpiel;
 
 	public List<Ergebnis> ergebnisse() {
@@ -68,14 +72,6 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 		return asList(ergebnisTyp).contains(e.ergebnisTyp());
 	}
 
-	private ToreUndGegentore heimToreUndGegentore() {
-		return toreGegentore.getOrDefault(HEIM, ToreUndGegentore.NULL);
-	}
-
-	private ToreUndGegentore auswaertsToreUndGegentore() {
-		return toreGegentore.getOrDefault(AUSWAERTS, ToreUndGegentore.NULL);
-	}
-
 	public int gesamtTore() {
 		return heimtore() + auswaertsTore();
 	}
@@ -85,19 +81,23 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 	}
 
 	public int heimtore() {
-		return heimToreUndGegentore().tore();
+		return tore().getOrDefault(HEIM, 0);
 	}
 
 	public int auswaertsTore() {
-		return auswaertsToreUndGegentore().tore();
+		return tore().getOrDefault(AUSWAERTS, 0);
 	}
 
 	public int heimGegentore() {
-		return heimToreUndGegentore().gegentore();
+		return gegentore().getOrDefault(HEIM, 0);
 	}
 
 	public int auswaertsGegentore() {
-		return auswaertsToreUndGegentore().gegentore();
+		return gegentore().getOrDefault(AUSWAERTS, 0);
+	}
+
+	public int torDifferenz() {
+		return gesamtTore() - gesamtGegentore();
 	}
 
 	public TabellenPlatzBuilder toBuilder() {
@@ -108,7 +108,8 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 		builder.spiele = spiele;
 		builder.ergebnisse = new ArrayList<>(ergebnisse);
 		builder.punkte = punkte;
-		builder.toreGegentore = new HashMap<>(toreGegentore);
+		builder.tore = new HashMap<>(tore);
+		builder.gegentore = new HashMap<>(gegentore);
 		builder.laufendesSpiel = laufendesSpiel;
 		return builder;
 	}
@@ -117,33 +118,41 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 
 		public TabellenPlatzBuilder() {
 			ergebnisse = new ArrayList<>();
-			toreGegentore = new HashMap<>();
+			tore = new HashMap<>();
+			gegentore = new HashMap<>();
 		}
 
 		public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp) {
-			ergebnisse.add(new ErgebnisEntry(ergebnis, ergebnisTyp));
+			this.ergebnisse.add(new ErgebnisEntry(ergebnis, ergebnisTyp));
 			return this;
 		}
 
-		public TabellenPlatzBuilder toreUndGegentore(ViewDirection viewDirection, ToreUndGegentore toreUndGegentore) {
-			toreGegentore.put(viewDirection, toreUndGegentore);
+		public TabellenPlatzBuilder toreUndGegentore(ViewDirection direction, int tore, int gegentore) {
+			return withTore(direction, tore).withGegentore(direction, gegentore);
+		}
+
+		public TabellenPlatzBuilder withGegentore(ViewDirection direction, int gegentore) {
+			this.gegentore.put(direction, gegentore);
 			return this;
 		}
 
-	}
+		public TabellenPlatzBuilder withTore(ViewDirection viewDirection, int tore) {
+			this.tore.put(viewDirection, tore);
+			return this;
+		}
 
-	public int torDifferenz() {
-		return gesamtTore() - gesamtGegentore();
 	}
 
 	@Override
 	public TabellenPlatz mergeWith(TabellenPlatz other) {
+
 		return builder() //
 				.team(lastNonNull(team, other.team)) //
 				.ergebnisse(merge(ergebnisse, other.ergebnisse)) //
 				.spiele(merge(spiele, other.spiele)) //
 				.punkte(merge(punkte, other.punkte)) //
-				.toreGegentore(merge(toreGegentore, other.toreGegentore)) //
+				.tore(merge(adder, tore, other.tore)) //
+				.gegentore(merge(adder, gegentore, other.gegentore)) //
 				.wappen(lastNonNull(wappen, other.wappen)) //
 				.laufendesSpiel(lastNonNull(laufendesSpiel, other.laufendesSpiel)) //
 				.build();
