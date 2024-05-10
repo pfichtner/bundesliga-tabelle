@@ -3,12 +3,8 @@ package de.atruvia.ase.samman.buli.infra.adapters.primary;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
-import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
-import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.LAUFEND;
-import static de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder.paarung;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.AUSWAERTS;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
-import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.merge;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.platzWith;
 import static java.net.URI.create;
 import static org.hamcrest.CoreMatchers.is;
@@ -23,7 +19,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +31,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
@@ -116,31 +110,6 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[1]*", not(hasKey("laufendesSpiel")))) //
 		;
 
-	}
-
-	@Test
-	void last5DoesNotIncludeNonFinishedGames() throws Exception {
-		String league = "bl1";
-		String season = "2022";
-
-		Paarung laufendesSpiel = paarung("Heim", "Gast").zwischenergebnis(1, 0).build();
-		TabellenPlatz platz1 = merge( //
-				Stream.of(platzWith(SIEG, BEENDET), //
-						platzWith(UNENTSCHIEDEN, BEENDET), //
-						platzWith(NIEDERLAGE, LAUFEND).toBuilder().laufendesSpiel(laufendesSpiel.viewForTeam(HEIM))
-								.build() //
-				));
-		when(tabellenService.erstelleTabelle(league, season)).thenReturn(List.of(platz1));
-
-		mockMvc.perform(get("/tabelle/" + league + "/" + season)) //
-				.andDo(print()) //
-				.andExpect(status().isOk()) //
-				.andExpect(jsonPath("$.[0].letzte5", is("US---"))) //
-				.andExpect(jsonPath("$.[0].laufendesSpiel.tore", is(1))) //
-				.andExpect(jsonPath("$.[0].laufendesSpiel.toreGegner", is(0))) //
-				.andExpect(jsonPath("$.[0].laufendesSpiel.ergebnis", is("S"))) //
-				.andExpect(jsonPath("$.[0].laufendesSpiel.gegner", is("Gast"))) //
-		;
 	}
 
 	@Test

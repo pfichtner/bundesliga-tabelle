@@ -3,11 +3,13 @@ package de.atruvia.ase.samman.buli.domain;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.AUSWAERTS;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
 import static de.atruvia.ase.samman.buli.util.Merger.lastNonNull;
 import static de.atruvia.ase.samman.buli.util.Merger.merge;
 import static java.util.Arrays.asList;
+import static java.util.stream.IntStream.range;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -167,6 +169,18 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 
 	private int countAnzahl(Ergebnis type) {
 		return (int) ergebnisseStream().map(ErgebnisEntry::ergebnis).filter(type::equals).count();
+	}
+
+	public Ergebnis[] tendenz() {
+		return last(5, ergebnisse(BEENDET)).toArray(Ergebnis[]::new);
+	}
+
+	private static <T> Stream<T> last(int count, List<T> elements) {
+		int size = elements.size();
+		return range(0, count).mapToObj(i -> {
+			int index = size - i - 1;
+			return index >= 0 ? elements.get(index) : null;
+		});
 	}
 
 }

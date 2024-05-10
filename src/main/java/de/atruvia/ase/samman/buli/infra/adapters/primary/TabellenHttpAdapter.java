@@ -1,9 +1,8 @@
 package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
-import static java.lang.Math.min;
-import static java.util.Arrays.fill;
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.joining;
 
 import java.util.List;
 
@@ -74,49 +73,35 @@ public class TabellenHttpAdapter {
 					.siege(domain.siege()) //
 					.unentschieden(domain.unentschieden()) //
 					.niederlagen(domain.niederlagen()) //
-					.letzte5(concatToSingleString(domain.ergebnisse(BEENDET), 5, '-')) //
-					.laufendesSpiel(
-							domain.laufendesSpiel() == null ? null : convertLaufendesSpiel(domain.laufendesSpiel())) //
+					.letzte5(convertTendenz(domain.tendenz())) //
+					.laufendesSpiel(convertLaufendesSpiel(domain.laufendesSpiel())) //
 					.build();
 			assert jsonTabellenPlatz.letzte5.matches(patternLetzte5)
 					: jsonTabellenPlatz.letzte5 + " entspricht nicht pattern " + patternLetzte5;
 			return jsonTabellenPlatz;
 		}
 
-		private static JsonLaufendesSpiel convertLaufendesSpiel(PaarungView view) {
-			return new JsonLaufendesSpiel(convertErgebnis(view.ergebnis()), view.gegner().team(), view.tore(),
-					view.gegentore());
-		}
-
-		/**
-		 * Liefert die letzten <code>length</code> Ergebnisse. Das jüngste Ergebnis ist
-		 * vorne, das älteste Ergebnis hinten im String.
-		 * 
-		 * @param ergebnisse zu übersetzende Ergebnisse
-		 * @param length     Länge des zu erzeugenden Strings. Sind weniger Ergebnisse
-		 *                   vorhanden als der String lang sein soll wird dieser mit
-		 *                   <code>filler</code> aufgefüllt
-		 * @param filler     Zeichen mit dem der String aufgefüllt werden soll, falls
-		 *                   nicht ausreichend Ergebnisse vorhanden sind
-		 * @return String der letzen <code>length</code> Ergebnisse bestehend aus 'S',
-		 *         'U', 'N'
-		 */
-		private static String concatToSingleString(List<Ergebnis> ergebnisse, int length, char filler) {
-			char[] chars = new char[length];
-			int idx = 0;
-			for (; idx < min(ergebnisse.size(), chars.length); idx++) {
-				chars[idx] = convertErgebnis(ergebnisse.get(ergebnisse.size() - 1 - idx));
-			}
-			fill(chars, idx, chars.length, filler);
-			return new String(chars);
+		private static String convertTendenz(Ergebnis[] tendenz) {
+			return stream(tendenz).map(JsonTabellenPlatz::convertErgebnis).map(String::valueOf).collect(joining());
 		}
 
 		private static char convertErgebnis(Ergebnis ergebnis) {
+			// needs at least Java 18 (JEP-420) to have a case null
+			if (ergebnis == null) {
+				return '-';
+			}
 			return switch (ergebnis) {
 			case SIEG -> 'S';
 			case UNENTSCHIEDEN -> 'U';
 			case NIEDERLAGE -> 'N';
 			};
+		}
+
+		private static JsonLaufendesSpiel convertLaufendesSpiel(PaarungView laufendesSpiel) {
+			return laufendesSpiel == null //
+					? null //
+					: new JsonLaufendesSpiel(convertErgebnis(laufendesSpiel.ergebnis()), laufendesSpiel.gegner().team(),
+							laufendesSpiel.tore(), laufendesSpiel.gegentore());
 		}
 
 	}

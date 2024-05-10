@@ -4,6 +4,7 @@ import static com.google.common.collect.Streams.concat;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
 import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
+import static de.atruvia.ase.samman.buli.domain.PaarungMother.createPaarungen;
 import static java.net.URI.create;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
@@ -21,6 +22,7 @@ import org.junit.jupiter.api.Test;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Entry;
 import de.atruvia.ase.samman.buli.domain.Paarung.Entry.EntryBuilder;
+import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 
 class TabelleTest {
@@ -248,6 +250,32 @@ class TabelleTest {
 		);
 	}
 
+	@Test
+	void tendenz_letzterSpieltagGanzVorneRestNull() {
+		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").endergebnis(1, 0));
+		wennDieTabelleBerechnetWird();
+		dannIstDieTendenz("Team 1", SIEG, null, null, null, null);
+	}
+
+	@Test
+	void tendenz_beinhaltetKeineLaufendenSpiele() {
+		gegebenSeienDiePaarungen( //
+				paarung("Team 1", "Team 2").endergebnis(1, 0), //
+				paarung("Team 2", "Team 1").zwischenergebnis(2, 1) //
+		);
+		wennDieTabelleBerechnetWird();
+		dannIstDieTendenz("Team 1", SIEG, null, null, null, null);
+	}
+
+	@Test
+	void tendenz_letzterSpieltagGanzVorneMaximalFuenfElemente() {
+		var team = "Team 1";
+		gegebenSeienDiePaarungen(
+				createPaarungen(team, SIEG, SIEG, NIEDERLAGE, NIEDERLAGE, UNENTSCHIEDEN, UNENTSCHIEDEN));
+		wennDieTabelleBerechnetWird();
+		dannIstDieTendenz(team, UNENTSCHIEDEN, UNENTSCHIEDEN, NIEDERLAGE, NIEDERLAGE, SIEG);
+	}
+
 	private static PaarungBuilder paarung(String teamHeim, String teamGast) {
 		return paarung(team(teamHeim), team(teamGast));
 	}
@@ -268,6 +296,10 @@ class TabelleTest {
 		this.paarungen = stream(paarungen).map(PaarungBuilder::build).toArray(Paarung[]::new);
 	}
 
+	private void gegebenSeienDiePaarungen(List<Paarung> paarungen) {
+		this.paarungen = paarungen.stream().toArray(Paarung[]::new);
+	}
+
 	private void wennDieTabelleBerechnetWird() {
 		stream(this.paarungen).forEach(sut::add);
 	}
@@ -279,6 +311,12 @@ class TabelleTest {
 	@SafeVarargs
 	private void dannIstDieTabelle(ThrowingConsumer<? super TabellenPlatz>... requirements) {
 		assertThat(sut.getEntries()).satisfiesExactly(requirements);
+	}
+
+	private void dannIstDieTendenz(String team, Ergebnis... tendenz) {
+		var tabellenPlatz = sut.getEntries().stream().filter(t -> t.team().equals(team)).findFirst()
+				.orElseThrow(() -> new IllegalStateException("No entry for team " + team));
+		assertThat(tabellenPlatz.tendenz()).containsExactly(tendenz);
 	}
 
 	private static String print(List<TabellenPlatz> plaetze) {
