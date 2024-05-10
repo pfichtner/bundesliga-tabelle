@@ -85,9 +85,9 @@ class TabelleTest {
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle("""
 				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
-				1    |Team 1|3     |    2|            0|          1|     6|         2|              1|           1
-				1    |Team 2|3     |    2|            0|          1|     6|         2|              1|           1
-				3    |Team 3|2     |    0|            0|          2|     0|         0|              2|          -2""");
+				1    |Team 1|     3|    2|            0|          1|     6|         2|              1|           1
+				1    |Team 2|     3|    2|            0|          1|     6|         2|              1|           1
+				3    |Team 3|     2|    0|            0|          2|     0|         0|              2|          -2""");
 	}
 
 	@Test
@@ -187,17 +187,19 @@ class TabelleTest {
 
 	@Test
 	void beiAenderndemMannschaftsnamenNullWirdNichtUebernommen() {
-		var heimAlt = team("Team 1").identifier("Team1");
-		var gastAlt = team("Team 2").identifier("Team2");
+		String team1 = "Team 1";
+		String team2 = "Team 2";
+		var heimAlt = team(team1).identifier(team1);
+		var gastAlt = team(team2).identifier(team2);
 
-		var heimNeu = team("Team 1").identifier("Team1");
-		var gastNeu = team(null).identifier("Team2");
+		var heimNeu = team(team1).identifier(team1);
+		var gastNeu = team(null).identifier(team2);
 		gegebenSeienDiePaarungen( //
 				paarung(heimAlt, gastAlt), paarung(heimNeu, gastNeu));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
-				e1 -> assertThat(e1.team()).isEqualTo("Team 1"), //
-				e2 -> assertThat(e2.team()).isEqualTo("Team 2") //
+				e1 -> assertThat(e1.team()).isEqualTo(team1), //
+				e2 -> assertThat(e2.team()).isEqualTo(team2) //
 		);
 	}
 
