@@ -14,7 +14,6 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.function.BinaryOperator;
 import java.util.stream.Stream;
@@ -172,17 +171,15 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 	}
 
 	public Ergebnis[] tendenz() {
-		return last(5, ergebnisse(BEENDET));
+		return copyReversedInto(ergebnisse(BEENDET), new Ergebnis[5]);
 	}
 
-	private static Ergebnis[] last(int count, List<Ergebnis> ergebnisse) {
-		Ergebnis[] tendenz = new Ergebnis[count];
-		int i = 0;
-		for (ListIterator<Ergebnis> it = ergebnisse.listIterator(ergebnisse.size()); it.hasPrevious()
-				&& i < count; i++) {
-			tendenz[i] = it.previous();
+	private static <T> T[] copyReversedInto(List<T> source, T[] target) {
+		var idx = 0;
+		for (var it = source.listIterator(source.size()); it.hasPrevious() && idx < target.length; idx++) {
+			target[idx] = it.previous();
 		}
-		return tendenz;
+		return target;
 	}
 
 }
