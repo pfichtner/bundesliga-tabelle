@@ -9,12 +9,12 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
 import static de.atruvia.ase.samman.buli.util.Merger.lastNonNull;
 import static de.atruvia.ase.samman.buli.util.Merger.merge;
 import static java.util.Arrays.asList;
-import static java.util.stream.IntStream.range;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.function.BinaryOperator;
 import java.util.stream.Stream;
@@ -172,15 +172,17 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 	}
 
 	public Ergebnis[] tendenz() {
-		return last(5, ergebnisse(BEENDET)).toArray(Ergebnis[]::new);
+		return last(5, ergebnisse(BEENDET));
 	}
 
-	private static <T> Stream<T> last(int count, List<T> elements) {
-		int size = elements.size();
-		return range(0, count).mapToObj(i -> {
-			int index = size - i - 1;
-			return index >= 0 ? elements.get(index) : null;
-		});
+	private static Ergebnis[] last(int count, List<Ergebnis> ergebnisse) {
+		Ergebnis[] tendenz = new Ergebnis[count];
+		int i = 0;
+		for (ListIterator<Ergebnis> it = ergebnisse.listIterator(ergebnisse.size()); it.hasPrevious()
+				&& i < count; i++) {
+			tendenz[i] = it.previous();
+		}
+		return tendenz;
 	}
 
 }
