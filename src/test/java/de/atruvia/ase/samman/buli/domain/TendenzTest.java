@@ -11,26 +11,21 @@ import java.util.List;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.Tendenz;
-import net.jqwik.api.Arbitraries;
-import net.jqwik.api.Arbitrary;
 import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
-import net.jqwik.api.Provide;
 import net.jqwik.api.constraints.IntRange;
 
 class TendenzTest {
 
-	private static final String ERGEBNISSE_WITH_NULLS = "ergebnisseWithNulls";
-
 	@Property
-	void asciiStringAlwaysAsLongAsLength(@ForAll(ERGEBNISSE_WITH_NULLS) List<Ergebnis> ergebnisse,
+	void asciiStringAlwaysAsLongAsLength(@ForAll List<Ergebnis> ergebnisse,
 			@ForAll @IntRange(min = 0, max = 34) int length) {
 		var value = Tendenz.from(ergebnisse, length).toASCIIString();
 		assertThat(value.chars()).hasSize(length);
 	}
 
 	@Property
-	void asciiStringOnlyContainsSUNorDash(@ForAll(ERGEBNISSE_WITH_NULLS) List<Ergebnis> ergebnisse,
+	void asciiStringOnlyContainsSUNorDash(@ForAll List<Ergebnis> ergebnisse,
 			@ForAll @IntRange(min = 0, max = 34) int length) {
 		var value = Tendenz.from(ergebnisse, length).toASCIIString();
 		String allowedChars = "SUN-";
@@ -39,8 +34,7 @@ class TendenzTest {
 	}
 
 	@Property
-	void containsTheLastNelements(@ForAll(ERGEBNISSE_WITH_NULLS) List<Ergebnis> ergebnisse,
-			@ForAll @IntRange(min = 0, max = 34) int length) {
+	void containsTheLastNelements(@ForAll List<Ergebnis> ergebnisse, @ForAll @IntRange(min = 0, max = 34) int length) {
 		String expected = reversedSubListOfSize(ergebnisse, length).stream()
 				.map(e -> e == null ? "-" : String.valueOf(e.charValue())).collect(joining());
 		var value = Tendenz.from(ergebnisse, length).toASCIIString();
@@ -52,11 +46,6 @@ class TendenzTest {
 		reverse(list);
 		list.addAll(nCopies(max(0, size - list.size()), null));
 		return list;
-	}
-
-	@Provide(ERGEBNISSE_WITH_NULLS)
-	private static Arbitrary<List<Ergebnis>> ergebnisseWithNulls() {
-		return Arbitraries.of(Ergebnis.class).injectNull(0.1).list();
 	}
 
 }
