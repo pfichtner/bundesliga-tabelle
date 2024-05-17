@@ -15,8 +15,15 @@ class TendenzTest {
 	@Property
 	void asciiStringAlwaysAsLongAsLength(@ForAll List<Ergebnis> ergebnisse,
 			@ForAll @IntRange(min = 0, max = 512) int length) {
-		String asciiString = Tendenz.from(ergebnisse, length).toASCIIString();
-		assertThat(asciiString).hasSize(length);
+		var value = Tendenz.from(ergebnisse, length).toASCIIString();
+		assertThat(value.chars()).hasSize(length);
+	}
+
+	@Property
+	void asciiStringOnlyContainsSUNorDash(@ForAll List<Ergebnis> ergebnisse,
+			@ForAll @IntRange(min = 0, max = 512) int length) {
+		var value = Tendenz.from(ergebnisse, length).toASCIIString();
+		assertThat(value.chars()).allMatch(c -> "SUN-".indexOf(c) != -1);
 	}
 
 }
