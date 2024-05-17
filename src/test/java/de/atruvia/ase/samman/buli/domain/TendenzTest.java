@@ -7,39 +7,46 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.Tendenz;
+import net.jqwik.api.Arbitraries;
+import net.jqwik.api.Arbitrary;
 import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
+import net.jqwik.api.Provide;
 import net.jqwik.api.constraints.IntRange;
 
 class TendenzTest {
 
+	private static final String ERGEBNISSE_WITH_NULLS = "ergebnisseWithNulls";
+
 	@Property
-	void asciiStringAlwaysAsLongAsLength(@ForAll List<Ergebnis> ergebnisse,
+	void asciiStringAlwaysAsLongAsLength(@ForAll(ERGEBNISSE_WITH_NULLS) List<Ergebnis> ergebnisse,
 			@ForAll @IntRange(min = 0, max = 34) int length) {
 		var value = Tendenz.from(ergebnisse, length).toASCIIString();
 		assertThat(value.chars()).hasSize(length);
 	}
 
 	@Property
-	void asciiStringOnlyContainsSUNorDash(@ForAll List<Ergebnis> ergebnisse,
+	void asciiStringOnlyContainsSUNorDash(@ForAll(ERGEBNISSE_WITH_NULLS) List<Ergebnis> ergebnisse,
 			@ForAll @IntRange(min = 0, max = 34) int length) {
 		var value = Tendenz.from(ergebnisse, length).toASCIIString();
-		assertThat(value.chars()).allMatch(c -> "SUN-".indexOf(c) != -1);
+		String allowedChars = "SUN-";
+		assertThat(value.chars()).withFailMessage(() -> "%s does not match one of %s".formatted(value, allowedChars))
+				.allMatch(c -> allowedChars.indexOf(c) != -1);
 	}
 
 	@Property
-	void containsTheLastNelements(@ForAll List<Ergebnis> ergebnisse, @ForAll @IntRange(min = 0, max = 34) int length) {
+	void containsTheLastNelements(@ForAll(ERGEBNISSE_WITH_NULLS) List<Ergebnis> ergebnisse,
+			@ForAll @IntRange(min = 0, max = 34) int length) {
 		String expected = subList(ergebnisse, length).stream().map(e -> e == null ? "-" : String.valueOf(e.charValue()))
 				.collect(joining());
 		var value = Tendenz.from(ergebnisse, length).toASCIIString();
 		assertThat(value).isEqualTo(expected);
 	}
 
-	private List<Ergebnis> subList(List<Ergebnis> ergebnisse, int length) {
+	private static List<Ergebnis> subList(List<Ergebnis> ergebnisse, int length) {
 		List<Ergebnis> list = new ArrayList<>(
 				ergebnisse.subList(max(0, ergebnisse.size() - length), ergebnisse.size()));
 		reverse(list);
@@ -47,6 +54,11 @@ class TendenzTest {
 			list.add(null);
 		}
 		return list;
+	}
+
+	@Provide(ERGEBNISSE_WITH_NULLS)
+	private static Arbitrary<List<Ergebnis>> ergebnisseWithNulls() {
+		return Arbitraries.of(Ergebnis.class).injectNull(0.1).list();
 	}
 
 }
