@@ -38,6 +38,8 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 	@Value
 	public static class Tendenz {
 
+		private static final String NICHT_GESPIELT = "-";
+
 		Ergebnis[] ergebnisse;
 
 		public static Tendenz from(List<Ergebnis> ergebnisse, int count) {
@@ -53,7 +55,11 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 		}
 
 		public String toASCIIString() {
-			return stream(ergebnisse).map(e -> (e == null ? "-" : String.valueOf(e.charValue()))).collect(joining());
+			return stream(ergebnisse).map(this::nullsafeCharValue).collect(joining());
+		}
+
+		private String nullsafeCharValue(Ergebnis ergebnis) {
+			return ergebnis == null ? NICHT_GESPIELT : String.valueOf(ergebnis.charValue());
 		}
 
 	}
