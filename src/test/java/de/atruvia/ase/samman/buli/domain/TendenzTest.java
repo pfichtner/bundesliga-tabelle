@@ -20,25 +20,29 @@ class TendenzTest {
 	@Property
 	void asciiStringAlwaysAsLongAsLength(@ForAll List<Ergebnis> ergebnisse,
 			@ForAll @IntRange(min = 0, max = 34) int length) {
-		var value = Tendenz.from(ergebnisse, length).toASCIIString();
+		var value = tendenzAsString(ergebnisse, length);
 		assertThat(value.chars()).hasSize(length);
 	}
 
 	@Property
 	void asciiStringOnlyContainsSUNorDash(@ForAll List<Ergebnis> ergebnisse,
 			@ForAll @IntRange(min = 0, max = 34) int length) {
-		var value = Tendenz.from(ergebnisse, length).toASCIIString();
-		String allowedChars = "SUN-";
+		var value = tendenzAsString(ergebnisse, length);
+		var allowedChars = "SUN-";
 		assertThat(value.chars()).withFailMessage(() -> "%s does not match one of %s".formatted(value, allowedChars))
 				.allMatch(c -> allowedChars.indexOf(c) >= 0);
 	}
 
 	@Property
 	void containsTheLastNelements(@ForAll List<Ergebnis> ergebnisse, @ForAll @IntRange(min = 0, max = 34) int length) {
-		var value = Tendenz.from(ergebnisse, length).toASCIIString();
+		var value = tendenzAsString(ergebnisse, length);
 		var expected = reversedSubListOfSize(ergebnisse, length).stream()
 				.map(e -> e == null ? "-" : String.valueOf(e.charValue())).collect(joining());
 		assertThat(value).isEqualTo(expected);
+	}
+
+	private String tendenzAsString(List<Ergebnis> ergebnisse, int length) {
+		return Tendenz.fromLatestGameAtEnd(ergebnisse, length).toASCIIString();
 	}
 
 	private static List<Ergebnis> reversedSubListOfSize(List<Ergebnis> ergebnisse, int size) {

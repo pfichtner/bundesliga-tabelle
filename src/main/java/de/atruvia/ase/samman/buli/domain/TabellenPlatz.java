@@ -42,7 +42,7 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 
 		Ergebnis[] ergebnisse;
 
-		public static Tendenz from(List<Ergebnis> ergebnisse, int count) {
+		public static Tendenz fromLatestGameAtEnd(List<Ergebnis> ergebnisse, int count) {
 			return new Tendenz(copyReversedInto(ergebnisse, new Ergebnis[count]));
 		}
 
@@ -202,7 +202,7 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 	}
 
 	public Tendenz tendenz() {
-		return Tendenz.from(ergebnisse(BEENDET), 5);
+		return Tendenz.fromLatestGameAtEnd(ergebnisse(BEENDET), 5);
 	}
 
 }
