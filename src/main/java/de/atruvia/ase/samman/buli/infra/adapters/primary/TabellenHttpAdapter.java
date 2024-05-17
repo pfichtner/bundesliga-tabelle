@@ -1,8 +1,6 @@
 package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.joining;
 
 import java.util.List;
 
@@ -12,8 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
-import de.atruvia.ase.samman.buli.domain.Paarung.PaarungView;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -73,35 +69,24 @@ public class TabellenHttpAdapter {
 					.siege(domain.siege()) //
 					.unentschieden(domain.unentschieden()) //
 					.niederlagen(domain.niederlagen()) //
-					.letzte5(convertTendenz(domain.tendenz())) //
-					.laufendesSpiel(convertLaufendesSpiel(domain.laufendesSpiel())) //
+					.letzte5(domain.tendenz().toASCIIString()) //
+					.laufendesSpiel(convertLaufendesSpiel(domain)) //
 					.build();
 			assert jsonTabellenPlatz.letzte5.matches(patternLetzte5)
 					: jsonTabellenPlatz.letzte5 + " entspricht nicht pattern " + patternLetzte5;
 			return jsonTabellenPlatz;
 		}
 
-		private static String convertTendenz(Ergebnis[] tendenz) {
-			return stream(tendenz).map(JsonTabellenPlatz::convertErgebnis).map(String::valueOf).collect(joining());
-		}
-
-		private static char convertErgebnis(Ergebnis ergebnis) {
-			// needs at least Java 18 (JEP-420) to have a case null
-			if (ergebnis == null) {
-				return '-';
-			}
-			return switch (ergebnis) {
-			case SIEG -> 'S';
-			case UNENTSCHIEDEN -> 'U';
-			case NIEDERLAGE -> 'N';
-			};
-		}
-
-		private static JsonLaufendesSpiel convertLaufendesSpiel(PaarungView laufendesSpiel) {
-			return laufendesSpiel == null //
+		private static JsonLaufendesSpiel convertLaufendesSpiel(TabellenPlatz domain) {
+			var paarung = domain.laufendesSpiel();
+			return paarung == null //
 					? null //
-					: new JsonLaufendesSpiel(convertErgebnis(laufendesSpiel.ergebnis()), laufendesSpiel.gegner().team(),
-							laufendesSpiel.tore(), laufendesSpiel.gegentore());
+					: new JsonLaufendesSpiel( //
+							paarung.ergebnis().charValue(), //
+							paarung.gegner().team(), //
+							paarung.tore(), //
+							paarung.gegentore() //
+					);
 		}
 
 	}

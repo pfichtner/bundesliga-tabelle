@@ -14,6 +14,7 @@ import java.util.function.Function;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.With;
 import lombok.experimental.Accessors;
@@ -82,8 +83,14 @@ public class Paarung {
 		HEIM, AUSWAERTS
 	}
 
+	@RequiredArgsConstructor
+	@Getter
+	@Accessors(fluent = true)
 	public enum Ergebnis {
-		SIEG, UNENTSCHIEDEN, NIEDERLAGE;
+
+		SIEG('S'), UNENTSCHIEDEN('U'), NIEDERLAGE('N');
+
+		private final char charValue;
 
 		public int punkte() {
 			return switch (this) {
@@ -92,6 +99,11 @@ public class Paarung {
 			case NIEDERLAGE -> 0;
 			};
 		}
+
+		public static char nullsafeCharValueOf(Ergebnis ergebnis) {
+			return ergebnis == null ? '-' : ergebnis.charValue();
+		}
+
 	}
 
 	public enum ErgebnisTyp {

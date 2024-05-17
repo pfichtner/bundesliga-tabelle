@@ -31,7 +31,8 @@ public class StepDefs {
 			entry("Punkte", TabellenPlatz::punkte), //
 			entry("Tore", TabellenPlatz::gesamtTore), //
 			entry("Gegentore", TabellenPlatz::gesamtGegentore), //
-			entry("Tordifferenz", TabellenPlatz::torDifferenz) //
+			entry("Tordifferenz", TabellenPlatz::torDifferenz), //
+			entry("Tendenz", t -> t.tendenz().toASCIIString()) //
 	);
 
 	List<Paarung> paarungen = new ArrayList<>();

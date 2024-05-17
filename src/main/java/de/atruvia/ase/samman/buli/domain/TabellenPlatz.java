@@ -9,6 +9,8 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
 import static de.atruvia.ase.samman.buli.util.Merger.lastNonNull;
 import static de.atruvia.ase.samman.buli.util.Merger.merge;
 import static java.util.Arrays.asList;
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.joining;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -32,6 +34,29 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 @Builder
 public class TabellenPlatz implements Mergeable<TabellenPlatz> {
+
+	@Value
+	public static class Tendenz {
+
+		Ergebnis[] ergebnisse;
+
+		public static Tendenz from(List<Ergebnis> ergebnisse, int count) {
+			return new Tendenz(copyReversedInto(ergebnisse, new Ergebnis[count]));
+		}
+
+		private static <T> T[] copyReversedInto(List<T> source, T[] target) {
+			var idx = 0;
+			for (var it = source.listIterator(source.size()); it.hasPrevious() && idx < target.length; idx++) {
+				target[idx] = it.previous();
+			}
+			return target;
+		}
+
+		public String toASCIIString() {
+			return stream(ergebnisse).map(Ergebnis::nullsafeCharValueOf).map(String::valueOf).collect(joining());
+		}
+
+	}
 
 	@Value
 	private static class ErgebnisEntry {
@@ -170,16 +195,8 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 		return (int) ergebnisseStream().map(ErgebnisEntry::ergebnis).filter(type::equals).count();
 	}
 
-	public Ergebnis[] tendenz() {
-		return copyReversedInto(ergebnisse(BEENDET), new Ergebnis[5]);
-	}
-
-	private static <T> T[] copyReversedInto(List<T> source, T[] target) {
-		var idx = 0;
-		for (var it = source.listIterator(source.size()); it.hasPrevious() && idx < target.length; idx++) {
-			target[idx] = it.previous();
-		}
-		return target;
+	public Tendenz tendenz() {
+		return Tendenz.from(ergebnisse(BEENDET), 5);
 	}
 
 }
