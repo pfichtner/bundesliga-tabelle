@@ -53,7 +53,7 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 		}
 
 		public String toASCIIString() {
-			return stream(ergebnisse).map(Ergebnis::nullsafeCharValueOf).map(String::valueOf).collect(joining());
+			return stream(ergebnisse).map(e -> (e == null ? "-" : String.valueOf(e.charValue()))).collect(joining());
 		}
 
 	}

@@ -100,10 +100,6 @@ public class Paarung {
 			};
 		}
 
-		public static char nullsafeCharValueOf(Ergebnis ergebnis) {
-			return ergebnis == null ? '-' : ergebnis.charValue();
-		}
-
 	}
 
 	public enum ErgebnisTyp {
