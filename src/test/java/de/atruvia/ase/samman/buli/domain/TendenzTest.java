@@ -35,9 +35,9 @@ class TendenzTest {
 
 	@Property
 	void containsTheLastNelements(@ForAll List<Ergebnis> ergebnisse, @ForAll @IntRange(min = 0, max = 34) int length) {
-		String expected = reversedSubListOfSize(ergebnisse, length).stream()
-				.map(e -> e == null ? "-" : String.valueOf(e.charValue())).collect(joining());
 		var value = Tendenz.from(ergebnisse, length).toASCIIString();
+		var expected = reversedSubListOfSize(ergebnisse, length).stream()
+				.map(e -> e == null ? "-" : String.valueOf(e.charValue())).collect(joining());
 		assertThat(value).isEqualTo(expected);
 	}
 
