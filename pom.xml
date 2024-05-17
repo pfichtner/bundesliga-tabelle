@@ -106,6 +106,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>net.jqwik</groupId>
+			<artifactId>jqwik</artifactId>
+			<version>1.8.3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>au.com.dius.pact.provider</groupId>
 			<artifactId>junit5</artifactId>
 			<version>${pact.version}</version>
@@ -124,7 +130,8 @@
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
+					<reportsDirectory>
+						${project.build.directory}/failsafe-reports</reportsDirectory>
 					<!-- do not break so cucumber-html gets generated (which
 					breaks build after html generation but at least the jar gets
 					generated anyway) :-/ -->
