@@ -1,6 +1,7 @@
 package de.atruvia.ase.samman.buli.domain;
 
 import static java.lang.Math.max;
+import static java.util.Collections.nCopies;
 import static java.util.Collections.reverse;
 import static java.util.stream.Collectors.joining;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,25 +35,22 @@ class TendenzTest {
 		var value = Tendenz.from(ergebnisse, length).toASCIIString();
 		String allowedChars = "SUN-";
 		assertThat(value.chars()).withFailMessage(() -> "%s does not match one of %s".formatted(value, allowedChars))
-				.allMatch(c -> allowedChars.indexOf(c) != -1);
+				.allMatch(c -> allowedChars.indexOf(c) >= 0);
 	}
 
 	@Property
 	void containsTheLastNelements(@ForAll(ERGEBNISSE_WITH_NULLS) List<Ergebnis> ergebnisse,
 			@ForAll @IntRange(min = 0, max = 34) int length) {
-		String expected = subList(ergebnisse, length).stream().map(e -> e == null ? "-" : String.valueOf(e.charValue()))
-				.collect(joining());
+		String expected = reversedSubListOfSize(ergebnisse, length).stream()
+				.map(e -> e == null ? "-" : String.valueOf(e.charValue())).collect(joining());
 		var value = Tendenz.from(ergebnisse, length).toASCIIString();
 		assertThat(value).isEqualTo(expected);
 	}
 
-	private static List<Ergebnis> subList(List<Ergebnis> ergebnisse, int length) {
-		List<Ergebnis> list = new ArrayList<>(
-				ergebnisse.subList(max(0, ergebnisse.size() - length), ergebnisse.size()));
+	private static List<Ergebnis> reversedSubListOfSize(List<Ergebnis> ergebnisse, int size) {
+		List<Ergebnis> list = new ArrayList<>(ergebnisse.subList(max(0, ergebnisse.size() - size), ergebnisse.size()));
 		reverse(list);
-		while (list.size() < length) {
-			list.add(null);
-		}
+		list.addAll(nCopies(max(0, size - list.size()), null));
 		return list;
 	}
 
