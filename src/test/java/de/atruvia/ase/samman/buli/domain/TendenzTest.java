@@ -5,6 +5,7 @@ import static java.util.Collections.nCopies;
 import static java.util.Collections.reverse;
 import static java.util.stream.Collectors.joining;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,12 @@ class TendenzTest {
 			@ForAll @IntRange(min = 0, max = 34) int length) {
 		var value = tendenzAsString(ergebnisse, length);
 		var allowedChars = "SUN-";
-		assertThat(value.chars()).withFailMessage(() -> "%s does not match one of %s".formatted(value, allowedChars))
-				.allMatch(c -> allowedChars.indexOf(c) >= 0);
+		assertThat(value.chars()).allSatisfy(c -> {
+			assertThat(allowedChars.indexOf(c))
+					.withFailMessage(() -> "'%s' in '%s' is not one of '%s'".formatted(c, value, allowedChars))
+					.isNotNegative();
+		});
+
 	}
 
 	@Property
