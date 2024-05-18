@@ -47,9 +47,9 @@ class TendenzTest {
 			@ForAll @IntRange(min = 0, max = MAX_LENGTH) int length) {
 		var value = tendenzAsString(ergebnisse, length);
 		var content = reversedSubListOfSize(ergebnisse, length).stream().map(Ergebnis::charValue);
-		var filler = generate(() -> '-').limit(max(0, length - ergebnisse.size()));
-		var expected = concat(content, filler).map(String::valueOf).collect(joining());
-		assertThat(value).isEqualTo(expected);
+		int dashesToAppend = length - ergebnisse.size();
+		var concated = dashesToAppend > 0 ? concat(content, generate(() -> '-').limit(dashesToAppend)) : content;
+		assertThat(value).isEqualTo(concated.map(String::valueOf).collect(joining()));
 	}
 
 	private static String tendenzAsString(List<Ergebnis> ergebnisse, int length) {
