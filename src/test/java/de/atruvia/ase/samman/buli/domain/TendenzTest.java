@@ -18,16 +18,20 @@ import net.jqwik.api.constraints.IntRange;
 
 class TendenzTest {
 
+	// Mögliche maximale Anzahl an Ergebnissen sind (teams-1)*2, Werte darüber sind
+	// daher eigentlich sinnlos
+	private static final int MAX_LENGTH = 42;
+
 	@Property
 	void asciiStringAlwaysAsLongAsLength(@ForAll List<Ergebnis> ergebnisse,
-			@ForAll @IntRange(min = 0, max = 34) int length) {
+			@ForAll @IntRange(min = 0, max = MAX_LENGTH) int length) {
 		var value = tendenzAsString(ergebnisse, length);
 		assertThat(value.chars()).hasSize(length);
 	}
 
 	@Property
 	void asciiStringOnlyContainsSUNorDash(@ForAll List<Ergebnis> ergebnisse,
-			@ForAll @IntRange(min = 0, max = 34) int length) {
+			@ForAll @IntRange(min = 0, max = MAX_LENGTH) int length) {
 		var value = tendenzAsString(ergebnisse, length);
 		var allowedChars = "SUN-";
 		assertThat(value.chars()).allSatisfy(c -> {
@@ -39,7 +43,8 @@ class TendenzTest {
 	}
 
 	@Property
-	void containsTheLastNelements(@ForAll List<Ergebnis> ergebnisse, @ForAll @IntRange(min = 0, max = 34) int length) {
+	void containsTheLastNelements(@ForAll List<Ergebnis> ergebnisse,
+			@ForAll @IntRange(min = 0, max = MAX_LENGTH) int length) {
 		var value = tendenzAsString(ergebnisse, length);
 		var content = reversedSubListOfSize(ergebnisse, length).stream().map(Ergebnis::charValue);
 		var filler = generate(() -> '-').limit(max(0, length - ergebnisse.size()));
