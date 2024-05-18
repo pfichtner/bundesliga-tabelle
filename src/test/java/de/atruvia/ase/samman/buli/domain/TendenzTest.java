@@ -1,11 +1,11 @@
 package de.atruvia.ase.samman.buli.domain;
 
 import static java.lang.Math.max;
-import static java.util.Collections.nCopies;
 import static java.util.Collections.reverse;
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Stream.concat;
+import static java.util.stream.Stream.generate;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,20 +41,20 @@ class TendenzTest {
 	@Property
 	void containsTheLastNelements(@ForAll List<Ergebnis> ergebnisse, @ForAll @IntRange(min = 0, max = 34) int length) {
 		var value = tendenzAsString(ergebnisse, length);
-		var expected = reversedSubListOfSize(ergebnisse, length).stream()
-				.map(e -> e == null ? "-" : String.valueOf(e.charValue())).collect(joining());
+		var content = reversedSubListOfSize(ergebnisse, length).stream().map(Ergebnis::charValue);
+		var filler = generate(() -> '-').limit(max(0, length - ergebnisse.size()));
+		var expected = concat(content, filler).map(String::valueOf).collect(joining());
 		assertThat(value).isEqualTo(expected);
 	}
 
-	private String tendenzAsString(List<Ergebnis> ergebnisse, int length) {
+	private static String tendenzAsString(List<Ergebnis> ergebnisse, int length) {
 		return Tendenz.fromLatestGameAtEnd(ergebnisse, length).toASCIIString();
 	}
 
-	private static List<Ergebnis> reversedSubListOfSize(List<Ergebnis> ergebnisse, int size) {
-		List<Ergebnis> list = new ArrayList<>(ergebnisse.subList(max(0, ergebnisse.size() - size), ergebnisse.size()));
-		reverse(list);
-		list.addAll(nCopies(max(0, size - list.size()), null));
-		return list;
+	private static List<Ergebnis> reversedSubListOfSize(List<Ergebnis> list, int size) {
+		List<Ergebnis> reversedSublist = new ArrayList<>(list.subList(max(0, list.size() - size), list.size()));
+		reverse(reversedSublist);
+		return reversedSublist;
 	}
 
 }
