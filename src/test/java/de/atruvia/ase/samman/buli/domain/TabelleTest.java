@@ -35,30 +35,33 @@ class TabelleTest {
 	void zweiMannschaftenKeinSpiel() {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2"), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle("""
-				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
-				1    |Team 1|     0|    0|            0|          0|     0|         0|              0|           0
-				1    |Team 2|     0|    0|            0|          0|     0|         0|              0|           0""");
+		dannIstDieTabelle(
+				"""
+						platz|teamName|spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
+						1    |Team 1  |     0|    0|            0|          0|     0|         0|              0|           0
+						1    |Team 2  |     0|    0|            0|          0|     0|         0|              0|           0""");
 	}
 
 	@Test
 	void zweiMannschaftenEinSpielKeineTore() {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").endergebnis(0, 0), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle("""
-				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
-				1    |Team 1|     1|    0|            1|          0|     1|         0|              0|           0
-				1    |Team 2|     1|    0|            1|          0|     1|         0|              0|           0""");
+		dannIstDieTabelle(
+				"""
+						platz|teamName|spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
+						1    |Team 1  |     1|    0|            1|          0|     1|         0|              0|           0
+						1    |Team 2  |     1|    0|            1|          0|     1|         0|              0|           0""");
 	}
 
 	@Test
 	void mannschaftMitMehrPunktenIstWeiterOben() {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").endergebnis(0, 1), paarung("Team 2", "Team 1"));
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle("""
-				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
-				1    |Team 2|     1|    1|            0|          0|     3|         1|              0|           1
-				2    |Team 1|     1|    0|            0|          1|     0|         0|              1|          -1""");
+		dannIstDieTabelle(
+				"""
+						platz|teamName|spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
+						1    |Team 2  |     1|    1|            0|          0|     3|         1|              0|           1
+						2    |Team 1  |     1|    0|            0|          1|     0|         0|              1|          -1""");
 	}
 
 	@Test
@@ -68,10 +71,11 @@ class TabelleTest {
 				paarung("Team 2", "Team 1").endergebnis(1, 0) //
 		);
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle("""
-				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
-				1    |Team 1|     2|    1|            0|          1|     3|         1|              1|           0
-				1    |Team 2|     2|    1|            0|          1|     3|         1|              1|           0""");
+		dannIstDieTabelle(
+				"""
+						platz|teamName|spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
+						1    |Team 1  |     2|    1|            0|          1|     3|         1|              1|           0
+						1    |Team 2  |     2|    1|            0|          1|     3|         1|              1|           0""");
 	}
 
 	@Test
@@ -86,11 +90,12 @@ class TabelleTest {
 				paarung("Team 2", "Team 3").endergebnis(1, 0) //
 		);
 		wennDieTabelleBerechnetWird();
-		dannIstDieTabelle("""
-				platz|team  |spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
-				1    |Team 1|     3|    2|            0|          1|     6|         2|              1|           1
-				1    |Team 2|     3|    2|            0|          1|     6|         2|              1|           1
-				3    |Team 3|     2|    0|            0|          2|     0|         0|              2|          -2""");
+		dannIstDieTabelle(
+				"""
+						platz|teamName|spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
+						1    |Team 1  |     3|    2|            0|          1|     6|         2|              1|           1
+						1    |Team 2  |     3|    2|            0|          1|     6|         2|              1|           1
+						3    |Team 3  |     2|    0|            0|          2|     0|         0|              2|          -2""");
 	}
 
 	@Test
@@ -106,19 +111,36 @@ class TabelleTest {
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
 				e1 -> {
-					assertThat(e1.team()).isEqualTo("Team 1");
+					assertThat(e1.teamName()).isEqualTo("Team 1");
 					assertThat(e1.platz()).isEqualTo(1);
 				}, //
 				e2 -> {
-					assertThat(e2.team()).isEqualTo("Team 2");
+					assertThat(e2.teamName()).isEqualTo("Team 2");
 					assertThat(e2.platz()).isEqualTo(1);
 				}, //
 				e3 -> {
-					assertThat(e3.team()).isEqualTo("Team 3");
+					assertThat(e3.teamName()).isEqualTo("Team 3");
 					assertThat(e3.platz()).isEqualTo(3);
 				} //
 
 		);
+	}
+
+	@Test
+	void team2IstImDirektenVergleichBesserAlsTeam1() {
+		gegebenSeienDiePaarungen( //
+				paarung("Team 1", "Team 2").endergebnis(0, 1), //
+				paarung("Team GegnerXvon1", "Team 1").endergebnis(0, 1), //
+				paarung("Team 2", "Team GegnerXvon2").endergebnis(0, 1) //
+		);
+		wennDieTabelleBerechnetWird();
+		dannIstDieTabelle(
+				"""
+						platz|teamName        |spiele|siege|unentschieden|niederlagen|punkte|gesamtTore|gesamtGegentore|torDifferenz
+						1    |Team GegnerXvon2|1     |1    |0            |0          |3     |1         |0              |1
+						2    |Team 2          |2     |1    |0            |1          |3     |1         |1              |0
+						3    |Team 1          |2     |1    |0            |1          |3     |1         |1              |0
+						4    |Team GegnerXvon1|1     |0    |0            |1          |0     |0         |1              |-1""");
 	}
 
 	@Test
@@ -129,8 +151,8 @@ class TabelleTest {
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
-				e1 -> assertThat(e1.team()).isEqualTo("Team 2"), //
-				e2 -> assertThat(e2.team()).isEqualTo("Team 1") //
+				e1 -> assertThat(e1.teamName()).isEqualTo("Team 2"), //
+				e2 -> assertThat(e2.teamName()).isEqualTo("Team 1") //
 		);
 	}
 
@@ -183,8 +205,8 @@ class TabelleTest {
 		gegebenSeienDiePaarungen(paarung(heimAlt, gastAlt), paarung(heimNeu, gastNeu));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
-				e1 -> assertThat(e1.team()).isEqualTo(team1), //
-				e2 -> assertThat(e2.team()).isEqualTo(team2 + "-B") //
+				e1 -> assertThat(e1.teamName()).isEqualTo(team1), //
+				e2 -> assertThat(e2.teamName()).isEqualTo(team2 + "-B") //
 		);
 	}
 
@@ -201,8 +223,8 @@ class TabelleTest {
 				paarung(heimAlt, gastAlt), paarung(heimNeu, gastNeu));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
-				e1 -> assertThat(e1.team()).isEqualTo(team1), //
-				e2 -> assertThat(e2.team()).isEqualTo(team2) //
+				e1 -> assertThat(e1.teamName()).isEqualTo(team1), //
+				e2 -> assertThat(e2.teamName()).isEqualTo(team2) //
 		);
 	}
 
@@ -238,12 +260,12 @@ class TabelleTest {
 		wennDieTabelleBerechnetWird();
 		dannIstDieTabelle( //
 				e1 -> {
-					assertThat(e1.team()).isEqualTo("Team 1");
+					assertThat(e1.teamName()).isEqualTo("Team 1");
 					assertThat(e1.laufendesSpiel().tore()).isEqualTo(1);
 					assertThat(e1.laufendesSpiel().gegentore()).isEqualTo(2);
 				}, //
 				e2 -> {
-					assertThat(e2.team()).isEqualTo("Team 2");
+					assertThat(e2.teamName()).isEqualTo("Team 2");
 					assertThat(e2.laufendesSpiel().tore()).isEqualTo(2);
 					assertThat(e2.laufendesSpiel().gegentore()).isEqualTo(1);
 				} //
@@ -288,7 +310,7 @@ class TabelleTest {
 	}
 
 	private static EntryBuilder team(String team) {
-		return Entry.builder().team(team);
+		return Entry.builder().identifier(team).team(team);
 	}
 
 	private static PaarungBuilder paarung(EntryBuilder heim, EntryBuilder gast) {
@@ -325,13 +347,13 @@ class TabelleTest {
 	}
 
 	private Tendenz tendenzForTeam(String team) {
-		var tabellenPlatz = sut.getEntries().stream().filter(t -> t.team().equals(team)).findFirst()
+		var tabellenPlatz = sut.getEntries().stream().filter(t -> t.teamName().equals(team)).findFirst()
 				.orElseThrow(() -> new IllegalStateException("No entry for team " + team));
 		return tabellenPlatz.tendenz();
 	}
 
 	private static String print(List<TabellenPlatz> plaetze) {
-		List<String> attribs = asList("platz", "team", "spiele", "siege", "unentschieden", "niederlagen", "punkte",
+		List<String> attribs = asList("platz", "teamName", "spiele", "siege", "unentschieden", "niederlagen", "punkte",
 				"gesamtTore", "gesamtGegentore", "torDifferenz");
 		Stream<String> header = Stream.of(line(attribs.stream()));
 		Stream<String> values = plaetze.stream().map(t -> print(t, attribs));

@@ -2,9 +2,11 @@ package de.atruvia.ase.samman.buli.util;
 
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
+import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toMap;
 import static lombok.AccessLevel.PRIVATE;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +54,15 @@ public final class Merger {
 			}
 		}
 		return null;
+	}
+
+	@SafeVarargs
+	public static <T> T enforceUnique(T... objects) {
+		T ref = objects[0];
+		if (Arrays.stream(objects).anyMatch(not(ref::equals))) {
+			throw new IllegalStateException("Object differs " + Arrays.toString(objects));
+		}
+		return ref;
 	}
 
 }

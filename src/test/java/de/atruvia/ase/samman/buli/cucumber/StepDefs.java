@@ -22,7 +22,7 @@ import io.cucumber.java.de.Wenn;
 public class StepDefs {
 
 	private static final Map<String, Function<TabellenPlatz, Object>> accessors = Map.ofEntries( //
-			entry("Team", TabellenPlatz::team), //
+			entry("Team", TabellenPlatz::teamName), //
 			entry("Platz", TabellenPlatz::platz), //
 			entry("Spiele", TabellenPlatz::spiele), //
 			entry("Siege", TabellenPlatz::siege), //

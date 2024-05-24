@@ -6,6 +6,7 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.AUSWAERTS;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
+import static de.atruvia.ase.samman.buli.util.Merger.enforceUnique;
 import static de.atruvia.ase.samman.buli.util.Merger.lastNonNull;
 import static de.atruvia.ase.samman.buli.util.Merger.merge;
 import static java.util.Arrays.asList;
@@ -65,18 +66,22 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 	}
 
 	@Value
-	private static class ErgebnisEntry {
+	static class ErgebnisEntry {
 		Ergebnis ergebnis;
 		ErgebnisTyp ergebnisTyp;
+		int tore;
+		Object identifierGegner;
+		int gegenTore;
 	}
 
 	private static final BinaryOperator<Integer> adder = (i1, i2) -> i1 + i2;
 
+	Object identifier;
 	URI wappen;
 	@With
 	int platz;
 	@With
-	String team;
+	String teamName;
 	int spiele;
 	List<ErgebnisEntry> ergebnisse;
 	int punkte;
@@ -85,14 +90,14 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 	PaarungView laufendesSpiel;
 
 	public List<Ergebnis> ergebnisse() {
-		return collectToList(ergebnisseStream());
+		return collectToList(ergebnisseEntryStream());
 	}
 
 	public List<Ergebnis> ergebnisse(ErgebnisTyp... ergebnisTyp) {
-		return collectToList(ergebnisseStream().filter(e -> entryErgebnisIsTypeOf(e, ergebnisTyp)));
+		return collectToList(ergebnisseEntryStream().filter(e -> entryErgebnisIsTypeOf(e, ergebnisTyp)));
 	}
 
-	private Stream<ErgebnisEntry> ergebnisseStream() {
+	Stream<ErgebnisEntry> ergebnisseEntryStream() {
 		return ergebnisse.stream();
 	}
 
@@ -134,9 +139,10 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 
 	public TabellenPlatzBuilder toBuilder() {
 		TabellenPlatzBuilder builder = new TabellenPlatzBuilder();
+		builder.identifier = identifier;
 		builder.wappen = wappen;
 		builder.platz = platz;
-		builder.team = team;
+		builder.teamName = teamName;
 		builder.spiele = spiele;
 		builder.ergebnisse = new ArrayList<>(ergebnisse);
 		builder.punkte = punkte;
@@ -154,18 +160,25 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 			gegentore = new HashMap<>();
 		}
 
-		public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp) {
-			ergebnisse.add(new ErgebnisEntry(ergebnis, ergebnisTyp));
+		public TabellenPlatzBuilder team(Object identifier, String name) {
+			this.identifier = identifier;
+			this.teamName = name;
+			return this;
+		}
+
+		public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp, int tore,
+				Object gegnerIdentifier, int gegenTore) {
+			this.ergebnisse.add(new ErgebnisEntry(ergebnis, ergebnisTyp, tore, gegnerIdentifier, gegenTore));
 			return this;
 		}
 
 		public TabellenPlatzBuilder withGegentore(ViewDirection direction, int anzahl) {
-			gegentore.put(direction, anzahl);
+			this.gegentore.put(direction, anzahl);
 			return this;
 		}
 
 		public TabellenPlatzBuilder withTore(ViewDirection viewDirection, int anzahl) {
-			tore.put(viewDirection, anzahl);
+			this.tore.put(viewDirection, anzahl);
 			return this;
 		}
 
@@ -174,7 +187,8 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 	@Override
 	public TabellenPlatz mergeWith(TabellenPlatz other) {
 		return builder() //
-				.team(lastNonNull(team, other.team)) //
+				.identifier(enforceUnique(identifier, other.identifier)) //
+				.teamName(lastNonNull(teamName, other.teamName)) //
 				.ergebnisse(merge(ergebnisse, other.ergebnisse)) //
 				.spiele(merge(spiele, other.spiele)) //
 				.punkte(merge(punkte, other.punkte)) //
@@ -198,7 +212,7 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 	}
 
 	private int countAnzahl(Ergebnis type) {
-		return (int) ergebnisseStream().map(ErgebnisEntry::ergebnis).filter(type::equals).count();
+		return (int) ergebnisseEntryStream().map(ErgebnisEntry::ergebnis).filter(type::equals).count();
 	}
 
 	public Tendenz tendenz() {

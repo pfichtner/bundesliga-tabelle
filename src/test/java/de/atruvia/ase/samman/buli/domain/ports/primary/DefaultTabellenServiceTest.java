@@ -53,12 +53,12 @@ class DefaultTabellenServiceTest {
 	}
 
 	int longestTeamName(List<TabellenPlatz> tabellenPlaetze) {
-		return tabellenPlaetze.stream().map(TabellenPlatz::team).mapToInt(String::length).max().orElse(0);
+		return tabellenPlaetze.stream().map(TabellenPlatz::teamName).mapToInt(String::length).max().orElse(0);
 	}
 
 	String print(TabellenPlatz tabellenPlatz, int length) {
 		return Stream.of( //
-				stringFormat(length, tabellenPlatz.team()), //
+				stringFormat(length, tabellenPlatz.teamName()), //
 				tabellenPlatz.spiele(), //
 				tabellenPlatz.siege(), //
 				tabellenPlatz.unentschieden(), //

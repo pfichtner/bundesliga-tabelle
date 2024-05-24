@@ -84,7 +84,7 @@ class TabellenHttpAdapterTest {
 				.andDo(print()) //
 				.andExpect(status().isOk()) //
 				.andExpect(jsonPath("$.[0].wappen", is(platz1.wappen().toASCIIString()))) //
-				.andExpect(jsonPath("$.[0].team", is(platz1.team()))) //
+				.andExpect(jsonPath("$.[0].team", is(platz1.teamName()))) //
 				.andExpect(jsonPath("$.[0].spiele", is(platz1.spiele()))) //
 				.andExpect(jsonPath("$.[0].siege", is(platz1.siege()))) //
 				.andExpect(jsonPath("$.[0].unentschieden", is(platz1.unentschieden()))) //
@@ -97,7 +97,7 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[0]*", not(hasKey("laufendesSpiel"))))
 				//
 				.andExpect(jsonPath("$.[1].wappen", is(platz2.wappen().toASCIIString()))) //
-				.andExpect(jsonPath("$.[1].team", is(platz2.team()))) //
+				.andExpect(jsonPath("$.[1].team", is(platz2.teamName()))) //
 				.andExpect(jsonPath("$.[1].spiele", is(platz2.spiele()))) //
 				.andExpect(jsonPath("$.[1].siege", is(platz2.siege()))) //
 				.andExpect(jsonPath("$.[1].unentschieden", is(platz2.unentschieden()))) //
@@ -129,7 +129,7 @@ class TabellenHttpAdapterTest {
 	static TabellenPlatz platzWithBase(int base, TabellenPlatzBuilder builder) {
 		int cnt = 0;
 		return builder.wappen(create("proto://wappen-team-" + base)) //
-				.team("Team " + base) //
+				.team("Team " + base, "Identifier " + base + (++cnt)) //
 				.spiele(base + (++cnt)) //
 				.withTore(HEIM, base + (++cnt)) //
 				.withGegentore(HEIM, base + (++cnt)) //

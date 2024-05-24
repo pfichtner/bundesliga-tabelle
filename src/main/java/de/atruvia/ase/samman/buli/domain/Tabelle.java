@@ -2,7 +2,6 @@ package de.atruvia.ase.samman.buli.domain;
 
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.AUSWAERTS;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
-import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
 import static lombok.AccessLevel.PRIVATE;
@@ -18,6 +17,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungView;
+import de.atruvia.ase.samman.buli.domain.TabellenPlatz.ErgebnisEntry;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz.TabellenPlatzBuilder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -33,44 +33,50 @@ public class Tabelle {
 
 		// X Die nach dem Subtraktionsverfahren ermittelte Tordifferenz
 		// X Anzahl der erzielten Tore
-		// - Das Gesamtergebnis aus Hin- und Rückspiel im direkten Vergleich
+		// X Das Gesamtergebnis aus Hin- und Rückspiel im direkten Vergleich
 		// - Die Anzahl der auswärts erzielten Tore im direkten Vergleich
 		// X die Anzahl aller auswärts erzielten Tore
 
-		private static final List<Function<TabellenPlatz, Comparable<?>>> comparators = asList( //
-				TabellenPlatz::punkte, //
-				TabellenPlatz::torDifferenz, //
-				TabellenPlatz::gesamtTore, //
-				TabellenPlatz::auswaertsTore //
-		);
+		private static final Comparator<OrdnungsElement> comparator = comparing(value(TabellenPlatz::punkte)) //
+				.thenComparing(comparing(value(TabellenPlatz::torDifferenz))) //
+				.thenComparing(comparing(value(TabellenPlatz::gesamtTore))) //
+				.thenComparing(gesamtErgebnis()) //
+				.thenComparing(comparing(value(TabellenPlatz::auswaertsTore))).reversed();
 
-		private static final Function<OrdnungsElement, TabellenPlatz> getTabellenPlatz = OrdnungsElement::tabellenPlatz;
-		private static final List<Function<OrdnungsElement, Comparable<?>>> extractors = comparators.stream()
-				.map(getTabellenPlatz::andThen).toList();
+		private static Comparator<OrdnungsElement> gesamtErgebnis() {
+			return (o1, o2) -> {
+				return Integer.compare( //
+						toreGegen(o1.tabellenPlatz, o2.tabellenPlatz.identifier()), //
+						toreGegen(o2.tabellenPlatz, o1.tabellenPlatz.identifier()) //
+				);
+			};
+		}
 
-		@SuppressWarnings({ "unchecked", "rawtypes" })
-		private static final Comparator<OrdnungsElement> comparator = extractors.stream() //
-				.map(f -> comparing((Function) f)) //
-				.reduce(Comparator::thenComparing).orElseThrow().reversed();
+		private static int toreGegen(TabellenPlatz tabellenPlatz, Object other) {
+			return tabellenPlatz.ergebnisseEntryStream().filter(e -> Objects.equals(e.identifierGegner(), other))
+					.map(ErgebnisEntry::tore).mapToInt(Integer::valueOf).sum();
+		}
 
 		@Getter(value = PRIVATE)
 		TabellenPlatz tabellenPlatz;
 
 		@Override
 		public int hashCode() {
-			return extractors.stream().map(e -> e.apply(this)).map(Object::hashCode).reduce(1,
-					(h1, h2) -> 31 * h1 + h2);
+			return 0;
+		}
+
+		private static <T> Function<OrdnungsElement, T> value(Function<TabellenPlatz, T> function) {
+			return t -> function.apply(t.tabellenPlatz);
 		}
 
 		@Override
-		public boolean equals(Object other) {
-			return this == other || (other != null && getClass() == other.getClass() && extractors.stream()
-					.allMatch(e -> Objects.equals(e.apply(this), e.apply((OrdnungsElement) other))));
+		public boolean equals(Object o) {
+			return comparator.compare(this, (OrdnungsElement) o) == 0;
 		}
 
 		@Override
 		public int compareTo(OrdnungsElement other) {
-			return comparator.thenComparing(comparing(e -> e.tabellenPlatz().team())).compare(this, other);
+			return comparator.thenComparing(comparing(e -> e.tabellenPlatz().teamName())).compare(this, other);
 		}
 
 	}
@@ -87,11 +93,13 @@ public class Tabelle {
 	}
 
 	private TabellenPlatz newEntry(PaarungView paarung) {
-		TabellenPlatzBuilder builder = TabellenPlatz.builder().team(paarung.team().team())
+		var team = paarung.team();
+		TabellenPlatzBuilder builder = TabellenPlatz.builder().team(team.identifier(), paarung.team().team())
 				.wappen(paarung.team().wappen());
 		if (!paarung.isGeplant()) {
 			builder = builder.spiele(1) //
-					.ergebnis(paarung.ergebnis(), paarung.ergebnisTyp()) //
+					.ergebnis(paarung.ergebnis(), paarung.ergebnisTyp(), paarung.tore(), paarung.gegner().identifier(),
+							paarung.gegentore()) //
 					.punkte(paarung.ergebnis().punkte()) //
 					.withTore(paarung.direction(), paarung.tore()) //
 					.withGegentore(paarung.direction(), paarung.gegentore()) //

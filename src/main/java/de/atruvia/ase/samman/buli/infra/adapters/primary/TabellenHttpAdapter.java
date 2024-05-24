@@ -60,7 +60,7 @@ public class TabellenHttpAdapter {
 			JsonTabellenPlatz jsonTabellenPlatz = builder() //
 					.platz(domain.platz()) //
 					.wappen(domain.wappen() == null ? null : domain.wappen().toASCIIString()) //
-					.team(domain.team()) //
+					.team(domain.teamName()) //
 					.spiele(domain.spiele()) //
 					.punkte(domain.punkte()) //
 					.tore(domain.gesamtTore()) //
