@@ -69,6 +69,7 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 	static class ErgebnisEntry {
 		Ergebnis ergebnis;
 		ErgebnisTyp ergebnisTyp;
+		ViewDirection viewDirection;
 		int tore;
 		Object identifierGegner;
 		int gegenTore;
@@ -166,9 +167,9 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 			return this;
 		}
 
-		public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp, int tore,
-				Object gegnerIdentifier, int gegenTore) {
-			this.ergebnisse.add(new ErgebnisEntry(ergebnis, ergebnisTyp, tore, gegnerIdentifier, gegenTore));
+		public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp, ViewDirection viewDirection,
+				int tore, Object gegnerIdentifier, int gegenTore) {
+			this.ergebnisse.add(new ErgebnisEntry(ergebnis, ergebnisTyp, viewDirection, tore, gegnerIdentifier, gegenTore));
 			return this;
 		}
 

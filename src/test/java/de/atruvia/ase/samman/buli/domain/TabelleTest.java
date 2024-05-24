@@ -144,6 +144,47 @@ class TabelleTest {
 	}
 
 	@Test
+	void anzahlAuswaertsToreImDirektenVergleichZiehtVorDenGesamtAuswaertsToren() {
+		gegebenSeienDiePaarungen( //
+				paarung("Team 2", "Team 1").endergebnis(0, 1), //
+				paarung("Team 1", "Team 2").endergebnis(1, 2), // <-- Team 2 hat 2, Team 1 hat 1 Auswärtstor
+				paarung("Team GegnerXvon1", "Team 1").endergebnis(0, 9), //
+				paarung("Team 1", "Team GegnerXvon1").endergebnis(9, 0), //
+				paarung("Team GegnerXvon2", "Team 2").endergebnis(0, 8), //
+				paarung("Team 2", "Team GegnerXvon2").endergebnis(10, 0) //
+		);
+		wennDieTabelleBerechnetWird();
+		dannIstDieTabelle( //
+				e1 -> assertThat(e1.teamName()).isEqualTo("Team 2"), //
+				e2 -> assertThat(e2.teamName()).isEqualTo("Team 1"), //
+				e3 -> dontCare(), //
+				e4 -> dontCare() //
+		);
+	}
+
+	@Test
+	void tordifferenzToreDirekterVergleichIDentischDannZaehlenMehrAuswaertsTore() {
+		gegebenSeienDiePaarungen( //
+				paarung("Team 2", "Team 1").endergebnis(0, 1), //
+				paarung("Team 1", "Team 2").endergebnis(0, 1), //
+				paarung("Team 1", "Team GegnerXvon1").endergebnis(3, 0), //
+				paarung("Team GegnerXvon1", "Team 1").endergebnis(3, 0), //
+				paarung("Team 2", "Team GegnerXvon2").endergebnis(2, 1), //
+				paarung("Team GegnerXvon2", "Team 2").endergebnis(2, 1) //
+		);
+		wennDieTabelleBerechnetWird();
+		dannIstDieTabelle( //
+				e1 -> assertThat(e1.teamName()).isEqualTo("Team 2"), //
+				e2 -> assertThat(e2.teamName()).isEqualTo("Team 1"), //
+				e3 -> dontCare(), //
+				e4 -> dontCare() //
+		);
+	}
+
+	private void dontCare() {
+	}
+
+	@Test
 	void punktUndTorGleichAberMehrAuswärtsTore() {
 		gegebenSeienDiePaarungen( //
 				paarung("Team 1", "Team 2").endergebnis(1, 2), //

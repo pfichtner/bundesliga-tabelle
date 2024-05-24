@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungView;
@@ -31,30 +32,53 @@ public class Tabelle {
 	@Accessors(fluent = true)
 	private static class OrdnungsElement implements Comparable<OrdnungsElement> {
 
-		// X Die nach dem Subtraktionsverfahren ermittelte Tordifferenz
-		// X Anzahl der erzielten Tore
-		// X Das Gesamtergebnis aus Hin- und Rückspiel im direkten Vergleich
-		// - Die Anzahl der auswärts erzielten Tore im direkten Vergleich
-		// X die Anzahl aller auswärts erzielten Tore
+		// [X] Die nach dem Subtraktionsverfahren ermittelte Tordifferenz
+		// [X] Anzahl der erzielten Tore
+		// [X] Das Gesamtergebnis aus Hin- und Rückspiel im direkten Vergleich
+		// [X] Die Anzahl der auswärts erzielten Tore im direkten Vergleich
+		// [X] die Anzahl aller auswärts erzielten Tore
 
 		private static final Comparator<OrdnungsElement> comparator = comparing(value(TabellenPlatz::punkte)) //
 				.thenComparing(comparing(value(TabellenPlatz::torDifferenz))) //
 				.thenComparing(comparing(value(TabellenPlatz::gesamtTore))) //
-				.thenComparing(gesamtErgebnis()) //
-				.thenComparing(comparing(value(TabellenPlatz::auswaertsTore))).reversed();
+				.thenComparing(direkterVegleichGesamt()) //
+				.thenComparing(direkterVegleichGesamtAuswaertsTore()) //
+				.thenComparing(comparing(value(TabellenPlatz::auswaertsTore))) //
+				.reversed();
 
-		private static Comparator<OrdnungsElement> gesamtErgebnis() {
+		private static Comparator<OrdnungsElement> direkterVegleichGesamt() {
 			return (o1, o2) -> {
 				return Integer.compare( //
-						toreGegen(o1.tabellenPlatz, o2.tabellenPlatz.identifier()), //
-						toreGegen(o2.tabellenPlatz, o1.tabellenPlatz.identifier()) //
+						toreGegen(o1.tabellenPlatz, o2.tabellenPlatz.identifier(),
+								gegnerIs(o2.tabellenPlatz.identifier())), //
+						toreGegen(o2.tabellenPlatz, o1.tabellenPlatz.identifier(),
+								gegnerIs(o1.tabellenPlatz.identifier())) //
 				);
 			};
 		}
 
-		private static int toreGegen(TabellenPlatz tabellenPlatz, Object other) {
-			return tabellenPlatz.ergebnisseEntryStream().filter(e -> Objects.equals(e.identifierGegner(), other))
-					.map(ErgebnisEntry::tore).mapToInt(Integer::valueOf).sum();
+		private static Comparator<OrdnungsElement> direkterVegleichGesamtAuswaertsTore() {
+			return (o1, o2) -> {
+				return Integer.compare( //
+						toreGegen(o1.tabellenPlatz, o2.tabellenPlatz.identifier(),
+								istAuswaerts().and(gegnerIs(o2.tabellenPlatz.identifier()))), //
+						toreGegen(o2.tabellenPlatz, o1.tabellenPlatz.identifier(),
+								istAuswaerts().and(gegnerIs(o1.tabellenPlatz.identifier()))) //
+				);
+			};
+		}
+
+		private static Predicate<ErgebnisEntry> gegnerIs(Object gegner) {
+			return e -> Objects.equals(e.identifierGegner(), gegner);
+		}
+
+		private static Predicate<ErgebnisEntry> istAuswaerts() {
+			return e -> e.viewDirection() == AUSWAERTS;
+		}
+
+		private static int toreGegen(TabellenPlatz tabellenPlatz, Object xxx, Predicate<ErgebnisEntry> filter) {
+			return tabellenPlatz.ergebnisseEntryStream().filter(filter).map(ErgebnisEntry::tore)
+					.mapToInt(Integer::valueOf).sum();
 		}
 
 		@Getter(value = PRIVATE)
@@ -98,8 +122,8 @@ public class Tabelle {
 				.wappen(paarung.team().wappen());
 		if (!paarung.isGeplant()) {
 			builder = builder.spiele(1) //
-					.ergebnis(paarung.ergebnis(), paarung.ergebnisTyp(), paarung.tore(), paarung.gegner().identifier(),
-							paarung.gegentore()) //
+					.ergebnis(paarung.ergebnis(), paarung.ergebnisTyp(), paarung.direction(), paarung.tore(),
+							paarung.gegner().identifier(), paarung.gegentore()) //
 					.punkte(paarung.ergebnis().punkte()) //
 					.withTore(paarung.direction(), paarung.tore()) //
 					.withGegentore(paarung.direction(), paarung.gegentore()) //

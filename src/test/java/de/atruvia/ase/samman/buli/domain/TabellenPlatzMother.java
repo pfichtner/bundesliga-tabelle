@@ -55,7 +55,7 @@ public final class TabellenPlatzMother {
 
 	public static TabellenPlatz platzWith(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp) {
 		return TabellenPlatz.builder().identifier("same object for all")
-				.ergebnis(ergebnis, ergebnisTyp, 0, "opposite id", 0).build();
+				.ergebnis(ergebnis, ergebnisTyp, null, 0, "opposite id", 0).build();
 	}
 
 }
