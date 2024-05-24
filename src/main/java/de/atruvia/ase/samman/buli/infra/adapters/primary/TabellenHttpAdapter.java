@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -72,10 +73,10 @@ public class TabellenHttpAdapter {
 		int siege, unentschieden, niederlagen;
 		@Deprecated
 		@Schema(deprecated = true, description = "Ergebnisse der letzten fünf Spiele. "
-				+ "Enthält 5 Zeichen, jeweils 'S' (Sieg), 'U' (Unentschieden), 'N' (Niederlage) oder '-' (nicht gespielt). Nur beendete (nicht laufende) Spiele werden berücksichtigt. ", pattern = patternLetzte5)
+				+ "Enthält 5 Zeichen, jeweils 'S' (Sieg), 'U' (Unentschieden), 'N' (Niederlage) oder '-' (nicht gespielt). Nur beendete (nicht laufende) Spiele werden berücksichtigt. ", maxLength = TENDENZ_MAX_LENGTH, pattern = patternLetzte5)
 		String letzte5;
-		@Schema(description = "Ergebnisse der letzten fünf Spiele. "
-				+ "Enthält bis zu 5 Zeichen, jeweils 'S' (Sieg), 'U' (Unentschieden), 'N' (Niederlage). Nur beendete (nicht laufende) Spiele werden berücksichtigt. ", maxLength = TENDENZ_MAX_LENGTH, pattern = "[SUN]")
+		@ArraySchema(schema = @Schema(description = "Ergebnisse der letzten fünf Spiele. "
+				+ "Enthält 'S' (Sieg), 'U' (Unentschieden), 'N' (Niederlage). Nur beendete (nicht laufende) Spiele werden berücksichtigt. ", pattern = "[SUN]"), maxItems = TENDENZ_MAX_LENGTH)
 		List<JsonErgebnis> tendenz;
 		@Schema(description = "Information zum Spiel, falls dieses Team derzeit gegen einen andere Mannschaft in dieser Liga spielt, ansonsten nicht gesetzt. ", nullable = true)
 		JsonLaufendesSpiel laufendesSpiel;
