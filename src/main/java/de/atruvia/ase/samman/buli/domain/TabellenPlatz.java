@@ -12,12 +12,15 @@ import static de.atruvia.ase.samman.buli.util.Merger.merge;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Stream.generate;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.stream.Stream;
 
@@ -41,10 +44,11 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 
 		private static final String NICHT_GESPIELT = "-";
 
-		Ergebnis[] ergebnisse;
+		Ergebnis[] ergebnisseOfSizeX;
+		List<Ergebnis> ergebnisse;
 
 		public static Tendenz fromLatestGameAtEnd(List<Ergebnis> ergebnisse, int count) {
-			return new Tendenz(copyReversedInto(ergebnisse, new Ergebnis[count]));
+			return new Tendenz(copyReversedInto(ergebnisse, new Ergebnis[count]), createReversed(ergebnisse, count));
 		}
 
 		private static <T> T[] copyReversedInto(List<T> source, T[] target) {
@@ -55,8 +59,20 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 			return target;
 		}
 
+		private static <T> List<Ergebnis> createReversed(List<Ergebnis> source, int maxLength) {
+			var it = source.listIterator(source.size());
+			return generate(() -> it.hasPrevious() ? it.previous() : null) //
+					.limit(maxLength) //
+					.takeWhile(Objects::nonNull) //
+					.collect(toList());
+		}
+
 		public String toASCIIString() {
-			return stream(ergebnisse).map(this::nullsafeCharValue).collect(joining());
+			return stream(ergebnisseOfSizeX).map(this::nullsafeCharValue).collect(joining());
+		}
+
+		public List<Ergebnis> ergebnisse() {
+			return ergebnisse;
 		}
 
 		private String nullsafeCharValue(Ergebnis ergebnis) {
@@ -169,7 +185,8 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 
 		public TabellenPlatzBuilder ergebnis(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp, ViewDirection viewDirection,
 				int tore, Object gegnerIdentifier, int gegenTore) {
-			this.ergebnisse.add(new ErgebnisEntry(ergebnis, ergebnisTyp, viewDirection, tore, gegnerIdentifier, gegenTore));
+			this.ergebnisse
+					.add(new ErgebnisEntry(ergebnis, ergebnisTyp, viewDirection, tore, gegnerIdentifier, gegenTore));
 			return this;
 		}
 

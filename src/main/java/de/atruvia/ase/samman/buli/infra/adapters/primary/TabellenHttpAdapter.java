@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,13 +22,30 @@ import lombok.Value;
 @RequiredArgsConstructor
 public class TabellenHttpAdapter {
 
+	public static enum JsonErgebnis {
+		N, U, S;
+
+		public static List<JsonErgebnis> fromDomain(List<Ergebnis> ergebnisse) {
+			return ergebnisse.stream().map(JsonErgebnis::fromDomain).toList();
+		}
+
+		public static JsonErgebnis fromDomain(Ergebnis ergebnis) {
+			return switch (ergebnis) {
+			case SIEG -> JsonErgebnis.S;
+			case UNENTSCHIEDEN -> JsonErgebnis.U;
+			case NIEDERLAGE -> JsonErgebnis.N;
+			};
+		}
+
+	}
+
 	@Value
 	@Builder
 	private static class JsonLaufendesSpiel {
 		@Schema(description = "Mögliche Ausprägungen: 'S' (Sieg), 'U' (Unentschieden), 'N' (Niederlage). "
 				+ "Da das Spiel noch nicht beendet ist handelt es sich eigentlich nicht um Sieg bzw. Niederlage sondern um Führung bzw. Rückstand. ", allowableValues = {
 						"S", "U", "N" })
-		char ergebnis;
+		JsonErgebnis ergebnis;
 		@Schema(description = "Teamname des gegnerischen Teams")
 		String gegner;
 		@Schema(description = "Geschossene Tore des Teams")
@@ -39,8 +57,10 @@ public class TabellenHttpAdapter {
 	@Value
 	@Builder
 	@JsonInclude(NON_NULL)
-	private static class JsonTabellenPlatz {
+	public static class JsonTabellenPlatz {
+
 		private static final String patternLetzte5 = "[SUN-]{5}";
+		private static final int TENDENZ_MAX_LENGTH = 5;
 
 		int platz;
 		@Schema(description = "URI des Vereinswappens/-logos. Im Normallfall gesetzt, kann aber potentiell null sein. ", nullable = true)
@@ -50,9 +70,13 @@ public class TabellenHttpAdapter {
 		int punkte;
 		int tore, gegentore, tordifferenz;
 		int siege, unentschieden, niederlagen;
-		@Schema(description = "Ergebnisse der letzten fünf Spiele. "
+		@Deprecated
+		@Schema(deprecated = true, description = "Ergebnisse der letzten fünf Spiele. "
 				+ "Enthält 5 Zeichen, jeweils 'S' (Sieg), 'U' (Unentschieden), 'N' (Niederlage) oder '-' (nicht gespielt). Nur beendete (nicht laufende) Spiele werden berücksichtigt. ", pattern = patternLetzte5)
 		String letzte5;
+		@Schema(description = "Ergebnisse der letzten fünf Spiele. "
+				+ "Enthält bis zu 5 Zeichen, jeweils 'S' (Sieg), 'U' (Unentschieden), 'N' (Niederlage). Nur beendete (nicht laufende) Spiele werden berücksichtigt. ", maxLength = TENDENZ_MAX_LENGTH, pattern = "[SUN]")
+		List<JsonErgebnis> tendenz;
 		@Schema(description = "Information zum Spiel, falls dieses Team derzeit gegen einen andere Mannschaft in dieser Liga spielt, ansonsten nicht gesetzt. ", nullable = true)
 		JsonLaufendesSpiel laufendesSpiel;
 
@@ -70,10 +94,13 @@ public class TabellenHttpAdapter {
 					.unentschieden(domain.unentschieden()) //
 					.niederlagen(domain.niederlagen()) //
 					.letzte5(domain.tendenz().toASCIIString()) //
+					.tendenz(JsonErgebnis.fromDomain(domain.tendenz().ergebnisse())) //
 					.laufendesSpiel(convertLaufendesSpiel(domain)) //
 					.build();
 			assert jsonTabellenPlatz.letzte5.matches(patternLetzte5)
 					: jsonTabellenPlatz.letzte5 + " entspricht nicht pattern " + patternLetzte5;
+			assert jsonTabellenPlatz.tendenz.size() <= TENDENZ_MAX_LENGTH
+					: jsonTabellenPlatz.tendenz + " länger als vereinbart ";
 			return jsonTabellenPlatz;
 		}
 
@@ -82,7 +109,7 @@ public class TabellenHttpAdapter {
 			return paarung == null //
 					? null //
 					: new JsonLaufendesSpiel( //
-							paarung.ergebnis().charValue(), //
+							JsonErgebnis.fromDomain(paarung.ergebnis()), //
 							paarung.gegner().team(), //
 							paarung.tore(), //
 							paarung.gegentore() //

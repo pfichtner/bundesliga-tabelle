@@ -11,7 +11,14 @@
     "siege": 15,
     "unentschieden": 9,
     "niederlagen": 2,
-    "letzte5": "SSNSS"
+    "letzte5": "SSNSS",
+    "tendenz": [
+      "S",
+      "S",
+      "N",
+      "S",
+      "S"
+    ]
   },
   {
     "platz": 2,
@@ -26,6 +33,13 @@
     "unentschieden": 4,
     "niederlagen": 7,
     "letzte5": "SSUNS",
+    "tendenz": [
+      "S",
+      "S",
+      "U",
+      "N",
+      "S"
+    ],
     "laufendesSpiel": {
       "ergebnis": "S",
       "gegner": "FC Hansa Rostock",
@@ -45,7 +59,14 @@
     "siege": 13,
     "unentschieden": 5,
     "niederlagen": 8,
-    "letzte5": "SNNSU"
+    "letzte5": "SNNSU",
+    "tendenz": [
+      "S",
+      "N",
+      "N",
+      "S",
+      "U"
+    ]
   },
   {
     "platz": 4,
@@ -60,6 +81,13 @@
     "unentschieden": 7,
     "niederlagen": 8,
     "letzte5": "SSUSU",
+    "tendenz": [
+      "S",
+      "S",
+      "U",
+      "S",
+      "U"
+    ],
     "laufendesSpiel": {
       "ergebnis": "N",
       "gegner": "1. FC Kaiserslautern",
@@ -79,7 +107,14 @@
     "siege": 10,
     "unentschieden": 10,
     "niederlagen": 6,
-    "letzte5": "UUUNS"
+    "letzte5": "UUUNS",
+    "tendenz": [
+      "U",
+      "U",
+      "U",
+      "N",
+      "S"
+    ]
   },
   {
     "platz": 6,
@@ -93,7 +128,14 @@
     "siege": 11,
     "unentschieden": 6,
     "niederlagen": 9,
-    "letzte5": "NUUSN"
+    "letzte5": "NUUSN",
+    "tendenz": [
+      "N",
+      "U",
+      "U",
+      "S",
+      "N"
+    ]
   },
   {
     "platz": 7,
@@ -107,7 +149,14 @@
     "siege": 10,
     "unentschieden": 8,
     "niederlagen": 8,
-    "letzte5": "SNSSU"
+    "letzte5": "SNSSU",
+    "tendenz": [
+      "S",
+      "N",
+      "S",
+      "S",
+      "U"
+    ]
   },
   {
     "platz": 8,
@@ -121,7 +170,14 @@
     "siege": 11,
     "unentschieden": 5,
     "niederlagen": 10,
-    "letzte5": "NNNSN"
+    "letzte5": "NNNSN",
+    "tendenz": [
+      "N",
+      "N",
+      "N",
+      "S",
+      "N"
+    ]
   },
   {
     "platz": 9,
@@ -135,7 +191,14 @@
     "siege": 10,
     "unentschieden": 7,
     "niederlagen": 9,
-    "letzte5": "SNUUS"
+    "letzte5": "SNUUS",
+    "tendenz": [
+      "S",
+      "N",
+      "U",
+      "U",
+      "S"
+    ]
   },
   {
     "platz": 10,
@@ -150,6 +213,13 @@
     "unentschieden": 6,
     "niederlagen": 11,
     "letzte5": "NSNNS",
+    "tendenz": [
+      "N",
+      "S",
+      "N",
+      "N",
+      "S"
+    ],
     "laufendesSpiel": {
       "ergebnis": "U",
       "gegner": "Eintracht Braunschweig",
@@ -169,7 +239,14 @@
     "siege": 10,
     "unentschieden": 6,
     "niederlagen": 10,
-    "letzte5": "NSSNU"
+    "letzte5": "NSSNU",
+    "tendenz": [
+      "N",
+      "S",
+      "S",
+      "N",
+      "U"
+    ]
   },
   {
     "platz": 12,
@@ -184,6 +261,13 @@
     "unentschieden": 5,
     "niederlagen": 13,
     "letzte5": "USSNU",
+    "tendenz": [
+      "U",
+      "S",
+      "S",
+      "N",
+      "U"
+    ],
     "laufendesSpiel": {
       "ergebnis": "S",
       "gegner": "Fortuna DÃ¼sseldorf",
@@ -203,7 +287,14 @@
     "siege": 8,
     "unentschieden": 7,
     "niederlagen": 11,
-    "letzte5": "NNUSN"
+    "letzte5": "NNUSN",
+    "tendenz": [
+      "N",
+      "N",
+      "U",
+      "S",
+      "N"
+    ]
   },
   {
     "platz": 14,
@@ -217,7 +308,14 @@
     "siege": 8,
     "unentschieden": 7,
     "niederlagen": 11,
-    "letzte5": "NUSNN"
+    "letzte5": "NUSNN",
+    "tendenz": [
+      "N",
+      "U",
+      "S",
+      "N",
+      "N"
+    ]
   },
   {
     "platz": 15,
@@ -231,7 +329,14 @@
     "siege": 9,
     "unentschieden": 3,
     "niederlagen": 14,
-    "letzte5": "NUSNS"
+    "letzte5": "NUSNS",
+    "tendenz": [
+      "N",
+      "U",
+      "S",
+      "N",
+      "S"
+    ]
   },
   {
     "platz": 16,
@@ -246,6 +351,13 @@
     "unentschieden": 4,
     "niederlagen": 15,
     "letzte5": "SNNUN",
+    "tendenz": [
+      "S",
+      "N",
+      "N",
+      "U",
+      "N"
+    ],
     "laufendesSpiel": {
       "ergebnis": "U",
       "gegner": "SV Elversberg 07",
@@ -266,6 +378,13 @@
     "unentschieden": 4,
     "niederlagen": 15,
     "letzte5": "SSNNU",
+    "tendenz": [
+      "S",
+      "S",
+      "N",
+      "N",
+      "U"
+    ],
     "laufendesSpiel": {
       "ergebnis": "N",
       "gegner": "Holstein Kiel",
@@ -285,6 +404,13 @@
     "siege": 3,
     "unentschieden": 9,
     "niederlagen": 14,
-    "letzte5": "NNSSN"
+    "letzte5": "NNSSN",
+    "tendenz": [
+      "N",
+      "N",
+      "S",
+      "S",
+      "N"
+    ]
   }
 ]

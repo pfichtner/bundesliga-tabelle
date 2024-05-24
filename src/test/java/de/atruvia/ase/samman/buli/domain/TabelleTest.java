@@ -318,7 +318,7 @@ class TabelleTest {
 	void tendenz_letzterSpieltagGanzVorneRestNull() {
 		gegebenSeienDiePaarungen(paarung("Team 1", "Team 2").endergebnis(1, 0));
 		wennDieTabelleBerechnetWird();
-		dannIstDieTendenz("Team 1", SIEG, null, null, null, null);
+		dannIstDieTendenz("Team 1", SIEG);
 	}
 
 	@Test
@@ -328,7 +328,7 @@ class TabelleTest {
 				paarung("Team 2", "Team 1").zwischenergebnis(2, 1) //
 		);
 		wennDieTabelleBerechnetWird();
-		dannIstDieTendenz("Team 1", SIEG, null, null, null, null);
+		dannIstDieTendenz("Team 1", SIEG);
 		dannIstDieTendenz("Team 1", "S----");
 	}
 

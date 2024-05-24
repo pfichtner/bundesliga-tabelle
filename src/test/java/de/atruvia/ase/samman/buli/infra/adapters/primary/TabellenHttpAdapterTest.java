@@ -93,7 +93,11 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[0].gegentore", is(platz1.gesamtGegentore()))) //
 				.andExpect(jsonPath("$.[0].tordifferenz", is(platz1.torDifferenz()))) //
 				.andExpect(jsonPath("$.[0].punkte", is(platz1.punkte()))) //
-				.andExpect(jsonPath("$.[0].letzte5", is("NUS--"))) //
+				.andExpect(jsonPath("$.[0].letzte5", is("NUS--"))) // will be replaced by tendenz
+				.andExpect(jsonPath("$.[0].tendenz[0]", is("N"))) //
+				.andExpect(jsonPath("$.[0].tendenz[1]", is("U"))) //
+				.andExpect(jsonPath("$.[0].tendenz[2]", is("S"))) //
+				.andExpect(jsonPath("$.[0].tendenz.length()", is(3))) //
 				.andExpect(jsonPath("$.[0]*", not(hasKey("laufendesSpiel"))))
 				//
 				.andExpect(jsonPath("$.[1].wappen", is(platz2.wappen().toASCIIString()))) //
@@ -106,7 +110,8 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[1].gegentore", is(platz2.gesamtGegentore()))) //
 				.andExpect(jsonPath("$.[1].tordifferenz", is(platz2.torDifferenz()))) //
 				.andExpect(jsonPath("$.[1].punkte", is(platz2.punkte()))) //
-				.andExpect(jsonPath("$.[1].letzte5", is("-----"))) //
+				.andExpect(jsonPath("$.[1].letzte5", is("-----"))) // will be replaced by tendenz
+				.andExpect(jsonPath("$.[1].tendenz.length()", is(0))) //
 				.andExpect(jsonPath("$.[1]*", not(hasKey("laufendesSpiel")))) //
 		;
 
