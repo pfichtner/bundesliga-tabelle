@@ -2,9 +2,6 @@ package de.atruvia.ase.samman.buli.domain;
 
 import static java.lang.Math.max;
 import static java.util.Collections.reverse;
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Stream.concat;
-import static java.util.stream.Stream.generate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
@@ -20,40 +17,28 @@ class TendenzTest {
 
 	// Mögliche maximale Anzahl an Ergebnissen sind (teams-1)*2, Werte darüber sind
 	// daher eigentlich sinnlos
-	private static final int MAX_LENGTH = 42;
+	private static final int MAX_LENGTH = 99;
 
 	@Property
-	void asciiStringAlwaysAsLongAsLength(@ForAll List<Ergebnis> ergebnisse,
+	void tendenzHatNieMehrErgebnisseAlsErgebnisse(@ForAll List<Ergebnis> ergebnisse,
 			@ForAll @IntRange(min = 0, max = MAX_LENGTH) int length) {
-		var value = tendenzAsString(ergebnisse, length);
-		assertThat(value.chars()).hasSize(length);
+		var sut = Tendenz.fromLatestGameAtEnd(ergebnisse, length);
+		assertThat(sut.ergebnisse()).hasSizeLessThanOrEqualTo(ergebnisse.size());
 	}
 
 	@Property
-	void asciiStringOnlyContainsSUNorDash(@ForAll List<Ergebnis> ergebnisse,
+	void tendenzHatNieMehrErgebnisseAlsLength(@ForAll List<Ergebnis> ergebnisse,
 			@ForAll @IntRange(min = 0, max = MAX_LENGTH) int length) {
-		var value = tendenzAsString(ergebnisse, length);
-		var allowedChars = "SUN-";
-		assertThat(value.chars()).allSatisfy(c -> {
-			assertThat(allowedChars.indexOf(c))
-					.withFailMessage(() -> "'%s' in '%s' is not one of '%s'".formatted(c, value, allowedChars))
-					.isNotNegative();
-		});
-
+		var sut = Tendenz.fromLatestGameAtEnd(ergebnisse, length);
+		assertThat(sut.ergebnisse()).hasSizeLessThanOrEqualTo(length);
 	}
 
 	@Property
 	void containsTheLastNelements(@ForAll List<Ergebnis> ergebnisse,
 			@ForAll @IntRange(min = 0, max = MAX_LENGTH) int length) {
-		var value = tendenzAsString(ergebnisse, length);
-		var content = reversedSubListOfSize(ergebnisse, length).stream().map(Ergebnis::charValue);
-		int dashesToAppend = length - ergebnisse.size();
-		var concated = dashesToAppend > 0 ? concat(content, generate(() -> '-').limit(dashesToAppend)) : content;
-		assertThat(value).isEqualTo(concated.map(String::valueOf).collect(joining()));
-	}
-
-	private static String tendenzAsString(List<Ergebnis> ergebnisse, int length) {
-		return Tendenz.fromLatestGameAtEnd(ergebnisse, length).toASCIIString();
+		var sut = Tendenz.fromLatestGameAtEnd(ergebnisse, length);
+		var content = reversedSubListOfSize(ergebnisse, length).stream().toList();
+		assertThat(sut.ergebnisse()).containsExactlyElementsOf(content);
 	}
 
 	private static List<Ergebnis> reversedSubListOfSize(List<Ergebnis> list, int size) {

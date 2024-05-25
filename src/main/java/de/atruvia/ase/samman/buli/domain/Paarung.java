@@ -88,9 +88,7 @@ public class Paarung {
 	@Accessors(fluent = true)
 	public enum Ergebnis {
 
-		SIEG('S'), UNENTSCHIEDEN('U'), NIEDERLAGE('N');
-
-		private final char charValue;
+		SIEG, UNENTSCHIEDEN, NIEDERLAGE;
 
 		public int punkte() {
 			return switch (this) {

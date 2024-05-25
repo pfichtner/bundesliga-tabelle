@@ -10,9 +10,6 @@ import static de.atruvia.ase.samman.buli.util.Merger.enforceUnique;
 import static de.atruvia.ase.samman.buli.util.Merger.lastNonNull;
 import static de.atruvia.ase.samman.buli.util.Merger.merge;
 import static java.util.Arrays.asList;
-import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.generate;
 
 import java.net.URI;
@@ -42,21 +39,10 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 	@Value
 	public static class Tendenz {
 
-		private static final String NICHT_GESPIELT = "-";
-
-		Ergebnis[] ergebnisseOfSizeX;
 		List<Ergebnis> ergebnisse;
 
 		public static Tendenz fromLatestGameAtEnd(List<Ergebnis> ergebnisse, int count) {
-			return new Tendenz(copyReversedInto(ergebnisse, new Ergebnis[count]), createReversed(ergebnisse, count));
-		}
-
-		private static <T> T[] copyReversedInto(List<T> source, T[] target) {
-			var idx = 0;
-			for (var it = source.listIterator(source.size()); it.hasPrevious() && idx < target.length; idx++) {
-				target[idx] = it.previous();
-			}
-			return target;
+			return new Tendenz(createReversed(ergebnisse, count));
 		}
 
 		private static <T> List<Ergebnis> createReversed(List<Ergebnis> source, int maxLength) {
@@ -64,19 +50,7 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 			return generate(() -> it.hasPrevious() ? it.previous() : null) //
 					.limit(maxLength) //
 					.takeWhile(Objects::nonNull) //
-					.collect(toList());
-		}
-
-		public String toASCIIString() {
-			return stream(ergebnisseOfSizeX).map(this::nullsafeCharValue).collect(joining());
-		}
-
-		public List<Ergebnis> ergebnisse() {
-			return ergebnisse;
-		}
-
-		private String nullsafeCharValue(Ergebnis ergebnis) {
-			return ergebnis == null ? NICHT_GESPIELT : String.valueOf(ergebnis.charValue());
+					.toList();
 		}
 
 	}

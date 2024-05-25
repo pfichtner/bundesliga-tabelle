@@ -329,7 +329,6 @@ class TabelleTest {
 		);
 		wennDieTabelleBerechnetWird();
 		dannIstDieTendenz("Team 1", SIEG);
-		dannIstDieTendenz("Team 1", "S----");
 	}
 
 	@Test
@@ -339,7 +338,6 @@ class TabelleTest {
 				createPaarungen(team, SIEG, SIEG, NIEDERLAGE, NIEDERLAGE, UNENTSCHIEDEN, UNENTSCHIEDEN));
 		wennDieTabelleBerechnetWird();
 		dannIstDieTendenz(team, UNENTSCHIEDEN, UNENTSCHIEDEN, NIEDERLAGE, NIEDERLAGE, SIEG);
-		dannIstDieTendenz(team, "UUNNS");
 	}
 
 	private static PaarungBuilder paarung(String teamHeim, String teamGast) {
@@ -381,10 +379,6 @@ class TabelleTest {
 
 	private void dannIstDieTendenz(String team, Ergebnis... tendenz) {
 		assertThat(tendenzForTeam(team).ergebnisse()).containsExactly(tendenz);
-	}
-
-	private void dannIstDieTendenz(String team, String tendenz) {
-		assertThat(tendenzForTeam(team).toASCIIString()).isEqualTo(tendenz);
 	}
 
 	private Tendenz tendenzForTeam(String team) {

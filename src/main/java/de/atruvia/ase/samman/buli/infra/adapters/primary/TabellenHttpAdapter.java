@@ -60,7 +60,6 @@ public class TabellenHttpAdapter {
 	@JsonInclude(NON_NULL)
 	public static class JsonTabellenPlatz {
 
-		private static final String patternLetzte5 = "[SUN-]{5}";
 		private static final int TENDENZ_MAX_LENGTH = 5;
 
 		int platz;
@@ -71,10 +70,6 @@ public class TabellenHttpAdapter {
 		int punkte;
 		int tore, gegentore, tordifferenz;
 		int siege, unentschieden, niederlagen;
-		@Deprecated
-		@Schema(deprecated = true, description = "Ergebnisse der letzten fünf Spiele. "
-				+ "Enthält 5 Zeichen, jeweils 'S' (Sieg), 'U' (Unentschieden), 'N' (Niederlage) oder '-' (nicht gespielt). Nur beendete (nicht laufende) Spiele werden berücksichtigt. ", maxLength = TENDENZ_MAX_LENGTH, pattern = patternLetzte5)
-		String letzte5;
 		@ArraySchema(schema = @Schema(description = "Ergebnisse der letzten fünf Spiele. "
 				+ "Enthält 'S' (Sieg), 'U' (Unentschieden), 'N' (Niederlage). Nur beendete (nicht laufende) Spiele werden berücksichtigt. ", pattern = "[SUN]"), maxItems = TENDENZ_MAX_LENGTH)
 		List<JsonErgebnis> tendenz;
@@ -94,12 +89,9 @@ public class TabellenHttpAdapter {
 					.siege(domain.siege()) //
 					.unentschieden(domain.unentschieden()) //
 					.niederlagen(domain.niederlagen()) //
-					.letzte5(domain.tendenz().toASCIIString()) //
 					.tendenz(JsonErgebnis.fromDomain(domain.tendenz().ergebnisse())) //
 					.laufendesSpiel(convertLaufendesSpiel(domain)) //
 					.build();
-			assert jsonTabellenPlatz.letzte5.matches(patternLetzte5)
-					: jsonTabellenPlatz.letzte5 + " entspricht nicht pattern " + patternLetzte5;
 			assert jsonTabellenPlatz.tendenz.size() <= TENDENZ_MAX_LENGTH
 					: jsonTabellenPlatz.tendenz + " länger als vereinbart ";
 			return jsonTabellenPlatz;

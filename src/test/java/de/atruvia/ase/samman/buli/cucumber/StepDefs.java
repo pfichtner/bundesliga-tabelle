@@ -4,6 +4,7 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder.paarung;
 import static java.lang.Integer.parseInt;
 import static java.util.Map.entry;
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.joining;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import de.atruvia.ase.samman.buli.domain.Paarung;
+import de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis;
 import de.atruvia.ase.samman.buli.domain.Tabelle;
 import de.atruvia.ase.samman.buli.domain.TabellenPlatz;
 import io.cucumber.datatable.DataTable;
@@ -32,7 +34,8 @@ public class StepDefs {
 			entry("Tore", TabellenPlatz::gesamtTore), //
 			entry("Gegentore", TabellenPlatz::gesamtGegentore), //
 			entry("Tordifferenz", TabellenPlatz::torDifferenz), //
-			entry("Tendenz", t -> t.tendenz().toASCIIString()) //
+			entry("Tendenz",
+					t -> t.tendenz().ergebnisse().stream().map(Ergebnis::name).map(n -> n.substring(0, 1)).collect(joining())) //
 	);
 
 	List<Paarung> paarungen = new ArrayList<>();

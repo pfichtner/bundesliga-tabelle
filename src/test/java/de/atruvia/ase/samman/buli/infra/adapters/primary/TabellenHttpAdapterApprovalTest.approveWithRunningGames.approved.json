@@ -11,7 +11,6 @@
     "siege": 15,
     "unentschieden": 9,
     "niederlagen": 2,
-    "letzte5": "SSNSS",
     "tendenz": [
       "S",
       "S",
@@ -32,7 +31,6 @@
     "siege": 16,
     "unentschieden": 4,
     "niederlagen": 7,
-    "letzte5": "SSUNS",
     "tendenz": [
       "S",
       "S",
@@ -59,7 +57,6 @@
     "siege": 13,
     "unentschieden": 5,
     "niederlagen": 8,
-    "letzte5": "SNNSU",
     "tendenz": [
       "S",
       "N",
@@ -80,7 +77,6 @@
     "siege": 12,
     "unentschieden": 7,
     "niederlagen": 8,
-    "letzte5": "SSUSU",
     "tendenz": [
       "S",
       "S",
@@ -107,7 +103,6 @@
     "siege": 10,
     "unentschieden": 10,
     "niederlagen": 6,
-    "letzte5": "UUUNS",
     "tendenz": [
       "U",
       "U",
@@ -128,7 +123,6 @@
     "siege": 11,
     "unentschieden": 6,
     "niederlagen": 9,
-    "letzte5": "NUUSN",
     "tendenz": [
       "N",
       "U",
@@ -149,7 +143,6 @@
     "siege": 10,
     "unentschieden": 8,
     "niederlagen": 8,
-    "letzte5": "SNSSU",
     "tendenz": [
       "S",
       "N",
@@ -170,7 +163,6 @@
     "siege": 11,
     "unentschieden": 5,
     "niederlagen": 10,
-    "letzte5": "NNNSN",
     "tendenz": [
       "N",
       "N",
@@ -191,7 +183,6 @@
     "siege": 10,
     "unentschieden": 7,
     "niederlagen": 9,
-    "letzte5": "SNUUS",
     "tendenz": [
       "S",
       "N",
@@ -212,7 +203,6 @@
     "siege": 10,
     "unentschieden": 6,
     "niederlagen": 11,
-    "letzte5": "NSNNS",
     "tendenz": [
       "N",
       "S",
@@ -239,7 +229,6 @@
     "siege": 10,
     "unentschieden": 6,
     "niederlagen": 10,
-    "letzte5": "NSSNU",
     "tendenz": [
       "N",
       "S",
@@ -260,7 +249,6 @@
     "siege": 9,
     "unentschieden": 5,
     "niederlagen": 13,
-    "letzte5": "USSNU",
     "tendenz": [
       "U",
       "S",
@@ -287,7 +275,6 @@
     "siege": 8,
     "unentschieden": 7,
     "niederlagen": 11,
-    "letzte5": "NNUSN",
     "tendenz": [
       "N",
       "N",
@@ -308,7 +295,6 @@
     "siege": 8,
     "unentschieden": 7,
     "niederlagen": 11,
-    "letzte5": "NUSNN",
     "tendenz": [
       "N",
       "U",
@@ -329,7 +315,6 @@
     "siege": 9,
     "unentschieden": 3,
     "niederlagen": 14,
-    "letzte5": "NUSNS",
     "tendenz": [
       "N",
       "U",
@@ -350,7 +335,6 @@
     "siege": 8,
     "unentschieden": 4,
     "niederlagen": 15,
-    "letzte5": "SNNUN",
     "tendenz": [
       "S",
       "N",
@@ -377,7 +361,6 @@
     "siege": 8,
     "unentschieden": 4,
     "niederlagen": 15,
-    "letzte5": "SSNNU",
     "tendenz": [
       "S",
       "S",
@@ -404,7 +387,6 @@
     "siege": 3,
     "unentschieden": 9,
     "niederlagen": 14,
-    "letzte5": "NNSSN",
     "tendenz": [
       "N",
       "N",
