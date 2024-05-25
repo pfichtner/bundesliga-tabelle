@@ -69,7 +69,7 @@ public class Tabelle {
 		}
 
 		private static Predicate<ErgebnisEntry> istAuswaerts() {
-			return e -> e.viewDirection() == AUSWAERTS;
+			return e -> Objects.equals(e.viewDirection(), AUSWAERTS);
 		}
 
 		private static int whereToreIs(TabellenPlatz tabellenPlatz, Predicate<ErgebnisEntry> filter) {
