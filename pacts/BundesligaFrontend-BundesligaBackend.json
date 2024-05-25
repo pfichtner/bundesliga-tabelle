@@ -17,20 +17,23 @@
         "body": [
           {
             "gegentore": 56,
-            "letzte5": "NUSxx",
             "niederlagen": 90,
             "platz": 12,
             "punkte": 34,
             "siege": 78,
             "spiele": 23,
             "team": "any team name",
+            "tendenz": [
+              "N",
+              "U",
+              "S"
+            ],
             "tordifferenz": 67,
             "tore": 45,
             "unentschieden": 89
           },
           {
             "gegentore": 13,
-            "letzte5": "iloveorange",
             "niederlagen": 13,
             "platz": 13,
             "punkte": 13,
@@ -43,7 +46,6 @@
           },
           {
             "gegentore": 13,
-            "letzte5": "iloveorange",
             "niederlagen": 13,
             "platz": 13,
             "punkte": 13,
@@ -56,7 +58,6 @@
           },
           {
             "gegentore": 13,
-            "letzte5": "iloveorange",
             "niederlagen": 13,
             "platz": 13,
             "punkte": 13,
@@ -74,10 +75,6 @@
         "matchingRules": {
           "$.body[0].gegentore": {
             "match": "type"
-          },
-          "$.body[0].letzte5": {
-            "match": "regex",
-            "regex": "NUS|^NUS[^NUS]{2}"
           },
           "$.body[0].niederlagen": {
             "match": "type"
@@ -97,6 +94,9 @@
           "$.body[0].team": {
             "match": "type"
           },
+          "$.body[0].tendenz": {
+            "match": "type"
+          },
           "$.body[0].tordifferenz": {
             "match": "type"
           },
@@ -107,9 +107,6 @@
             "match": "type"
           },
           "$.body[1].gegentore": {
-            "match": "type"
-          },
-          "$.body[1].letzte5": {
             "match": "type"
           },
           "$.body[1].niederlagen": {
@@ -142,9 +139,6 @@
           "$.body[2].gegentore": {
             "match": "type"
           },
-          "$.body[2].letzte5": {
-            "match": "type"
-          },
           "$.body[2].niederlagen": {
             "match": "type"
           },
@@ -173,9 +167,6 @@
             "match": "type"
           },
           "$.body[3].gegentore": {
-            "match": "type"
-          },
-          "$.body[3].letzte5": {
             "match": "type"
           },
           "$.body[3].niederlagen": {
@@ -227,19 +218,15 @@
               "tore": 102,
               "toreGegner": 113
             },
-            "letzte5": "iloveorange",
             "team": "any team name #1"
           },
           {
-            "letzte5": "iloveorange",
             "team": "iloveorange"
           },
           {
-            "letzte5": "iloveorange",
             "team": "iloveorange"
           },
           {
-            "letzte5": "iloveorange",
             "team": "iloveorange"
           }
         ],
@@ -257,25 +244,13 @@
           "$.body[0].laufendesSpiel.toreGegner": {
             "match": "type"
           },
-          "$.body[0].letzte5": {
-            "match": "type"
-          },
           "$.body[0].team": {
-            "match": "type"
-          },
-          "$.body[1].letzte5": {
             "match": "type"
           },
           "$.body[1].team": {
             "match": "type"
           },
-          "$.body[2].letzte5": {
-            "match": "type"
-          },
           "$.body[2].team": {
-            "match": "type"
-          },
-          "$.body[3].letzte5": {
             "match": "type"
           },
           "$.body[3].team": {
