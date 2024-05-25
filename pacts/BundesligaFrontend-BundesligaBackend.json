@@ -94,9 +94,6 @@
           "$.body[0].team": {
             "match": "type"
           },
-          "$.body[0].tendenz": {
-            "match": "type"
-          },
           "$.body[0].tordifferenz": {
             "match": "type"
           },
