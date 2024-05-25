@@ -49,10 +49,8 @@ public class Tabelle {
 		private static Comparator<OrdnungsElement> direkterVegleichGesamt() {
 			return (o1, o2) -> {
 				return Integer.compare( //
-						toreGegen(o1.tabellenPlatz, o2.tabellenPlatz.identifier(),
-								gegnerIs(o2.tabellenPlatz.identifier())), //
-						toreGegen(o2.tabellenPlatz, o1.tabellenPlatz.identifier(),
-								gegnerIs(o1.tabellenPlatz.identifier())) //
+						whereToreIs(o1.tabellenPlatz, gegnerIs(o2.tabellenPlatz.identifier())), //
+						whereToreIs(o2.tabellenPlatz, gegnerIs(o1.tabellenPlatz.identifier())) //
 				);
 			};
 		}
@@ -60,10 +58,8 @@ public class Tabelle {
 		private static Comparator<OrdnungsElement> direkterVegleichGesamtAuswaertsTore() {
 			return (o1, o2) -> {
 				return Integer.compare( //
-						toreGegen(o1.tabellenPlatz, o2.tabellenPlatz.identifier(),
-								istAuswaerts().and(gegnerIs(o2.tabellenPlatz.identifier()))), //
-						toreGegen(o2.tabellenPlatz, o1.tabellenPlatz.identifier(),
-								istAuswaerts().and(gegnerIs(o1.tabellenPlatz.identifier()))) //
+						whereToreIs(o1.tabellenPlatz, istAuswaerts().and(gegnerIs(o2.tabellenPlatz.identifier()))), //
+						whereToreIs(o2.tabellenPlatz, istAuswaerts().and(gegnerIs(o1.tabellenPlatz.identifier()))) //
 				);
 			};
 		}
@@ -76,7 +72,7 @@ public class Tabelle {
 			return e -> e.viewDirection() == AUSWAERTS;
 		}
 
-		private static int toreGegen(TabellenPlatz tabellenPlatz, Object xxx, Predicate<ErgebnisEntry> filter) {
+		private static int whereToreIs(TabellenPlatz tabellenPlatz, Predicate<ErgebnisEntry> filter) {
 			return tabellenPlatz.ergebnisseEntryStream().filter(filter).map(ErgebnisEntry::tore)
 					.mapToInt(Integer::valueOf).sum();
 		}
