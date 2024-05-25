@@ -26,14 +26,13 @@ import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvide
 import au.com.dius.pact.provider.junitsupport.Provider;
 import au.com.dius.pact.provider.junitsupport.State;
 import au.com.dius.pact.provider.junitsupport.loader.PactFolder;
-import de.atruvia.ase.samman.buli.Main;
 import de.atruvia.ase.samman.buli.domain.Paarung;
 import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
 import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
 
 @Provider("BundesligaBackend")
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 @PactFolder("pacts")
-@SpringBootTest(classes = Main.class, webEnvironment = RANDOM_PORT)
 @ContractTest
 class ContractVerificationTest {
 
