@@ -45,7 +45,7 @@ public class TabellenPlatz implements Mergeable<TabellenPlatz> {
 			return new Tendenz(createReversed(ergebnisse, count));
 		}
 
-		private static <T> List<Ergebnis> createReversed(List<Ergebnis> source, int maxLength) {
+		private static <T> List<T> createReversed(List<T> source, int maxLength) {
 			var it = source.listIterator(source.size());
 			return generate(() -> it.hasPrevious() ? it.previous() : null) //
 					.limit(maxLength) //
