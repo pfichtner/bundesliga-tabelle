@@ -32,6 +32,7 @@ public class Tabelle {
 	@Accessors(fluent = true)
 	private static class OrdnungsElement implements Comparable<OrdnungsElement> {
 
+		// [X] Die Summe der erzielten Punkte
 		// [X] Die nach dem Subtraktionsverfahren ermittelte Tordifferenz
 		// [X] Anzahl der erzielten Tore
 		// [X] Das Gesamtergebnis aus Hin- und Rückspiel im direkten Vergleich
@@ -49,8 +50,8 @@ public class Tabelle {
 		private static Comparator<OrdnungsElement> direkterVegleichGesamt() {
 			return (o1, o2) -> {
 				return Integer.compare( //
-						whereToreIs(o1.tabellenPlatz, gegnerIs(o2.tabellenPlatz.identifier())), //
-						whereToreIs(o2.tabellenPlatz, gegnerIs(o1.tabellenPlatz.identifier())) //
+						whereToreIs(o1.tabellenPlatz, gegnerIs(identifier(o2))), //
+						whereToreIs(o2.tabellenPlatz, gegnerIs(identifier(o1))) //
 				);
 			};
 		}
@@ -58,10 +59,14 @@ public class Tabelle {
 		private static Comparator<OrdnungsElement> direkterVegleichGesamtAuswaertsTore() {
 			return (o1, o2) -> {
 				return Integer.compare( //
-						whereToreIs(o1.tabellenPlatz, istAuswaerts().and(gegnerIs(o2.tabellenPlatz.identifier()))), //
-						whereToreIs(o2.tabellenPlatz, istAuswaerts().and(gegnerIs(o1.tabellenPlatz.identifier()))) //
+						whereToreIs(o1.tabellenPlatz, gegnerIs(identifier(o2)).and(istAuswaerts())), //
+						whereToreIs(o2.tabellenPlatz, gegnerIs(identifier(o1)).and(istAuswaerts())) //
 				);
 			};
+		}
+
+		private static Object identifier(OrdnungsElement ordnungsElement) {
+			return ordnungsElement.tabellenPlatz.identifier();
 		}
 
 		private static Predicate<ErgebnisEntry> gegnerIs(Object gegner) {
