@@ -42,12 +42,12 @@ public class Tabelle {
 		private static final Comparator<OrdnungsElement> comparator = comparing(value(TabellenPlatz::punkte)) //
 				.thenComparing(comparing(value(TabellenPlatz::torDifferenz))) //
 				.thenComparing(comparing(value(TabellenPlatz::gesamtTore))) //
-				.thenComparing(direktervergleichGesamt()) //
-				.thenComparing(direktervergleichAuswaertsTore()) //
+				.thenComparing(direkterVergleichGesamt()) //
+				.thenComparing(direkterVergleichAuswaertsTore()) //
 				.thenComparing(comparing(value(TabellenPlatz::auswaertsTore))) //
 				.reversed();
 
-		private static Comparator<OrdnungsElement> direktervergleichGesamt() {
+		private static Comparator<OrdnungsElement> direkterVergleichGesamt() {
 			return (o1, o2) -> {
 				return Integer.compare( //
 						whereToreIs(o1.tabellenPlatz, gegnerIs(identifier(o2))), //
@@ -56,7 +56,7 @@ public class Tabelle {
 			};
 		}
 
-		private static Comparator<OrdnungsElement> direktervergleichAuswaertsTore() {
+		private static Comparator<OrdnungsElement> direkterVergleichAuswaertsTore() {
 			return (o1, o2) -> {
 				return Integer.compare( //
 						whereToreIs(o1.tabellenPlatz, gegnerIs(identifier(o2)).and(istAuswaerts())), //
