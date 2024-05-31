@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -48,21 +49,16 @@ public class Tabelle {
 				.reversed();
 
 		private static Comparator<OrdnungsElement> direkterVergleichGesamt() {
-			return (o1, o2) -> {
-				return Integer.compare( //
-						whereToreIs(o1.tabellenPlatz, gegnerIs(identifier(o2))), //
-						whereToreIs(o2.tabellenPlatz, gegnerIs(identifier(o1))) //
-				);
-			};
+			return compareWithSwapped((that, other) -> whereToreIs(that.tabellenPlatz, gegnerIs(identifier(other))));
 		}
 
 		private static Comparator<OrdnungsElement> direkterVergleichAuswaertsTore() {
-			return (o1, o2) -> {
-				return Integer.compare( //
-						whereToreIs(o1.tabellenPlatz, gegnerIs(identifier(o2)).and(istAuswaerts())), //
-						whereToreIs(o2.tabellenPlatz, gegnerIs(identifier(o1)).and(istAuswaerts())) //
-				);
-			};
+			return compareWithSwapped(
+					(that, other) -> whereToreIs(that.tabellenPlatz, gegnerIs(identifier(other)).and(isAuswaerts())));
+		}
+
+		private static <T, R extends Comparable<R>> Comparator<T> compareWithSwapped(BiFunction<T, T, R> biFunction) {
+			return (o1, o2) -> biFunction.apply(o1, o2).compareTo(biFunction.apply(o2, o1));
 		}
 
 		private static Object identifier(OrdnungsElement ordnungsElement) {
@@ -73,7 +69,7 @@ public class Tabelle {
 			return e -> Objects.equals(e.identifierGegner(), gegner);
 		}
 
-		private static Predicate<ErgebnisEntry> istAuswaerts() {
+		private static Predicate<ErgebnisEntry> isAuswaerts() {
 			return e -> Objects.equals(e.viewDirection(), AUSWAERTS);
 		}
 
