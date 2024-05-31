@@ -1,6 +1,10 @@
 package de.atruvia.ase.samman.buli.domain;
 
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
+import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ErgebnisTyp.BEENDET;
+import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
 import static java.util.Arrays.asList;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -56,6 +60,29 @@ public final class TabellenPlatzMother {
 	public static TabellenPlatz platzWith(Ergebnis ergebnis, ErgebnisTyp ergebnisTyp) {
 		return TabellenPlatz.builder().identifier("same object for all")
 				.ergebnis(ergebnis, ergebnisTyp, null, 0, "opposite id", 0).build();
+	}
+
+	public static List<TabellenPlatz> onMatchday3TeamHasWonOnMatchdayNo1ThenDrawOnMatchdayNo2ThenLossOnMatchdayNo3() {
+		var tp1 = TabellenPlatz.builder().platz(1).teamName("Team 1") //
+				.ergebnis(SIEG, BEENDET, HEIM, 0, "other team", 0) //
+				.ergebnis(UNENTSCHIEDEN, BEENDET, HEIM, 0, "other team", 0) //
+				.ergebnis(NIEDERLAGE, BEENDET, HEIM, 0, "other team", 0) //
+				.build();
+		var tp2 = TabellenPlatz.builder().platz(2).teamName("Team 2").build();
+		var tp3 = TabellenPlatz.builder().platz(2).teamName("Team 3").build();
+		var tp4 = TabellenPlatz.builder().platz(4).teamName("Team 4").build();
+		return List.of(tp1, tp2, tp3, tp4);
+	}
+
+	public static List<TabellenPlatz> team1IsCurrentlyPlaying() {
+		var spiel = PaarungMother.paarung("Team 1", "Team 4", NIEDERLAGE);
+		var tp1 = TabellenPlatz.builder().platz(1).teamName("Team 1") //
+				.laufendesSpiel(spiel.viewForTeam(HEIM)) //
+				.build();
+		var tp2 = TabellenPlatz.builder().platz(2).teamName("Team 2").build();
+		var tp3 = TabellenPlatz.builder().platz(2).teamName("Team 3").build();
+		var tp4 = TabellenPlatz.builder().platz(4).teamName("Team 4").build();
+		return List.of(tp1, tp2, tp3, tp4);
 	}
 
 }

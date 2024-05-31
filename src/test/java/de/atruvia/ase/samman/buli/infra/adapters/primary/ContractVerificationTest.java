@@ -1,17 +1,8 @@
 package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
-import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.NIEDERLAGE;
-import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.SIEG;
-import static de.atruvia.ase.samman.buli.domain.Paarung.Ergebnis.UNENTSCHIEDEN;
-import static de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder.paarung;
-import static de.atruvia.ase.samman.buli.domain.PaarungMother.createPaarungen;
-import static java.lang.Integer.MAX_VALUE;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-
-import java.util.List;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
@@ -26,9 +17,8 @@ import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvide
 import au.com.dius.pact.provider.junitsupport.Provider;
 import au.com.dius.pact.provider.junitsupport.State;
 import au.com.dius.pact.provider.junitsupport.loader.PactFolder;
-import de.atruvia.ase.samman.buli.domain.Paarung;
-import de.atruvia.ase.samman.buli.domain.Paarung.PaarungBuilder;
-import de.atruvia.ase.samman.buli.domain.ports.secondary.SpieltagRepo;
+import de.atruvia.ase.samman.buli.domain.TabellenPlatzMother;
+import de.atruvia.ase.samman.buli.domain.ports.primary.TabellenService;
 
 @Provider("BundesligaBackend")
 @SpringBootTest(webEnvironment = RANDOM_PORT)
@@ -40,7 +30,7 @@ class ContractVerificationTest {
 	int port;
 
 	@MockBean
-	SpieltagRepo spieltagRepoMock;
+	TabellenService tabellenService;
 
 	@BeforeEach
 	void setup(PactVerificationContext context) {
@@ -55,22 +45,14 @@ class ContractVerificationTest {
 
 	@State("matchday #3 team has won on matchday #1, draw on matchday #2 and loss on day #3")
 	void matchdayThreeWinDrawLoss() {
-		when(spieltagRepoMock.lade(anyString(), anyString()))
-				.thenReturn(createPaarungen("anyTeamName", SIEG, UNENTSCHIEDEN, NIEDERLAGE));
+		var answer = TabellenPlatzMother.onMatchday3TeamHasWonOnMatchdayNo1ThenDrawOnMatchdayNo2ThenLossOnMatchdayNo3();
+		when(tabellenService.erstelleTabelle(anyString(), anyString())).thenReturn(answer);
 	}
 
 	@State("team #1 is currently playing")
 	void runningGame() {
-		when(spieltagRepoMock.lade(anyString(), anyString())).thenReturn( //
-				paarungen( 
-					paarung("Team 1", "Team 4").zwischenergebnis(MAX_VALUE, 0), //
-					paarung("Team 2", "Team 3").endergebnis(0, 0) //
-				)
-		);
-	}
-
-	private static List<Paarung> paarungen(PaarungBuilder... paarungen) {
-		return Stream.of(paarungen).map(PaarungBuilder::build).toList();
+		var answer = TabellenPlatzMother.team1IsCurrentlyPlaying();
+		when(tabellenService.erstelleTabelle(anyString(), anyString())).thenReturn(answer);
 	}
 
 }
