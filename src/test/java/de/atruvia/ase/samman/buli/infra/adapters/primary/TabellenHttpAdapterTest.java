@@ -7,6 +7,7 @@ import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.AUSWAERTS;
 import static de.atruvia.ase.samman.buli.domain.Paarung.ViewDirection.HEIM;
 import static de.atruvia.ase.samman.buli.domain.TabellenPlatzMother.platzWith;
 import static java.net.URI.create;
+import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.not;
@@ -18,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -113,6 +115,19 @@ class TabellenHttpAdapterTest {
 				.andExpect(jsonPath("$.[1]*", not(hasKey("laufendesSpiel")))) //
 		;
 
+	}
+
+	@Test
+	void failsWith404IfTableIsEmpty() throws Exception {
+		String league = "bl1";
+		String season = "2022";
+
+		when(tabellenService.erstelleTabelle(league, season)).thenReturn(emptyList());
+
+		mockMvc.perform(get("/tabelle/" + league + "/" + season)) //
+				.andDo(print()) //
+				.andExpect(status().isNotFound()) //
+		;
 	}
 
 	@Test

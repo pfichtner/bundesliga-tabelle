@@ -1,9 +1,12 @@
 package de.atruvia.ase.samman.buli.infra.adapters.primary;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+import static org.springframework.http.ResponseEntity.notFound;
+import static org.springframework.http.ResponseEntity.ok;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -113,11 +116,14 @@ public class TabellenHttpAdapter {
 
 	private final TabellenService tabellenService;
 
-	// Spring supports Stream<JsonTabellenPlatz> but then swagger cannot detect the
-	// returntype so collect it into a List that gets returned
 	@GetMapping("/tabelle/{league}/{season}")
-	public List<JsonTabellenPlatz> getTabelle(@PathVariable String league, @PathVariable String season) {
-		return tabellenService.erstelleTabelle(league, season).stream().map(JsonTabellenPlatz::fromDomain).toList();
+	public ResponseEntity<List<JsonTabellenPlatz>> getTabelle(@PathVariable String league,
+			@PathVariable String season) {
+		var tabellenPlaetze = tabellenService.erstelleTabelle(league, season).stream()
+				.map(JsonTabellenPlatz::fromDomain).toList();
+		return tabellenPlaetze.isEmpty() //
+				? notFound().build() //
+				: ok(tabellenPlaetze);
 	}
 
 }
