@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -33,8 +34,8 @@ class DefaultTabellenServiceTest {
 		verifyTabelle(sut.erstelleTabelle("bl1", "2023-games-running-correct-final-result"));
 	}
 
-	private static void verifyTabelle(List<TabellenPlatz> erstellteTabelle) {
-		verify(erstellteTabelle.stream().map(f -> print(f, longestTeamName(erstellteTabelle))).collect(joining("\n")));
+	private static void verifyTabelle(List<TabellenPlatz> tabelle) {
+		verify(tabelle.stream().map(f -> print(f, longest(tabelle, TabellenPlatz::teamName))).collect(joining("\n")));
 	}
 
 	@Test
@@ -47,8 +48,8 @@ class DefaultTabellenServiceTest {
 				.withFailMessage(message);
 	}
 
-	static int longestTeamName(List<TabellenPlatz> tabellenPlaetze) {
-		return tabellenPlaetze.stream().map(TabellenPlatz::teamName).mapToInt(String::length).max().orElse(0);
+	static int longest(List<TabellenPlatz> tabellenPlaetze, Function<TabellenPlatz, String> attribute) {
+		return tabellenPlaetze.stream().map(attribute).mapToInt(String::length).max().orElse(0);
 	}
 
 	static String print(TabellenPlatz tabellenPlatz, int length) {
