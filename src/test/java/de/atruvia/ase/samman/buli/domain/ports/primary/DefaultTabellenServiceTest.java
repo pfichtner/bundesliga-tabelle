@@ -18,28 +18,23 @@ class DefaultTabellenServiceTest {
 	@Test
 	void tabelleBl12022Spieltag24() {
 		TabellenService sut = new DefaultTabellenService(spieltagFsRepo());
-		List<TabellenPlatz> erstellteTabelle = sut.erstelleTabelle("bl1", "2022");
-		String tabelle = erstellteTabelle.stream().map(f -> print(f, longestTeamName(erstellteTabelle)))
-				.collect(joining("\n"));
-		verify(tabelle);
+		verifyTabelle(sut.erstelleTabelle("bl1", "2022"));
 	}
 
 	@Test
 	void tabelleBl12023Spieltag27_gamesRunning_goalsButFinalResultsAre_0_0() {
 		TabellenService sut = new DefaultTabellenService(spieltagFsRepo());
-		List<TabellenPlatz> erstellteTabelle = sut.erstelleTabelle("bl1", "2023-games-running");
-		String tabelle = erstellteTabelle.stream().map(f -> print(f, longestTeamName(erstellteTabelle)))
-				.collect(joining("\n"));
-		verify(tabelle);
+		verifyTabelle(sut.erstelleTabelle("bl1", "2023-games-running"));
 	}
 
 	@Test
 	void tabelleBl12023Spieltag27_gamesRunning_goalsAndFinalResultsAreCorrect() {
 		TabellenService sut = new DefaultTabellenService(spieltagFsRepo());
-		List<TabellenPlatz> erstellteTabelle = sut.erstelleTabelle("bl1", "2023-games-running-correct-final-result");
-		String tabelle = erstellteTabelle.stream().map(f -> print(f, longestTeamName(erstellteTabelle)))
-				.collect(joining("\n"));
-		verify(tabelle);
+		verifyTabelle(sut.erstelleTabelle("bl1", "2023-games-running-correct-final-result"));
+	}
+
+	private static void verifyTabelle(List<TabellenPlatz> erstellteTabelle) {
+		verify(erstellteTabelle.stream().map(f -> print(f, longestTeamName(erstellteTabelle))).collect(joining("\n")));
 	}
 
 	@Test
@@ -52,11 +47,11 @@ class DefaultTabellenServiceTest {
 				.withFailMessage(message);
 	}
 
-	int longestTeamName(List<TabellenPlatz> tabellenPlaetze) {
+	static int longestTeamName(List<TabellenPlatz> tabellenPlaetze) {
 		return tabellenPlaetze.stream().map(TabellenPlatz::teamName).mapToInt(String::length).max().orElse(0);
 	}
 
-	String print(TabellenPlatz tabellenPlatz, int length) {
+	static String print(TabellenPlatz tabellenPlatz, int length) {
 		return Stream.of( //
 				stringFormat(length, tabellenPlatz.teamName()), //
 				tabellenPlatz.spiele(), //
@@ -68,14 +63,14 @@ class DefaultTabellenServiceTest {
 				tabellenPlatz.torDifferenz(), //
 				tabellenPlatz.punkte(), //
 				tabellenPlatz.wappen() //
-		).map(this::format).collect(joining(" | "));
+		).map(DefaultTabellenServiceTest::format).collect(joining(" | "));
 	}
 
-	String stringFormat(int length, String team) {
+	static String stringFormat(int length, String team) {
 		return String.format("%-" + (length + 1) + "s", team);
 	}
 
-	String format(Object o) {
+	static String format(Object o) {
 		return o instanceof Number n ? "%3d".formatted(n) : Objects.toString(o);
 	}
 
