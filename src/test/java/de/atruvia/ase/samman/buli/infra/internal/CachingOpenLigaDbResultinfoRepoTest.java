@@ -98,8 +98,7 @@ class CachingOpenLigaDbResultinfoRepoTest {
 		void cacheGetsEvictedAfterOneSecond() throws InterruptedException {
 			var first = List.of(resultinfo("A1"));
 			var second = List.of(resultinfo("B1"), resultinfo("B2"));
-			var answers = List.of(first, second).iterator();
-			when(delegateMock.getResultinfos(league, season)).thenAnswer(__ -> answers.next());
+			when(delegateMock.getResultinfos(league, season)).thenReturn(first).thenReturn(second);
 
 			whenCachingRepoIsQueriedTheResultIs(first);
 			MILLISECONDS.sleep(EVICT_MS);
