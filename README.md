@@ -2,6 +2,7 @@
 [![codecov](https://codecov.io/gh/pfichtner/bundesliga-tabelle/graph/badge.svg?token=M28D715AGT)](https://codecov.io/gh/pfichtner/bundesliga-tabelle)
 
 # bundesliga-tabelle
+## the successor is/is continued under https://github.com/atruvia/bundesliga-tabelle/
 
 This repository contains code I use in my coachings and/or as showcase. 
 It is intended to represent the constellation that a team develops a frontend and a backend, but the backend obtains the data from a third-party system that we have no control over or can hardly influence. 
